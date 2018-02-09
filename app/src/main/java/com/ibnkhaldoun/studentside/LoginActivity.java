@@ -1,5 +1,6 @@
 package com.ibnkhaldoun.studentside;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -34,7 +35,7 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         findViewById(R.id.sign_up_button).setOnClickListener(v -> {
-
+            startActivity(new Intent(LoginActivity.this, SignUpActivity.class));
         });
     }
 
