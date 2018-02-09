@@ -12,20 +12,18 @@ import android.widget.Toast;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private EditText mUsernameEmailEditText, mPasswordEditText;
-    private TextInputLayout passwordWrapper;
-    private TextInputLayout emailUsernameWrapper;
-
+    private EditText mEmailEditText, mPasswordEditText;
+    private TextInputLayout mEmailWrapper, mPasswordWrapper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        mUsernameEmailEditText = findViewById(R.id.input_email_username);
+        mEmailEditText = findViewById(R.id.input_email);
         mPasswordEditText = findViewById(R.id.input_password);
-        passwordWrapper = findViewById(R.id.password_wrapper);
-        emailUsernameWrapper = findViewById(R.id.email_username_wrapper);
+        mPasswordWrapper = findViewById(R.id.password_wrapper);
+        mEmailWrapper = findViewById(R.id.email_wrapper);
 
         findViewById(R.id.login_button).setOnClickListener(v -> {
             hideKeyboard();
@@ -34,8 +32,12 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        findViewById(R.id.sign_up_button).setOnClickListener(v -> {
+        findViewById(R.id.create_account_button).setOnClickListener(v -> {
             startActivity(new Intent(LoginActivity.this, SignUpActivity.class));
+        });
+
+        findViewById(R.id.forget_password_textView).setOnClickListener(v -> {
+            startActivity(new Intent(LoginActivity.this, ForgetPasswordActivity.class));
         });
     }
 
@@ -48,27 +50,27 @@ public class LoginActivity extends AppCompatActivity {
     private boolean validate() {
 
         boolean validate = true;
-        String usernameEmail = mUsernameEmailEditText.getText().toString();
+        String usernameEmail = mEmailEditText.getText().toString();
         String password = mPasswordEditText.getText().toString();
 
         if (usernameEmail.isEmpty()) {
-            emailUsernameWrapper.setError(getResources().getString(R.string.email_empty));
+            mEmailWrapper.setError(getResources().getString(R.string.email_empty));
             validate = false;
         } else if (!Patterns.EMAIL_ADDRESS.matcher(usernameEmail).matches()) {
-            emailUsernameWrapper.setError(getResources().getString(R.string.valid_email));
+            mEmailWrapper.setError(getResources().getString(R.string.valid_email));
             validate = false;
         } else {
-            emailUsernameWrapper.setError(null);
+            mEmailWrapper.setError(null);
         }
 
         if (password.isEmpty()) {
-            passwordWrapper.setError(getResources().getString(R.string.password_empty));
+            mPasswordWrapper.setError(getResources().getString(R.string.password_empty));
             validate = false;
         } else if (password.length() < 8) {
-            passwordWrapper.setError(getResources().getString(R.string.valid_password));
+            mPasswordWrapper.setError(getResources().getString(R.string.valid_password));
             validate = false;
         } else {
-            passwordWrapper.setError(null);
+            mPasswordWrapper.setError(null);
         }
         return validate;
     }

@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -34,7 +32,7 @@
             app:errorEnabled="true">
 
             <EditText
-                android:id="@+id/input_card_number"
+                android:id="@+id/input_card_number_sign_up"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawablePadding="16dp"
@@ -54,7 +52,7 @@
             app:errorEnabled="true">
 
             <EditText
-                android:id="@+id/input_email_username"
+                android:id="@+id/input_email_sign_up"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawablePadding="16dp"
@@ -86,6 +84,7 @@
         </android.support.design.widget.TextInputLayout>
 
         <Button
+            android:id="@+id/sign_up_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="#FF1744"

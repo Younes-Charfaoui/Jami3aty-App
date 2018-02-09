@@ -9,11 +9,22 @@
     <string name="sign_up">Create an Account</string>
     <string name="or">OR</string>
     <string name="valid_email">Invalid email</string>
-    <string name="password_empty">A password is required</string>
-    <string name="email_empty">A email is required</string>
+    <string name="valid_card_number">Invalid Card Number</string>
+    <string name="password_empty">An password is required</string>
+    <string name="card_number_empty">An card number is required</string>
+    <string name="email_empty">An email is required</string>
     <string name="valid_password">Use at least 8 characters</string>
     <string name="title_activity_sign_up">Sign up</string>
     <string name="action_help">Help</string>
     <string name="card_number_string">Card Number</string>
+    <string name="title_activity_help">Help</string>
+    <string name="card_number_help">This number is the register number in the University, you can get it by viewing your student card under the registration number which compose of Two numbers xxxxxxx/xx , the first 8 numbers is your number</string>
+    <string name="password_help">Try to use a password more complex for your security , you are oblige to use a password compose from 8 characters, you can use the Capitales letters , symbol as much you like.</string>
+    <string name="email_help">you can use gmail , Yahoo , microsoft or any email you like , this email will be used for activating your account and for reinstal the passwor in the case you lost it.</string>
+    <string name="welcome_in_help">Welcome In Help</string>
+    <string name="student_card_description">Student card in which we are demonstrating from where to get the card number</string>
+    <string name="title_activity_forget_password">Forget Password</string>
+    <string name="account_search">Please enter your email to search your account</string>
+    <string name="find_your_account_text">Find your account</string>
 
 </resources>
