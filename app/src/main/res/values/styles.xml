@@ -8,8 +8,24 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+
+
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <!-- style for buttons -->
+    <style name="ButtonStylesOne" parent="Theme.AppCompat.Light">
+        <item name="colorButtonNormal">@color/colorAccent</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="ButtonStylesTwo" parent="Theme.AppCompat.Light">
+        <item name="colorButtonNormal">@color/deep_red</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="EditTextStyle" parent="Theme.AppCompat.Light">
+        <item name="colorAccent">#4CAF50</item>
+    </style>
 </resources>

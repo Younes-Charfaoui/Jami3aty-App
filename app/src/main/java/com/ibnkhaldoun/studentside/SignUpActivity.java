@@ -3,6 +3,7 @@ package com.ibnkhaldoun.studentside;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Patterns;
@@ -12,7 +13,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 public class SignUpActivity extends AppCompatActivity {
-
 
     private EditText mEmailEditText, mPasswordEditText, mCardNumberEditText;
     private TextInputLayout mEmailWrapper, mCardNumberWrapper, mPasswordWrapper;
@@ -25,6 +25,7 @@ public class SignUpActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close_white);
 
         mCardNumberWrapper = findViewById(R.id.card_number_wrapper_sign_up);
         mEmailWrapper = findViewById(R.id.email_wrapper_sign_up);
@@ -54,6 +55,14 @@ public class SignUpActivity extends AppCompatActivity {
         switch (id) {
             case R.id.action_help:
                 startActivity(new Intent(this, HelpActivity.class));
+                break;
+            case android.R.id.home:
+                new AlertDialog.Builder(this)
+                        .setTitle("Cancel Account Creation")
+                        .setMessage("Are you sure you want to cancel account creation? this will discard any information you've entered so far.")
+                        .setPositiveButton("Yes", (dialog, which) -> finish())
+                        .setNegativeButton("No", null)
+                        .create().show();
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -97,5 +106,15 @@ public class SignUpActivity extends AppCompatActivity {
         }
         return validate;
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        new AlertDialog.Builder(this)
+                .setTitle("Cancel Account Creation")
+                .setMessage("Are you sure you want to cancel account creation? this will discard any information you've entered so far.")
+                .setPositiveButton("Yes", (dialog, which) -> finish())
+                .setNegativeButton("No", null)
+                .create().show();
     }
 }

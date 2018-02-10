@@ -14,63 +14,63 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="24dp">
+        android:padding="@dimen/linearLayout_padding">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="@dimen/bottom_margin"
             android:text="@string/welcome_in_help"
-            android:textSize="30sp" />
+            android:textColor="@color/colorAccent"
+            android:textSize="40sp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="@dimen/bottom_margin"
             android:text="@string/card_number_string"
             android:textAppearance="@android:style/TextAppearance.Holo.Widget.ActionMode.Title" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="@dimen/bottom_margin"
             android:text="@string/card_number_help" />
 
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="200dp"
+            android:layout_marginBottom="@dimen/bottom_margin"
             android:alpha="0.7"
             android:contentDescription="@string/student_card_description"
             android:scaleType="fitCenter"
-            android:src="@drawable/student" />
+            android:src="@drawable/student_card" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginBottom="@dimen/bottom_margin"
             android:text="@string/email_string"
             android:textAppearance="@android:style/TextAppearance.Holo.Widget.ActionMode.Title" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
+            android:layout_marginBottom="@dimen/bottom_margin"
             android:text="@string/email_help" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginBottom="@dimen/bottom_margin"
             android:text="@string/password_string"
             android:textAppearance="@android:style/TextAppearance.Holo.Widget.ActionMode.Title" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
+            android:layout_marginBottom="@dimen/bottom_margin"
             android:text="@string/password_help" />
 
     </LinearLayout>

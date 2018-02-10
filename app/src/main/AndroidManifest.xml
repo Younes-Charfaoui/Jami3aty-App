@@ -23,13 +23,8 @@
             android:name=".SignUpActivity"
             android:label="@string/title_activity_sign_up"
             android:launchMode="singleTop"
-            android:parentActivityName=".LoginActivity"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustResize">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.ibnkhaldoun.studentside.LoginActivity" />
-        </activity>
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".HelpActivity"
             android:label="@string/title_activity_help"

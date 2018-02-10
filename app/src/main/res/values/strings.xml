@@ -26,5 +26,6 @@
     <string name="title_activity_forget_password">Forget Password</string>
     <string name="account_search">Please enter your email to search your account</string>
     <string name="find_your_account_text">Find your account</string>
+    <string name="logo_image_description">Logo image</string>
 
 </resources>

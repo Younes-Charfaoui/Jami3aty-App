@@ -43,7 +43,7 @@
             android:alpha="0.7"
             android:contentDescription="@string/student_card_description"
             android:scaleType="fitCenter"
-            android:src="@drawable/student" />
+            android:src="@drawable/student_card" />
 
         <TextView
             android:layout_width="wrap_content"

@@ -17,10 +17,10 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
             android:text="@string/title_activity_sign_up"
-            android:textSize="40sp"
-            android:textColor="@color/colorPrimaryDark"
-            android:layout_marginBottom="24dp"/>
+            android:textColor="@color/colorAccent"
+            android:textSize="40sp" />
 
         <!-- Card number Label -->
         <android.support.design.widget.TextInputLayout
@@ -37,7 +37,6 @@
                 android:layout_height="wrap_content"
                 android:drawablePadding="16dp"
                 android:drawableStart="@drawable/ic_card"
-                android:drawableTint="#66CC99"
                 android:hint="@string/card_number_string"
                 android:inputType="number" />
         </android.support.design.widget.TextInputLayout>
@@ -57,7 +56,6 @@
                 android:layout_height="wrap_content"
                 android:drawablePadding="16dp"
                 android:drawableStart="@drawable/ic_email"
-                android:drawableTint="#66CC99"
                 android:hint="@string/email_string"
                 android:inputType="textEmailAddress" />
         </android.support.design.widget.TextInputLayout>
@@ -78,7 +76,6 @@
                 android:layout_height="wrap_content"
                 android:drawablePadding="16dp"
                 android:drawableStart="@drawable/ic_lock"
-                android:drawableTint="#66CC99"
                 android:hint="@string/password_string"
                 android:inputType="textPassword" />
         </android.support.design.widget.TextInputLayout>
@@ -87,11 +84,10 @@
             android:id="@+id/sign_up_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="#FF1744"
             android:layout_gravity="end"
+            android:theme="@style/ButtonStylesTwo"
             android:text="@string/title_activity_sign_up"
             android:textColor="@android:color/white" />
+
     </LinearLayout>
 </ScrollView>
-
-
