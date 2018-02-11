@@ -26,8 +26,8 @@ public class LoginActivity extends AppCompatActivity {
         mEmailWrapper = findViewById(R.id.email_wrapper);
 
         findViewById(R.id.login_button).setOnClickListener(v -> {
-            hideKeyboard();
             if (validate()) {
+                hideKeyboard();
                 Toast.makeText(LoginActivity.this, "You Logged In", Toast.LENGTH_SHORT).show();
             }
         });

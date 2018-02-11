@@ -27,8 +27,8 @@
             android:id="@+id/email_wrapper"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginTop="8dp">
+            app:errorEnabled="true"
+            >
 
             <EditText
                 android:id="@+id/input_email"
@@ -45,8 +45,7 @@
             android:id="@+id/password_wrapper"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginTop="8dp"
+            app:errorEnabled="true"
             app:passwordToggleEnabled="true">
 
             <EditText
@@ -78,7 +77,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="7dp"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="8dp"
                 android:padding="12dp"
                 android:text="@string/login_string"
                 android:theme="@style/ButtonStylesOne"

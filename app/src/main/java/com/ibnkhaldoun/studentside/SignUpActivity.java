@@ -1,5 +1,6 @@
 package com.ibnkhaldoun.studentside;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
@@ -9,14 +10,20 @@ import android.support.v7.widget.Toolbar;
 import android.util.Patterns;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
+
 public class SignUpActivity extends AppCompatActivity {
 
-    private EditText mEmailEditText, mPasswordEditText, mCardNumberEditText;
-    private TextInputLayout mEmailWrapper, mCardNumberWrapper, mPasswordWrapper;
-
+    private EditText mEmailEditText, mPasswordEditText, mCardNumberEditText, mBirthDayEditText;
+    private TextInputLayout mEmailWrapper, mCardNumberWrapper, mPasswordWrapper, mBirthDayWrapper;
+    private Calendar mCalendar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,13 +37,32 @@ public class SignUpActivity extends AppCompatActivity {
         mCardNumberWrapper = findViewById(R.id.card_number_wrapper_sign_up);
         mEmailWrapper = findViewById(R.id.email_wrapper_sign_up);
         mPasswordWrapper = findViewById(R.id.password_wrapper_sign_up);
+        mBirthDayWrapper = findViewById(R.id.date_wrapper_sign_up);
+
 
         mCardNumberEditText = findViewById(R.id.input_card_number_sign_up);
         mEmailEditText = findViewById(R.id.input_email_sign_up);
         mPasswordEditText = findViewById(R.id.input_password_sign_up);
+        mBirthDayEditText = findViewById(R.id.input_date_of_birth_sign_up);
+
+        mCalendar = Calendar.getInstance();
+
+        mBirthDayEditText.setOnClickListener(v -> {
+            new DatePickerDialog(SignUpActivity.this,
+                    (view, year, month, dayOfMonth) -> {
+                        mCalendar.set(Calendar.YEAR, year);
+                        mCalendar.set(Calendar.MONTH, month);
+                        mCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                        updateDateValue();
+                    },
+                    mCalendar.get(Calendar.YEAR),
+                    mCalendar.get(Calendar.MONTH),
+                    mCalendar.get(Calendar.DAY_OF_MONTH)).show();
+        });
 
         findViewById(R.id.sign_up_button).setOnClickListener(v -> {
             if (validate()) {
+                hideKeyboard();
                 Toast.makeText(this, "Sign up......", Toast.LENGTH_SHORT).show();
             }
         });
@@ -74,7 +100,8 @@ public class SignUpActivity extends AppCompatActivity {
         String cardNumber = mCardNumberEditText.getText().toString();
         String email = mEmailEditText.getText().toString();
         String password = mPasswordEditText.getText().toString();
-
+        String date = mBirthDayEditText.getText().toString();
+         
         if (cardNumber.isEmpty()) {
             mCardNumberWrapper.setError(getResources().getString(R.string.card_number_empty));
             validate = false;
@@ -104,6 +131,13 @@ public class SignUpActivity extends AppCompatActivity {
         } else {
             mPasswordWrapper.setError(null);
         }
+
+        if (date.isEmpty()) {
+            mBirthDayWrapper.setError(getResources().getString(R.string.date_empty));
+            validate = false;
+        } else {
+            mBirthDayWrapper.setError(null);
+        }
         return validate;
 
     }
@@ -116,5 +150,24 @@ public class SignUpActivity extends AppCompatActivity {
                 .setPositiveButton("Yes", (dialog, which) -> finish())
                 .setNegativeButton("No", null)
                 .create().show();
+    }
+
+    private void updateDateValue() {
+        String dateFormat = "dd/MM/yyyy";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(dateFormat, Locale.FRANCE);
+        mBirthDayEditText.setText(simpleDateFormat.format(mCalendar.getTime()));
+    }
+
+    /**
+     * this is a helper method will be used to hide keyboard after
+     * click on the login button
+     */
+    private void hideKeyboard() {
+        View view = getCurrentFocus();
+        if (view != null) {
+            InputMethodManager manager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+            assert manager != null;
+            manager.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        }
     }
 }

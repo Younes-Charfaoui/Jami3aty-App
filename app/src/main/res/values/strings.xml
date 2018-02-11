@@ -1,10 +1,9 @@
 <resources>
     <string name="app_name">Student Side</string>
-    <string name="username_string">User Name</string>
-    <string name="password_string">Password</string>
-    <string name="email_string">Email</string>
+    <string name="password_string">Password *</string>
+    <string name="email_string">Email *</string>
     <string name="login_string">Login</string>
-    <string name="forget_password_string">Forget Password ?</string>
+    <string name="forget_password_string">Forgot Password ?</string>
     <string name="back">background Image</string>
     <string name="sign_up">Create an Account</string>
     <string name="or">OR</string>
@@ -13,10 +12,11 @@
     <string name="password_empty">An password is required</string>
     <string name="card_number_empty">An card number is required</string>
     <string name="email_empty">An email is required</string>
-    <string name="valid_password">Use at least 8 characters</string>
+    <string name="valid_password">At least 8 characters</string>
+    <string name="date_empty">An date is required</string>
     <string name="title_activity_sign_up">Sign up</string>
     <string name="action_help">Help</string>
-    <string name="card_number_string">Card Number</string>
+    <string name="card_number_string">Card Number *</string>
     <string name="title_activity_help">Help</string>
     <string name="card_number_help">This number is the register number in the University, you can get it by viewing your student card under the registration number which compose of Two numbers xxxxxxx/xx , the first 8 numbers is your number</string>
     <string name="password_help">Try to use a password more complex for your security , you are oblige to use a password compose from 8 characters, you can use the Capitales letters , symbol as much you like.</string>
@@ -27,5 +27,6 @@
     <string name="account_search">Please enter your email to search your account</string>
     <string name="find_your_account_text">Find your account</string>
     <string name="logo_image_description">Logo image</string>
+    <string name="date_of_birth_string">Date of birth *</string>
 
 </resources>
