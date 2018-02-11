@@ -2,6 +2,7 @@ package com.ibnkhaldoun.studentside;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AlertDialog;
@@ -12,8 +13,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.ProgressBar;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -24,15 +26,17 @@ public class SignUpActivity extends AppCompatActivity {
     private EditText mEmailEditText, mPasswordEditText, mCardNumberEditText, mBirthDayEditText;
     private TextInputLayout mEmailWrapper, mCardNumberWrapper, mPasswordWrapper, mBirthDayWrapper;
     private Calendar mCalendar;
+    private Menu mMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close_white);
+
 
         mCardNumberWrapper = findViewById(R.id.card_number_wrapper_sign_up);
         mEmailWrapper = findViewById(R.id.email_wrapper_sign_up);
@@ -59,11 +63,22 @@ public class SignUpActivity extends AppCompatActivity {
                     mCalendar.get(Calendar.MONTH),
                     mCalendar.get(Calendar.DAY_OF_MONTH)).show();
         });
-
-        findViewById(R.id.sign_up_button).setOnClickListener(v -> {
+        final ProgressBar loading = findViewById(R.id.loading_progressBar_signUp);
+        final Button signUpButton = findViewById(R.id.sign_up_button);
+        signUpButton.setOnClickListener(v -> {
             if (validate()) {
                 hideKeyboard();
-                Toast.makeText(this, "Sign up......", Toast.LENGTH_SHORT).show();
+                ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
+                
+                mCardNumberWrapper.setEnabled(false);
+                mEmailWrapper.setEnabled(false);
+                mPasswordWrapper.setEnabled(false);
+                mBirthDayWrapper.setEnabled(false);
+                mMenu.findItem(R.id.action_help).setEnabled(false);
+                getSupportActionBar().setHomeButtonEnabled(false);
+                signUpButton.setVisibility(View.GONE);
+                loading.setVisibility(View.VISIBLE);
+
             }
         });
     }
@@ -72,6 +87,7 @@ public class SignUpActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_sign_up, menu);
+        mMenu = menu;
         return true;
     }
 
@@ -101,7 +117,7 @@ public class SignUpActivity extends AppCompatActivity {
         String email = mEmailEditText.getText().toString();
         String password = mPasswordEditText.getText().toString();
         String date = mBirthDayEditText.getText().toString();
-         
+
         if (cardNumber.isEmpty()) {
             mCardNumberWrapper.setError(getResources().getString(R.string.card_number_empty));
             validate = false;

@@ -8,7 +8,8 @@ import android.util.Patterns;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -24,17 +25,22 @@ public class LoginActivity extends AppCompatActivity {
         mPasswordEditText = findViewById(R.id.input_password);
         mPasswordWrapper = findViewById(R.id.password_wrapper);
         mEmailWrapper = findViewById(R.id.email_wrapper);
-
+        final ProgressBar loadingProgressBar = findViewById(R.id.progress_bar);
+        final LinearLayout buttonsLinearLayout = findViewById(R.id.buttons_linearLayout);
         findViewById(R.id.login_button).setOnClickListener(v -> {
             if (validate()) {
                 hideKeyboard();
-                Toast.makeText(LoginActivity.this, "You Logged In", Toast.LENGTH_SHORT).show();
+                mPasswordWrapper.setEnabled(false);
+                mEmailWrapper.setEnabled(false);
+                loadingProgressBar.setVisibility(View.VISIBLE);
+                buttonsLinearLayout.setVisibility(View.GONE);
             }
         });
 
         findViewById(R.id.create_account_button).setOnClickListener(v -> {
             startActivity(new Intent(LoginActivity.this, SignUpActivity.class));
         });
+
 
         findViewById(R.id.forget_password_textView).setOnClickListener(v -> {
             startActivity(new Intent(LoginActivity.this, ForgetPasswordActivity.class));
