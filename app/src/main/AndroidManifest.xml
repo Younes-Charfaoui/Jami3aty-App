@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.ibnkhaldoun.studentside">
 
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".LoginActivity"
+            android:name=".Activities.LoginActivity"
             android:launchMode="singleTop"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
@@ -23,29 +23,30 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".SignUpActivity"
+            android:name=".Activities.SignUpActivity"
             android:label="@string/title_activity_sign_up"
             android:launchMode="singleTop"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".HelpActivity"
+            android:name=".Activities.HelpActivity"
             android:label="@string/title_activity_help"
-            android:parentActivityName=".SignUpActivity"
+            android:parentActivityName=".Activities.SignUpActivity"
             android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.ibnkhaldoun.studentside.SignUpActivity" />
+                android:value="com.ibnkhaldoun.studentside.Activities.SignUpActivity" />
         </activity>
         <activity
-            android:name=".ForgetPasswordActivity"
+            android:name=".Activities.ForgetPasswordActivity"
             android:label="@string/title_activity_forget_password"
-            android:parentActivityName=".LoginActivity"
+            android:parentActivityName=".Activities.LoginActivity"
             android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.ibnkhaldoun.studentside.LoginActivity" />
+                android:value="com.ibnkhaldoun.studentside.Activities.LoginActivity" />
         </activity>
+        <activity android:name=".WelcomeActivity"></activity>
     </application>
 
 </manifest>

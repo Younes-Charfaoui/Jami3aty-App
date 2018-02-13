@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.ibnkhaldoun.studentside.SignUpActivity"
+    tools:context="com.ibnkhaldoun.studentside.Activities.SignUpActivity"
     tools:showIn="@layout/activity_sign_up">
 
     <LinearLayout
@@ -17,93 +17,146 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="8dp"
+            android:fontFamily="sans-serif-light"
             android:text="@string/title_activity_sign_up"
             android:textColor="@color/colorAccent"
             android:textSize="40sp" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/bottom_margin"
+            android:fontFamily="sans-serif"
+            android:text="@string/fill_all_the_input" />
         <!-- Card number Label -->
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/card_number_wrapper_sign_up"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-            app:errorEnabled="true">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="16dp"
+                android:src="@drawable/ic_card" />
 
-            <EditText
-                android:id="@+id/input_card_number_sign_up"
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/card_number_wrapper_sign_up"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawablePadding="16dp"
-                android:drawableStart="@drawable/ic_card"
-                android:hint="@string/card_number_string"
-                android:inputType="number" />
-        </android.support.design.widget.TextInputLayout>
+                app:errorEnabled="true">
+
+                <EditText
+                    android:id="@+id/input_card_number_sign_up"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/card_number_string"
+                    android:inputType="number" />
+            </android.support.design.widget.TextInputLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="16dp"
+                android:src="@drawable/ic_school" />
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/bac_average_wrapper_sign_up"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:errorEnabled="true">
+
+                <EditText
+                    android:id="@+id/input_bac_average_sign_up"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/bac_average_string"
+                    android:inputType="numberDecimal" />
+            </android.support.design.widget.TextInputLayout>
+        </LinearLayout>
+        <!-- Email Label -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="16dp"
+                android:src="@drawable/ic_email" />
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/email_wrapper_sign_up"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                app:errorEnabled="true">
+
+                <EditText
+                    android:id="@+id/input_email_sign_up"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/email_string"
+                    android:inputType="textEmailAddress" />
+            </android.support.design.widget.TextInputLayout>
+        </LinearLayout>
 
         <!-- Email Label -->
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/email_wrapper_sign_up"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-            app:errorEnabled="true">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="16dp"
+                android:src="@drawable/ic_lock" />
 
-            <EditText
-                android:id="@+id/input_email_sign_up"
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/password_wrapper_sign_up"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawablePadding="16dp"
-                android:drawableStart="@drawable/ic_email"
-                android:hint="@string/email_string"
-                android:inputType="textEmailAddress" />
-        </android.support.design.widget.TextInputLayout>
 
-        <!-- Email Label -->
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/password_wrapper_sign_up"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+                app:errorEnabled="true"
+                app:passwordToggleEnabled="true">
 
-            app:errorEnabled="true"
-            app:passwordToggleEnabled="true">
+                <EditText
+                    android:id="@+id/input_password_sign_up"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
 
-            <EditText
-                android:id="@+id/input_password_sign_up"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:drawablePadding="16dp"
-                android:drawableStart="@drawable/ic_lock"
-                android:hint="@string/password_string"
-                android:inputType="textPassword" />
-        </android.support.design.widget.TextInputLayout>
-
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/date_wrapper_sign_up"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:errorEnabled="true"
-            app:passwordToggleEnabled="true">
-
-            <EditText
-                android:id="@+id/input_date_of_birth_sign_up"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:drawablePadding="16dp"
-                android:focusableInTouchMode="false"
-                android:drawableStart="@drawable/ic_calendar_new"
-                android:hint="@string/date_of_birth_string"
-                />
-        </android.support.design.widget.TextInputLayout>
+                    android:hint="@string/password_string"
+                    android:inputType="textPassword" />
+            </android.support.design.widget.TextInputLayout>
+        </LinearLayout>
 
         <Button
             android:id="@+id/sign_up_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
+            android:fontFamily="sans-serif-medium"
             android:text="@string/title_activity_sign_up"
             android:textColor="@android:color/white"
-            android:visibility="visible"
-            android:theme="@style/ButtonStylesTwo" />
+            android:theme="@style/ButtonStylesTwo"
+            android:visibility="visible" />
 
         <ProgressBar
             android:id="@+id/loading_progressBar_signUp"
@@ -111,7 +164,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="end"
             android:layout_marginEnd="16dp"
-            android:visibility="gone"/>
+            android:visibility="gone" />
 
     </LinearLayout>
 </ScrollView>
