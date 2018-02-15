@@ -30,5 +30,7 @@
     <string name="logo_image_description">Logo image</string>
     <string name="bac_average_string">Bac average</string>
     <string name="fill_all_the_input">Please fill all the field listed bellow</string>
+    <string name="next">Next</string>
+    <string name="skip">Skip</string>
 
 </resources>

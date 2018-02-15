@@ -18,8 +18,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=""
-            android:textColor="@android:color/white"
+            android:text="First"
+            android:textColor="@android:color/darker_gray"
             android:textSize="@dimen/slide_title"
             android:textStyle="bold" />
 

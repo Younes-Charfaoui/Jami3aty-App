@@ -3,9 +3,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.ibnkhaldoun.studentside.WelcomeActivity">
+    tools:context="com.ibnkhaldoun.studentside.Activities.WelcomeActivity">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:scaleType="centerCrop"
+        android:alpha=".5"
+        android:src="@drawable/hami" />
 
     <android.support.v4.view.ViewPager
+        android:id="@+id/welcome_view_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
@@ -21,18 +30,18 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:alpha=".5"
         android:layout_above="@id/layoutDots"
-        android:background="@android:color/white" />
+        android:alpha=".5"
+        android:background="@android:color/darker_gray" />
 
     <Button
         android:id="@+id/btn_next"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:background="@null"
-        android:text="Next"
+        android:text="@string/next"
         android:textColor="@android:color/black" />
 
     <Button
@@ -40,8 +49,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:background="@null"
-        android:text="Skip"
+        android:text="@string/skip"
         android:textColor="@android:color/black" />
 </RelativeLayout>
