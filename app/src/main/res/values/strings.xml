@@ -32,5 +32,9 @@
     <string name="fill_all_the_input">Please fill all the field listed bellow</string>
     <string name="next">Next</string>
     <string name="skip">Skip</string>
+    <string name="background_image">background image</string>
+    <string name="next_button">next_button</string>
+    <string name="previous_button">previous_button</string>
+    <string name="title_activity_main">MainActivity</string>
 
 </resources>

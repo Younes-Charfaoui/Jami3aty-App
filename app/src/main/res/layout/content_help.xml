@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.ibnkhaldoun.studentside.Activities.HelpActivity"
+    tools:context="com.ibnkhaldoun.studentside.activities.HelpActivity"
     tools:showIn="@layout/activity_help">
 
     <LinearLayout

@@ -1,4 +1,4 @@
-package com.ibnkhaldoun.studentside.Activities;
+package com.ibnkhaldoun.studentside.activities;
 
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;

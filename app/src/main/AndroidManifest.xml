@@ -13,38 +13,36 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".Activities.LoginActivity"
+            android:name=".activities.LoginActivity"
             android:launchMode="singleTop"
-            android:windowSoftInputMode="adjustResize">
-
-        </activity>
+            android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".Activities.SignUpActivity"
+            android:name=".activities.SignUpActivity"
             android:label="@string/title_activity_sign_up"
             android:launchMode="singleTop"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".Activities.HelpActivity"
+            android:name=".activities.HelpActivity"
             android:label="@string/title_activity_help"
-            android:parentActivityName=".Activities.SignUpActivity"
+            android:parentActivityName=".activities.SignUpActivity"
             android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.ibnkhaldoun.studentside.Activities.SignUpActivity" />
+                android:value="com.ibnkhaldoun.studentside.activities.SignUpActivity" />
         </activity>
         <activity
-            android:name=".Activities.ForgetPasswordActivity"
+            android:name=".activities.ForgetPasswordActivity"
             android:label="@string/title_activity_forget_password"
-            android:parentActivityName=".Activities.LoginActivity"
+            android:parentActivityName=".activities.LoginActivity"
             android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.ibnkhaldoun.studentside.Activities.LoginActivity" />
+                android:value="com.ibnkhaldoun.studentside.activities.LoginActivity" />
         </activity>
-        <activity android:name=".Activities.WelcomeActivity" />
+        <activity android:name=".activities.WelcomeActivity" />
         <activity
-            android:name=".Activities.SplashActivity"
+            android:name=".activities.SplashActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -52,6 +50,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".activities.MainActivity"
+            android:label="@string/title_activity_main"
+            android:theme="@style/AppTheme" />
     </application>
 
 </manifest>

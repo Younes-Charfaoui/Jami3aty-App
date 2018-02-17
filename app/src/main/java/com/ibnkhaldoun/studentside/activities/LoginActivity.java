@@ -1,4 +1,4 @@
-package com.ibnkhaldoun.studentside.Activities;
+package com.ibnkhaldoun.studentside.activities;
 
 import android.content.Intent;
 import android.os.Build;
@@ -36,24 +36,24 @@ public class LoginActivity extends AppCompatActivity {
         mEmailWrapper = findViewById(R.id.email_wrapper);
         final ProgressBar loadingProgressBar = findViewById(R.id.progress_bar);
         final LinearLayout buttonsLinearLayout = findViewById(R.id.buttons_linearLayout);
+
         findViewById(R.id.login_button).setOnClickListener(v -> {
-            if (validate()) {
+            //TODO getting the information from the server
+            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+
+            /*if (validate()) {
                 hideKeyboard();
                 mPasswordWrapper.setEnabled(false);
                 mEmailWrapper.setEnabled(false);
                 loadingProgressBar.setVisibility(View.VISIBLE);
                 buttonsLinearLayout.setVisibility(View.GONE);
-            }
+            }*/
         });
 
-        findViewById(R.id.create_account_button).setOnClickListener(v -> {
-            startActivity(new Intent(LoginActivity.this, SignUpActivity.class));
-        });
+        findViewById(R.id.create_account_button).setOnClickListener(v -> startActivity(new Intent(LoginActivity.this, SignUpActivity.class)));
 
 
-        findViewById(R.id.forget_password_textView).setOnClickListener(v -> {
-            startActivity(new Intent(LoginActivity.this, ForgetPasswordActivity.class));
-        });
+        findViewById(R.id.forget_password_textView).setOnClickListener(v -> startActivity(new Intent(LoginActivity.this, ForgetPasswordActivity.class)));
     }
 
     /**

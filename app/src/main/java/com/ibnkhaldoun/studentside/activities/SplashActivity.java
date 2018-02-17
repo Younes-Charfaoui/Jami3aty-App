@@ -1,4 +1,4 @@
-package com.ibnkhaldoun.studentside.Activities;
+package com.ibnkhaldoun.studentside.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
