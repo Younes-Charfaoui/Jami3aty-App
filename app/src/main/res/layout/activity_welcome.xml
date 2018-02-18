@@ -34,7 +34,8 @@
         android:layout_marginBottom="16dp"
         android:text="@string/next"
         android:contentDescription="@string/next_button"
-        android:theme="@style/ButtonStylesTwo" />
+        android:theme="@style/ButtonStylesTwo"
+        tools:ignore="RelativeOverlap" />
 
     <Button
         android:id="@+id/skip_button"
@@ -45,7 +46,8 @@
         android:layout_marginStart="16dp"
         android:layout_marginBottom="16dp"
         android:text="@string/skip"
-        android:contentDescription="@string/next_button"
-        android:theme="@style/ButtonStylesTwo" />
+        android:textColor="@android:color/darker_gray"
+        android:contentDescription="@string/skip"
+        android:background="@null"/>
 
 </RelativeLayout>

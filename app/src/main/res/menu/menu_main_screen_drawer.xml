@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:id="@+id/nav_top_menu"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/ic_home"
+            android:title="@string/nav_home_string" />
+        <item
+            android:id="@+id/nav_marks"
+            android:icon="@drawable/ic_school"
+            android:title="@string/nav_marks_string" />
+        <item
+            android:id="@+id/nav_schedule"
+            android:icon="@drawable/ic_date_range"
+            android:title="@string/nav_schedule_string" />
+        <item
+            android:id="@+id/nav_notes"
+            android:icon="@drawable/ic_note"
+            android:title="@string/nav_notes_string" />
+        <item
+            android:id="@+id/nav_saved"
+            android:icon="@drawable/ic_bookmark"
+            android:title="@string/nav_saved_string" />
+    </group>
+
+
+    <group
+        android:id="@+id/nav_sub_menu"
+        android:checkableBehavior="none">
+        <item
+            android:id="@+id/nav_setting"
+            android:icon="@drawable/ic_settings"
+            android:title="@string/nav_setting_string" />
+        <item
+            android:id="@+id/nav_help"
+            android:icon="@drawable/ic_help_black"
+            android:title="@string/nav_help_feedback_string" />
+        <item
+            android:id="@+id/nav_log_out"
+            android:icon="@drawable/ic_logout"
+            android:title="@string/nav_log_out_string" />
+    </group>
+</menu>

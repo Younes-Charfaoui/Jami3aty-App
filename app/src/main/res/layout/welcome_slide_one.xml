@@ -13,26 +13,15 @@
         <ImageView
             android:layout_width="@dimen/img_width_height"
             android:layout_height="@dimen/img_width_height"
-            android:src="@drawable/first_logo" />
+            android:src="@drawable/first_logo"
+            />
+
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="First"
-            android:textColor="@android:color/darker_gray"
-            android:textSize="@dimen/slide_title"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:paddingLeft="@dimen/desc_padding"
-            android:paddingRight="@dimen/desc_padding"
-            android:text=""
-            android:textAlignment="center"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/slide_desc" />
+            android:text="@string/text_slide_one_string"
+            style="@style/IntroSlidersText"/>
 
     </LinearLayout>
 

@@ -23,8 +23,8 @@ public class PreferencesManager {
         return mPreferences.getBoolean(FIRST_TIME, true);
     }
 
-    public void setFirstTimeLaunched(boolean value) {
-        mEditor.putBoolean(FIRST_TIME, value);
+    public void setFirstTimeLaunched() {
+        mEditor.putBoolean(FIRST_TIME, false);
         mEditor.commit();
     }
 }

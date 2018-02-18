@@ -35,6 +35,56 @@
     <string name="background_image">background image</string>
     <string name="next_button">next_button</string>
     <string name="previous_button">previous_button</string>
-    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_main">Home</string>
+    <string name="got_it">Got it</string>
+    <string name="title_activity_main2">Main2Activity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="nav_setting_string">Setting</string>
+    <string name="nav_marks_string">Marks</string>
+    <string name="nav_home_string">Home</string>
+    <string name="nav_schedule_string">Schedule</string>
+    <string name="nav_notes_string">Notes</string>
+    <string name="nav_saved_string">Saved</string>
+    <string name="nav_log_out_string">Log Out</string>
+    <string name="nav_help_feedback_string"><![CDATA[Help & Feedback]]></string>
+    <string name="title_activity_settings">Settings</string>
+
+    <!-- Strings related to Settings -->
+
+    <!-- Example General settings -->
+    <string name="pref_header_general">General</string>
+
+    <string name="pref_title_social_recommendations">Enable social recommendations</string>
+    <string name="pref_description_social_recommendations">Recommendations for people to contact
+        based on your message history
+    </string>
+
+    <string name="pref_title_display_name">Display name</string>
+    <string name="pref_default_display_name">John Smith</string>
+
+    <string name="pref_title_add_friends_to_messages">Add friends to messages</string>
+    <string-array name="pref_example_list_titles">
+        <item>Always</item>
+        <item>When possible</item>
+        <item>Never</item>
+    </string-array>
+    <string-array name="pref_example_list_values">
+        <item>1</item>
+        <item>0</item>
+        <item>-1</item>
+    </string-array>
+    <string-array name="main_screen_titles">
+        <item>Home</item>
+        <item>Notification</item>
+        <item>Messages</item>
+    </string-array>
+    <string name="text_slide_one_string">Finally we can see displays of university from our phone</string>
+    <string name="text_slide_four_string">Communicating with professor is much easier</string>
+    <string name="text_slide_two_string">Notification up to your phone</string>
+    <string name="text_slide_three_string">Being at the university from your phone</string>
 
 </resources>

@@ -46,7 +46,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginBottom="8dp"
                     android:layout_marginEnd="16dp"
-                    android:src="@drawable/ic_email" />
+                    android:src="@drawable/ic_mail_outline" />
 
                 <android.support.design.widget.TextInputLayout
                     android:id="@+id/email_wrapper"
@@ -75,7 +75,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginBottom="8dp"
                     android:layout_marginEnd="16dp"
-                    android:src="@drawable/ic_lock" />
+                    android:src="@drawable/ic_lock_outline" />
 
                 <android.support.design.widget.TextInputLayout
                     android:id="@+id/password_wrapper"

@@ -8,10 +8,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
-import com.ibnkhaldoun.studentside.adapters.IntroPagerAdapter;
 import com.ibnkhaldoun.studentside.R;
 import com.ibnkhaldoun.studentside.Utilities.ActivityUtilities;
 import com.ibnkhaldoun.studentside.Utilities.PreferencesManager;
+import com.ibnkhaldoun.studentside.adapters.IntroPagerAdapter;
 
 public class WelcomeActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener {
 
@@ -49,7 +49,7 @@ public class WelcomeActivity extends AppCompatActivity implements ViewPager.OnPa
 
         //changing the color of the status bar to transparent
         ActivityUtilities.changeStatusBarColor(getWindow());
-        IntroPagerAdapter mPageAdapter = new IntroPagerAdapter(this,mLayouts);
+        IntroPagerAdapter mPageAdapter = new IntroPagerAdapter(this, mLayouts);
         mViewPager.setAdapter(mPageAdapter);
         mViewPager.addOnPageChangeListener(this);
 
@@ -70,7 +70,7 @@ public class WelcomeActivity extends AppCompatActivity implements ViewPager.OnPa
     }
 
     private void launchMainScreen() {
-        mPreferencesManager.setFirstTimeLaunched(false);
+        mPreferencesManager.setFirstTimeLaunched();
         startActivity(new Intent(this, LoginActivity.class));
         finish();
     }
@@ -83,17 +83,14 @@ public class WelcomeActivity extends AppCompatActivity implements ViewPager.OnPa
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
-
         if (position == mLayouts.length - 1) {
-
-            mNextButton.setText(getResources().getString(R.string.next));
+            mNextButton.setText(getResources().getString(R.string.got_it));
             mSkipButton.setVisibility(View.GONE);
-
         } else {
-
             mNextButton.setText(getResources().getString(R.string.next));
             mSkipButton.setVisibility(View.VISIBLE);
         }
+
     }
 
     @Override

@@ -16,23 +16,10 @@
             android:src="@drawable/first_logo" />
 
         <TextView
+            style="@style/IntroSlidersText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Fourth"
-            android:textColor="@android:color/darker_gray"
-            android:textSize="@dimen/slide_title"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:paddingLeft="@dimen/desc_padding"
-            android:paddingRight="@dimen/desc_padding"
-            android:text=""
-            android:textAlignment="center"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/slide_desc" />
+            android:text="@string/text_slide_four_string" />
 
     </LinearLayout>
 
