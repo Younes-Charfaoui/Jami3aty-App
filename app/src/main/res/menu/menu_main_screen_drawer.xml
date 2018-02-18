@@ -39,9 +39,5 @@
             android:id="@+id/nav_help"
             android:icon="@drawable/ic_help_black"
             android:title="@string/nav_help_feedback_string" />
-        <item
-            android:id="@+id/nav_log_out"
-            android:icon="@drawable/ic_logout"
-            android:title="@string/nav_log_out_string" />
     </group>
 </menu>

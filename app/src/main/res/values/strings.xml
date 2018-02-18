@@ -53,10 +53,17 @@
     <string name="nav_help_feedback_string"><![CDATA[Help & Feedback]]></string>
     <string name="title_activity_settings">Settings</string>
 
-    <string-array name="main_screen_titles">
+    <string-array name="pager_titles_array_string">
         <item>Home</item>
         <item>Notification</item>
-        <item>Messages</item>
+        <item>Mail</item>
+    </string-array>
+
+    <string-array name="fragment_title_array_string">
+        <item>Marks</item>
+        <item>Schedule</item>
+        <item>Notes</item>
+        <item>Saved</item>
     </string-array>
 
     <string name="text_slide_one_string">Finally we can see displays of university from our phone</string>

@@ -32,6 +32,9 @@
         android:layout_height="wrap_content"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-    <include android:id="@+id/frame" layout="@layout/content_main"/>
+    <include
+        android:id="@+id/frame"
+        layout="@layout/content_main"
+        android:visibility="gone" />
 
 </android.support.design.widget.CoordinatorLayout>
