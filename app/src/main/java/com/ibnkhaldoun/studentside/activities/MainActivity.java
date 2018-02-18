@@ -15,7 +15,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import com.ibnkhaldoun.studentside.R;
 import com.ibnkhaldoun.studentside.adapters.TabLayoutAdapter;
@@ -34,24 +33,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_screen_drawer);
 
-
         mToolBar = findViewById(R.id.toolbar);
         mToolBar.setTitle(mTitles[0]);
         setSupportActionBar(mToolBar);
 
-
         setupNavigationDrawer();
 
-        setupTabIcons();
-
         setupViewPagerAndTabLayout();
+
+        setupTabIcons();
     }
 
+    //helper method to initialize the view pager and the tab layout
     private void setupViewPagerAndTabLayout() {
-        mViewPager = findViewById(R.id.main_screen_pager);
+        mViewPager = findViewById(R.id.main_screen_view_pager);
+        mTabLayout = findViewById(R.id.main_screen_tab_layout);
         TabLayoutAdapter adapter = new TabLayoutAdapter(getSupportFragmentManager(), mTabLayout.getTabCount());
         mViewPager.setAdapter(adapter);
-
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTabLayout));
         mTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -82,12 +80,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         NavigationView navigationView = findViewById(R.id.navigation_main_screen_view);
         navigationView.setCheckedItem(R.id.nav_home);
         navigationView.setNavigationItemSelectedListener(this);
-        mTabLayout = findViewById(R.id.main_screen_tab_layout);
     }
 
     private void setupTabIcons() {
         mTabLayout.addTab(mTabLayout.newTab().setIcon(R.drawable.ic_home));
-        mTabLayout.addTab(mTabLayout.newTab().setIcon(R.drawable.ic_notifications));
+        mTabLayout.addTab(mTabLayout.newTab().setIcon(R.drawable.ic_notifications_white));
         mTabLayout.addTab(mTabLayout.newTab().setIcon(R.drawable.ic_email_white));
     }
 
@@ -99,14 +96,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                Toast.makeText(MainActivity.this, "Text Changing", Toast.LENGTH_SHORT).show();
-                return true;
+                //todo code to submit query
+                return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                Toast.makeText(MainActivity.this, "Text Submitted", Toast.LENGTH_SHORT).show();
-                return true;
+                //todo code when query text is changing
+                return false;
             }
         });
         return true;
