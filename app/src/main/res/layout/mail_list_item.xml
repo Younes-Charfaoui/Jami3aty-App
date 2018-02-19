@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="88dp">
+
+    <RelativeLayout
+        android:id="@+id/image_professor_layout"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:contentDescription="@null"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/circle" />
+
+        <TextView
+            android:id="@+id/professor_name_short_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:textColor="@android:color/white"
+            android:textSize="22sp"
+            tools:text="OA" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/mail_information_layout"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="16dp"
+        app:layout_constraintBottom_toTopOf="@id/image_professor_layout"
+        app:layout_constraintStart_toEndOf="@id/image_professor_layout"
+        app:layout_constraintTop_toBottomOf="@id/image_professor_layout">
+
+        <TextView
+            android:id="@+id/professor_name_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:singleLine="true"
+            android:fontFamily="sans-serif-light"
+            android:textColor="@android:color/black"
+            android:textSize="22sp"
+            tools:text="Phd Ouared Aek" />
+
+        <TextView
+            android:id="@+id/last_subject_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@id/professor_name_text_view"
+            android:layout_below="@id/professor_name_text_view"
+            android:fontFamily="sans-serif-light"
+            android:singleLine="true"
+            tools:text="Metting" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/time_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        app:layout_constraintBottom_toTopOf="@id/image_professor_layout"
+        app:layout_constraintRight_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/image_professor_layout">
+
+        <TextView
+            android:id="@+id/time_of_mail_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@id/date_of_mail_text_view"
+            android:fontFamily="sans-serif-light"
+            android:textColor="@android:color/black"
+            tools:text="17:45" />
+
+        <TextView
+            android:id="@+id/date_of_mail_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/time_of_mail_text_view"
+            android:fontFamily="sans-serif-thin"
+            android:textAppearance="@android:style/TextAppearance.Holo"
+            tools:text="16 Feb" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"
+        app:layout_constraintBottom_toTopOf="parent" />
+</android.support.constraint.ConstraintLayout>

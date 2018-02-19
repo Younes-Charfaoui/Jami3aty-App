@@ -2,6 +2,7 @@ package com.ibnkhaldoun.studentside.activities;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.HandlerThread;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
@@ -52,6 +53,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_screen_drawer);
+
         //getting the arrays
         mFragmentsTitles = getResources().getStringArray(R.array.fragment_title_array_string);
         mPagerTitles = getResources().getStringArray(R.array.pager_titles_array_string);
@@ -165,6 +167,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void checkingAndChanging(int index) {
         if (mCurrentState != index) {
             mCurrentState = index;
+
             new Handler().post(() -> {
                         mViewPager.setVisibility(View.GONE);
                         mTabLayout.setVisibility(View.GONE);
@@ -189,10 +192,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case 0:
                 List<Mark> list = new ArrayList<>();
                 list.add(new Mark("OS", "Operating System", 18.5f, 19, 18));
-                list.add(new Mark("CD", "Compiler Design", 18.5f, 19, 18));
+                list.add(new Mark("CD", "Compiler Design", 15f, 15, 15));
                 list.add(new Mark("LP", "Linear Programming", 20, 19, 0));
-                list.add(new Mark("LP", "Logical Programming", 20f, 19, 0));
-                list.add(new Mark("SE", "Software Engineering", 19f, 0, 18));
+                list.add(new Mark("LP", "Logical Programming", 19f, 0, 18));
+                list.add(new Mark("SE", "Software Engineering", 12f, 0, 0));
                 list.add(new Mark("IHM", "IHM", 14f, 0, 17));
                 list.add(new Mark("PB", "Probability", 20f, 19, 0));
                 list.add(new Mark("EN", "English", 16f, 0, 0));
