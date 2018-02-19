@@ -12,20 +12,20 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.ibnkhaldoun.studentside.R;
-import com.ibnkhaldoun.studentside.adapters.MarksAdapter;
-import com.ibnkhaldoun.studentside.models.Mark;
+import com.ibnkhaldoun.studentside.adapters.MailAdapter;
+import com.ibnkhaldoun.studentside.models.Mail;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class MarksFragment extends Fragment {
+public class MailFragment extends Fragment {
 
-    public static MarksFragment newInstance(List<Mark> mListData) {
 
+    public static MailFragment newInstance(List<Mail> mails) {
         Bundle args = new Bundle();
-        args.putParcelableArrayList("Key", (ArrayList<? extends Parcelable>) mListData);
-        MarksFragment fragment = new MarksFragment();
+        args.putParcelableArrayList("Key", (ArrayList<? extends Parcelable>) mails);
+        MailFragment fragment = new MailFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -33,15 +33,15 @@ public class MarksFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_marks, container, false);
+        View view = inflater.inflate(R.layout.fragment_mail, container, false);
+        RecyclerView recyclerView = view.findViewById(R.id.mail_recycler_view);
         assert getArguments() != null;
-        List<Mark> marksList = getArguments().getParcelableArrayList("Key");
-        RecyclerView recycler = view.findViewById(R.id.marks_recycler_view);
-        MarksAdapter adapter = new MarksAdapter(marksList, getContext());
+        List<Mail> mailList = getArguments().getParcelableArrayList("Key");
+        MailAdapter adapter = new MailAdapter(getContext(), mailList);
         LinearLayoutManager manager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
-        recycler.setAdapter(adapter);
-        recycler.setLayoutManager(manager);
-        recycler.setHasFixedSize(true);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(manager);
+        recyclerView.setHasFixedSize(true);
         return view;
     }
 }

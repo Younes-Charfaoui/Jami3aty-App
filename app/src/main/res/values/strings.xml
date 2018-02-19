@@ -73,5 +73,7 @@
     <string name="exam_string">Exam</string>
     <string name="tp_string">TP</string>
     <string name="td_string">TD</string>
+    <string name="title_activity_mail">MailActivity</string>
+    <string name="title_activity_message_detail">MessageDetailActivity</string>
 
 </resources>

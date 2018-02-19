@@ -54,6 +54,24 @@
             android:name=".activities.MainActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme" />
+        <activity
+            android:name=".activities.MessagesActivity"
+            android:label="@string/title_activity_mail"
+            android:parentActivityName=".activities.MainActivity"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.ibnkhaldoun.studentside.activities.MainActivity" />
+        </activity>
+        <activity
+            android:name=".activities.MessageDetailActivity"
+            android:label="@string/title_activity_message_detail"
+            android:parentActivityName=".activities.MessagesActivity"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.ibnkhaldoun.studentside.activities.MessagesActivity" />
+        </activity>
     </application>
 
 </manifest>

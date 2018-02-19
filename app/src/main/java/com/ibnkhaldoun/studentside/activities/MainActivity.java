@@ -2,8 +2,8 @@ package com.ibnkhaldoun.studentside.activities;
 
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.HandlerThread;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public static final int NOTES = 2;
     public static final int SAVED = 3;
 
+    private FloatingActionButton mAddMailFab;
 
     private ViewPager mViewPager;
     private TabLayout mTabLayout;
@@ -63,6 +64,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mFrame = findViewById(R.id.frame);
         setSupportActionBar(mToolBar);
 
+        mAddMailFab = findViewById(R.id.mail_add_professor_fab);
+
         setupNavigationDrawer();
 
         setupViewPagerAndTabLayout();
@@ -81,6 +84,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             public void onTabSelected(TabLayout.Tab tab) {
                 mViewPager.setCurrentItem(tab.getPosition());
                 mToolBar.setTitle(mPagerTitles[tab.getPosition()]);
+                if (tab.getPosition() == 2) mAddMailFab.show();
+                else mAddMailFab.hide();
             }
 
             @Override
