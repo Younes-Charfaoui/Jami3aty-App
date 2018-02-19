@@ -1,6 +1,7 @@
 package com.ibnkhaldoun.studentside.activities;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
@@ -21,6 +22,10 @@ import com.ibnkhaldoun.studentside.fragments.MarksFragment;
 import com.ibnkhaldoun.studentside.fragments.NotesFragment;
 import com.ibnkhaldoun.studentside.fragments.SavedFragment;
 import com.ibnkhaldoun.studentside.fragments.ScheduleFragment;
+import com.ibnkhaldoun.studentside.models.Mark;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -41,14 +46,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private String[] mPagerTitles;
     private String[] mFragmentsTitles;
     private int mCurrentState = 4;
-
+    private MarksFragment marksFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_screen_drawer);
         //getting the arrays
-        mFragmentsTitles = getResources().getStringArray(R.array.pager_titles_array_string);
+        mFragmentsTitles = getResources().getStringArray(R.array.fragment_title_array_string);
         mPagerTitles = getResources().getStringArray(R.array.pager_titles_array_string);
 
         mToolBar = findViewById(R.id.toolbar);
@@ -160,14 +165,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void checkingAndChanging(int index) {
         if (mCurrentState != index) {
             mCurrentState = index;
-            mViewPager.setVisibility(View.GONE);
-            mTabLayout.setVisibility(View.GONE);
-            mFrame.setVisibility(View.VISIBLE);
-            getSupportFragmentManager().beginTransaction().setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
-                    .replace(R.id.frame, getFragmentByIndex(index))
-                    .commit();
-            mToolBar.setTitle(mFragmentsTitles[index]);
+            new Handler().post(() -> {
+                        mViewPager.setVisibility(View.GONE);
+                        mTabLayout.setVisibility(View.GONE);
+                        mFrame.setVisibility(View.VISIBLE);
+                        getSupportFragmentManager().beginTransaction().setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
+                                .replace(R.id.frame, getFragmentByIndex(index))
+                                .commit();
+                        mToolBar.setTitle(mFragmentsTitles[index]);
+                    }
+            );
         }
+
     }
 
     /**
@@ -178,7 +187,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private Fragment getFragmentByIndex(int index) {
         switch (index) {
             case 0:
-                return new MarksFragment();
+                List<Mark> list = new ArrayList<>();
+                list.add(new Mark("OS", "Operating System", 18.5f, 19, 18));
+                list.add(new Mark("CD", "Compiler Design", 18.5f, 19, 18));
+                list.add(new Mark("LP", "Linear Programming", 20, 19, 0));
+                list.add(new Mark("LP", "Logical Programming", 20f, 19, 0));
+                list.add(new Mark("SE", "Software Engineering", 19f, 0, 18));
+                list.add(new Mark("IHM", "IHM", 14f, 0, 17));
+                list.add(new Mark("PB", "Probability", 20f, 19, 0));
+                list.add(new Mark("EN", "English", 16f, 0, 0));
+                if (marksFragment == null) marksFragment = MarksFragment.newInstance(list);
+                return marksFragment;
             case 1:
                 return new ScheduleFragment();
             case 2:
