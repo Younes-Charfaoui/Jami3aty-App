@@ -2,6 +2,7 @@ package com.ibnkhaldoun.studentside.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.GradientDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.ibnkhaldoun.studentside.R;
+import com.ibnkhaldoun.studentside.Utilities.Utils;
 import com.ibnkhaldoun.studentside.activities.MessagesActivity;
 import com.ibnkhaldoun.studentside.models.Mail;
 
@@ -36,6 +38,8 @@ public class MailAdapter extends RecyclerView.Adapter<MailAdapter.MailViewHolder
     public void onBindViewHolder(MailViewHolder holder, int position) {
         Mail mail = mDataList.get(position);
         holder.mProfessorShortNameTextView.setText(mail.getProfessor().getShortName());
+        GradientDrawable shortNameCircle = (GradientDrawable) holder.mProfessorShortNameTextView.getBackground();
+        shortNameCircle.setColor(Utils.getCircleColor(mail.getProfessor().getFirstName().charAt(0), mContext));
         holder.mProfessorNameTextView.setText(mail.getProfessor().getFullName());
         holder.mSubjectTextView.setText(mail.getMessages().get(mail.getMessages().size() - 1).getSubject());
         holder.mDateTextView.setText(mail.getMessages().get(mail.getMessages().size() - 1).getDate());
@@ -66,4 +70,6 @@ public class MailAdapter extends RecyclerView.Adapter<MailAdapter.MailViewHolder
             });
         }
     }
+
+
 }

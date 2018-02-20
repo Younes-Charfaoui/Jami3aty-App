@@ -22,6 +22,9 @@
         <item name="android:textColor">@android:color/white</item>
     </style>
 
+    <style name="FabStyle" parent="Theme.AppCompat.Light">
+        <item name="android:background">@color/deep_red</item>
+    </style>
     <style name="EditTextStyle" parent="Theme.AppCompat.Light">
         <item name="colorAccent">#4CAF50</item>
     </style>

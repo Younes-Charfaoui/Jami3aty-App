@@ -17,7 +17,7 @@
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
             app:layout_scrollFlags="enterAlways|snap"
-            
+
             app:popupTheme="@style/AppTheme.PopupOverlay" />
 
         <android.support.design.widget.TabLayout
@@ -34,16 +34,15 @@
         android:layout_height="wrap_content"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-    <include
-        android:id="@+id/frame"
-        layout="@layout/content_main"
-        android:visibility="gone" />
+    <include         android:id="@+id/frame"
+        layout="@layout/content_main" />
+
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/mail_add_professor_fab"
         android:layout_width="56dp"
         android:layout_height="56dp"
+        android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
         android:scaleType="center"
-        app:srcCompat="@drawable/ic_person_add_white"
-        android:layout_gravity="bottom|end"/>
+        app:srcCompat="@drawable/ic_person_add_white" />
 </android.support.design.widget.CoordinatorLayout>

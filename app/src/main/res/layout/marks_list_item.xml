@@ -30,24 +30,21 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/circle"
-                android:contentDescription="@null" />
 
             <TextView
-                android:id="@+id/subject_short_text"
+                android:id="@+id/mark_subject_short_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
+                android:background="@drawable/circle"
+                android:gravity="center"
                 android:textColor="@android:color/white"
                 android:textSize="22sp"
                 tools:text="OS" />
         </RelativeLayout>
 
         <TextView
-            android:id="@+id/subject_textView"
+            android:id="@+id/mark_subject_textView"
             android:layout_width="140dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/activity_horizontal_margin"
@@ -134,6 +131,8 @@
             app:layout_constraintStart_toEndOf="@+id/exam"
             app:layout_constraintTop_toBottomOf="@id/exam"
             tools:text="18,5" />
+
+
     </android.support.constraint.ConstraintLayout>
 
 </android.support.v7.widget.CardView>

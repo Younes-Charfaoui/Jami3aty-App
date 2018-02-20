@@ -1,6 +1,7 @@
 package com.ibnkhaldoun.studentside.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ibnkhaldoun.studentside.R;
+import com.ibnkhaldoun.studentside.activities.MessageDetailActivity;
 import com.ibnkhaldoun.studentside.models.Message;
 
 import java.util.List;
@@ -55,6 +57,11 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.Messag
             mSubjectTextView = itemView.findViewById(R.id.message_subject);
             mTextTextView = itemView.findViewById(R.id.message_text);
             mDateTextView = itemView.findViewById(R.id.message_date);
+            itemView.setOnClickListener(v -> {
+                Intent intent = new Intent(mContext, MessageDetailActivity.class);
+                intent.putExtra("Key", mMessagesList.get(getAdapterPosition()));
+                mContext.startActivity(intent);
+            });
         }
     }
 }

@@ -1,6 +1,7 @@
 package com.ibnkhaldoun.studentside.adapters;
 
 import android.content.Context;
+import android.graphics.drawable.GradientDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ibnkhaldoun.studentside.R;
+import com.ibnkhaldoun.studentside.Utilities.Utils;
 import com.ibnkhaldoun.studentside.models.Mark;
 
 import java.util.ArrayList;
@@ -37,6 +39,8 @@ public class MarksAdapter extends RecyclerView.Adapter<MarksAdapter.MarksViewHol
     public void onBindViewHolder(MarksViewHolder holder, int position) {
         Mark mark = mDataList.get(position);
         holder.mShortSubjectTextView.setText(mark.getShortSubjectName());
+        GradientDrawable circleDrawable = (GradientDrawable) holder.mShortSubjectTextView.getBackground();
+        circleDrawable.setColor(Utils.getCircleColor(mark.getShortSubjectName().charAt(0), mContext));
         holder.mSubjectTextView.setText(mark.getSubjectName());
         holder.mExamTextView.setText(String.valueOf(mark.getExam()));
         holder.mTdTextView.setText(String.valueOf(mark.getTD()));
@@ -61,8 +65,8 @@ public class MarksAdapter extends RecyclerView.Adapter<MarksAdapter.MarksViewHol
         MarksViewHolder(View itemView) {
             super(itemView);
 
-            mShortSubjectTextView = itemView.findViewById(R.id.subject_short_text);
-            mSubjectTextView = itemView.findViewById(R.id.subject_textView);
+            mShortSubjectTextView = itemView.findViewById(R.id.mark_subject_short_text);
+            mSubjectTextView = itemView.findViewById(R.id.mark_subject_textView);
             mTpTextView = itemView.findViewById(R.id.tp_note);
             mTdTextView = itemView.findViewById(R.id.td_note);
             mExamTextView = itemView.findViewById(R.id.exam_note);

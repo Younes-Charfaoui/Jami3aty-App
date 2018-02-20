@@ -2,6 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="@dimen/nav_header_height"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@drawable/side_nav_bar"
     android:gravity="bottom"
     android:orientation="vertical"
@@ -10,7 +11,6 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
         android:scaleType="centerCrop"
         android:src="@drawable/hami" />
 
@@ -36,15 +36,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="@dimen/nav_header_vertical_spacing"
-            android:text="Younes Charfaoui"
+            tools:text="Younes Charfaoui"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:textColor="@android:color/white" />
 
         <TextView
-            android:id="@+id/branch_header_textView_"
+            android:id="@+id/branch_header_textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="L3 Computer Science"
+            tools:text="L3 Computer Science"
             android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
     </LinearLayout>

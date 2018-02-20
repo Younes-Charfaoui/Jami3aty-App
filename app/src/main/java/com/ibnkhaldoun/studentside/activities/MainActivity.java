@@ -16,18 +16,18 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ibnkhaldoun.studentside.R;
+import com.ibnkhaldoun.studentside.Utilities.PreferencesManager;
 import com.ibnkhaldoun.studentside.adapters.TabLayoutAdapter;
+import com.ibnkhaldoun.studentside.data_providers.DataProviders;
 import com.ibnkhaldoun.studentside.fragments.MarksFragment;
 import com.ibnkhaldoun.studentside.fragments.NotesFragment;
 import com.ibnkhaldoun.studentside.fragments.SavedFragment;
 import com.ibnkhaldoun.studentside.fragments.ScheduleFragment;
-import com.ibnkhaldoun.studentside.models.Mark;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private TabLayout mTabLayout;
     private Toolbar mToolBar;
     private DrawerLayout mDrawer;
+    private NavigationView mNavigation;
     private View mFrame;
 
     private String[] mPagerTitles;
@@ -65,7 +66,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mFrame = findViewById(R.id.frame);
         setSupportActionBar(mToolBar);
 
+
         mAddMailFab = findViewById(R.id.mail_add_professor_fab);
+        mAddMailFab.setBackgroundColor(getResources().getColor(R.color.deep_red));
         mAddMailFab.hide();
         mAddMailFab.setOnClickListener(v -> {
             Toast.makeText(this, "Messages Fragment", Toast.LENGTH_SHORT).show();
@@ -73,6 +76,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         setupNavigationDrawer();
 
+        TextView nameHeader = mNavigation.getHeaderView(0).findViewById(R.id.name_header_textView);
+        TextView branchHeader = mNavigation.getHeaderView(0).findViewById(R.id.branch_header_textView);
+
+        PreferencesManager manager = new PreferencesManager(this);
+        nameHeader.setText(manager.getFullName());
+        String hello = manager.getGrade() + " " + manager.getBranch();
+        branchHeader.setText(hello);
         setupViewPagerAndTabLayout();
     }
 
@@ -113,9 +123,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mDrawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = findViewById(R.id.navigation_main_screen_view);
-        navigationView.setCheckedItem(R.id.nav_home);
-        navigationView.setNavigationItemSelectedListener(this);
+        mNavigation = findViewById(R.id.navigation_main_screen_view);
+        mNavigation.setCheckedItem(R.id.nav_home);
+        mNavigation.setNavigationItemSelectedListener(this);
     }
 
     //method to add icons to the TabLayout
@@ -183,7 +193,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         mFrame.setVisibility(View.VISIBLE);
                         getSupportFragmentManager().beginTransaction().setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
                                 .replace(R.id.frame, getFragmentByIndex(index))
-                                .commit();
+                                .commitAllowingStateLoss();
                         mToolBar.setTitle(mFragmentsTitles[index]);
                     }
             );
@@ -199,16 +209,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private Fragment getFragmentByIndex(int index) {
         switch (index) {
             case 0:
-                List<Mark> list = new ArrayList<>();
-                list.add(new Mark("OS", "Operating System", 18.5f, 19, 18));
-                list.add(new Mark("CD", "Compiler Design", 15f, 15, 15));
-                list.add(new Mark("LP", "Linear Programming", 20, 19, 0));
-                list.add(new Mark("LP", "Logical Programming", 19f, 0, 18));
-                list.add(new Mark("SE", "Software Engineering", 12f, 0, 0));
-                list.add(new Mark("IHM", "IHM", 14f, 0, 17));
-                list.add(new Mark("PB", "Probability", 20f, 19, 0));
-                list.add(new Mark("EN", "English", 16f, 0, 0));
-                if (marksFragment == null) marksFragment = MarksFragment.newInstance(list);
+
+                if (marksFragment == null)
+                    marksFragment = MarksFragment.newInstance(DataProviders.getMarkList());
                 return marksFragment;
             case 1:
                 return new ScheduleFragment();

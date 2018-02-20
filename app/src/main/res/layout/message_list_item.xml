@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="88dp">
+    android:layout_height="88dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -20,7 +21,8 @@
             android:contentDescription="@null" />
 
 
-        <RelativeLayout
+        <LinearLayout
+            android:orientation="vertical"
             android:id="@+id/message_layout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -39,11 +41,10 @@
                 android:id="@+id/message_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/message_subject"
                 android:fontFamily="sans-serif-thin"
                 android:singleLine="true"
                 tools:text="hello sir wa wasdqdqsdqsdq sdqsdqsd qsd qsdnt to meet you as soon as possible" />
-        </RelativeLayout>
+        </LinearLayout>
 
         <TextView
             android:id="@+id/message_date"
@@ -62,5 +63,6 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_alignParentBottom="true"
+        app:layout_constraintBottom_toBottomOf="parent"
         android:background="@android:color/darker_gray" />
-</RelativeLayout>
+</android.support.constraint.ConstraintLayout>

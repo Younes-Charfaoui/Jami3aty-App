@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.ibnkhaldoun.studentside.data_providers.DataProviders;
 import com.ibnkhaldoun.studentside.fragments.HomeFragment;
 import com.ibnkhaldoun.studentside.fragments.MailFragment;
 import com.ibnkhaldoun.studentside.fragments.NotificationFragment;
@@ -32,24 +33,7 @@ public class TabLayoutAdapter extends FragmentPagerAdapter {
             case 1:
                 return new NotificationFragment();
             case 2:
-                List<Mail> list = new ArrayList<>();
-                List<Message> messageList = new ArrayList<>();
-                messageList.add(new Message("Meeting", "Hello World", "17,5"));
-                messageList.add(new Message("Meeting", "Hello World", "17,5"));
-                messageList.add(new Message("Meeting", "Hello World", "17,5"));
-                messageList.add(new Message("Meeting", "Hello World", "17,5"));
-                messageList.add(new Message("Meeting", "Hello World", "17,5"));
-                messageList.add(new Message("Meeting", "Hello World", "17,5"));
-                messageList.add(new Message("Meeting", "Hello World", "17,5"));
-                messageList.add(new Message("Meeting", "Hello World", "17,5"));
-                list.add(new Mail(new Professor("Ouared", "Aek"), messageList));
-                list.add(new Mail(new Professor("Bekki", "Khathir"), messageList));
-                list.add(new Mail(new Professor("Chikhaoui", "Ahmed"), messageList));
-                list.add(new Mail(new Professor("Aid", "Lahcen"), messageList));
-                list.add(new Mail(new Professor("Dahmani", "Youcef"), messageList));
-                list.add(new Mail(new Professor("Boudaa", "Boujemaa"), messageList));
-                list.add(new Mail(new Professor("Baghani", "Abdelmalek"), messageList));
-                return MailFragment.newInstance(list);
+                return MailFragment.newInstance(DataProviders.getMailList());
             default:
                 return null;
         }

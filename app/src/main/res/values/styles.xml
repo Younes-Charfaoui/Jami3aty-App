@@ -28,6 +28,10 @@
         <item name="colorAccent">#4CAF50</item>
     </style>
 
+    <style name="FabStyle" parent="Theme.AppCompat.Light">
+        <item name="android:background">@color/deep_red</item>
+    </style>
+
     <style name="IntroSlidersText" parent="Theme.AppCompat.Light">
         <item name="android:layout_marginTop">20dp</item>
         <item name="android:paddingLeft">@dimen/desc_padding</item>
