@@ -6,14 +6,15 @@ import android.os.Parcelable;
 
 public class Message implements Parcelable {
 
+    private boolean in;
     private String subject, text, date;
+
 
     public Message(String subject, String text, String date) {
         this.subject = subject;
         this.text = text;
         this.date = date;
     }
-
 
     public String getSubject() {
         return subject;
@@ -39,6 +40,14 @@ public class Message implements Parcelable {
         this.date = date;
     }
 
+    public boolean isIn() {
+        return in;
+    }
+
+    public void setIn(boolean in) {
+        this.in = in;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -46,12 +55,14 @@ public class Message implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeByte(this.in ? (byte) 1 : (byte) 0);
         dest.writeString(this.subject);
         dest.writeString(this.text);
         dest.writeString(this.date);
     }
 
     protected Message(Parcel in) {
+        this.in = in.readByte() != 0;
         this.subject = in.readString();
         this.text = in.readString();
         this.date = in.readString();
