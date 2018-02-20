@@ -6,13 +6,33 @@ import android.os.Parcelable;
 
 public class Professor implements Parcelable {
 
+    public static final Parcelable.Creator<Professor> CREATOR = new Parcelable.Creator<Professor>() {
+        @Override
+        public Professor createFromParcel(Parcel source) {
+            return new Professor(source);
+        }
+
+        @Override
+        public Professor[] newArray(int size) {
+            return new Professor[size];
+        }
+    };
     private String mFirstName, mLastName, mShortName;
 
     public Professor(String mFirstName, String mLastName) {
         this.mFirstName = mFirstName;
         this.mLastName = mLastName;
-        mShortName = String.valueOf(mFirstName.charAt(0) + mLastName.charAt(0));
+        mShortName = String.valueOf(
+                Character.toString(mFirstName.charAt(0)) +
+                        Character.toString(mLastName.charAt(0)))
+                .toUpperCase();
 
+    }
+
+    protected Professor(Parcel in) {
+        this.mFirstName = in.readString();
+        this.mLastName = in.readString();
+        this.mShortName = in.readString();
     }
 
     public String getFirstName() {
@@ -54,22 +74,4 @@ public class Professor implements Parcelable {
         dest.writeString(this.mLastName);
         dest.writeString(this.mShortName);
     }
-
-    protected Professor(Parcel in) {
-        this.mFirstName = in.readString();
-        this.mLastName = in.readString();
-        this.mShortName = in.readString();
-    }
-
-    public static final Parcelable.Creator<Professor> CREATOR = new Parcelable.Creator<Professor>() {
-        @Override
-        public Professor createFromParcel(Parcel source) {
-            return new Professor(source);
-        }
-
-        @Override
-        public Professor[] newArray(int size) {
-            return new Professor[size];
-        }
-    };
 }

@@ -12,8 +12,9 @@
 
         <ImageView
             android:id="@+id/in_out_message_image_view"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="36dp"
+            android:layout_marginStart="16dp"
+            android:layout_height="36dp"
             android:layout_gravity="center_vertical"
             android:background="@drawable/ic_email"
             android:contentDescription="@null" />
@@ -31,7 +32,7 @@
                 android:id="@+id/message_subject"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="@android:style/TextAppearance.Holo.Widget.ActionBar.Title"
+                android:textAppearance="@android:style/TextAppearance.Holo.Widget.ActionBar.Subtitle"
                 tools:text="Meeting" />
 
             <TextView
@@ -39,7 +40,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/message_subject"
-                android:fontFamily="sans-serif-light"
+                android:fontFamily="sans-serif-thin"
                 android:singleLine="true"
                 tools:text="hello sir wa wasdqdqsdqsdq sdqsdqsd qsd qsdnt to meet you as soon as possible" />
         </RelativeLayout>
@@ -51,8 +52,8 @@
             android:layout_gravity="center_vertical"
             android:layout_margin="8dp"
             android:layout_marginEnd="16dp"
-            android:layout_weight="1"
-            android:fontFamily="sans-serif-light"
+            android:layout_weight="1.5"
+            android:fontFamily="sans-serif-thin"
             android:textColor="@android:color/black"
             tools:text="16:15" />
     </LinearLayout>

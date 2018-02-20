@@ -16,6 +16,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.ibnkhaldoun.studentside.R;
 import com.ibnkhaldoun.studentside.adapters.TabLayoutAdapter;
@@ -65,6 +66,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setSupportActionBar(mToolBar);
 
         mAddMailFab = findViewById(R.id.mail_add_professor_fab);
+        mAddMailFab.hide();
+        mAddMailFab.setOnClickListener(v -> {
+            Toast.makeText(this, "Messages Fragment", Toast.LENGTH_SHORT).show();
+        });
 
         setupNavigationDrawer();
 
@@ -123,7 +128,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main_screen, menu);
-
         return true;
     }
 

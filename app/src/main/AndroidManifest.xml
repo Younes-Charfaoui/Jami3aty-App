@@ -56,7 +56,6 @@
             android:theme="@style/AppTheme" />
         <activity
             android:name=".activities.MessagesActivity"
-            android:label="@string/title_activity_mail"
             android:parentActivityName=".activities.MainActivity"
             android:theme="@style/AppTheme">
             <meta-data

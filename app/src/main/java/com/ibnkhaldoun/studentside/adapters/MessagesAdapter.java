@@ -46,10 +46,10 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.Messag
     }
 
     class MessageViewHolder extends RecyclerView.ViewHolder {
-        public ImageView mInOutImageView;
-        public TextView mSubjectTextView, mTextTextView, mDateTextView;
+        ImageView mInOutImageView;
+        TextView mSubjectTextView, mTextTextView, mDateTextView;
 
-        public MessageViewHolder(View itemView) {
+        MessageViewHolder(View itemView) {
             super(itemView);
             mInOutImageView = itemView.findViewById(R.id.in_out_message_image_view);
             mSubjectTextView = itemView.findViewById(R.id.message_subject);

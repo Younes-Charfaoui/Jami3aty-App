@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="8dp"
+    android:background="?attr/selectableItemBackground"
+    android:layout_marginEnd="16dp"
+    android:layout_marginStart="16dp"
+    android:layout_marginTop="8dp"
+    app:cardCornerRadius="4dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="8dp">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp">
+
+            <RelativeLayout
+                android:id="@+id/display_professor_information"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:id="@+id/image_professor_layout_display"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginTop="8dp">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/circle"
+                        android:contentDescription="@null" />
+
+                    <TextView
+                        android:id="@+id/display_professor_short_name_text_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:textColor="@android:color/white"
+                        android:textSize="22sp"
+                        tools:text="OS" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/display_text_information_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="8dp"
+                    android:layout_toEndOf="@+id/image_professor_layout_display">
+
+                    <TextView
+                        android:id="@+id/display_professor_name_text_view"
+                        style="@android:style/TextAppearance.Holo.Widget.ActionBar.Title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-light"
+                        tools:text="Phd Ouared Aek" />
+
+                    <TextView
+                        android:id="@+id/display_date_and_time_text_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignStart="@id/display_professor_name_text_view"
+                        android:layout_below="@id/display_professor_name_text_view"
+                        android:fontFamily="sans-serif-light"
+                        tools:text="19:30 Feb 13" />
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/display_text_text_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/display_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-light"
+            android:padding="16dp"
+            android:textAppearance="@android:style/TextAppearance.Holo.Widget.ActionBar.Subtitle"
+            android:textColor="@android:color/black"
+            tools:text="Hello tomorow will be a test for  nksdnvlk nklsdnvklsnd nklsdnvklsndf nlksndflksdnf nksldfnlksd nskldnlksdfn sndklnsdlfn nskdlfnsdlknvs nsdlkfnlksdnfnthe new dacade in the folowing consition " />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingEnd="16dp"
+            android:paddingStart="16dp">
+
+            <Button
+                android:id="@+id/display_save_button"
+                style="?attr/buttonBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:background="@null"
+                android:drawableStart="@drawable/ic_bookmark_red"
+                android:fontFamily="sans-serif-light"
+                tools:text="Save" />
+
+            <Button
+                android:id="@+id/display_note_button"
+                style="?attr/buttonBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:drawableStart="@drawable/ic_message_blue"
+                android:fontFamily="sans-serif-light"
+                tools:text="Note" />
+        </LinearLayout>
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>

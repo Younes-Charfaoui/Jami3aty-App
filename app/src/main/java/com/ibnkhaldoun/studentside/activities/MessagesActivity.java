@@ -25,25 +25,28 @@ public class MessagesActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_messages);
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.messages_toolbar);
         setSupportActionBar(toolbar);
         Intent intent = getIntent();
         Mail mail = intent.getParcelableExtra("Key");
+
+        getSupportActionBar().setTitle(mail.getProfessor().getFullName());
         toolbar.setTitle(mail.getProfessor().getFullName());
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         List<Message> list = mail.getMessages();
 
         mAddMessageFab = findViewById(R.id.messages_fab);
         mRecyclerView = findViewById(R.id.messages_recycler_view);
         mAdapter = new MessagesAdapter(this, list);
         mRecyclerView.setAdapter(mAdapter);
-        LinearLayoutManager manager =
-                new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        LinearLayoutManager manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        mRecyclerView.setLayoutManager(manager);
         mRecyclerView.setHasFixedSize(true);
 
-        mAddMessageFab.setOnClickListener(v ->{
-            //todo code to handle the add new message
+        mAddMessageFab.setOnClickListener(v -> {
+
         });
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
 }
