@@ -1,6 +1,7 @@
 package com.ibnkhaldoun.studentside.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.GradientDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ibnkhaldoun.studentside.DisplayDetailActivity;
 import com.ibnkhaldoun.studentside.R;
 import com.ibnkhaldoun.studentside.Utilities.Utils;
 import com.ibnkhaldoun.studentside.models.Display;
@@ -74,6 +76,12 @@ public class DisplaysAdapter extends RecyclerView.Adapter<DisplaysAdapter.Displa
             mNoteButton.setOnClickListener(v -> {
                 //todo , put the code we need to send a note to this publication
                 Toast.makeText(mContext, "Note Button", Toast.LENGTH_SHORT).show();
+            });
+
+            itemView.setOnClickListener(v -> {
+                Intent intent = new Intent(mContext, DisplayDetailActivity.class);
+                intent.putExtra("Key", mDataList.get(getAdapterPosition()));
+                mContext.startActivity(intent);
             });
         }
     }

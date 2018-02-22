@@ -41,7 +41,6 @@ public class MarksAdapter extends RecyclerView.Adapter<MarksAdapter.MarksViewHol
         holder.mShortSubjectTextView.setText(mark.getShortSubjectName());
         GradientDrawable circleDrawable = (GradientDrawable) holder.mShortSubjectTextView.getBackground();
         circleDrawable.setColor(Utils.getCircleColor(mark.getShortSubjectName().charAt(0), mContext));
-        holder.mSubjectTextView.setText(mark.getSubjectName());
         holder.mExamTextView.setText(String.valueOf(mark.getExam()));
         holder.mTdTextView.setText(String.valueOf(mark.getTD()));
         holder.mTpTextView.setText(String.valueOf(mark.getTP()));
@@ -57,8 +56,8 @@ public class MarksAdapter extends RecyclerView.Adapter<MarksAdapter.MarksViewHol
     class MarksViewHolder extends RecyclerView.ViewHolder {
 
         final TextView mShortSubjectTextView,
-                mSubjectTextView,
-                mTpTextView,
+
+        mTpTextView,
                 mTdTextView,
                 mExamTextView;
 
@@ -66,7 +65,6 @@ public class MarksAdapter extends RecyclerView.Adapter<MarksAdapter.MarksViewHol
             super(itemView);
 
             mShortSubjectTextView = itemView.findViewById(R.id.mark_subject_short_text);
-            mSubjectTextView = itemView.findViewById(R.id.mark_subject_textView);
             mTpTextView = itemView.findViewById(R.id.tp_note);
             mTdTextView = itemView.findViewById(R.id.td_note);
             mExamTextView = itemView.findViewById(R.id.exam_note);

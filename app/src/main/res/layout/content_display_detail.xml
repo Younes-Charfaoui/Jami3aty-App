@@ -1,25 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="8dp"
-    android:layout_marginEnd="8dp"
-    android:layout_marginStart="8dp"
-    android:layout_marginTop="8dp"
-    android:background="?attr/selectableItemBackground"
-    app:cardCornerRadius="2dp"
-    app:cardElevation="4dp">
+    android:layout_marginTop="9dp"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.ibnkhaldoun.studentside.DisplayDetailActivity"
+    tools:showIn="@layout/activity_display_detail">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="?attr/selectableItemBackground"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:paddingEnd="8dp"
         android:paddingStart="8dp">
-
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -30,7 +25,7 @@
             android:paddingTop="8dp">
 
             <TextView
-                android:id="@+id/display_professor_short_name_text_view"
+                android:id="@+id/display_detail_professor_short_name_text_view"
                 android:layout_width="36dp"
                 android:layout_height="36dp"
                 android:layout_marginBottom="8dp"
@@ -49,10 +44,10 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="8dp"
-                android:layout_toEndOf="@+id/display_professor_short_name_text_view">
+                android:layout_toEndOf="@+id/display_detail_professor_short_name_text_view">
 
                 <TextView
-                    android:id="@+id/display_professor_name_text_view"
+                    android:id="@+id/display_detail_professor_name_text_view"
                     style="@android:style/TextAppearance.Holo.Widget.ActionBar.Title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -60,11 +55,11 @@
                     tools:text="Phd Ouared Aek" />
 
                 <TextView
-                    android:id="@+id/display_date_and_time_text_view"
+                    android:id="@+id/display_detail_date_and_time_text_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignStart="@id/display_professor_name_text_view"
-                    android:layout_below="@id/display_professor_name_text_view"
+                    android:layout_alignStart="@id/display_detail_professor_name_text_view"
+                    android:layout_below="@id/display_detail_professor_name_text_view"
                     android:fontFamily="sans-serif-light"
                     tools:text="19:30 Feb 13" />
             </RelativeLayout>
@@ -73,7 +68,7 @@
 
 
         <TextView
-            android:id="@+id/display_text_text_view"
+            android:id="@+id/display_detail_text_text_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-light"
@@ -97,26 +92,45 @@
             android:paddingStart="16dp">
 
             <Button
-                android:id="@+id/display_save_button"
+                android:id="@+id/display_detail_save_button"
                 style="?attr/buttonBarStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
+                android:layout_weight="1"
                 android:background="@null"
                 android:drawableStart="@drawable/ic_bookmark_red"
                 android:fontFamily="sans-serif-light"
                 android:text="@string/displays_save_string" />
 
             <Button
-                android:id="@+id/display_note_button"
+                android:id="@+id/display_detail_note_button"
                 style="?attr/buttonBarStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:background="@null"
+
                 android:drawableStart="@drawable/ic_message_blue"
                 android:fontFamily="sans-serif-light"
                 android:text="@string/display_note_string" />
+
+            <TextView
+                android:id="@+id/display_detail_number_of_notes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:gravity="end"
+                tools:text="1 notes" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/display_detail_notes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="8dp">
+
         </LinearLayout>
     </LinearLayout>
-
-</android.support.v7.widget.CardView>
+</ScrollView>

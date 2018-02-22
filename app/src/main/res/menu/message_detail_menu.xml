@@ -14,10 +14,4 @@
         android:orderInCategory="101"
         android:title="@string/reply_string"
         app:showAsAction="never" />
-
-    <item
-        android:id="@+id/message_detail_forward_menu"
-        android:orderInCategory="101"
-        android:title="@string/forward_string"
-        app:showAsAction="never" />
 </menu>

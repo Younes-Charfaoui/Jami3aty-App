@@ -71,6 +71,21 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.ibnkhaldoun.studentside.activities.MessagesActivity" />
         </activity>
+
+        <provider
+            android:name=".database.DatabaseProvider"
+            android:authorities="com.ibnkhaldoun.studentside"
+            android:exported="false" />
+
+        <activity
+            android:name=".DisplayDetailActivity"
+            android:label="@string/title_activity_display_detail"
+            android:parentActivityName=".activities.MainActivity"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.ibnkhaldoun.studentside.activities.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

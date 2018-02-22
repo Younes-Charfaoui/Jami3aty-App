@@ -80,5 +80,6 @@
     <string name="delete_message_string">Delete message</string>
     <string name="forward_string">Forward</string>
     <string name="reply_string">Reply</string>
+    <string name="title_activity_display_detail">Post</string>
 
 </resources>

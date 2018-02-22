@@ -58,10 +58,6 @@ public class MessageDetailActivity extends AppCompatActivity {
             Toast.makeText(this, "Replay Button", Toast.LENGTH_SHORT).show();
         });
 
-        findViewById(R.id.message_detail_forward_button).setOnClickListener(v -> {
-            //todo add code to handle forwarding messages
-            Toast.makeText(this, "Forward Button", Toast.LENGTH_SHORT).show();
-        });
     }
 
     @Override
@@ -79,10 +75,6 @@ public class MessageDetailActivity extends AppCompatActivity {
             case R.id.message_detail_delete_menu:
                 //todo add code to handle deleting messages
                 Toast.makeText(this, "Delete Action", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.message_detail_forward_menu:
-                //todo add code to handle forwarding messages
-                Toast.makeText(this, "Forward Action", Toast.LENGTH_SHORT).show();
                 break;
 
             case R.id.message_detail_reply_menu:

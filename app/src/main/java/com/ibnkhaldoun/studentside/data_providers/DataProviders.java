@@ -1,10 +1,12 @@
 package com.ibnkhaldoun.studentside.data_providers;
 
 
+import com.ibnkhaldoun.studentside.enums.PostTypes;
 import com.ibnkhaldoun.studentside.models.Display;
 import com.ibnkhaldoun.studentside.models.Mail;
 import com.ibnkhaldoun.studentside.models.Mark;
 import com.ibnkhaldoun.studentside.models.Message;
+import com.ibnkhaldoun.studentside.models.Notification;
 import com.ibnkhaldoun.studentside.models.Professor;
 import com.ibnkhaldoun.studentside.models.Student;
 
@@ -17,7 +19,7 @@ public final class DataProviders {
     private static final List<Professor> professorList = new ArrayList<>();
     private static final List<Mark> markList = new ArrayList<>();
     private static final List<Display> displayList = new ArrayList<>();
-
+    private static final List<Notification> notificationList = new ArrayList<>();
 
     static {
         markList.add(new Mark("CD", "Compiler Design", 15f, 15, 15));
@@ -27,8 +29,6 @@ public final class DataProviders {
         markList.add(new Mark("IHM", "IHM", 14f, 0, 17));
         markList.add(new Mark("PB", "Probability", 20f, 19, 0));
         markList.add(new Mark("EN", "English", 16f, 0, 0));
-
-
 
 
         professorList.add(new Professor("Phd.", "Ouared", "Aek"));
@@ -70,6 +70,20 @@ public final class DataProviders {
         displayList.add(new Display(1, professorList.get(6), "22 Jul 16:00", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse eu mi vitae ante sodales sollicitudin. Phasellus dignissim laoreet ipsum, facilisis lacinia purus hendrerit vitae. Vestibulum et interdum velit. Nam et nulla vitae mauris malesuada commodo. Quisque vulputate vitae dui eget pellentesque. Nam ac dolor porttitor, ullamcorper orci non, mollis turpis. Etiam imperdiet ante eu diam iaculis, laoreet eros id purus mollis congue. "));
         displayList.add(new Display(1, professorList.get(7), "10 Aug 02:20", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse eu mi vitae ante sodales sollicitudin. Phasellus dignissim laoreet ipsum, facilisis lacinia purus hendrerit vitae. Vestibulum et interdum velit. Nam et nulla vitae mauris malesuada commodo. Quisque vulputate vitae dui eget pellentesque. Nam ac dolor porttitor, ullamcorper orci non, mollis turpis. Etiam imperdiet ante eu diam iaculis, ut tempor l"));
         displayList.add(new Display(1, professorList.get(8), "11 Sep 04:30", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse eu mi vitae ante sodales sollicitudin. Phasellus dignissim laoreet ipsum, facilisis lacinia purus hendrerit vitae. Vestibulum et interdum velit. Nam et nulla vitae mauris malesuada commodo. Quisque vulputate vitae dui eget pellentesque. Nam ac dolor porttitor, ullamcorper orci non, mollis turpis. Etiam iut felis."));
+
+        notificationList.add(new Notification(professorList.get(0), "hello", "Ouared Has", PostTypes.Consultation));
+        notificationList.add(new Notification(professorList.get(0), "hello", "Ouared Has", PostTypes.Avis));
+        notificationList.add(new Notification(professorList.get(0), "hello", "Ouared Has", PostTypes.Marks));
+        notificationList.add(new Notification(professorList.get(0), "hello", "Ouared Has", PostTypes.Consultation));
+        notificationList.add(new Notification(professorList.get(0), "hello", "Ouared Has", PostTypes.Avis));
+        notificationList.add(new Notification(professorList.get(0), "hello", "Ouared Has", PostTypes.Marks));
+        notificationList.add(new Notification(professorList.get(0), "hello", "Ouared Has", PostTypes.Consultation));
+        notificationList.add(new Notification(professorList.get(0), "hello", "Ouared Has", PostTypes.Avis));
+        notificationList.add(new Notification(professorList.get(0), "hello", "Ouared Has", PostTypes.Marks));
+    }
+
+    public static List<Notification> getNotificationList() {
+        return notificationList;
     }
 
     public static List<Display> getDisplayList() {

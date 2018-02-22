@@ -2,10 +2,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="72dp"
-    android:background="?android:selectableItemBackground"
-   >
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="16dp"
+    android:background="?android:selectableItemBackground">
 
 
     <android.support.constraint.ConstraintLayout
@@ -14,44 +14,16 @@
         android:background="?android:selectableItemBackground"
         android:orientation="vertical">
 
-        <RelativeLayout
-            android:id="@+id/image_subject"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-
-            <TextView
-                android:id="@+id/mark_subject_short_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:background="@drawable/circle"
-                android:gravity="center"
-                android:textColor="@android:color/white"
-                android:textSize="22sp"
-                tools:text="OS" />
-        </RelativeLayout>
-
         <TextView
-            android:id="@+id/mark_subject_textView"
-            android:layout_width="140dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/activity_horizontal_margin"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="@dimen/activity_horizontal_margin"
-            android:fontFamily="sans-serif-light"
-            android:singleLine="true"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toRightOf="@id/image_subject"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="Linear Programming" />
+            android:id="@+id/mark_subject_short_text"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_centerInParent="true"
+            android:background="@drawable/circle"
+            android:gravity="center"
+            android:textColor="@android:color/white"
+            android:textSize="22sp"
+            tools:text="Compiler design" />
 
         <TextView
             android:id="@+id/td"
@@ -81,7 +53,6 @@
             android:id="@+id/tp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
             android:layout_marginBottom="@dimen/activity_horizontal_margin"
             android:layout_marginEnd="@dimen/activity_horizontal_margin"
             android:layout_marginTop="@dimen/activity_horizontal_margin"
@@ -134,5 +105,5 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_alignParentBottom="true"
-        android:background="@android:color/darker_gray"/>
+        android:background="@android:color/darker_gray" />
 </RelativeLayout>
