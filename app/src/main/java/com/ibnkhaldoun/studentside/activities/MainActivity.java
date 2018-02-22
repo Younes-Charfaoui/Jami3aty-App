@@ -12,11 +12,11 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -91,6 +91,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mViewPager = findViewById(R.id.main_screen_view_pager);
         mTabLayout = findViewById(R.id.main_screen_tab_layout);
         setupTabIcons();
+
         TabLayoutAdapter adapter = new TabLayoutAdapter(getSupportFragmentManager(), mTabLayout.getTabCount());
         mViewPager.setAdapter(adapter);
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTabLayout));

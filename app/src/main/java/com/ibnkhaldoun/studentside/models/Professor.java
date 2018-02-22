@@ -2,14 +2,27 @@ package com.ibnkhaldoun.studentside.models;
 
 
 import android.os.Parcel;
-import android.os.Parcelable;
 
-public class Professor implements Parcelable {
+public class Professor extends Person {
 
-    public static final Parcelable.Creator<Professor> CREATOR = new Parcelable.Creator<Professor>() {
+
+    private String mGrade;
+
+
+    public Professor(String grade, String mFirstName, String mLastName) {
+        super(mFirstName, mLastName);
+        this.mGrade = grade;
+    }
+
+    protected Professor(Parcel in) {
+        super(in);
+        this.mGrade = in.readString();
+    }
+
+    public static final Creator<Professor> CREATOR = new Creator<Professor>() {
         @Override
-        public Professor createFromParcel(Parcel source) {
-            return new Professor(source);
+        public Professor createFromParcel(Parcel in) {
+            return new Professor(in);
         }
 
         @Override
@@ -17,61 +30,14 @@ public class Professor implements Parcelable {
             return new Professor[size];
         }
     };
-    private String mFirstName, mLastName, mShortName;
-
-    public Professor(String mFirstName, String mLastName) {
-        this.mFirstName = mFirstName;
-        this.mLastName = mLastName;
-        mShortName = String.valueOf(
-                Character.toString(mFirstName.charAt(0)) +
-                        Character.toString(mLastName.charAt(0)))
-                .toUpperCase();
-
-    }
-
-    protected Professor(Parcel in) {
-        this.mFirstName = in.readString();
-        this.mLastName = in.readString();
-        this.mShortName = in.readString();
-    }
-
-    public String getFirstName() {
-        return mFirstName;
-    }
-
-    public void setFirstName(String mFirstName) {
-        this.mFirstName = mFirstName;
-    }
-
-    public String getLastName() {
-        return mLastName;
-    }
-
-    public void setLastName(String mLastName) {
-        this.mLastName = mLastName;
-    }
-
-    public String getShortName() {
-        return mShortName;
-    }
-
-    public void setShortName(String mShortName) {
-        this.mShortName = mShortName;
-    }
-
-    public String getFullName() {
-        return this.mFirstName + " " + this.mLastName;
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.mFirstName);
-        dest.writeString(this.mLastName);
-        dest.writeString(this.mShortName);
+        super.writeToParcel(dest, flags);
+        dest.writeString(this.mGrade);
+    }
+
+    public int describeContents() {
+        return 0;
     }
 }

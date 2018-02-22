@@ -6,15 +6,9 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.ibnkhaldoun.studentside.data_providers.DataProviders;
-import com.ibnkhaldoun.studentside.fragments.HomeFragment;
+import com.ibnkhaldoun.studentside.fragments.DisplaysFragment;
 import com.ibnkhaldoun.studentside.fragments.MailFragment;
 import com.ibnkhaldoun.studentside.fragments.NotificationFragment;
-import com.ibnkhaldoun.studentside.models.Mail;
-import com.ibnkhaldoun.studentside.models.Message;
-import com.ibnkhaldoun.studentside.models.Professor;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class TabLayoutAdapter extends FragmentPagerAdapter {
 
@@ -29,7 +23,7 @@ public class TabLayoutAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return new HomeFragment();
+                return DisplaysFragment.newInstance(DataProviders.getDisplayList());
             case 1:
                 return new NotificationFragment();
             case 2:

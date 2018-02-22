@@ -1,70 +1,133 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="@dimen/linearLayout_padding"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.ibnkhaldoun.studentside.activities.MessageDetailActivity"
-    tools:showIn="@layout/activity_message_detail">
+    android:isScrollContainer="false"
+    tools:showIn="@layout/activity_message_detail"
+    >
 
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:id="@+id/message_detail_time_text_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_above="@id/message_detail_date_text_view"
-            tools:text="16:30" />
-
-        <TextView
-            android:id="@+id/message_detail_date_text_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/message_detail_time_text_view"
-            tools:text="Feb 16" />
-    </RelativeLayout>
-
-    <TextView
-        android:id="@+id/message_detail_subject_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:fontFamily="sans-serif-light"
-        android:textAppearance="@android:style/TextAppearance.Large"
-        android:textSize="30sp"
-        tools:text="Metting" />
-
-    <RelativeLayout
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="@dimen/linearLayout_padding"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:context="com.ibnkhaldoun.studentside.activities.MessageDetailActivity">
 
-        <RelativeLayout
-            android:id="@+id/id"
+
+        <TextView
+            android:id="@+id/message_detail_subject"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="sans-serif-thin"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Meeting" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toTopOf="@id/message_detail_subject"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/message_detail_subject">
+
 
             <TextView
-                android:id="@+id/message_detail_sender_short_name_text_view"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:background="@drawable/circle"
-                android:gravity="center"
-                android:textColor="@android:color/white"
-                android:textSize="22sp"
-                tools:text="YC" />
-        </RelativeLayout>
+                android:id="@+id/message_detail_time"
+                android:layout_width="wrap_content"
+                android:layout_height="17dp"
+                android:textSize="16sp"
+
+                tools:text="17:30" />
+
+            <TextView
+                android:id="@+id/message_detail_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                tools:text="Feb 13" />
+        </LinearLayout>
+
 
         <TextView
-            android:id="@+id/message_detail_sender_text_view"
+            android:id="@+id/message_detail_sender_short_name"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginEnd="7dp"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/circle"
+            android:gravity="center"
+            android:textColor="@android:color/white"
+            android:textSize="24sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/message_detail_subject"
+            tools:text="YC" />
+
+        <TextView
+            android:id="@+id/message_detail_sender_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="Younes Chrafaoui" />
-    </RelativeLayout>
+            android:layout_marginStart="8dp"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/message_detail_sender_short_name"
+            app:layout_constraintTop_toTopOf="@id/message_detail_sender_short_name"
+            tools:text="Younes Charfaoui" />
 
-</LinearLayout>
+
+        <TextView
+            android:id="@+id/message_detail_receiver"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="@id/message_detail_sender_name"
+            app:layout_constraintTop_toBottomOf="@id/message_detail_sender_name"
+            tools:text="to Dr. Bekki Khathir" />
+
+        <TextView
+            android:id="@+id/message_detail_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            app:layout_constraintTop_toBottomOf="@id/message_detail_sender_short_name"
+            tools:text="dNam suscipit dui  lobortis porttitor. Donec semper, lectus ut congue vehicula, metus erat commodo justo, id iaculis ipsum mi ac elit. Maecenas consequat nisl sed leo ultrices, nec malesuada quam sollicitudin. Suspendisse ultricies augue eu massa hendrerit, at vulputate orci malesuada. Cras venenatis, tortor et semper hendrerit, quam justo tincidunt mi, at tempus ante purus non orci. Fusce ultricies blandit lectus, quis ornare enim blandit at. Pellentesque porta, nisl id ornare auctor, est risus maximus nunc, quis accumsan est lacus et erat. Suspendisse ex ipsum, pellentesque sit amet condimentum non, cursus sit amet nibh. Suspendisse potenti. In in enim enim. Maecenas et mollis lorem, semper imperdiet ligula. Praesent lobortis, dolor id cursus varius, dui sapien dignissim sem, a viverra enim odio vitae purus." />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            app:layout_constraintTop_toBottomOf="@id/message_detail_text">
+
+            <Button
+                style="?attr/buttonBarStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@null"
+                android:drawablePadding="8dp"
+                android:drawableTop="@drawable/ic_reply_black"
+                android:id="@+id/message_detail_reply_button"
+                android:text="@string/reply_string" />
+
+            <Button
+                style="?attr/buttonBarStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@null"
+                android:drawablePadding="8dp"
+                android:id="@+id/message_detail_forward_button"
+                android:drawableTop="@drawable/ic_forward_black"
+                android:text="@string/forward_string" />
+        </LinearLayout>
+
+    </android.support.constraint.ConstraintLayout>
+</ScrollView>

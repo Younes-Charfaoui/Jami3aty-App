@@ -75,5 +75,10 @@
     <string name="td_string">TD</string>
     <string name="title_activity_mail">MailActivity</string>
     <string name="title_activity_message_detail">MessageDetailActivity</string>
+    <string name="displays_save_string">Save</string>
+    <string name="display_note_string">Note</string>
+    <string name="delete_message_string">Delete message</string>
+    <string name="forward_string">Forward</string>
+    <string name="reply_string">Reply</string>
 
 </resources>

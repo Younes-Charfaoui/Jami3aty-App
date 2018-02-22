@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/message_detail_delete_menu"
+        android:icon="@drawable/ic_delete_white"
+        android:orderInCategory="100"
+        android:title="@string/delete_message_string"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/message_detail_reply_menu"
+        android:orderInCategory="101"
+        android:title="@string/reply_string"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/message_detail_forward_menu"
+        android:orderInCategory="101"
+        android:title="@string/forward_string"
+        app:showAsAction="never" />
+</menu>

@@ -3,100 +3,86 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-
     android:layout_height="wrap_content"
     android:layout_marginBottom="8dp"
-    android:background="?attr/selectableItemBackground"
-    android:layout_marginEnd="16dp"
-    android:layout_marginStart="16dp"
+    android:layout_marginEnd="8dp"
+    android:layout_marginStart="8dp"
     android:layout_marginTop="8dp"
-    app:cardCornerRadius="4dp">
+    android:background="?attr/selectableItemBackground"
+    app:cardCornerRadius="2dp"
+    app:cardElevation="4dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="8dp">
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        >
 
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="16dp">
-
-            <RelativeLayout
-                android:id="@+id/display_professor_information"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-                <RelativeLayout
-                    android:id="@+id/image_professor_layout_display"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_centerVertical="true"
-                    android:layout_marginBottom="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginTop="8dp">
-
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/circle"
-                        android:contentDescription="@null" />
-
-                    <TextView
-                        android:id="@+id/display_professor_short_name_text_view"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:textColor="@android:color/white"
-                        android:textSize="22sp"
-                        tools:text="OS" />
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:id="@+id/display_text_information_layout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="8dp"
-                    android:layout_toEndOf="@+id/image_professor_layout_display">
-
-                    <TextView
-                        android:id="@+id/display_professor_name_text_view"
-                        style="@android:style/TextAppearance.Holo.Widget.ActionBar.Title"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="sans-serif-light"
-                        tools:text="Phd Ouared Aek" />
-
-                    <TextView
-                        android:id="@+id/display_date_and_time_text_view"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignStart="@id/display_professor_name_text_view"
-                        android:layout_below="@id/display_professor_name_text_view"
-                        android:fontFamily="sans-serif-light"
-                        tools:text="19:30 Feb 13" />
-                </RelativeLayout>
-
-            </RelativeLayout>
+            android:paddingEnd="16dp"
+            android:paddingStart="16dp"
+            android:paddingBottom="8dp"
+            android:paddingTop="8dp">
 
             <TextView
-                android:id="@+id/display_text_text_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:id="@+id/display_professor_short_name_text_view"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/circle"
+                android:gravity="center"
+                android:textColor="@android:color/white"
+                android:textSize="22sp"
+                tools:text="OA" />
+
+
+            <RelativeLayout
+                android:id="@+id/display_text_information_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="8dp"
+                android:layout_toEndOf="@+id/display_professor_short_name_text_view">
+
+                <TextView
+                    android:id="@+id/display_professor_name_text_view"
+                    style="@android:style/TextAppearance.Holo.Widget.ActionBar.Title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-light"
+                    tools:text="Phd Ouared Aek" />
+
+                <TextView
+                    android:id="@+id/display_date_and_time_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignStart="@id/display_professor_name_text_view"
+                    android:layout_below="@id/display_professor_name_text_view"
+                    android:fontFamily="sans-serif-light"
+                    tools:text="19:30 Feb 13" />
+            </RelativeLayout>
+
         </RelativeLayout>
 
+
         <TextView
-            android:id="@+id/display_text"
+            android:id="@+id/display_text_text_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-light"
-            android:padding="16dp"
+            android:paddingBottom="16dp"
+            android:paddingEnd="16dp"
+            android:paddingStart="16dp"
             android:textAppearance="@android:style/TextAppearance.Holo.Widget.ActionBar.Subtitle"
             android:textColor="@android:color/black"
-            tools:text="Hello tomorow will be a test for  nksdnvlk nklsdnvklsnd nklsdnvklsndf nlksndflksdnf nksldfnlksd nskldnlksdfn sndklnsdlfn nskdlfnsdlknvs nsdlkfnlksdnfnthe new dacade in the folowing consition " />
+            tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse eu mi vitae ante sodales sollicitudin. Phasellus dignissim laoreet ipsum, facilisis lacinia purus hendrerit vitae. Vestibulum et interdum velit. Nam et nulla vitae mauris malesuada commodo. Quisque vulputate vitae dui eget pellentesque. Nam ac dolor porttitor, ullamcorper orci non, mollis turpis. Etiam imperdiet ante eu diam iaculis, ut tempor ligula varius. Maecenas laoreet eros id purus mollis congue. Vivamus interdum condimentum lorem quis porttitor. Mauris tortor mi, eleifend viverra porta a, dapibus ut felis." />
 
         <View
             android:layout_width="match_parent"
@@ -119,7 +105,7 @@
                 android:background="@null"
                 android:drawableStart="@drawable/ic_bookmark_red"
                 android:fontFamily="sans-serif-light"
-                tools:text="Save" />
+                android:text="@string/displays_save_string" />
 
             <Button
                 android:id="@+id/display_note_button"
@@ -129,7 +115,7 @@
                 android:background="@null"
                 android:drawableStart="@drawable/ic_message_blue"
                 android:fontFamily="sans-serif-light"
-                tools:text="Note" />
+                android:text="@string/display_note_string" />
         </LinearLayout>
     </LinearLayout>
 

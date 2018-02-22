@@ -6,15 +6,36 @@ import android.os.Parcelable;
 
 public class Message implements Parcelable {
 
+
     private boolean in;
     private String subject, text, date;
 
+    public Person getSender() {
+        return sender;
+    }
 
-    public Message(String subject, String text, String date) {
+    public void setSender(Person sender) {
+        this.sender = sender;
+    }
+
+    public Person getReceiver() {
+        return receiver;
+    }
+
+    public void setReceiver(Person receiver) {
+        this.receiver = receiver;
+    }
+
+    private Person sender, receiver;
+
+    public Message(String subject, String text, String date, Person sender, Person receiver) {
         this.subject = subject;
         this.text = text;
         this.date = date;
+        this.receiver = receiver;
+        this.sender = sender;
     }
+
 
     public String getSubject() {
         return subject;
@@ -59,6 +80,8 @@ public class Message implements Parcelable {
         dest.writeString(this.subject);
         dest.writeString(this.text);
         dest.writeString(this.date);
+        dest.writeParcelable(this.sender, flags);
+        dest.writeParcelable(this.receiver, flags);
     }
 
     protected Message(Parcel in) {
@@ -66,6 +89,8 @@ public class Message implements Parcelable {
         this.subject = in.readString();
         this.text = in.readString();
         this.date = in.readString();
+        this.sender = in.readParcelable(Person.class.getClassLoader());
+        this.receiver = in.readParcelable(Person.class.getClassLoader());
     }
 
     public static final Parcelable.Creator<Message> CREATOR = new Parcelable.Creator<Message>() {
