@@ -41,7 +41,7 @@ public class LoginActivity extends AppCompatActivity {
         findViewById(R.id.login_button).setOnClickListener(v -> {
             //TODO getting the information from the server
             PreferencesManager manager = new PreferencesManager(LoginActivity.this);
-            manager.setLogin("11", "Younes Charfaoui", "L3", "Computer Science");
+            manager.setLogin("11", mEmailEditText.getText().toString(), "L3", "Computer Science");
             startActivity(new Intent(LoginActivity.this, MainActivity.class));
             finish();
             /*if (validate()) {

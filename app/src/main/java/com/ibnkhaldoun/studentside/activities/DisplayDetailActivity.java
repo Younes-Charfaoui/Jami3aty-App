@@ -1,4 +1,4 @@
-package com.ibnkhaldoun.studentside;
+package com.ibnkhaldoun.studentside.activities;
 
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
@@ -10,11 +10,15 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.ibnkhaldoun.studentside.R;
 import com.ibnkhaldoun.studentside.Utilities.Utils;
+import com.ibnkhaldoun.studentside.models.Comment;
 import com.ibnkhaldoun.studentside.models.Display;
 
 
 public class DisplayDetailActivity extends AppCompatActivity {
+
+    private LinearLayout notesLinearLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,10 +49,20 @@ public class DisplayDetailActivity extends AppCompatActivity {
 
         TextView numberOfNoteTextView = findViewById(R.id.display_detail_number_of_notes);
         numberOfNoteTextView.setText("1 note");
+        View separatorView = findViewById(R.id.display_detail_notes_separator);
 
-        LinearLayout notesLinearLayout = findViewById(R.id.display_detail_notes);
-        View noteView = LayoutInflater.from(this).inflate(R.layout.note_of_display_list_item, notesLinearLayout, false);
-        notesLinearLayout.addView(noteView);
+        notesLinearLayout = findViewById(R.id.display_detail_notes);
+        if (display.getCommentList().size() != 0) {
+            for (int i = 0; i < display.getCommentList().size(); i++) {
+                Comment comment = display.getCommentList().get(i);
+                notesLinearLayout.addView(
+                        createNoteView(comment.getmCommenter().getShortName(),
+                        comment.getmComment(),
+                        comment.getmCommenter().getFullName(),
+                        comment.getmDate()));
+
+            }
+        }
     }
 
     @Override
@@ -59,5 +73,26 @@ public class DisplayDetailActivity extends AppCompatActivity {
                 break;
         }
         return true;
+    }
+
+    private View createNoteView(String shortName, String text, String name, String date) {
+        View noteView = LayoutInflater.from(this).inflate(R.layout.note_of_display_list_item, notesLinearLayout, false);
+
+        TextView noteShortNameTextView = noteView.findViewById(R.id.note_of_display_person_short_name_text_view);
+        noteShortNameTextView.setText(shortName);
+
+        GradientDrawable circleNoteShortName = (GradientDrawable) noteShortNameTextView.getBackground();
+        circleNoteShortName.setColor(Utils.getCircleColor(shortName.charAt(0), this));
+
+        TextView noteNamePersonTextView = noteView.findViewById(R.id.note_of_display_person_name_text_view);
+        noteNamePersonTextView.setText(name);
+
+        TextView noteTextTextView = noteView.findViewById(R.id.note_of_display_note);
+        noteTextTextView.setText(text);
+
+        TextView noteDateTextView = noteView.findViewById(R.id.note_of_display_date);
+        noteDateTextView.setText(date);
+
+        return noteView;
     }
 }

@@ -43,6 +43,7 @@ public class MailAdapter extends RecyclerView.Adapter<MailAdapter.MailViewHolder
         holder.mProfessorNameTextView.setText(mail.getProfessor().getFullName());
         holder.mSubjectTextView.setText(mail.getMessages().get(mail.getMessages().size() - 1).getSubject());
         holder.mDateTextView.setText(mail.getMessages().get(mail.getMessages().size() - 1).getDate());
+        holder.mStartView.setBackgroundColor(Utils.getCircleColor(mail.getProfessor().getFirstName().charAt(0), mContext));
     }
 
 
@@ -57,12 +58,15 @@ public class MailAdapter extends RecyclerView.Adapter<MailAdapter.MailViewHolder
                 mProfessorNameTextView, mSubjectTextView,
                 mDateTextView;
 
+        private View mStartView;
+
         MailViewHolder(View itemView) {
             super(itemView);
             mProfessorShortNameTextView = itemView.findViewById(R.id.mail_professor_name_short_text_view);
             mProfessorNameTextView = itemView.findViewById(R.id.mail_professor_name_text_view);
             mSubjectTextView = itemView.findViewById(R.id.mail_last_subject_text_view);
             mDateTextView = itemView.findViewById(R.id.mail_date_of_mail_text_view);
+            mStartView = itemView.findViewById(R.id.mail_start_view);
             itemView.setOnClickListener(v -> {
                 Intent intent = new Intent(mContext, MessagesActivity.class);
                 intent.putExtra("Key", mDataList.get(getAdapterPosition()));

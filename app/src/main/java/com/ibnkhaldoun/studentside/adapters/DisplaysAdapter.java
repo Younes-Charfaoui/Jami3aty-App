@@ -11,7 +11,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.ibnkhaldoun.studentside.DisplayDetailActivity;
+import com.ibnkhaldoun.studentside.activities.DisplayDetailActivity;
 import com.ibnkhaldoun.studentside.R;
 import com.ibnkhaldoun.studentside.Utilities.Utils;
 import com.ibnkhaldoun.studentside.models.Display;

@@ -1,8 +1,11 @@
 package com.ibnkhaldoun.studentside.activities;
 
+import android.app.ActivityManager;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
@@ -12,7 +15,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,6 +24,7 @@ import android.widget.Toast;
 
 import com.ibnkhaldoun.studentside.R;
 import com.ibnkhaldoun.studentside.Utilities.PreferencesManager;
+import com.ibnkhaldoun.studentside.Utilities.Utils;
 import com.ibnkhaldoun.studentside.adapters.TabLayoutAdapter;
 import com.ibnkhaldoun.studentside.data_providers.DataProviders;
 import com.ibnkhaldoun.studentside.fragments.MarksFragment;
@@ -78,11 +81,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         TextView nameHeader = mNavigation.getHeaderView(0).findViewById(R.id.name_header_textView);
         TextView branchHeader = mNavigation.getHeaderView(0).findViewById(R.id.branch_header_textView);
-
+        TextView circleImage = mNavigation.getHeaderView(0).findViewById(R.id.nav_imageView);
+        GradientDrawable circle = (GradientDrawable) circleImage.getBackground();
         PreferencesManager manager = new PreferencesManager(this);
+        circleImage.setText("YC");
+        circle.setColor(Utils.getCircleColor(manager.getFullName().charAt(0), this));
         nameHeader.setText(manager.getFullName());
-        String hello = manager.getGrade() + " " + manager.getBranch();
-        branchHeader.setText(hello);
+        String branch = manager.getGrade() + " " + manager.getBranch();
+        branchHeader.setText(branch);
         setupViewPagerAndTabLayout();
     }
 
@@ -102,6 +108,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 mToolBar.setTitle(mPagerTitles[tab.getPosition()]);
                 if (tab.getPosition() == 2) mAddMailFab.show();
                 else mAddMailFab.hide();
+                AppBarLayout appBarLayout = findViewById(R.id.appbar);
+                appBarLayout.setExpanded(true);
             }
 
             @Override
@@ -230,6 +238,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (mDrawer.isDrawerOpen(GravityCompat.START)) {
             mDrawer.closeDrawer(GravityCompat.START);
         } else {
+            ActivityManager hello = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
+            hello.moveTaskToFront(getTaskId(), 0);
             super.onBackPressed();
         }
     }

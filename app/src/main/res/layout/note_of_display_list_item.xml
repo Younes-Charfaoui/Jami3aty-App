@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
@@ -13,9 +14,9 @@
         android:layout_marginEnd="8dp"
         android:background="@drawable/circle"
         android:gravity="center"
-        android:text="OA"
         android:textColor="@android:color/white"
-        android:textSize="20sp" />
+        android:textSize="16sp"
+        tools:text="OA" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -28,16 +29,30 @@
             style="@android:style/TextAppearance.Holo.Widget.ActionBar.Title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
             android:fontFamily="sans-serif-light"
-            android:text="Phd Ouared Aek"
             android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            tools:text="Phd Ouared Aek" />
 
         <TextView
             android:id="@+id/note_of_display_note"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="hello sir , you mised the Consultation time in the hello world application" />
+            android:layout_marginBottom="2dp"
+            android:fontFamily="sans-serif-light"
+            tools:text="hello sir , you mised the Consultation time in the hello world application" />
+
+
+        <TextView
+            android:id="@+id/note_of_display_date"
+            android:layout_width="match_parent"
+            android:textAlignment="viewEnd"
+            android:paddingEnd="8dp"
+            android:paddingStart="8dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-thin"
+            tools:text="4h" />
     </LinearLayout>
 
 </LinearLayout>

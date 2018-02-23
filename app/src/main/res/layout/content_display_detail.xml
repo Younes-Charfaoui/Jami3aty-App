@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:layout_marginTop="9dp"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.ibnkhaldoun.studentside.DisplayDetailActivity"
+    tools:context="com.ibnkhaldoun.studentside.activities.DisplayDetailActivity"
     tools:showIn="@layout/activity_display_detail">
 
     <LinearLayout
@@ -129,8 +129,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="8dp">
-
+            >
+        <View
+            android:id="@+id/display_detail_notes_separator"
+            android:layout_width="match_parent"
+            android:visibility="gone"
+            android:background="@android:color/darker_gray"
+            android:layout_height="1dp"/>
         </LinearLayout>
     </LinearLayout>
 </ScrollView>

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="72dp"
+    android:layout_height="76dp"
     android:gravity="center_vertical"
     android:orientation="horizontal"
     android:paddingEnd="16dp"
@@ -19,19 +19,37 @@
         android:background="@drawable/circle"
         android:gravity="center"
         android:textColor="@android:color/white"
-        android:textSize="20sp"
+        android:textSize="16sp"
         tools:text="OA" />
 
-    <TextView
-        android:id="@+id/notification_text"
+    <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_weight="4"
-        android:ellipsize="end"
-        android:lines="2"
-        android:textSize="18sp"
-        tools:text="Ouared Aek has published the marks of Operating system" />
+        android:orientation="vertical"
+        android:layout_weight="4">
+
+        <TextView
+            android:id="@+id/notification_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:lines="2"
+            android:fontFamily="sans-serif-light"
+            android:textSize="18sp"
+            android:textColor="@android:color/black"
+            tools:text="Ouared Aek has published the marks of Operating system" />
+
+        <TextView
+            android:id="@+id/notification_date"
+            android:textColor="@android:color/black"
+
+            tools:text="5 min ago"
+            android:fontFamily="sans-serif-thin"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
 
     <ImageView
         android:id="@+id/notification_image"
@@ -39,6 +57,5 @@
         android:layout_height="36dp"
         android:layout_weight="1"
         android:contentDescription="@null"
-
         app:srcCompat="@drawable/ic_school" />
 </LinearLayout>
