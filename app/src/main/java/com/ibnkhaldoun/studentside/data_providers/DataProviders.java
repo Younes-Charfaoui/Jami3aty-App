@@ -1,6 +1,7 @@
 package com.ibnkhaldoun.studentside.data_providers;
 
 
+import com.ibnkhaldoun.studentside.enums.ClassTypes;
 import com.ibnkhaldoun.studentside.enums.PostTypes;
 import com.ibnkhaldoun.studentside.models.Comment;
 import com.ibnkhaldoun.studentside.models.Display;
@@ -9,6 +10,7 @@ import com.ibnkhaldoun.studentside.models.Mark;
 import com.ibnkhaldoun.studentside.models.Message;
 import com.ibnkhaldoun.studentside.models.Notification;
 import com.ibnkhaldoun.studentside.models.Professor;
+import com.ibnkhaldoun.studentside.models.ScheduleItem;
 import com.ibnkhaldoun.studentside.models.Student;
 
 import java.util.ArrayList;
@@ -23,8 +25,46 @@ public final class DataProviders {
     private static final List<Notification> notificationList = new ArrayList<>();
     private static final List<Comment> commentList = new ArrayList<>();
     private static final List<Student> studentList = new ArrayList<>();
+    private static final List<ScheduleItem> sundayList = new ArrayList<>();
+    private static final List<ScheduleItem> mondayList = new ArrayList<>();
+    private static final List<ScheduleItem> tuesdayList = new ArrayList<>();
+    private static final List<ScheduleItem> wednesdayList = new ArrayList<>();
+    private static final List<ScheduleItem> thursdayList = new ArrayList<>();
 
     static {
+
+        professorList.add(new Professor("Phd.", "Ouared", "Aek"));
+        professorList.add(new Professor("Dr.", "Bekki", "Khathir"));
+        professorList.add(new Professor("Pr.", "Chikhaoui", "Ahmed"));
+        professorList.add(new Professor("Dr.", "Aid", "Lahcen"));
+        professorList.add(new Professor("Pr.", "Dahmani", "Youcef"));
+        professorList.add(new Professor("Dr.", "Boudaa", "Boujemaa"));
+        professorList.add(new Professor("Dr.", "Baghani", "Abdelmalek"));
+        professorList.add(new Professor("Dr.", "Mezzoug", "Karim"));
+        professorList.add(new Professor("Dr.", "Siabdelhadi", "Ahmed"));
+        professorList.add(new Professor("Dr.", "Benoudaa", "Habib"));
+        sundayList.add(new ScheduleItem("8:00", "Amphis C", "Compilation", ClassTypes.COURSE, professorList.get(6)));
+        sundayList.add(new ScheduleItem("9:30", "Amphis B", "Operating System", ClassTypes.COURSE, professorList.get(1)));
+        sundayList.add(new ScheduleItem("11:00", "Class 14", "Operating System", ClassTypes.TD, professorList.get(1)));
+        sundayList.add(new ScheduleItem("14:00", "Amphis C", "Compilation", ClassTypes.TD, professorList.get(6)));
+        sundayList.add(new ScheduleItem("15:30", "Labo 4", "IHM", ClassTypes.TP, professorList.get(9)));
+
+        mondayList.add(new ScheduleItem("9:30", "Class 7", "Linear Programming", ClassTypes.TD, professorList.get(2)));
+        mondayList.add(new ScheduleItem("11:00", "Labo 3", "Compilation", ClassTypes.TP, professorList.get(6)));
+        mondayList.add(new ScheduleItem("15:30", "Labo 2", "Logical programming", ClassTypes.TP, professorList.get(3)));
+
+        tuesdayList.add(new ScheduleItem("8:00", "Amphi A", "IHM", ClassTypes.COURSE, professorList.get(9)));
+        tuesdayList.add(new ScheduleItem("9:30", "Amphi B", "Logical programming", ClassTypes.COURSE, professorList.get(3)));
+        tuesdayList.add(new ScheduleItem("11:00", "Amphi B", "Linear programming", ClassTypes.COURSE, professorList.get(2)));
+
+        wednesdayList.add(new ScheduleItem("9:30", "Class 12", "Software Engineering", ClassTypes.TD, professorList.get(2)));
+        wednesdayList.add(new ScheduleItem("11:00", "Amphi C", "Compilation", ClassTypes.COURSE, professorList.get(6)));
+        wednesdayList.add(new ScheduleItem("14:00", "Labo 3", "Operating System", ClassTypes.TP, professorList.get(5)));
+
+        thursdayList.add(new ScheduleItem("8:00", "Amphi A", "Probability", ClassTypes.COURSE, professorList.get(7)));
+        thursdayList.add(new ScheduleItem("9:00", "Class 14", "Probability", ClassTypes.TD, professorList.get(7)));
+
+
         markList.add(new Mark("CD", "Compiler Design", 15f, 15, 15));
         markList.add(new Mark("LP", "Linear Programming", 20, 19, -1));
         markList.add(new Mark("OS", "Operating System", 18.5f, 19, 18));
@@ -39,16 +79,6 @@ public final class DataProviders {
         studentList.add(new Student("Taif", "Amine"));
         studentList.add(new Student("Redouane", "Baya"));
         studentList.add(new Student("Hami", "Doulami"));
-
-        professorList.add(new Professor("Phd.", "Ouared", "Aek"));
-        professorList.add(new Professor("Dr.", "Bekki", "Khathir"));
-        professorList.add(new Professor("Pr.", "Chikhaoui", "Ahmed"));
-        professorList.add(new Professor("Dr.", "Aid", "Lahcen"));
-        professorList.add(new Professor("Pr.", "Dahmani", "Youcef"));
-        professorList.add(new Professor("Dr.", "Boudaa", "Boujemaa"));
-        professorList.add(new Professor("Dr.", "Baghani", "Abdelmalek"));
-        professorList.add(new Professor("Dr.", "Mezzoug", "Karim"));
-        professorList.add(new Professor("Dr.", "Siabdelhadi", "Ahmed"));
 
 
         messageList.add(new Message("Meeting", "Hello Sir , we need a meeting", "Jan 26", new Student("Younes", "Charfaoui"), professorList.get(0)));
@@ -90,15 +120,43 @@ public final class DataProviders {
         displayList.add(new Display(1, professorList.get(7), "10 Aug 02:20", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse eu mi vitae ante sodales sollicitudin. Phasellus dignissim laoreet ipsum, facilisis lacinia purus hendrerit vitae. Vestibulum et interdum velit. Nam et nulla vitae mauris malesuada commodo. Quisque vulputate vitae dui eget pellentesque. Nam ac dolor porttitor, ullamcorper orci non, mollis turpis. Etiam imperdiet ante eu diam iaculis, ut tempor l", commentList));
         displayList.add(new Display(1, professorList.get(8), "11 Sep 04:30", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse eu mi vitae ante sodales sollicitudin. Phasellus dignissim laoreet ipsum, facilisis lacinia purus hendrerit vitae. Vestibulum et interdum velit. Nam et nulla vitae mauris malesuada commodo. Quisque vulputate vitae dui eget pellentesque. Nam ac dolor porttitor, ullamcorper orci non, mollis turpis. Etiam iut felis.", commentList));
 
-        notificationList.add(new Notification(professorList.get(0), "Just now", "Has published the note of the OS", PostTypes.Consultation));
-        notificationList.add(new Notification(professorList.get(1), "Just now", "Has published and avis of exam", PostTypes.Avis));
-        notificationList.add(new Notification(professorList.get(3), "6 min Ago", "Has published the note of the OS", PostTypes.Consultation));
-        notificationList.add(new Notification(professorList.get(4), "30 min Ago", "Has published and avis of exam", PostTypes.Avis));
-        notificationList.add(new Notification(professorList.get(2), "5 min Ago", "Has published the note of the OS", PostTypes.Marks));
-        notificationList.add(new Notification(professorList.get(0), "15 min Ago", "Has publihed a course", PostTypes.Consultation));
-        notificationList.add(new Notification(professorList.get(0), "51 min Ago", "Has published and avis of exam", PostTypes.Marks));
-        notificationList.add(new Notification(professorList.get(0), "50 min Ago", "Has published the note of the OS", PostTypes.Avis));
-        notificationList.add(new Notification(professorList.get(0), "51 min Ago", "Has publihed a course", PostTypes.Marks));
+        notificationList.add(new Notification(professorList.get(0), "Just now", "Has published the note of the OS", PostTypes.CONSULTATION));
+        notificationList.add(new Notification(professorList.get(1), "Just now", "Has published and avis of exam", PostTypes.AVIS));
+        notificationList.add(new Notification(professorList.get(3), "6 min Ago", "Has published the note of the OS", PostTypes.CONSULTATION));
+        notificationList.add(new Notification(professorList.get(4), "30 min Ago", "Has published and avis of exam", PostTypes.AVIS));
+        notificationList.add(new Notification(professorList.get(2), "5 min Ago", "Has published the note of the OS", PostTypes.MARKS));
+        notificationList.add(new Notification(professorList.get(0), "15 min Ago", "Has publihed a course", PostTypes.CONSULTATION));
+        notificationList.add(new Notification(professorList.get(0), "51 min Ago", "Has published and avis of exam", PostTypes.MARKS));
+        notificationList.add(new Notification(professorList.get(0), "50 min Ago", "Has published the note of the OS", PostTypes.AVIS));
+        notificationList.add(new Notification(professorList.get(0), "51 min Ago", "Has publihed a course", PostTypes.MARKS));
+    }
+
+    public static List<Comment> getCommentList() {
+        return commentList;
+    }
+
+    public static List<Student> getStudentList() {
+        return studentList;
+    }
+
+    public static List<ScheduleItem> getSundayList() {
+        return sundayList;
+    }
+
+    public static List<ScheduleItem> getMondayList() {
+        return mondayList;
+    }
+
+    public static List<ScheduleItem> getTuesdayList() {
+        return tuesdayList;
+    }
+
+    public static List<ScheduleItem> getWednesdayList() {
+        return wednesdayList;
+    }
+
+    public static List<ScheduleItem> getThursdayList() {
+        return thursdayList;
     }
 
     public static List<Notification> getNotificationList() {

@@ -81,5 +81,6 @@
     <string name="forward_string">Forward</string>
     <string name="reply_string">Reply</string>
     <string name="title_activity_display_detail">Post</string>
+    <string name="title_activity_mark_detail">MarkDetailActivity</string>
 
 </resources>

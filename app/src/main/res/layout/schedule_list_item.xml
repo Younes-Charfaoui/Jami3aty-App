@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="88dp"
+    android:orientation="horizontal"
+    android:padding="8dp">
+
+    <TextView
+        android:id="@+id/schedule_time"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="5"
+        android:fontFamily="sans-serif-light"
+        android:textSize="16sp"
+        android:gravity="center"
+        tools:text="8:00" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/schedule_circle"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_margin="5dp"
+            android:contentDescription="@null"
+            android:src="@drawable/circle"
+            tools:ignore="NestedWeights" />
+
+        <View
+            android:id="@+id/schedule_separator"
+            android:layout_width="2dp"
+            android:layout_height="fill_parent"
+            android:background="@color/colorPrimary" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="19"
+        android:padding="8dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/schedule_subject"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-light"
+            android:drawableStart="@drawable/ic_lightbulb_outline_black"
+            android:drawablePadding="8dp"
+            android:textSize="18sp"
+            android:singleLine="true"
+            tools:drawableTint="@color/colorPrimary"
+            tools:text="Compiler Design" />
+
+        <TextView
+            android:id="@+id/schedule_location_and_professor"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:drawablePadding="8dp"
+            android:drawableStart="@drawable/ic_person_outline_black"
+            tools:drawableTint="@color/colorPrimary"
+            android:fontFamily="sans-serif-thin"
+            android:gravity="center_vertical"
+            android:textSize="16sp"
+            android:singleLine="true"
+            tools:text="Amphi B , Benghani Abdelmalk" />
+
+
+    </LinearLayout>
+
+</LinearLayout>

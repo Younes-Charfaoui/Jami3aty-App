@@ -25,6 +25,7 @@ import android.widget.Toast;
 import com.ibnkhaldoun.studentside.R;
 import com.ibnkhaldoun.studentside.Utilities.PreferencesManager;
 import com.ibnkhaldoun.studentside.Utilities.Utils;
+import com.ibnkhaldoun.studentside.adapters.SchedulePagerAdapter;
 import com.ibnkhaldoun.studentside.adapters.TabLayoutAdapter;
 import com.ibnkhaldoun.studentside.data_providers.DataProviders;
 import com.ibnkhaldoun.studentside.fragments.MarksFragment;
@@ -43,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private FloatingActionButton mAddMailFab;
 
-    private ViewPager mViewPager;
+    private ViewPager mMainViewPager, mScheduleViewPager;
     private TabLayout mTabLayout;
     private Toolbar mToolBar;
     private DrawerLayout mDrawer;
@@ -54,6 +55,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private String[] mFragmentsTitles;
     private int mCurrentState = 4;
     private MarksFragment marksFragment;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +71,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mFrame = findViewById(R.id.frame);
         setSupportActionBar(mToolBar);
 
+        mScheduleViewPager = findViewById(R.id.schedule_view_pager);
+        mMainViewPager = findViewById(R.id.main_screen_view_pager);
+        mTabLayout = findViewById(R.id.main_screen_tab_layout);
 
         mAddMailFab = findViewById(R.id.mail_add_professor_fab);
         mAddMailFab.setBackgroundColor(getResources().getColor(R.color.deep_red));
@@ -89,27 +94,32 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         nameHeader.setText(manager.getFullName());
         String branch = manager.getGrade() + " " + manager.getBranch();
         branchHeader.setText(branch);
+
         setupViewPagerAndTabLayout();
     }
 
     //helper method to initialize the view pager and the tab layout
     private void setupViewPagerAndTabLayout() {
-        mViewPager = findViewById(R.id.main_screen_view_pager);
-        mTabLayout = findViewById(R.id.main_screen_tab_layout);
+
         setupTabIcons();
 
+
         TabLayoutAdapter adapter = new TabLayoutAdapter(getSupportFragmentManager(), mTabLayout.getTabCount());
-        mViewPager.setAdapter(adapter);
-        mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTabLayout));
+        mMainViewPager.setAdapter(adapter);
+        mMainViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTabLayout));
+        mScheduleViewPager.setVisibility(View.INVISIBLE);
+        mMainViewPager.setVisibility(View.VISIBLE);
         mTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                mViewPager.setCurrentItem(tab.getPosition());
-                mToolBar.setTitle(mPagerTitles[tab.getPosition()]);
-                if (tab.getPosition() == 2) mAddMailFab.show();
-                else mAddMailFab.hide();
-                AppBarLayout appBarLayout = findViewById(R.id.appbar);
-                appBarLayout.setExpanded(true);
+                mMainViewPager.setCurrentItem(tab.getPosition());
+                if (mCurrentState == HOME) {
+                    mToolBar.setTitle(mPagerTitles[tab.getPosition()]);
+                    if (tab.getPosition() == 2) mAddMailFab.show();
+                    else mAddMailFab.hide();
+                    AppBarLayout appBarLayout = findViewById(R.id.appbar);
+                    appBarLayout.setExpanded(true);
+                }
             }
 
             @Override
@@ -133,6 +143,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             public void onDrawerClosed(View drawerView) {
                 super.onDrawerClosed(drawerView);
                 //todo add an interface to use the progress bar in the other fragment
+                checkingAndChanging(mCurrentState);
+                Toast.makeText(MainActivity.this, "Hello", Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -151,9 +163,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     //method to add icons to the TabLayout
     private void setupTabIcons() {
+        if (mTabLayout.getTabCount() > 0) {
+            mTabLayout.removeAllTabs();
+        }
         mTabLayout.addTab(mTabLayout.newTab().setIcon(R.drawable.ic_home));
         mTabLayout.addTab(mTabLayout.newTab().setIcon(R.drawable.ic_notifications_white));
         mTabLayout.addTab(mTabLayout.newTab().setIcon(R.drawable.ic_email_white));
+    }
+
+    private void setupTabDaySchedule() {
+        if (mTabLayout.getTabCount() > 0) {
+            mTabLayout.removeAllTabs();
+        }
+        mTabLayout.addTab(mTabLayout.newTab().setText("Sun"));
+        mTabLayout.addTab(mTabLayout.newTab().setText("Mon"));
+        mTabLayout.addTab(mTabLayout.newTab().setText("Tue"));
+        mTabLayout.addTab(mTabLayout.newTab().setText("Wed"));
+        mTabLayout.addTab(mTabLayout.newTab().setText("Thu"));
     }
 
     @Override
@@ -162,6 +188,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
+    //todo
     private void changeFlagOfAppBarLayout() {
 
     }
@@ -175,9 +202,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_home:
                 if (mCurrentState != HOME) {
                     mCurrentState = HOME;
-                    mViewPager.setVisibility(View.VISIBLE);
                     mTabLayout.setVisibility(View.VISIBLE);
                     mFrame.setVisibility(View.GONE);
+                    setupViewPagerAndTabLayout();
                     mToolBar.setTitle(mPagerTitles[mTabLayout.getSelectedTabPosition()]);
                 }
                 break;
@@ -185,7 +212,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 checkingAndChanging(MARKS);
                 break;
             case R.id.nav_schedule:
-                checkingAndChanging(SCHEDULE);
+                if (mCurrentState != SCHEDULE) {
+                    mCurrentState = SCHEDULE;
+                    mTabLayout.setVisibility(View.VISIBLE);
+                    mFrame.setVisibility(View.GONE);
+                    mToolBar.setTitle(mFragmentsTitles[SCHEDULE]);
+                    setupViewPagerAndTabLayoutForSchedule();
+                }
                 break;
             case R.id.nav_notes:
                 checkingAndChanging(NOTES);
@@ -213,10 +246,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             mCurrentState = index;
 
             new Handler().post(() -> {
-                        mViewPager.setVisibility(View.GONE);
+                        mMainViewPager.setVisibility(View.GONE);
                         mTabLayout.setVisibility(View.GONE);
                         mFrame.setVisibility(View.VISIBLE);
-                        getSupportFragmentManager().beginTransaction().setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
+                        getSupportFragmentManager().beginTransaction()
                                 .replace(R.id.frame, getFragmentByIndex(index))
                                 .commitAllowingStateLoss();
                         mToolBar.setTitle(mFragmentsTitles[index]);
@@ -234,7 +267,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private Fragment getFragmentByIndex(int index) {
         switch (index) {
             case 0:
-
                 if (marksFragment == null)
                     marksFragment = MarksFragment.newInstance(DataProviders.getMarkList());
                 return marksFragment;
@@ -261,5 +293,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-
+    private void setupViewPagerAndTabLayoutForSchedule() {
+        setupTabDaySchedule();
+        SchedulePagerAdapter mAdapter = new SchedulePagerAdapter(getSupportFragmentManager(), mTabLayout.getTabCount());
+        mScheduleViewPager.setAdapter(mAdapter);
+        mScheduleViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTabLayout));
+        mScheduleViewPager.setVisibility(View.VISIBLE);
+        mMainViewPager.setVisibility(View.INVISIBLE);
+    }
 }

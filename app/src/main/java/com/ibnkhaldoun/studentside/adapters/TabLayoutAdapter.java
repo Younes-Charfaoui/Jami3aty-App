@@ -13,14 +13,20 @@ import com.ibnkhaldoun.studentside.fragments.NotificationFragment;
 public class TabLayoutAdapter extends FragmentPagerAdapter {
 
     private int mNumbersOfTabs;
+    private int CurrentState;
 
     public TabLayoutAdapter(FragmentManager fm, int numbersOfTab) {
         super(fm);
         this.mNumbersOfTabs = numbersOfTab;
     }
 
+    public void setCurrentState(int currentState) {
+        CurrentState = currentState;
+    }
+
     @Override
     public Fragment getItem(int position) {
+
         switch (position) {
             case 0:
                 return DisplaysFragment.newInstance(DataProviders.getDisplayList());
