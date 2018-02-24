@@ -32,7 +32,6 @@
             android:layout_marginBottom="2dp"
             android:fontFamily="sans-serif-light"
             android:textSize="18sp"
-            android:textStyle="bold"
             tools:text="Phd Ouared Aek" />
 
         <TextView

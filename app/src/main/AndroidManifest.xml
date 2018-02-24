@@ -100,7 +100,41 @@
         <activity
             android:name=".activities.MarkDetailActivity"
             android:label="@string/title_activity_mark_detail"
+            android:parentActivityName=".activities.MarkActivity"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.ibnkhaldoun.studentside.activities.MainActivity" />
+        </activity>
+        <activity
+            android:name=".activities.MarkActivity"
+            android:label="@string/title_activity_mark"
             android:parentActivityName=".activities.MainActivity"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.ibnkhaldoun.studentside.activities.MainActivity" />
+        </activity>
+        <activity
+            android:name=".activities.ScheduleActivity"
+            android:label="@string/title_activity_schedule"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.ibnkhaldoun.studentside.activities.MainActivity" />
+        </activity>
+        <activity
+            android:name=".activities.NotesActivity"
+            android:label="@string/title_activity_notes"
+            android:parentActivityName=".activities.MainActivity"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.ibnkhaldoun.studentside.activities.MainActivity" />
+        </activity>
+        <activity
+            android:name=".activities.SavedActivity"
+            android:label="@string/title_activity_saved"
             android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
