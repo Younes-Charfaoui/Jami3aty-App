@@ -12,7 +12,7 @@
         android:layout_height="36dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
-        android:background="@drawable/circle"
+        android:background="@drawable/rectangle"
         android:gravity="center"
         android:textColor="@android:color/white"
         android:textSize="16sp"

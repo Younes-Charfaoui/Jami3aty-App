@@ -7,9 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-/**
- * Created by Younes Charfaoui on 16/02/2018.
- */
+
 
 public class IntroPagerAdapter extends PagerAdapter {
 

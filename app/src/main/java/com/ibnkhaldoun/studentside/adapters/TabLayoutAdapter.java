@@ -25,7 +25,7 @@ public class TabLayoutAdapter extends FragmentPagerAdapter {
             case 0:
                 return DisplaysFragment.newInstance(DataProviders.getDisplayList());
             case 1:
-                return new NotificationFragment();
+                return NotificationFragment.newInstance(DataProviders.getNotificationList());
             case 2:
                 return MailFragment.newInstance(DataProviders.getMailList());
             default:

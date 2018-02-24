@@ -2,6 +2,7 @@ package com.ibnkhaldoun.studentside.data_providers;
 
 
 import com.ibnkhaldoun.studentside.enums.PostTypes;
+import com.ibnkhaldoun.studentside.models.Comment;
 import com.ibnkhaldoun.studentside.models.Display;
 import com.ibnkhaldoun.studentside.models.Mail;
 import com.ibnkhaldoun.studentside.models.Mark;
@@ -20,16 +21,24 @@ public final class DataProviders {
     private static final List<Mark> markList = new ArrayList<>();
     private static final List<Display> displayList = new ArrayList<>();
     private static final List<Notification> notificationList = new ArrayList<>();
+    private static final List<Comment> commentList = new ArrayList<>();
+    private static final List<Student> studentList = new ArrayList<>();
 
     static {
         markList.add(new Mark("CD", "Compiler Design", 15f, 15, 15));
-        markList.add(new Mark("LP", "Linear Programming", 20, 19, 0));
-        markList.add(new Mark("LP", "Logical Programming", 19f, 0, 18));
-        markList.add(new Mark("SE", "Software Engineering", 12f, 0, 0));
-        markList.add(new Mark("IHM", "IHM", 14f, 0, 17));
-        markList.add(new Mark("PB", "Probability", 20f, 19, 0));
-        markList.add(new Mark("EN", "English", 16f, 0, 0));
+        markList.add(new Mark("LP", "Linear Programming", 20, 19, -1));
+        markList.add(new Mark("OS", "Operating System", 18.5f, 19, 18));
+        markList.add(new Mark("LP", "Logical Programming", 19f, -1, 18));
+        markList.add(new Mark("SE", "Software Engineering", 12f, 15.5f, 16.5f));
+        markList.add(new Mark("IHM", "IHM", 14f, -1, 17));
+        markList.add(new Mark("PB", "Probability", 20f, 19, -1));
+        markList.add(new Mark("EN", "English", 16f, -1, -1));
 
+        studentList.add(new Student("Younes", "Charfaoui"));
+        studentList.add(new Student("Ismail", "Bourbie"));
+        studentList.add(new Student("Taif", "Amine"));
+        studentList.add(new Student("Redouane", "Baya"));
+        studentList.add(new Student("Hami", "Doulami"));
 
         professorList.add(new Professor("Phd.", "Ouared", "Aek"));
         professorList.add(new Professor("Dr.", "Bekki", "Khathir"));
@@ -50,6 +59,16 @@ public final class DataProviders {
         messageList.add(new Message("Consulting", "Phasellus tincidunt orci quam, quis mattis dolor pharetra a. Nam dui lectus, facilisis vel pharetra quis, elementum non augue. Proin nec sodales risus. Nunc facilisis metus dui, a interdum ligula sagittis non. Curabitur vel nibh in nisi fringilla gravida eget nec urna. Vestibulum posuere, diam sed ullamcorper aliquet, ante metus malesuada mi, eget tempus ex tortor a libero. Fusce erat arcu, varius ut sodales consequat, fringilla quis sapien. Sed mattis pellentesque bibendum. Donec quis ornare sem, in blandit magna. Morbi nulla arcu, porttitor vitae ipsum nec, dictum sodales nunc. Donec a tristique turpis, posuere scelerisque leo. Aenean cursus enim arcu, et porttitor augue scelerisque nec. Vivamus at urna vel dui ultrices vehicula ut non tellus. Praesent scelerisque justo id est semper luctus", "Feb 15", new Student("Younes", "Charfaoui"), professorList.get(0)));
         messageList.add(new Message("Do the work", "Hello World for all the reason", "Jan 26", new Student("Younes", "Charfaoui"), professorList.get(0)));
         messageList.add(new Message("A request please", "Hello World every body is here", "Jan 13", new Student("Younes", "Charfaoui"), professorList.get(0)));
+
+        commentList.add(new Comment(studentList.get(0), "You missed", "1 mar"));
+        commentList.add(new Comment(studentList.get(1), "alright then", "1 apr"));
+        commentList.add(new Comment(studentList.get(2), "come one", "12 Jan"));
+        commentList.add(new Comment(studentList.get(3), "Hello from the other", "16 apr"));
+        commentList.add(new Comment(professorList.get(4), "sure you can not do that", "16 apr"));
+        commentList.add(new Comment(studentList.get(4), "no , it's not true", "14 feb"));
+        commentList.add(new Comment(professorList.get(6), "try to keep it secret", "8 apr"));
+        commentList.add(new Comment(studentList.get(1), "Hello world", "13 apr"));
+        commentList.add(new Comment(professorList.get(8), "try to do something else", "19 apr"));
 
         mailList.add(new Mail(professorList.get(0), messageList));
         mailList.add(new Mail(professorList.get(1), messageList));

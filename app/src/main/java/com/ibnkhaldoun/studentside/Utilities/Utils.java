@@ -5,13 +5,16 @@ import android.support.v4.content.ContextCompat;
 
 import com.ibnkhaldoun.studentside.R;
 
-/**
- * Created by Younes Charfaoui on 20/02/2018.
- */
 
-public final  class  Utils {
+public final class Utils {
 
-    public static int getCircleColor(char firstChar , Context mContext) {
+    public static int getMarkColor(float mark, Context context) {
+
+        if (mark >= 10) return ContextCompat.getColor(context, R.color.deep_green);
+        else return ContextCompat.getColor(context, R.color.deep_red);
+    }
+
+    public static int getCircleColor(char firstChar, Context context) {
         char mChar = Character.toLowerCase(firstChar);
         int color;
 
@@ -83,6 +86,6 @@ public final  class  Utils {
             default:
                 color = R.color.circle_15;
         }
-        return ContextCompat.getColor(mContext, color);
+        return ContextCompat.getColor(context, color);
     }
 }

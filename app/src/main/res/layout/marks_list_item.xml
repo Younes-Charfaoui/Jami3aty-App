@@ -1,109 +1,150 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:layout_marginBottom="20dp"
+    android:layout_marginLeft="17dp"
+    android:layout_marginRight="17dp"
+    android:layout_marginTop="20dp"
+    android:background="?android:selectableItemBackground"
     android:padding="16dp"
-    android:background="?android:selectableItemBackground">
 
+    app:cardElevation="4dp">
 
-    <android.support.constraint.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="?android:selectableItemBackground"
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/mark_subject_short_text"
+
+        <LinearLayout
+            android:id="@+id/mark_linear_subject"
             android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:layout_centerInParent="true"
-            android:background="@drawable/circle"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/mark_subject_text_view"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:maxLength="16"
+                android:textAlignment="center"
+                android:textColor="@android:color/white"
+                android:textSize="20sp"
+                tools:text="IHM" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="8dp">
+
+            <LinearLayout
+                android:id="@+id/mark_linear_exam"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/mark_exam_text_view"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_weight="2"
+                    android:text="@string/exam_string"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/mark_exam_mark_text_view"
+                    android:layout_width="@dimen/circle_marks_dim"
+                    android:layout_height="@dimen/circle_marks_dim"
+                    android:background="@drawable/circle"
+                    android:gravity="center"
+                    android:maxLength="4"
+                    android:textColor="@android:color/white"
+                    android:textSize="12sp"
+                    tools:text="12.OO" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/mark_linear_TD"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/mark_td_text_view"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_weight="2"
+                    android:text="@string/td_string"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/mark_td_mark_text_view"
+                    android:layout_width="@dimen/circle_marks_dim"
+                    android:layout_height="@dimen/circle_marks_dim"
+                    android:background="@drawable/circle"
+                    android:gravity="center"
+                    android:maxLength="4"
+                    android:textColor="@android:color/white"
+                    android:textSize="12sp"
+                    tools:text="12" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/mark_linear_TP"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/mark_tp_text_view"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_weight="2"
+                    android:text="@string/tp_string"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/mark_tp_mark_text_view"
+                    android:layout_width="@dimen/circle_marks_dim"
+                    android:layout_height="@dimen/circle_marks_dim"
+                    android:background="@drawable/circle"
+                    android:gravity="center"
+                    android:maxLength="4"
+                    android:textColor="@android:color/white"
+                    android:textSize="12sp"
+                    tools:text="12" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/mark_average_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:layout_gravity="bottom"
+            android:layout_marginTop="8dp"
             android:gravity="center"
-            android:textColor="@android:color/white"
-            android:textSize="22sp"
-            tools:text="Compiler design" />
+            android:padding="8dp"
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
+            tools:text="19.6" />
 
-        <TextView
-            android:id="@+id/td"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/activity_horizontal_margin"
-            android:layout_marginEnd="@dimen/activity_horizontal_margin"
-            android:layout_marginTop="@dimen/activity_horizontal_margin"
-            android:fontFamily="sans-serif-light"
-            android:text="@string/td_string"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+    </LinearLayout>
 
-        <TextView
-            android:id="@+id/td_note"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/activity_horizontal_margin"
-            android:layout_marginTop="@dimen/nav_header_vertical_spacing"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/td"
-            app:layout_constraintStart_toEndOf="@+id/td"
-            app:layout_constraintTop_toBottomOf="@id/td"
-            tools:text="19" />
-
-        <TextView
-            android:id="@+id/tp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/activity_horizontal_margin"
-            android:layout_marginEnd="@dimen/activity_horizontal_margin"
-            android:layout_marginTop="@dimen/activity_horizontal_margin"
-            android:fontFamily="sans-serif-light"
-            android:text="@string/tp_string"
-            app:layout_constraintRight_toLeftOf="@id/td"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/tp_note"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/activity_horizontal_margin"
-            android:layout_marginTop="@dimen/nav_header_vertical_spacing"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/tp"
-            app:layout_constraintRight_toLeftOf="@id/td_note"
-            app:layout_constraintStart_toEndOf="@+id/tp"
-            app:layout_constraintTop_toBottomOf="@id/tp"
-            tools:text="18" />
-
-        <TextView
-            android:id="@+id/exam"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/activity_horizontal_margin"
-            android:layout_marginEnd="@dimen/activity_horizontal_margin"
-            android:layout_marginTop="@dimen/activity_horizontal_margin"
-            android:fontFamily="sans-serif-light"
-            android:text="@string/exam_string"
-            app:layout_constraintRight_toLeftOf="@id/tp"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/exam_note"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/activity_horizontal_margin"
-            android:layout_marginTop="@dimen/nav_header_vertical_spacing"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/exam"
-            app:layout_constraintStart_toEndOf="@+id/exam"
-            app:layout_constraintTop_toBottomOf="@id/exam"
-            tools:text="18,5" />
-
-
-    </android.support.constraint.ConstraintLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_alignParentBottom="true"
-        android:background="@android:color/darker_gray" />
-</RelativeLayout>
+</android.support.v7.widget.CardView>

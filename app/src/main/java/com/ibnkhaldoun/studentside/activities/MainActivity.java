@@ -128,7 +128,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void setupNavigationDrawer() {
         mDrawer = findViewById(R.id.drawer_main_screen_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, mDrawer, mToolBar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+                this, mDrawer, mToolBar, R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                super.onDrawerClosed(drawerView);
+                //todo add an interface to use the progress bar in the other fragment
+            }
+
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+            }
+        };
+
         mDrawer.addDrawerListener(toggle);
         toggle.syncState();
 
@@ -148,6 +160,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main_screen, menu);
         return true;
+    }
+
+    private void changeFlagOfAppBarLayout() {
+
     }
 
     @Override
@@ -237,10 +253,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void onBackPressed() {
         if (mDrawer.isDrawerOpen(GravityCompat.START)) {
             mDrawer.closeDrawer(GravityCompat.START);
+
         } else {
             ActivityManager hello = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
             hello.moveTaskToFront(getTaskId(), 0);
             super.onBackPressed();
         }
     }
+
+
 }

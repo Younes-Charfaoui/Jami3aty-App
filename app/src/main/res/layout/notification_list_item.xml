@@ -26,35 +26,33 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:orientation="vertical"
-        android:layout_weight="4">
+        android:layout_weight="4"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/notification_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ellipsize="end"
-            android:lines="2"
             android:fontFamily="sans-serif-light"
-            android:textSize="18sp"
+            android:lines="2"
             android:textColor="@android:color/black"
+            android:textSize="18sp"
             tools:text="Ouared Aek has published the marks of Operating system" />
 
         <TextView
             android:id="@+id/notification_date"
-            android:textColor="@android:color/black"
-
-            tools:text="5 min ago"
-            android:fontFamily="sans-serif-thin"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:fontFamily="sans-serif-thin"
+            android:textColor="@android:color/black"
+            tools:text="5 min ago" />
     </LinearLayout>
-
 
     <ImageView
         android:id="@+id/notification_image"
         android:layout_width="0dp"
-        android:layout_height="36dp"
+        android:layout_height="24dp"
         android:layout_weight="1"
         android:contentDescription="@null"
         app:srcCompat="@drawable/ic_school" />

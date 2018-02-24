@@ -48,18 +48,25 @@ public class DisplayDetailActivity extends AppCompatActivity {
         textTextView.setText(display.getText());
 
         TextView numberOfNoteTextView = findViewById(R.id.display_detail_number_of_notes);
-        numberOfNoteTextView.setText("1 note");
+        if (display.getCommentList().size() != 0) {
+            numberOfNoteTextView.setText(display.getCommentList().size() + " note");
+
+        } else {
+
+            numberOfNoteTextView.setText("No note");
+        }
         View separatorView = findViewById(R.id.display_detail_notes_separator);
 
         notesLinearLayout = findViewById(R.id.display_detail_notes);
         if (display.getCommentList().size() != 0) {
+            separatorView.setVisibility(View.VISIBLE);
             for (int i = 0; i < display.getCommentList().size(); i++) {
                 Comment comment = display.getCommentList().get(i);
                 notesLinearLayout.addView(
                         createNoteView(comment.getmCommenter().getShortName(),
-                        comment.getmComment(),
-                        comment.getmCommenter().getFullName(),
-                        comment.getmDate()));
+                                comment.getmComment(),
+                                comment.getmCommenter().getFullName(),
+                                comment.getmDate()));
 
             }
         }

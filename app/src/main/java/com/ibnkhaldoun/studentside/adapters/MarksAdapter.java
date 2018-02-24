@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,11 +20,11 @@ import java.util.List;
 
 public class MarksAdapter extends RecyclerView.Adapter<MarksAdapter.MarksViewHolder> {
 
-    private List<Mark> mDataList = new ArrayList<>();
+    private List<Mark> mMarkList = new ArrayList<>();
     private Context mContext;
 
     public MarksAdapter(List<Mark> dataList, Context context) {
-        this.mDataList = dataList;
+        this.mMarkList = dataList;
         this.mContext = context;
     }
 
@@ -37,42 +38,68 @@ public class MarksAdapter extends RecyclerView.Adapter<MarksAdapter.MarksViewHol
 
     @Override
     public void onBindViewHolder(MarksViewHolder holder, int position) {
-        Mark mark = mDataList.get(position);
+        Mark mark = mMarkList.get(position);
         holder.mShortSubjectTextView.setText(mark.getShortSubjectName());
-        GradientDrawable circleDrawable = (GradientDrawable) holder.mShortSubjectTextView.getBackground();
-        circleDrawable.setColor(Utils.getCircleColor(mark.getShortSubjectName().charAt(0), mContext));
+        holder.mLinearSubject.setBackgroundColor(Utils.getCircleColor(mark.getSubjectName().charAt(0), mContext));
+
         holder.mExamTextView.setText(String.valueOf(mark.getExam()));
-        holder.mTdTextView.setText(String.valueOf(mark.getTD()));
-        holder.mTpTextView.setText(String.valueOf(mark.getTP()));
+        GradientDrawable examCircle = (GradientDrawable) holder.mExamTextView.getBackground();
+        examCircle.setColor(Utils.getMarkColor(mark.getExam(), mContext));
+
+        if (mark.getTD() != -1) {
+
+            holder.mTdTextView.setText(mark.getTD() == (int) mark.getTD() ? String.valueOf((int) mark.getTD()) : String.valueOf(mark.getTD()));
+            GradientDrawable tdCircle = (GradientDrawable) holder.mTdTextView.getBackground();
+            tdCircle.setColor(Utils.getMarkColor(mark.getTD(), mContext));
+        } else {
+            holder.mLinearTd.setVisibility(View.INVISIBLE);
+        }
+
+        if (mark.getTP() != -1) {
+            holder.mTpTextView.setText(String.valueOf(mark.getTP()));
+            GradientDrawable tpCircle = (GradientDrawable) holder.mTpTextView.getBackground();
+            tpCircle.setColor(Utils.getMarkColor(mark.getTP(), mContext));
+        } else {
+            holder.mLinearTp.setVisibility(View.INVISIBLE);
+        }
+
+        holder.mAverageTextView.setText("19");
+        holder.mAverageTextView.setTextColor(Utils.getMarkColor(19, mContext));
 
     }
 
 
     @Override
     public int getItemCount() {
-        return mDataList.size();
+        return mMarkList.size();
     }
 
     class MarksViewHolder extends RecyclerView.ViewHolder {
 
         final TextView mShortSubjectTextView,
-
-        mTpTextView,
+                mTpTextView,
                 mTdTextView,
-                mExamTextView;
+                mExamTextView, mAverageTextView;
+        final LinearLayout mLinearSubject, mLinearExam, mLinearTp, mLinearTd;
 
         MarksViewHolder(View itemView) {
             super(itemView);
 
-            mShortSubjectTextView = itemView.findViewById(R.id.mark_subject_short_text);
-            mTpTextView = itemView.findViewById(R.id.tp_note);
-            mTdTextView = itemView.findViewById(R.id.td_note);
-            mExamTextView = itemView.findViewById(R.id.exam_note);
+            mShortSubjectTextView = itemView.findViewById(R.id.mark_subject_text_view);
+            mTpTextView = itemView.findViewById(R.id.mark_tp_mark_text_view);
+            mTdTextView = itemView.findViewById(R.id.mark_td_mark_text_view);
+            mExamTextView = itemView.findViewById(R.id.mark_exam_mark_text_view);
+
             itemView.setOnClickListener(v -> {
                 //todo code to launch the detail activity of the subject
-                String display = mDataList.get(getAdapterPosition()).getSubjectName();
+                String display = mMarkList.get(getAdapterPosition()).getSubjectName();
                 Toast.makeText(mContext, display, Toast.LENGTH_SHORT).show();
             });
+            mLinearTd = itemView.findViewById(R.id.mark_linear_TD);
+            mLinearSubject = itemView.findViewById(R.id.mark_linear_subject);
+            mLinearExam = itemView.findViewById(R.id.mark_linear_exam);
+            mLinearTp = itemView.findViewById(R.id.mark_linear_TP);
+            mAverageTextView = itemView.findViewById(R.id.mark_average_text_view);
         }
     }
 }

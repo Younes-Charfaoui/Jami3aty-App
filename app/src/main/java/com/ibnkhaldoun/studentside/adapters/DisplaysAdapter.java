@@ -11,9 +11,9 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.ibnkhaldoun.studentside.activities.DisplayDetailActivity;
 import com.ibnkhaldoun.studentside.R;
 import com.ibnkhaldoun.studentside.Utilities.Utils;
+import com.ibnkhaldoun.studentside.activities.DisplayDetailActivity;
 import com.ibnkhaldoun.studentside.models.Display;
 
 import java.util.List;
@@ -31,6 +31,7 @@ public class DisplaysAdapter extends RecyclerView.Adapter<DisplaysAdapter.Displa
 
     @Override
     public DisplayViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        
         View view = LayoutInflater.from(mContext)
                 .inflate(R.layout.display_list_item, parent, false);
         return new DisplayViewHolder(view);
@@ -45,6 +46,7 @@ public class DisplaysAdapter extends RecyclerView.Adapter<DisplaysAdapter.Displa
         holder.mProfessorNameTv.setText(display.getProfessor().getFullName());
         holder.mDateTimeTv.setText(display.getDate());
         holder.mTextTv.setText(display.getText());
+        holder.mNumberOfNoteTextView.setText(String.valueOf(display.getCommentList().size() + " note"));
     }
 
     @Override
@@ -56,7 +58,7 @@ public class DisplaysAdapter extends RecyclerView.Adapter<DisplaysAdapter.Displa
 
         TextView mProfessorShortNameTv,
                 mProfessorNameTv, mDateTimeTv,
-                mTextTv;
+                mTextTv, mNumberOfNoteTextView;
         Button mSaveButton, mNoteButton;
 
         DisplayViewHolder(View itemView) {
@@ -67,7 +69,7 @@ public class DisplaysAdapter extends RecyclerView.Adapter<DisplaysAdapter.Displa
             mTextTv = itemView.findViewById(R.id.display_text_text_view);
             mSaveButton = itemView.findViewById(R.id.display_save_button);
             mNoteButton = itemView.findViewById(R.id.display_note_button);
-
+            mNumberOfNoteTextView = itemView.findViewById(R.id.display_number_of_notes);
             mSaveButton.setOnClickListener(v -> {
                 //todo , put the code we need to save the publication in the storage
                 Toast.makeText(mContext, "Save Button", Toast.LENGTH_SHORT).show();

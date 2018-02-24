@@ -48,6 +48,7 @@ public class Mark implements Parcelable {
         this.mTP = in.readFloat();
     }
 
+
     public String getSubjectName() {
         return subjectName;
     }
