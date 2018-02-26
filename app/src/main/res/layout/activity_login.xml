@@ -12,9 +12,9 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/hami"
+            android:alpha=".4"
             android:scaleType="centerCrop"
-            android:alpha=".4"/>
+            android:src="@drawable/hami" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -32,7 +32,6 @@
                 android:layout_marginBottom="16dp"
                 android:contentDescription="@string/logo_image_description"
                 android:src="@drawable/first_logo" />
-
             <!-- Email Label -->
 
             <LinearLayout
@@ -46,7 +45,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginBottom="8dp"
                     android:layout_marginEnd="16dp"
-                    android:src="@drawable/ic_mail_outline" />
+                    app:srcCompat="@drawable/ic_mail_outline" />
 
                 <android.support.design.widget.TextInputLayout
                     android:id="@+id/email_wrapper"
@@ -75,7 +74,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginBottom="8dp"
                     android:layout_marginEnd="16dp"
-                    android:src="@drawable/ic_lock_outline" />
+                    app:srcCompat="@drawable/ic_lock_outline" />
 
                 <android.support.design.widget.TextInputLayout
                     android:id="@+id/password_wrapper"

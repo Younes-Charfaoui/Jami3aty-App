@@ -1,5 +1,6 @@
 package com.ibnkhaldoun.studentside.activities;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -16,8 +17,8 @@ import android.support.v7.widget.helper.ItemTouchHelper.SimpleCallback;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
+import com.ibnkhaldoun.studentside.NoteEditActivity;
 import com.ibnkhaldoun.studentside.R;
 import com.ibnkhaldoun.studentside.adapters.NotesAdapter;
 import com.ibnkhaldoun.studentside.database.DatabaseContract;
@@ -51,7 +52,8 @@ public class NotesActivity extends AppCompatActivity
     private void setupFloatingActionButton() {
         FloatingActionButton mAddNoteFloatingActionButton = findViewById(R.id.note_add_fav);
         mAddNoteFloatingActionButton.setOnClickListener(v -> {
-            Toast.makeText(this, "The note add button", Toast.LENGTH_SHORT).show();
+
+            startActivity(new Intent(NotesActivity.this, NoteEditActivity.class));
         });
     }
 
@@ -91,6 +93,7 @@ public class NotesActivity extends AppCompatActivity
         }
         return true;
     }
+
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {

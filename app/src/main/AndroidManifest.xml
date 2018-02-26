@@ -140,6 +140,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.ibnkhaldoun.studentside.activities.MainActivity" />
         </activity>
+        <activity
+            android:name=".NoteEditActivity"
+            android:label="@string/title_activity_note_edit"
+            android:parentActivityName=".activities.NotesActivity"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.ibnkhaldoun.studentside.activities.NotesActivity" />
+        </activity>
     </application>
 
 </manifest>

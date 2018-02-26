@@ -77,6 +77,7 @@
     <string name="title_activity_message_detail">MessageDetailActivity</string>
     <string name="displays_save_string">Save</string>
     <string name="display_note_string">Note</string>
+    <string name="note_edit_string">Note</string>
     <string name="delete_message_string">Delete message</string>
     <string name="forward_string">Forward</string>
     <string name="reply_string">Reply</string>
@@ -99,4 +100,7 @@
     <string name="mark_empty_string">There is no mark</string>
     <string name="note_empty_string">There is no note</string>
     <string name="get_started_note">Get started by adding a note</string>
+    <string name="title_activity_note_edit">NoteEditActivity</string>
+    <string name="subject_string">Subject</string>
+    <string name="done_menu_string">done</string>
 </resources>
