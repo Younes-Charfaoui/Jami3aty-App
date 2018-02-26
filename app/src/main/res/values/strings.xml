@@ -82,9 +82,21 @@
     <string name="reply_string">Reply</string>
     <string name="title_activity_display_detail">Post</string>
     <string name="title_activity_mark_detail">MarkDetailActivity</string>
-    <string name="title_activity_mark">MarkActivity</string>
-    <string name="title_activity_schedule">ScheduleActivity</string>
-    <string name="title_activity_notes">NotesActivity</string>
-    <string name="title_activity_saved">SavedActivity</string>
+    <string name="title_activity_mark">Mark</string>
+    <string name="title_activity_schedule">Schedule</string>
+    <string name="title_activity_notes">Notes</string>
+    <string name="title_activity_saved">Saved</string>
 
+    <string name="sunday_string">Sun</string>
+    <string name="monday_string">Mon</string>
+    <string name="tuesday_string">Tue</string>
+    <string name="wednesday_string">Wed</string>
+    <string name="thursday_string">Thu</string>
+    <string name="emty_mail_string">There is no mails</string>
+    <string name="mail_empty_description_string">Get started by send new mails</string>
+    <string name="no_internet_connection_string">No Internet Connection</string>
+    <string name="notification_empty_string">There is no notification</string>
+    <string name="mark_empty_string">There is no mark</string>
+    <string name="note_empty_string">There is no note</string>
+    <string name="get_started_note">Get started by adding a note</string>
 </resources>

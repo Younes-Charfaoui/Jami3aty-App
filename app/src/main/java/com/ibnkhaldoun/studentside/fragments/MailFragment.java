@@ -15,6 +15,7 @@ import com.ibnkhaldoun.studentside.R;
 import com.ibnkhaldoun.studentside.adapters.MailAdapter;
 import com.ibnkhaldoun.studentside.models.Mail;
 
+import java.security.Security;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,6 +29,7 @@ public class MailFragment extends Fragment {
         MailFragment fragment = new MailFragment();
         fragment.setArguments(args);
         return fragment;
+
     }
 
     @Nullable

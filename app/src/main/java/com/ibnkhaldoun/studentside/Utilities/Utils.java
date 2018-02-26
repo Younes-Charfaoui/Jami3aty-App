@@ -9,7 +9,6 @@ import com.ibnkhaldoun.studentside.R;
 public final class Utils {
 
     public static int getMarkColor(float mark, Context context) {
-
         if (mark >= 10) return ContextCompat.getColor(context, R.color.deep_green);
         else return ContextCompat.getColor(context, R.color.deep_red);
     }

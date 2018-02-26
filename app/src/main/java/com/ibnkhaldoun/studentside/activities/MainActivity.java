@@ -14,6 +14,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,6 +25,8 @@ import com.ibnkhaldoun.studentside.R;
 import com.ibnkhaldoun.studentside.Utilities.PreferencesManager;
 import com.ibnkhaldoun.studentside.Utilities.Utils;
 import com.ibnkhaldoun.studentside.adapters.TabLayoutAdapter;
+
+import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -37,7 +40,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private NavigationView mNavigation;
 
     private String[] mPagerTitles;
-    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +56,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mMainViewPager = findViewById(R.id.main_screen_view_pager);
         mTabLayout = findViewById(R.id.main_screen_tab_layout);
 
+        Log.i("Hello", "The Time is : " + Calendar.getInstance().getTime());
         mAddMailFab = findViewById(R.id.mail_add_professor_fab);
         mAddMailFab.setBackgroundColor(getResources().getColor(R.color.deep_red));
         mAddMailFab.hide();
@@ -87,20 +91,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         switch (id) {
             case R.id.nav_marks:
-                mNavigation.setCheckedItem(R.id.nav_home);
                 startActivity(new Intent(this, MarkActivity.class));
+                mNavigation.setCheckedItem(R.id.nav_home);
                 break;
             case R.id.nav_schedule:
-                mNavigation.setCheckedItem(R.id.nav_home);
                 startActivity(new Intent(this, ScheduleActivity.class));
+                mNavigation.setCheckedItem(R.id.nav_home);
                 break;
             case R.id.nav_notes:
-                mNavigation.setCheckedItem(R.id.nav_home);
                 startActivity(new Intent(this, NotesActivity.class));
+                mNavigation.setCheckedItem(R.id.nav_home);
                 break;
             case R.id.nav_saved:
-                mNavigation.setCheckedItem(R.id.nav_home);
                 startActivity(new Intent(this, SavedActivity.class));
+                mNavigation.setCheckedItem(R.id.nav_home);
                 break;
             case R.id.nav_setting:
 
@@ -125,7 +129,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     //helper method to initialize the view pager and the tab layout
     private void setupViewPagerAndTabLayout() {
         setupTabIcons();
-
         TabLayoutAdapter adapter = new TabLayoutAdapter(getSupportFragmentManager(), mTabLayout.getTabCount());
         mMainViewPager.setAdapter(adapter);
         mMainViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTabLayout));
@@ -138,7 +141,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 else mAddMailFab.hide();
                 AppBarLayout appBarLayout = findViewById(R.id.appbar);
                 appBarLayout.setExpanded(true);
-
             }
 
             @Override

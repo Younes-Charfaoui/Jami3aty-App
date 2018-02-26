@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/schedule_choose_level"
+        android:orderInCategory="100"
+        android:title="Choose Level"
+        app:showAsAction="never" />
+    <!-- todo add the search menu item-->
+
+</menu>

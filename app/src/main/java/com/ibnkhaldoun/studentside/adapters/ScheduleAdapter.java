@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ibnkhaldoun.studentside.R;
+import com.ibnkhaldoun.studentside.Utilities.Utils;
 import com.ibnkhaldoun.studentside.models.ScheduleItem;
 
 import java.util.List;
@@ -38,6 +39,7 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.Schedu
         holder.mScheduleSubject.setText(scheduleItem.getSubject());
         String placeAndProfessor = scheduleItem.getLocation() + ", " + scheduleItem.getProfessor().getFullName();
         holder.mScheduleLocationAndProfessor.setText(placeAndProfessor);
+        holder.mSeparatorView.setBackgroundColor(Utils.getCircleColor(scheduleItem.getSubject().charAt(0), mContext));
     }
 
     @Override
