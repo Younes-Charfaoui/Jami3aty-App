@@ -10,6 +10,7 @@ public class DatabaseContract implements BaseColumns {
 
     public static final String PATH_NOTES = NoteEntry.TABLE_NAME;
     public static final String PATH_SAVED = SavedEntry.TABLE_NAME;
+    public static final String PATH_NOTE_DISPLAY = NoteOfDisplaysEntry.TABLE_NAME;
     public static final String PATH_DISPLAY = DisplayEntry.TABLE_NAME;
     public static final String PATH_MARK = MarkEntry.TABLE_NAME;
     public static final String PATH_SCHEDULE = ScheduleEntry.TABLE_NAME;
@@ -19,20 +20,31 @@ public class DatabaseContract implements BaseColumns {
     //todo the Path of the tables
 
     public static final class NoteEntry {
-        //todo list of the table constant
         public static final Uri CONTENT_NOTE_URI = BASE_URI.buildUpon().appendPath(PATH_NOTES).build();
-
-        public static final String TABLE_NAME = "notes";
         public static final String COLUMN_NOTE_TEXT = "note";
-        public static final String COLUMN_NOTE_ID = _ID;
         public static final String COLUMN_NOTE_SUBJECT = "subject";
+        static final String TABLE_NAME = "notes";
+        static final String COLUMN_NOTE_ID = _ID;
         public static final String[] ALL_COLUMN =
                 {COLUMN_NOTE_ID, COLUMN_NOTE_TEXT, COLUMN_NOTE_SUBJECT};
     }
 
-    public class SavedEntry {
-        public static final String TABLE_NAME = "saved";
-        //todo list of the table constant
+    public static final class SavedEntry {
+        public static final Uri CONTENT_SAVED_URI = BASE_URI.buildUpon().appendPath(PATH_SAVED).build();
+        public static final String COLUMN_NAME = "professor_name";
+        public static final String COLUMN_DATE = "date";
+        public static final String COLUMN_DISPLAY_TEXT = "display";
+        static final String TABLE_NAME = "saved";
+        public static final String COLUMN_ID = _ID;
+    }
+
+    public static final class NoteOfDisplaysEntry {
+        public static final Uri CONTENT_NOTE_DISPLAY_URI = BASE_URI.buildUpon().appendPath(PATH_NOTE_DISPLAY).build();
+        public static final String TABLE_NAME = "note_of_display";
+        public static final String COLUMN_ID = _ID;
+        public static final String COLUMN_ID_DISPLAY = "_ID_display";
+        public static final String COLUMN_TEXT = "note_text";
+        public static final String COLUMN_NAME = "name";
     }
 
     public class DisplayEntry {

@@ -18,6 +18,9 @@ import com.ibnkhaldoun.studentside.models.Display;
 
 public class DisplayDetailActivity extends AppCompatActivity {
 
+    public static final String SENDER = "sender";
+    public static final String DATA = "data";
+
     private LinearLayout notesLinearLayout;
 
     @Override

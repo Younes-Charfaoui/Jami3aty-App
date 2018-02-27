@@ -87,4 +87,9 @@ public final class Utils {
         }
         return ContextCompat.getColor(context, color);
     }
+
+    public static String getShortName(String name) {
+        //todo code to get two chars from string
+        return Character.toString(name.charAt(0));
+    }
 }

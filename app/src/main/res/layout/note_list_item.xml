@@ -14,7 +14,7 @@
             android:id="@+id/note_list_item_starter_view"
             android:layout_width="10dp"
             android:layout_height="match_parent"
-            android:background="@color/colorPrimary" />
+            tools:background="@color/colorPrimary" />
 
         <TextView
             android:id="@+id/note_list_item_text"

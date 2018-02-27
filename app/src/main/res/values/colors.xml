@@ -29,4 +29,6 @@
     <array name="d">
         <item>@color/circle_16</item>
     </array>
+
+    <color name="active_schedule">#EEEEEE</color>
 </resources>

@@ -2,6 +2,7 @@ package com.ibnkhaldoun.studentside.adapters;
 
 
 import android.content.Context;
+import android.graphics.drawable.GradientDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,10 +37,15 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.Schedu
     public void onBindViewHolder(ScheduleViewHolder holder, int position) {
         ScheduleItem scheduleItem = mScheduleList.get(position);
         holder.mTimeTextView.setText(scheduleItem.getTime());
+        if (Integer.parseInt(Character.toString(scheduleItem.getTime().charAt(0))) > 12) {
+            holder.itemView.setBackgroundColor(mContext.getResources().getColor(R.color.active_schedule));
+        }
         holder.mScheduleSubject.setText(scheduleItem.getSubject());
         String placeAndProfessor = scheduleItem.getLocation() + ", " + scheduleItem.getProfessor().getFullName();
         holder.mScheduleLocationAndProfessor.setText(placeAndProfessor);
         holder.mSeparatorView.setBackgroundColor(Utils.getCircleColor(scheduleItem.getSubject().charAt(0), mContext));
+        GradientDrawable circle = (GradientDrawable) holder.mCircleImage.getBackground();
+
     }
 
     @Override

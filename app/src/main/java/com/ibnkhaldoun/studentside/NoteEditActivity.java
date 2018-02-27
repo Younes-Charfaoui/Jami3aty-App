@@ -7,6 +7,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.ibnkhaldoun.studentside.database.DatabaseContract;
 
@@ -38,14 +39,33 @@ public class NoteEditActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.note_edit_menu_done:
-                getDataAndInsert();
-                finish();
+                if (validate()) {
+                    getDataAndInsert();
+                    finish();
+                }
                 break;
             case android.R.id.home:
                 onBackPressed();
                 break;
         }
         return true;
+    }
+
+    public boolean validate() {
+
+        boolean valid = true;
+
+        if (mNoteEditText.getText().toString().isEmpty()) {
+            Toast.makeText(this, "Please add something", Toast.LENGTH_SHORT).show();
+            valid = false;
+        }
+
+        if (mSubjectEditText.getText().toString().isEmpty()) {
+            Toast.makeText(this, "Please Choose Subject", Toast.LENGTH_SHORT).show();
+            valid = false;
+        }
+
+        return valid;
     }
 
     private void getDataAndInsert() {

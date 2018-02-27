@@ -76,7 +76,7 @@ public class MarksAdapter extends RecyclerView.Adapter<MarksAdapter.MarksViewHol
 
     class MarksViewHolder extends RecyclerView.ViewHolder {
 
-        final TextView mShortSubjectTextView,
+         TextView mShortSubjectTextView,
                 mTpTextView,
                 mTdTextView,
                 mExamTextView, mAverageTextView;
@@ -99,7 +99,7 @@ public class MarksAdapter extends RecyclerView.Adapter<MarksAdapter.MarksViewHol
             mLinearSubject = itemView.findViewById(R.id.mark_linear_subject);
             mLinearExam = itemView.findViewById(R.id.mark_linear_exam);
             mLinearTp = itemView.findViewById(R.id.mark_linear_TP);
-            mAverageTextView = itemView.findViewById(R.id.mark_average_text_view);
+            //mAverageTextView = itemView.findViewById(R.id.mark_average_text_view);
         }
     }
 }
