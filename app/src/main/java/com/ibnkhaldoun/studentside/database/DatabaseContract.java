@@ -24,7 +24,7 @@ public class DatabaseContract implements BaseColumns {
         public static final String COLUMN_NOTE_TEXT = "note";
         public static final String COLUMN_NOTE_SUBJECT = "subject";
         static final String TABLE_NAME = "notes";
-        static final String COLUMN_NOTE_ID = _ID;
+        public static final String COLUMN_NOTE_ID = _ID;
         public static final String[] ALL_COLUMN =
                 {COLUMN_NOTE_ID, COLUMN_NOTE_TEXT, COLUMN_NOTE_SUBJECT};
     }

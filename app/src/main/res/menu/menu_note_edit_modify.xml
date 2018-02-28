@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/note_edit_menu_done"
+        android:icon="@drawable/ic_check_white"
+        android:orderInCategory="101"
+        android:title="@string/done_menu_string"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/note_edit_menu_delete"
+        android:icon="@drawable/ic_delete_white"
+        android:orderInCategory="100"
+        android:title="@string/delete_note_string"
+        app:showAsAction="ifRoom" />
+</menu>

@@ -79,6 +79,7 @@
     <string name="display_note_string">Note</string>
     <string name="note_edit_string">Note</string>
     <string name="delete_message_string">Delete message</string>
+    <string name="delete_note_string">Delete</string>
     <string name="forward_string">Forward</string>
     <string name="reply_string">Reply</string>
     <string name="title_activity_display_detail">Post</string>
@@ -103,4 +104,6 @@
     <string name="title_activity_note_edit">NoteEditActivity</string>
     <string name="subject_string">Subject</string>
     <string name="done_menu_string">done</string>
+    <string name="delete_all_string">Delete all</string>
+    <string name="add_note_string">Add note</string>
 </resources>

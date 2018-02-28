@@ -4,19 +4,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="16dp"
+    android:layout_marginBottom="8dp"
+    android:layout_marginEnd="16dp"
+    android:layout_marginStart="16dp"
+    android:layout_marginTop="8dp"
     android:background="?android:selectableItemBackground"
     app:cardElevation="4dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="?android:selectableItemBackground"
         android:baselineAligned="false"
         android:orientation="horizontal">
 
 
         <LinearLayout
-            android:id="@+id/mark_linear_subject"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="3"
@@ -30,24 +33,28 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
                 android:background="@color/colorPrimary"
-                android:padding="2dp"
+                android:padding="3dp"
                 android:singleLine="true"
                 android:textAlignment="center"
                 android:textColor="@android:color/white"
                 android:textSize="20sp"
-                tools:text="IHM " />
+                tools:text="BDA" />
 
             <TextView
+                android:id="@+id/mark_average_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="8dp"
                 android:gravity="center_vertical"
+                android:singleLine="true"
+                android:textSize="20sp"
                 tools:text="Average  17,87" />
         </LinearLayout>
 
 
         <LinearLayout
+            android:id="@+id/mark_linear_layout_marks"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -62,7 +69,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:orientation="horizontal"
-                android:visibility="gone">
+                android:visibility="visible">
 
                 <TextView
                     android:id="@+id/mark_exam_text_view"
@@ -71,19 +78,18 @@
                     android:layout_marginStart="10dp"
                     android:layout_weight="2"
                     android:text="@string/exam_string"
+                    android:textColor="@android:color/white"
                     android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/mark_exam_mark_text_view"
-                    android:layout_width="@dimen/circle_marks_dim"
-                    android:layout_height="@dimen/circle_marks_dim"
-                    android:background="@drawable/circle"
-                    android:backgroundTint="@color/deep_red"
-
-                    android:gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="end"
                     android:maxLength="4"
                     android:textColor="@android:color/white"
-                    android:textSize="12sp"
+                    android:textSize="16sp"
                     tools:text="12.OO" />
             </LinearLayout>
 
@@ -93,7 +99,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:orientation="horizontal"
-                android:visibility="gone">
+                android:visibility="visible">
 
                 <TextView
                     android:id="@+id/mark_td_text_view"
@@ -102,18 +108,18 @@
                     android:layout_marginStart="10dp"
                     android:layout_weight="2"
                     android:text="@string/td_string"
+                    android:textColor="@android:color/white"
                     android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/mark_td_mark_text_view"
-                    android:layout_width="@dimen/circle_marks_dim"
-                    android:layout_height="@dimen/circle_marks_dim"
-                    android:background="@drawable/circle"
-                    android:backgroundTint="@color/deep_red"
-                    android:gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="end"
                     android:maxLength="4"
                     android:textColor="@android:color/white"
-                    android:textSize="12sp"
+                    android:textSize="16sp"
                     tools:text="12" />
             </LinearLayout>
 
@@ -131,19 +137,18 @@
                     android:layout_marginStart="10dp"
                     android:layout_weight="2"
                     android:text="@string/tp_string"
+                    android:textColor="@android:color/white"
                     android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/mark_tp_mark_text_view"
-                    android:layout_width="@dimen/circle_marks_dim"
-                    android:layout_height="@dimen/circle_marks_dim"
-                    android:background="@drawable/circle"
-
-                    android:backgroundTint="@color/deep_red"
-                    android:gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="end"
                     android:maxLength="4"
                     android:textColor="@android:color/white"
-                    android:textSize="12sp"
+                    android:textSize="16sp"
                     tools:text="12" />
             </LinearLayout>
 

@@ -1,7 +1,6 @@
 package com.ibnkhaldoun.studentside.adapters;
 
 import android.content.Context;
-import android.graphics.drawable.GradientDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,31 +40,23 @@ public class MarksAdapter extends RecyclerView.Adapter<MarksAdapter.MarksViewHol
         Mark mark = mMarkList.get(position);
         holder.mShortSubjectTextView.setText(mark.getShortSubjectName());
         holder.mLinearSubject.setBackgroundColor(Utils.getCircleColor(mark.getSubjectName().charAt(0), mContext));
-
+        holder.mShortSubjectTextView.setBackgroundColor(Utils.getCircleColor(mark.getShortSubjectName().charAt(0), mContext));
         holder.mExamTextView.setText(String.valueOf(mark.getExam()));
-        GradientDrawable examCircle = (GradientDrawable) holder.mExamTextView.getBackground();
-        examCircle.setColor(Utils.getMarkColor(mark.getExam(), mContext));
+
 
         if (mark.getTD() != -1) {
-
             holder.mTdTextView.setText(mark.getTD() == (int) mark.getTD() ? String.valueOf((int) mark.getTD()) : String.valueOf(mark.getTD()));
-            GradientDrawable tdCircle = (GradientDrawable) holder.mTdTextView.getBackground();
-            tdCircle.setColor(Utils.getMarkColor(mark.getTD(), mContext));
         } else {
-            holder.mLinearTd.setVisibility(View.INVISIBLE);
+            holder.mLinearTd.setVisibility(View.GONE);
         }
 
         if (mark.getTP() != -1) {
             holder.mTpTextView.setText(String.valueOf(mark.getTP()));
-            GradientDrawable tpCircle = (GradientDrawable) holder.mTpTextView.getBackground();
-            tpCircle.setColor(Utils.getMarkColor(mark.getTP(), mContext));
         } else {
-            holder.mLinearTp.setVisibility(View.INVISIBLE);
+            holder.mLinearTp.setVisibility(View.GONE);
         }
 
         holder.mAverageTextView.setText("19");
-        holder.mAverageTextView.setTextColor(Utils.getMarkColor(19, mContext));
-
     }
 
 
@@ -76,11 +67,11 @@ public class MarksAdapter extends RecyclerView.Adapter<MarksAdapter.MarksViewHol
 
     class MarksViewHolder extends RecyclerView.ViewHolder {
 
-         TextView mShortSubjectTextView,
+        final LinearLayout mLinearSubject, mLinearExam, mLinearTp, mLinearTd;
+        TextView mShortSubjectTextView,
                 mTpTextView,
                 mTdTextView,
                 mExamTextView, mAverageTextView;
-        final LinearLayout mLinearSubject, mLinearExam, mLinearTp, mLinearTd;
 
         MarksViewHolder(View itemView) {
             super(itemView);
@@ -96,9 +87,10 @@ public class MarksAdapter extends RecyclerView.Adapter<MarksAdapter.MarksViewHol
                 Toast.makeText(mContext, display, Toast.LENGTH_SHORT).show();
             });
             mLinearTd = itemView.findViewById(R.id.mark_linear_TD);
-            mLinearSubject = itemView.findViewById(R.id.mark_linear_subject);
+            mLinearSubject = itemView.findViewById(R.id.mark_linear_layout_marks);
             mLinearExam = itemView.findViewById(R.id.mark_linear_exam);
             mLinearTp = itemView.findViewById(R.id.mark_linear_TP);
+            mAverageTextView = itemView.findViewById(R.id.mark_average_text_view);
             //mAverageTextView = itemView.findViewById(R.id.mark_average_text_view);
         }
     }

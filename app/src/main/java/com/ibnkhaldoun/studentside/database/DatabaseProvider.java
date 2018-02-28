@@ -46,7 +46,7 @@ public class DatabaseProvider extends ContentProvider {
     @Override
     public Cursor query(@NonNull Uri uri, @Nullable String[] projection, @Nullable String selection, @Nullable String[] selectionArgs, @Nullable String sortOrder) {
         SQLiteDatabase database = mDatabase.getReadableDatabase();
-        Cursor cursor;
+        Cursor cursor = null;
 
         int match = sUriMatcher.match(uri);
 
@@ -60,8 +60,18 @@ public class DatabaseProvider extends ContentProvider {
                 selection = DatabaseContract.NoteEntry.COLUMN_NOTE_ID + "= ?";
                 selectionArgs = new String[]{String.valueOf(uri.getLastPathSegment())};
                 cursor = database.query(DatabaseContract.NoteEntry.TABLE_NAME,
-                        projection, selection, selectionArgs, null, null, sortOrder
-                );
+                        projection, selection, selectionArgs, null, null, sortOrder);
+                break;
+
+            case SAVED:
+                cursor = database.query(DatabaseContract.SavedEntry.TABLE_NAME, projection,
+                        selection, selectionArgs, null, null, sortOrder);
+                break;
+            case SAVED_ID:
+                selection = DatabaseContract.SavedEntry.COLUMN_ID + "= ?";
+                selectionArgs = new String[]{String.valueOf(uri.getLastPathSegment())};
+                cursor = database.query(DatabaseContract.SavedEntry.TABLE_NAME, projection,
+                        selection, selectionArgs, null, null, sortOrder);
                 break;
             default:
                 throw new IllegalArgumentException();
@@ -83,15 +93,17 @@ public class DatabaseProvider extends ContentProvider {
         int match = sUriMatcher.match(uri);
         switch (match) {
             case NOTES:
-                return insertNote(uri, values);
+                return insertData(uri, values, DatabaseContract.NoteEntry.TABLE_NAME);
+            case SAVED:
+                return insertData(uri, values, DatabaseContract.SavedEntry.TABLE_NAME);
             default:
                 throw new IllegalArgumentException();
         }
     }
 
-    private Uri insertNote(Uri uri, ContentValues values) {
+    private Uri insertData(Uri uri, ContentValues values, String table) {
         SQLiteDatabase database = mDatabase.getWritableDatabase();
-        long id = database.insert(DatabaseContract.NoteEntry.TABLE_NAME, null, values);
+        long id = database.insert(table, null, values);
         if (id != -1) {
             assert getContext() != null;
             getContext().getContentResolver().notifyChange(uri, null);
@@ -99,6 +111,7 @@ public class DatabaseProvider extends ContentProvider {
         }
         return null;
     }
+
 
     @Override
     public int delete(@NonNull Uri uri, @Nullable String selection, @Nullable String[] selectionArgs) {
@@ -109,14 +122,29 @@ public class DatabaseProvider extends ContentProvider {
                 return database.delete(DatabaseContract.NoteEntry.TABLE_NAME, selection, selectionArgs);
 
             case NOTES_ID:
-                selection = DatabaseContract.NoteEntry.COLUMN_NOTE_ID + " = ?";
-                selectionArgs = new String[]{String.valueOf(uri.getLastPathSegment())};
-                int rowDeleted = database.delete(DatabaseContract.NoteEntry.TABLE_NAME, selection, selectionArgs);
-                assert getContext() != null;
-                if (rowDeleted != 0) getContext().getContentResolver().notifyChange(uri, null);
-                return rowDeleted;
+                return deleteElement(uri, database,
+                        DatabaseContract.NoteEntry.COLUMN_NOTE_ID,
+                        DatabaseContract.NoteEntry.TABLE_NAME);
+            case SAVED:
+                return database.delete(DatabaseContract.SavedEntry.TABLE_NAME, selection, selectionArgs);
+
+            case SAVED_ID:
+                return deleteElement(uri, database,
+                        DatabaseContract.SavedEntry.COLUMN_ID,
+                        DatabaseContract.SavedEntry.TABLE_NAME);
         }
         return 0;
+    }
+
+    private int deleteElement(@NonNull Uri uri, SQLiteDatabase database, String id, String table) {
+        String selection;
+        String[] selectionArgs;
+        selection = id + " = ?";
+        selectionArgs = new String[]{String.valueOf(uri.getLastPathSegment())};
+        int rowDeleted = database.delete(table, selection, selectionArgs);
+        assert getContext() != null;
+        if (rowDeleted != 0) getContext().getContentResolver().notifyChange(uri, null);
+        return rowDeleted;
     }
 
     @Override
@@ -126,19 +154,30 @@ public class DatabaseProvider extends ContentProvider {
 
         switch (match) {
             case NOTES:
-                return updateNote(uri, values, selection, selectionArgs, database);
+                return updateElement(uri, values, selection, selectionArgs,
+                        database, DatabaseContract.NoteEntry.TABLE_NAME);
             case NOTES_ID:
                 selection = DatabaseContract.NoteEntry.COLUMN_NOTE_ID + "= ?";
                 selectionArgs = new String[]{String.valueOf(uri.getLastPathSegment())};
-                return updateNote(uri, values, selection, selectionArgs, database);
+                return updateElement(uri, values, selection, selectionArgs,
+                        database, DatabaseContract.NoteEntry.TABLE_NAME);
+            case SAVED:
+                return updateElement(uri, values, selection, selectionArgs,
+                        database, DatabaseContract.SavedEntry.TABLE_NAME);
+            case SAVED_ID:
+                selection = DatabaseContract.SavedEntry.COLUMN_ID + "= ?";
+                selectionArgs = new String[]{String.valueOf(uri.getLastPathSegment())};
+                return updateElement(uri, values, selection, selectionArgs,
+                        database, DatabaseContract.SavedEntry.TABLE_NAME);
             default:
                 throw new IllegalArgumentException();
         }
 
     }
 
-    private int updateNote(@NonNull Uri uri, @Nullable ContentValues values, @Nullable String selection, @Nullable String[] selectionArgs, SQLiteDatabase database) {
-        int rowUpdated = database.update(DatabaseContract.NoteEntry.TABLE_NAME, values, selection, selectionArgs);
+    private int updateElement(@NonNull Uri uri, @Nullable ContentValues values, @Nullable String selection,
+                              @Nullable String[] selectionArgs, SQLiteDatabase database, String table) {
+        int rowUpdated = database.update(table, values, selection, selectionArgs);
         assert getContext() != null;
         if (rowUpdated != 0) getContext().getContentResolver().notifyChange(uri, null);
         return rowUpdated;

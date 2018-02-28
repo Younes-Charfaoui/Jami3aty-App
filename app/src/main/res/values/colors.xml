@@ -4,6 +4,7 @@
     <color name="colorPrimaryDark">#1976d2</color>
     <color name="colorAccent">#2979ff</color>
     <color name="deep_red">#FF1744</color>
+    <color name="red_me">#F44336</color>
     <color name="deep_green">#4CAF50</color>
 
     <color name="circle_1">#F44336</color>

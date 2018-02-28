@@ -3,10 +3,11 @@ package com.ibnkhaldoun.studentside.models;
 
 public class Note {
     private String note;
-    private Subject subject;
+    private String subject;
+    private long id;
 
-    public Note(String note, Subject subject) {
-
+    public Note(long id, String subject, String note) {
+        this.id = id;
         this.note = note;
         this.subject = subject;
     }
@@ -15,7 +16,15 @@ public class Note {
         return note;
     }
 
-    public Subject getSubject() {
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getSubject() {
         return subject;
     }
 }

@@ -2,6 +2,7 @@ package com.ibnkhaldoun.studentside.adapters;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.drawable.GradientDrawable;
 import android.support.v7.widget.RecyclerView;
@@ -10,17 +11,26 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.ibnkhaldoun.studentside.NoteEditActivity;
 import com.ibnkhaldoun.studentside.R;
 import com.ibnkhaldoun.studentside.Utilities.Utils;
 import com.ibnkhaldoun.studentside.database.DatabaseContract;
+import com.ibnkhaldoun.studentside.models.Note;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NotesViewHolder> {
 
-    private Cursor mCursor;
     private Context mContext;
+    private List<Note> mNoteList;
 
     public NotesAdapter(Context mContext) {
         this.mContext = mContext;
+    }
+
+    public void setNotes(List<Note> noteList) {
+        this.mNoteList = noteList;
     }
 
     @Override
@@ -31,25 +41,44 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NotesViewHol
 
     @Override
     public void onBindViewHolder(NotesViewHolder holder, int position) {
-        mCursor.moveToPosition(position);
-        String subject = mCursor.getString(mCursor.getColumnIndex(DatabaseContract.NoteEntry.COLUMN_NOTE_SUBJECT));
-        String note = mCursor.getString(mCursor.getColumnIndex(DatabaseContract.NoteEntry.COLUMN_NOTE_TEXT));
-        holder.mStarterView.setBackgroundColor(subject.charAt(0));
-        holder.mSubjectTextView.setText(subject);
+        Note note = mNoteList.get(position);
+        holder.itemView.setTag(note.getId());
+        holder.mStarterView.setBackgroundColor(Utils.getCircleColor(note.getSubject().charAt(0), mContext));
+        holder.mSubjectTextView.setText(note.getSubject());
         GradientDrawable drawable = (GradientDrawable) holder.mSubjectTextView.getBackground();
-        drawable.setColor(Utils.getCircleColor(subject.charAt(0), mContext));
-        holder.mNoteTextView.setText(note);
+        drawable.setColor(Utils.getCircleColor(note.getSubject().charAt(0), mContext));
+        holder.mNoteTextView.setText(note.getNote());
     }
 
     @Override
     public int getItemCount() {
-        if (mCursor != null) return mCursor.getCount();
+        if (mNoteList != null) return mNoteList.size();
         return 0;
     }
 
     public void swapCursor(Cursor cursor) {
-        mCursor = cursor;
+        mNoteList = new ArrayList<>();
+        if (cursor != null) {
+            while (cursor.moveToNext()) {
+                long id = cursor.getInt(cursor.getColumnIndex(DatabaseContract.NoteEntry.COLUMN_NOTE_ID));
+                String subject = cursor.getString(cursor.getColumnIndex(DatabaseContract.NoteEntry.COLUMN_NOTE_SUBJECT));
+                String note = cursor.getString(cursor.getColumnIndex(DatabaseContract.NoteEntry.COLUMN_NOTE_TEXT));
+                mNoteList.add(new Note(id, subject, note));
+            }
+        }
         notifyDataSetChanged();
+    }
+
+    public Note removeItem(int position) {
+        Note note = mNoteList.get(position);
+        mNoteList.remove(position);
+        notifyItemRemoved(position);
+        return note;
+    }
+
+    public void restoreItem(int position, Note note) {
+        mNoteList.add(position, note);
+        notifyItemInserted(position);
     }
 
     class NotesViewHolder extends RecyclerView.ViewHolder {
@@ -60,8 +89,14 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NotesViewHol
         NotesViewHolder(View itemView) {
             super(itemView);
             mStarterView = itemView.findViewById(R.id.note_list_item_starter_view);
-            mNoteTextView = itemView.findViewById(R.id.note_list_item_text);
             mSubjectTextView = itemView.findViewById(R.id.note_list_item_subject);
+            mNoteTextView = itemView.findViewById(R.id.note_list_item_text);
+            itemView.setOnClickListener(v -> {
+                Intent intent = new Intent(mContext, NoteEditActivity.class);
+                intent.putExtra(NoteEditActivity.KEY_ID, itemView.getTag().toString());
+                intent.putExtra(NoteEditActivity.KEY_SENDER, NoteEditActivity.KEY_MODIFY);
+                mContext.startActivity(intent);
+            });
         }
     }
 }
