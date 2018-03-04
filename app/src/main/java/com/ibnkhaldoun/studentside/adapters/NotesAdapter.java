@@ -11,7 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.ibnkhaldoun.studentside.NoteEditActivity;
+import com.ibnkhaldoun.studentside.activities.NoteEditActivity;
 import com.ibnkhaldoun.studentside.R;
 import com.ibnkhaldoun.studentside.Utilities.Utils;
 import com.ibnkhaldoun.studentside.database.DatabaseContract;

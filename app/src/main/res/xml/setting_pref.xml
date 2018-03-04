@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="Notification">
+        <CheckBoxPreference android:defaultValue="true" android:title="Displays Notification" />
+        <CheckBoxPreference android:title="Message Notification" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="Reminders">
+
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="Reminders"
+            android:title="Class Reminders" />
+
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="Reminders"
+            android:title="Exam Reminders" />
+
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="Reminders"
+            android:title="Consultation Reminders" />
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:icon="@drawable/ic_delete"
+        android:title="About">
+        <Preference android:title="Feedback and Support" />
+        <Preference android:title="Privacy" />
+        <Preference android:title="Term of Use" />
+    </PreferenceCategory>
+    <Preference android:title="Sign out" />
+</PreferenceScreen>

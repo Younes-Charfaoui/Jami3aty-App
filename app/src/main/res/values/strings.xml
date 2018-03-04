@@ -106,4 +106,5 @@
     <string name="done_menu_string">done</string>
     <string name="delete_all_string">Delete all</string>
     <string name="add_note_string">Add note</string>
+    <string name="title_activity_setting">Setting</string>
 </resources>

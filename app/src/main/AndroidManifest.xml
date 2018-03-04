@@ -141,13 +141,22 @@
                 android:value="com.ibnkhaldoun.studentside.activities.MainActivity" />
         </activity>
         <activity
-            android:name=".NoteEditActivity"
+            android:name=".activities.NoteEditActivity"
             android:label="@string/title_activity_note_edit"
             android:parentActivityName=".activities.NotesActivity"
             android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.ibnkhaldoun.studentside.activities.NotesActivity" />
+        </activity>
+        <activity
+            android:name=".activities.SettingActivity"
+            android:label="@string/title_activity_setting"
+            android:parentActivityName=".activities.MainActivity"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.ibnkhaldoun.studentside.activities.MainActivity" />
         </activity>
     </application>
 

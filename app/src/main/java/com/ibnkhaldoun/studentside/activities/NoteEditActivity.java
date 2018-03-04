@@ -1,4 +1,4 @@
-package com.ibnkhaldoun.studentside;
+package com.ibnkhaldoun.studentside.activities;
 
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -12,9 +12,12 @@ import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.ibnkhaldoun.studentside.R;
 import com.ibnkhaldoun.studentside.database.DatabaseContract;
+import com.ibnkhaldoun.studentside.fragments.SubjectListFragment;
+import com.ibnkhaldoun.studentside.interfaces.SubjectDialogInterface;
 
-public class NoteEditActivity extends AppCompatActivity {
+public class NoteEditActivity extends AppCompatActivity implements SubjectDialogInterface {
 
     public static final String KEY_SENDER = "sender";
     public static final String KEY_NEW = "new";
@@ -59,6 +62,12 @@ public class NoteEditActivity extends AppCompatActivity {
             mNoteEditText.setText(cursor.getString(cursor.getColumnIndex(DatabaseContract.NoteEntry.COLUMN_NOTE_TEXT)));
             cursor.close();
         }
+
+        mSubjectEditText.setOnClickListener(v -> {
+            SubjectListFragment dialog = new SubjectListFragment();
+            dialog.setCancelable(true);
+            dialog.show(getSupportFragmentManager(), "TAG");
+        });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
     }
@@ -144,5 +153,10 @@ public class NoteEditActivity extends AppCompatActivity {
         values.put(DatabaseContract.NoteEntry.COLUMN_NOTE_SUBJECT, subject);
         values.put(DatabaseContract.NoteEntry.COLUMN_NOTE_TEXT, note);
         getContentResolver().insert(DatabaseContract.NoteEntry.CONTENT_NOTE_URI, values);
+    }
+
+    @Override
+    public void onSubjectChosen(String s) {
+        mSubjectEditText.setText(s);
     }
 }

@@ -33,7 +33,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
             DatabaseContract.NoteOfDisplaysEntry.COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             DatabaseContract.NoteOfDisplaysEntry.COLUMN_NAME + " TEXT NOT NULL, " +
             DatabaseContract.NoteOfDisplaysEntry.COLUMN_TEXT + " TEXT NOT NULL, " +
-            DatabaseContract.NoteOfDisplaysEntry.COLUMN_ID_DISPLAY + "INTEGER NOT NULL , " +
+            DatabaseContract.NoteOfDisplaysEntry.COLUMN_ID_DISPLAY + " INTEGER NOT NULL , " +
             "FOREIGN KEY (" + DatabaseContract.NoteOfDisplaysEntry.COLUMN_ID_DISPLAY + ") " +
             "REFERENCES " + DatabaseContract.SavedEntry.TABLE_NAME +
             "(" + DatabaseContract.SavedEntry.COLUMN_ID + "));";

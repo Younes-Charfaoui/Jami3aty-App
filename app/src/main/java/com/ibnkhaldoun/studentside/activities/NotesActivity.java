@@ -26,7 +26,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import com.ibnkhaldoun.studentside.NoteEditActivity;
 import com.ibnkhaldoun.studentside.R;
 import com.ibnkhaldoun.studentside.adapters.NotesAdapter;
 import com.ibnkhaldoun.studentside.database.DatabaseContract;
@@ -101,7 +100,11 @@ public class NotesActivity extends AppCompatActivity
                             @Override
                             public void onDismissed(Snackbar transientBottomBar, int event) {
                                 super.onDismissed(transientBottomBar, event);
-                                if (event == Snackbar.Callback.DISMISS_EVENT_TIMEOUT) {
+                                if (event == Snackbar.Callback.DISMISS_EVENT_TIMEOUT
+                                        ) {
+                                    getContentResolver().delete(uri, null, null);
+                                }
+                                if (event == Snackbar.Callback.DISMISS_EVENT_CONSECUTIVE) {
                                     getContentResolver().delete(uri, null, null);
                                     getSupportLoaderManager().restartLoader(ID_LOADER, null, NotesActivity.this);
                                 }
