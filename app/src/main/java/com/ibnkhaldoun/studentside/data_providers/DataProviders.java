@@ -25,6 +25,7 @@ public final class DataProviders {
     private static final List<Notification> notificationList = new ArrayList<>();
     private static final List<Comment> commentList = new ArrayList<>();
     private static final List<Student> studentList = new ArrayList<>();
+
     private static final List<ScheduleItem> sundayList = new ArrayList<>();
     private static final List<ScheduleItem> mondayList = new ArrayList<>();
     private static final List<ScheduleItem> tuesdayList = new ArrayList<>();

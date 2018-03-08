@@ -3,16 +3,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <group android:id="@+id/nav_top_menu"
-        android:checkableBehavior="single">
+    <group
+        android:id="@+id/nav_top_menu"
+        android:checkableBehavior="none">
         <item
             android:id="@+id/nav_home"
+            android:checked="true"
             android:icon="@drawable/ic_home"
             android:title="@string/nav_home_string" />
         <item
             android:id="@+id/nav_marks"
             android:icon="@drawable/ic_school"
             android:title="@string/nav_marks_string" />
+        <item
+            android:id="@+id/nav_subject"
+            android:title="@string/subject_string"
+            android:icon="@drawable/ic_subject_black"/>
         <item
             android:id="@+id/nav_schedule"
             android:icon="@drawable/ic_date_range"

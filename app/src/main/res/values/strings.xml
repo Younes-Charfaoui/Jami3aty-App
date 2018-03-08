@@ -107,4 +107,9 @@
     <string name="delete_all_string">Delete all</string>
     <string name="add_note_string">Add note</string>
     <string name="title_activity_setting">Setting</string>
+    <string name="saved_empty_title_string">There is no saved post</string>
+    <string name="get_started_saved_string">Get started by saving a post from home screen</string>
+    <string name="title_activity_subjects_detail">SubjectsDetailActivity</string>
+    <string name="title_activity_subjects">SubjectsActivity</string>
+    <string name="subject_string">Subject</string>
 </resources>

@@ -158,6 +158,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.ibnkhaldoun.studentside.activities.MainActivity" />
         </activity>
+        <activity
+            android:name=".activities.SubjectsDetailActivity"
+            android:label="@string/title_activity_subjects_detail"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".activities.SubjectsActivity"
+            android:label="@string/title_activity_subjects"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

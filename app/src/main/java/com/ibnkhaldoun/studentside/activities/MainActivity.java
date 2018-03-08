@@ -92,20 +92,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         switch (id) {
             case R.id.nav_marks:
                 startActivity(new Intent(this, MarkActivity.class));
-                mNavigation.setCheckedItem(R.id.nav_home);
                 break;
             case R.id.nav_schedule:
                 startActivity(new Intent(this, ScheduleActivity.class));
-                mNavigation.setCheckedItem(R.id.nav_home);
                 break;
             case R.id.nav_notes:
                 startActivity(new Intent(this, NotesActivity.class));
-                mNavigation.setCheckedItem(R.id.nav_home);
                 break;
             case R.id.nav_saved:
                 startActivity(new Intent(this, SavedActivity.class));
-                mNavigation.setCheckedItem(R.id.nav_home);
                 break;
+
+            case R.id.nav_subject:
+                startActivity(new Intent(this, SubjectsActivity.class));
             case R.id.nav_setting:
 
                 break;
