@@ -27,14 +27,14 @@ public class SubjectsActivity extends AppCompatActivity {
 
     private void setupRecyclerView() {
         mSubjectRecyclerView = findViewById(R.id.subject_recycler_view);
-        mAdapter = new SubjectsAdapter();
+        mAdapter = new SubjectsAdapter(this);
         LinearLayoutManager manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mSubjectRecyclerView.setAdapter(mAdapter);
         mSubjectRecyclerView.setLayoutManager(manager);
         mSubjectRecyclerView.setHasFixedSize(true);
     }
 
-    //todo add a subject table in the database of course
-    //todo add the layout item for this adapter
+
+
     //todo add the loader manager for loading the subject from the database
 }

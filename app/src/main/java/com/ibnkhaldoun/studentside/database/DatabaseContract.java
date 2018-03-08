@@ -16,6 +16,7 @@ public class DatabaseContract implements BaseColumns {
     public static final String PATH_SCHEDULE = ScheduleEntry.TABLE_NAME;
     public static final String PATH_NOTIFICATION = NotificationEntry.TABLE_NAME;
     public static final String PATH_MAIL = MailEntry.TABLE_NAME;
+    public static final String PATH_SUBJECT = SubjectEntry.TABLE_NAME;
     private static final Uri BASE_URI = Uri.parse("content://" + AUTHORITY);
     //todo the Path of the tables
 
@@ -23,10 +24,10 @@ public class DatabaseContract implements BaseColumns {
         public static final Uri CONTENT_NOTE_URI = BASE_URI.buildUpon().appendPath(PATH_NOTES).build();
         public static final String COLUMN_NOTE_TEXT = "note";
         public static final String COLUMN_NOTE_SUBJECT = "subject";
-        static final String TABLE_NAME = "notes";
         public static final String COLUMN_NOTE_ID = _ID;
         public static final String[] ALL_COLUMN =
                 {COLUMN_NOTE_ID, COLUMN_NOTE_TEXT, COLUMN_NOTE_SUBJECT};
+        static final String TABLE_NAME = "notes";
     }
 
     public static final class SavedEntry {
@@ -34,8 +35,8 @@ public class DatabaseContract implements BaseColumns {
         public static final String COLUMN_NAME = "professor_name";
         public static final String COLUMN_DATE = "date";
         public static final String COLUMN_DISPLAY_TEXT = "display";
-        static final String TABLE_NAME = "saved";
         public static final String COLUMN_ID = _ID;
+        static final String TABLE_NAME = "saved";
     }
 
     public static final class NoteOfDisplaysEntry {
@@ -70,5 +71,18 @@ public class DatabaseContract implements BaseColumns {
     public class ScheduleEntry {
         public static final String TABLE_NAME = "schedules";
         //todo list of the table constant
+    }
+
+    public class SubjectEntry {
+        public static final String TABLE_NAME = "subjects";
+        public static final String COLUMN_ID = _ID;
+        public static final String COLUMN_TITLE = "title";
+        public static final String COLUMN_SHORT_TITLE = "shortTitle";
+        public static final String COLUMN_COEFFICIENT = "coefficient";
+        public static final String COLUMN_CREDIT = "credit";
+        public static final String COLUMN_SUMMARY = "summary";
+        public static final String COLUMN_TABLE_CONTENT = "content";
+        public static final String COLUMN_LEVEL = "content";
+        public static final String COLUMN_UNITY_TYPE = "unityType";
     }
 }

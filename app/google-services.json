@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "920285888823",
+    "firebase_url": "https://displaysstudentside.firebaseio.com",
+    "project_id": "displaysstudentside",
+    "storage_bucket": "displaysstudentside.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:920285888823:android:bd5dc45499f87fc2",
+        "android_client_info": {
+          "package_name": "com.ibnkhaldoun.studentside"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "920285888823-n18dao5lataa0thlv2kmpls7u56h80eb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ibnkhaldoun.studentside",
+            "certificate_hash": "7587448290674ff72a5c816ea50516a0296d0298"
+          }
+        },
+        {
+          "client_id": "920285888823-fbktl8cpe0tsoi4qtictidrvdi4h7r7c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCb5YIzcbZb-eq-8302d_jWEign3eEwGzk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "920285888823-fbktl8cpe0tsoi4qtictidrvdi4h7r7c.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

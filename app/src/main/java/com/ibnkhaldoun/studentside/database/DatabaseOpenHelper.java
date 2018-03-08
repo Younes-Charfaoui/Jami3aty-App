@@ -10,7 +10,6 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "university.db";
     private static final int DATABASE_VERSION = 1;
 
-    //todo add the query for creating the tables and dropping the tables
     private static final String SQL_QUERY_CREATE_NOTE = "CREATE TABLE " +
             DatabaseContract.NoteEntry.TABLE_NAME + " ( " +
             DatabaseContract.NoteEntry.COLUMN_NOTE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -43,6 +42,21 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
     private static final String SQL_QUERY_CREATE_DISPLAY = "";
     private static final String SQL_QUERY_DROP_DISPLAY = "";
 
+    private static final String SQL_QUERY_CREATE_SUBJECT = "CREATE TABLE " +
+            DatabaseContract.SubjectEntry.TABLE_NAME + " ( " +
+            DatabaseContract.SubjectEntry.COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            DatabaseContract.SubjectEntry.COLUMN_TITLE + " TEXT NOT NULL , " +
+            DatabaseContract.SubjectEntry.COLUMN_SHORT_TITLE + " TEXT NOT NULL , " +
+            DatabaseContract.SubjectEntry.COLUMN_COEFFICIENT + " TEXT NOT NULL , " +
+            DatabaseContract.SubjectEntry.COLUMN_SUMMARY + " TEXT NOT NULL , " +
+            DatabaseContract.SubjectEntry.COLUMN_TABLE_CONTENT + " TEXT NOT NULL , " +
+            DatabaseContract.SubjectEntry.COLUMN_CREDIT + " TEXT NOT NULL , " +
+            DatabaseContract.SubjectEntry.COLUMN_LEVEL + " INTEGER NOT NULL , " +
+            DatabaseContract.SubjectEntry.COLUMN_UNITY_TYPE + " INTEGER NOT NULL ); ";
+
+
+    private static final String SQL_QUERY_DROP_SUBJECT = "DROP TABLE IF EXISTS " + DatabaseContract.SubjectEntry.TABLE_NAME;
+
     private static final String SQL_QUERY_CREATE_NOTIFICATION = "";
     private static final String SQL_QUERY_DROP_NOTIFICATION = "";
 
@@ -59,6 +73,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
         //database.execSQL(SQL_QUERY_CREATE_DISPLAY);
         database.execSQL(SQL_QUERY_CREATE_NOTE_DISPLAY);
         database.execSQL(SQL_QUERY_CREATE_NOTE);
+        database.execSQL(SQL_QUERY_CREATE_SUBJECT);
         //database.execSQL(SQL_QUERY_CREATE_NOTIFICATION);
         database.execSQL(SQL_QUERY_CREATE_SAVED);
         //database.execSQL(SQL_QUERY_CREATE_MAIL);
@@ -72,6 +87,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
         database.execSQL(SQL_QUERY_DROP_NOTE);
 //        database.execSQL(SQL_QUERY_DROP_NOTIFICATION);
         database.execSQL(SQL_QUERY_DROP_SAVED);
+        database.execSQL(SQL_QUERY_DROP_SUBJECT);
 //        database.execSQL(SQL_QUERY_DROP_MAIL);
         onCreate(database);
     }

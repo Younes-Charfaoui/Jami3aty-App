@@ -161,11 +161,23 @@
         <activity
             android:name=".activities.SubjectsDetailActivity"
             android:label="@string/title_activity_subjects_detail"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.ibnkhaldoun.studentside.activities.SubjectsActivity" />
+        </activity>
         <activity
             android:name=".activities.SubjectsActivity"
             android:label="@string/title_activity_subjects"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.ibnkhaldoun.studentside.activities.MainActivity" />
+        </activity>
+
+        <service
+            android:name=".services.DatabaseService"
+            android:exported="false" />
     </application>
 
 </manifest>

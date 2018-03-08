@@ -111,5 +111,4 @@
     <string name="get_started_saved_string">Get started by saving a post from home screen</string>
     <string name="title_activity_subjects_detail">SubjectsDetailActivity</string>
     <string name="title_activity_subjects">SubjectsActivity</string>
-    <string name="subject_string">Subject</string>
 </resources>

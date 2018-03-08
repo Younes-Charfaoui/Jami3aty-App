@@ -17,4 +17,7 @@ public enum Levels {
     MASTER_RT_ONE,
     MASTER_RT_TWO;
 
+    public static Levels getLevel(int level){
+        return LICENCE_ONE;
+    }
 }
