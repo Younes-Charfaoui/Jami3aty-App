@@ -14,29 +14,78 @@
         android:orientation="vertical"
         android:padding="@dimen/linearLayout_padding">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/circle_1"
+                    tools:text="Subject Title" />
+
+                <TextView
+                    android:id="@+id/subject_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:layout_marginBottom="16dp"
+                    android:ellipsize="end"
+                    android:fontFamily="sans-serif-light"
+                    android:gravity="center_vertical"
+                    android:textColor="@android:color/black"
+                    android:textSize="24sp"
+                    tools:text="Hello World" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="@string/subject_coefficient_string"
+                    android:textColor="?colorAccent" />
+
+                <TextView
+                    android:id="@+id/subject_coefficient"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="16dp"
+                    android:layout_marginTop="4dp"
+                    android:background="@drawable/circle"
+                    android:backgroundTint="@color/circle_1"
+                    android:fontFamily="sans-serif-light"
+                    android:gravity="center"
+                    android:textColor="@android:color/white"
+                    android:textSize="24sp"
+                    tools:text="3" />
+            </LinearLayout>
+        </LinearLayout>
+
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="Subject Title" />
 
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:fontFamily="sans-serif-light"
-            android:textColor="@android:color/black"
-            android:textSize="24sp"
-            tools:text="Operating System" />
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:textColor="?colorAccent"
             tools:text="Subject Utility" />
 
 
         <TextView
+            android:id="@+id/subject_utility"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
@@ -48,10 +97,12 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="?colorAccent"
             tools:text="Course Professor" />
 
 
         <TextView
+            android:id="@+id/subject_course_professor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
@@ -61,12 +112,15 @@
             tools:text="Ouared Aek" />
 
         <TextView
+            android:id="@+id/subject_td_professor_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="?colorAccent"
             tools:text="TD Professor" />
 
 
         <TextView
+            android:id="@+id/subject_td_professor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
@@ -76,12 +130,15 @@
             tools:text="Ouared Aek" />
 
         <TextView
+            android:id="@+id/subject_tp_professor_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="?colorAccent"
             tools:text="TP Professor" />
 
 
         <TextView
+            android:id="@+id/subject_tp_professor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
@@ -93,28 +150,29 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="?colorAccent"
+
             tools:text="Schedule" />
 
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/subject_schedule_linear_layout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@android:color/black"
-            android:textSize="18sp"
-            tools:text="8:00 Sunday , Course at Amphitheatre A" />
+            android:orientation="vertical" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@android:color/black"
-            android:textSize="18sp"
-            tools:text="8:00 Tuesday , Td at Class 13" />
+            android:text="@string/subject_overview_string"
+            android:textColor="?colorAccent" />
 
         <TextView
+            android:id="@+id/subject_overview_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-light"
             android:textColor="@android:color/black"
             android:textSize="18sp"
-            tools:text="14:00 Wednesday , Tp at laboratory 3" />
-
+            tools:text="this is a sample test" />
     </LinearLayout>
 </ScrollView>

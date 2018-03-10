@@ -178,6 +178,21 @@
         <service
             android:name=".services.DatabaseService"
             android:exported="false" />
+
+        <service
+            android:name="com.ibnkhaldoun.studentside.services.FcmTokenService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
+        <service
+            android:name=".services.FcmMessagingService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>

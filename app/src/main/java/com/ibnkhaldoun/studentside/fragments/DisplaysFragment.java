@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 
 import com.ibnkhaldoun.studentside.R;
 import com.ibnkhaldoun.studentside.adapters.DisplaysAdapter;
-import com.ibnkhaldoun.studentside.data_providers.DataProviders;
 import com.ibnkhaldoun.studentside.models.Display;
 
 import java.util.ArrayList;

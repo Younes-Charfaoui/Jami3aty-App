@@ -1,4 +1,4 @@
-package com.ibnkhaldoun.studentside.networking;
+package com.ibnkhaldoun.studentside.networking.utilities;
 
 import android.content.Context;
 import android.net.ConnectivityManager;

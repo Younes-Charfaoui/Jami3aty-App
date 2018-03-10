@@ -1,6 +1,7 @@
 package com.ibnkhaldoun.studentside.activities;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
@@ -15,12 +16,16 @@ import android.widget.ProgressBar;
 import com.ibnkhaldoun.studentside.R;
 import com.ibnkhaldoun.studentside.Utilities.ActivityUtilities;
 import com.ibnkhaldoun.studentside.Utilities.PreferencesManager;
+import com.ibnkhaldoun.studentside.networking.utilities.HttpUtilities;
+import com.ibnkhaldoun.studentside.networking.models.RequestPackage;
+
+import java.io.IOException;
 
 public class LoginActivity extends AppCompatActivity {
 
+    private final static int LOGIN_ID_LOADER = 126;
     private EditText mEmailEditText, mPasswordEditText;
     private TextInputLayout mEmailWrapper, mPasswordWrapper;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +35,7 @@ public class LoginActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= 21) {
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
         }
-        ActivityUtilities.changeStatusBarColor(getWindow());
+        ActivityUtilities.changeStatusBarColorToTransparent(getWindow());
         mEmailEditText = findViewById(R.id.input_email);
         mPasswordEditText = findViewById(R.id.input_password);
         mPasswordWrapper = findViewById(R.id.password_wrapper);
@@ -46,6 +51,17 @@ public class LoginActivity extends AppCompatActivity {
             finish();
             /*if (validate()) {
                 hideKeyboard();
+
+                //setting the request parameters
+                RequestPackage request = new RequestPackage();
+                request.setMethod(RequestPackage.POST);
+                request.setEndPoint(EndPointsProvider.getLoginEndpoint());
+                String email = mEmailEditText.getText().toString();
+                String password = mPasswordEditText.getText().toString();
+                request.addParams("email", CryptographyUtilities.encryptEmail(email));
+                request.addParams("password", CryptographyUtilities.hashingPassword(password));
+                LoginAsyncTask loginTask = new LoginAsyncTask();
+                loginTask.execute(request);
                 mPasswordWrapper.setEnabled(false);
                 mEmailWrapper.setEnabled(false);
                 loadingProgressBar.setVisibility(View.VISIBLE);
@@ -103,6 +119,29 @@ public class LoginActivity extends AppCompatActivity {
             InputMethodManager manager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
             assert manager != null;
             manager.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        }
+    }
+
+    private class LoginAsyncTask extends AsyncTask<RequestPackage, Void, String> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            // TODO: 09/03/2018 add code to handle the response from the server
+        }
+
+        @Override
+        protected String doInBackground(RequestPackage... requests) {
+            try {
+                return HttpUtilities.getData(requests[0]);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
         }
     }
 }

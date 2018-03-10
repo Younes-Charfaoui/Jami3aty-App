@@ -1,4 +1,4 @@
-package com.ibnkhaldoun.studentside.networking;
+package com.ibnkhaldoun.studentside.networking.models;
 
 
 import android.os.Parcel;
@@ -26,8 +26,8 @@ public class RequestPackage implements Parcelable {
         }
     };
     //public constant we need in the process of making http calls
-    static final String GET = "GET";
-    static final String POST = "POST";
+    public static final String GET = "GET";
+    public static final String POST = "POST";
     private String mEndPoint;
     private String mMethod;
     private Map<String, String> mParams = new HashMap<>();
@@ -47,7 +47,7 @@ public class RequestPackage implements Parcelable {
         }
     }
 
-    String getEndPoint() {
+    public String getEndPoint() {
         return mEndPoint;
     }
 
@@ -55,7 +55,7 @@ public class RequestPackage implements Parcelable {
         this.mEndPoint = mEndPoint;
     }
 
-    String getMethod() {
+    public String getMethod() {
         return mMethod;
     }
 
@@ -63,7 +63,7 @@ public class RequestPackage implements Parcelable {
         this.mMethod = mMethod;
     }
 
-    Map<String, String> getParams() {
+    public Map<String, String> getParams() {
         return mParams;
     }
 

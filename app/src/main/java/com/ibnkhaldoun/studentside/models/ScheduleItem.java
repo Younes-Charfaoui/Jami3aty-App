@@ -22,11 +22,6 @@ public class ScheduleItem implements Parcelable {
     private String time, location;
     private String subject;
     private ClassTypes classType;
-
-    public Professor getProfessor() {
-        return professor;
-    }
-
     //todo the variable added below for just testing purpose
     private Professor professor;
 
@@ -45,6 +40,10 @@ public class ScheduleItem implements Parcelable {
         int tmpClassType = in.readInt();
         this.classType = tmpClassType == -1 ? null : ClassTypes.values()[tmpClassType];
         this.professor = in.readParcelable(Professor.class.getClassLoader());
+    }
+
+    public Professor getProfessor() {
+        return professor;
     }
 
     public String getTime() {
@@ -79,5 +78,12 @@ public class ScheduleItem implements Parcelable {
         dest.writeString(this.subject);
         dest.writeInt(this.classType == null ? -1 : this.classType.ordinal());
         dest.writeParcelable(this.professor, flags);
+    }
+
+    @Override
+    public String toString() {
+        return this.getTime() + ", " +
+                ClassTypes.getStringFormat(this.classType) +
+                " at" + this.getLocation();
     }
 }

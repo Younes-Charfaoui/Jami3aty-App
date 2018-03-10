@@ -15,16 +15,16 @@ public class DatabaseService extends IntentService {
 
     /**
      * Creates an IntentService.  Invoked by your subclass's constructor.
-     *
-     *  Used to name the worker thread, important only for debugging.
+     * <p>
+     * Used to name the worker thread, important only for debugging.
      */
     public DatabaseService() {
         super("Database Service");
     }
 
-    //todo add the schedule and the subjects to the database
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
-
+        //todo add the schedule and the subjects to the database
+        
     }
 }

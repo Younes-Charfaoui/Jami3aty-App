@@ -5,7 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.ibnkhaldoun.studentside.data_providers.DataProviders;
+import com.ibnkhaldoun.studentside.providers.DataProviders;
 import com.ibnkhaldoun.studentside.fragments.DisplaysFragment;
 import com.ibnkhaldoun.studentside.fragments.MailFragment;
 import com.ibnkhaldoun.studentside.fragments.NotificationFragment;

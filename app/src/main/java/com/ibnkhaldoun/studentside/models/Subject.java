@@ -2,13 +2,16 @@ package com.ibnkhaldoun.studentside.models;
 
 import com.ibnkhaldoun.studentside.enums.UnityTypes;
 
+import java.util.List;
+
 public class Subject {
     private String title, shortTitle;
     private boolean hasTd, hasTP;
-    private String summary, content , credit , coefficient;
+    private String summary, content, credit, coefficient;
     private Professor tdProfessor, tpProfessor, courseProfessor;
     private UnityTypes unityTypes;
     private int level;
+    private List<ScheduleItem> scheduleList;
 
     public Subject() {
     }
@@ -45,6 +48,18 @@ public class Subject {
         this.hasTP = hasTP;
     }
 
+    public List<ScheduleItem> getScheduleList() {
+        return this.scheduleList;
+    }
+
+    public void setScheduleList(List<ScheduleItem> scheduleList) {
+        this.scheduleList = scheduleList;
+    }
+
+    public void addScheduleItem(ScheduleItem item) {
+        scheduleList.add(item);
+    }
+
     public String getTitle() {
         return title;
     }
@@ -65,7 +80,7 @@ public class Subject {
         return hasTd;
     }
 
-    public boolean itHasTP() {
+    public boolean itHasTp() {
         return hasTP;
     }
 

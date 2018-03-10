@@ -1,4 +1,4 @@
-package com.ibnkhaldoun.studentside.data_providers;
+package com.ibnkhaldoun.studentside.providers;
 
 
 import com.ibnkhaldoun.studentside.enums.ClassTypes;

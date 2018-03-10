@@ -48,7 +48,7 @@ public class WelcomeActivity extends AppCompatActivity implements ViewPager.OnPa
                 R.layout.welcome_slide_four};
 
         //changing the color of the status bar to transparent
-        ActivityUtilities.changeStatusBarColor(getWindow());
+        ActivityUtilities.changeStatusBarColorToTransparent(getWindow());
         IntroPagerAdapter mPageAdapter = new IntroPagerAdapter(this, mLayouts);
         mViewPager.setAdapter(mPageAdapter);
         mViewPager.addOnPageChangeListener(this);

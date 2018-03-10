@@ -10,7 +10,7 @@ import android.view.MenuItem;
 
 import com.ibnkhaldoun.studentside.R;
 import com.ibnkhaldoun.studentside.adapters.MarksAdapter;
-import com.ibnkhaldoun.studentside.data_providers.DataProviders;
+import com.ibnkhaldoun.studentside.providers.DataProviders;
 
 public class MarkActivity extends AppCompatActivity {
 

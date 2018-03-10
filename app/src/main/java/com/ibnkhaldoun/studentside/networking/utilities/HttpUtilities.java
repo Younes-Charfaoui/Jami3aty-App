@@ -1,7 +1,9 @@
-package com.ibnkhaldoun.studentside.networking;
+package com.ibnkhaldoun.studentside.networking.utilities;
 
 
 import android.net.Uri;
+
+import com.ibnkhaldoun.studentside.networking.models.RequestPackage;
 
 import java.io.IOException;
 import java.util.Map;
@@ -23,6 +25,7 @@ public class HttpUtilities {
     /**
      * thi method will check if the package contain a post or a get method
      * and base on this choice it will make a call and return a string response
+     *
      * @param requestPackage requestPackage
      * @return String
      * @throws IOException
@@ -58,6 +61,7 @@ public class HttpUtilities {
         Response response = client.newCall(request).execute();
         if (response.isSuccessful()) {
             //this will get true only if the response code was 200 from the http.
+
             return response.body().string();
         } else {
             //the response code was not 200.
@@ -67,6 +71,7 @@ public class HttpUtilities {
 
     /**
      * this method can create a url with the %s=%s pattern for the get request
+     *
      * @param params
      * @param endPoint
      * @return

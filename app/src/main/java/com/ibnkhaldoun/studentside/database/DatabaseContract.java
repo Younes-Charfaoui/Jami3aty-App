@@ -48,6 +48,20 @@ public class DatabaseContract implements BaseColumns {
         public static final String COLUMN_NAME = "name";
     }
 
+    public static final class SubjectEntry {
+        public static final Uri CONTENT_SUBJECT_URI = BASE_URI.buildUpon().appendPath(PATH_SUBJECT).build();
+        public static final String TABLE_NAME = "subjects";
+        public static final String COLUMN_ID = _ID;
+        public static final String COLUMN_TITLE = "title";
+        public static final String COLUMN_SHORT_TITLE = "shortTitle";
+        public static final String COLUMN_COEFFICIENT = "coefficient";
+        public static final String COLUMN_CREDIT = "credit";
+        public static final String COLUMN_SUMMARY = "summary";
+        public static final String COLUMN_TABLE_CONTENT = "content";
+        public static final String COLUMN_LEVEL = "content";
+        public static final String COLUMN_UNITY_TYPE = "unityType";
+    }
+
     public class DisplayEntry {
         public static final String TABLE_NAME = "displays";
         //todo list of the table constant
@@ -71,18 +85,5 @@ public class DatabaseContract implements BaseColumns {
     public class ScheduleEntry {
         public static final String TABLE_NAME = "schedules";
         //todo list of the table constant
-    }
-
-    public class SubjectEntry {
-        public static final String TABLE_NAME = "subjects";
-        public static final String COLUMN_ID = _ID;
-        public static final String COLUMN_TITLE = "title";
-        public static final String COLUMN_SHORT_TITLE = "shortTitle";
-        public static final String COLUMN_COEFFICIENT = "coefficient";
-        public static final String COLUMN_CREDIT = "credit";
-        public static final String COLUMN_SUMMARY = "summary";
-        public static final String COLUMN_TABLE_CONTENT = "content";
-        public static final String COLUMN_LEVEL = "content";
-        public static final String COLUMN_UNITY_TYPE = "unityType";
     }
 }
