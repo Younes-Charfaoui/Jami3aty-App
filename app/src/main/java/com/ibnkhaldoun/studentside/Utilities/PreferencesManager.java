@@ -13,7 +13,6 @@ public class PreferencesManager {
     private static final String LOGIN = "login";
     private static final String FULL_NAME = "fullName";
     private static final String GRADE = "grade";
-    private static final String BRANCH = "branch";
     private static final String ID = "id";
     private SharedPreferences mPreferences;
     private SharedPreferences.Editor mEditor;
@@ -37,12 +36,11 @@ public class PreferencesManager {
         return mPreferences.getBoolean(LOGIN, false);
     }
 
-    public void setLogin(String id, String fullName, String grade, String branch) {
+    public void setLogin(String id, String fullName, String grade) {
         mEditor.putBoolean(LOGIN, true);
         mEditor.putString(ID, id);
         mEditor.putString(FULL_NAME, fullName);
         mEditor.putString(GRADE, grade);
-        mEditor.putString(BRANCH, branch);
         mEditor.commit();
     }
 
@@ -50,9 +48,7 @@ public class PreferencesManager {
         return mPreferences.getString(ID, null);
     }
 
-    public String getBranch() {
-        return mPreferences.getString(BRANCH, null);
-    }
+
 
     public String getGrade() {
         return mPreferences.getString(GRADE, null);

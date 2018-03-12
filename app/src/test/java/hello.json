@@ -1,0 +1,18 @@
+{
+  "status": 200,
+  "message": "Every Thing is Okay",
+  "data": {
+    "_id_student": "123456789",
+    "first_name": "Charfaoui",
+    "last_name": "Younes",
+    "date_of_birth": "1997-04-16",
+    "bac_average": "13.85",
+    "email": "ismail@gmail.com",
+    "password": "$2y$10$tvn7EzOyA8dVuHJ0MxAq1..3KGZgEdmo.uO0PqfcerB1VD7l1LiYm",
+    "level": "6",
+    "group": "2",
+    "section": "0",
+    "isConfirmed": "1",
+    "token": ""
+  }
+}

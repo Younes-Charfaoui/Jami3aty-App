@@ -6,19 +6,6 @@ import android.os.Parcel;
 public class Professor extends Person {
 
 
-    private String mGrade;
-
-
-    public Professor(String grade, String mFirstName, String mLastName) {
-        super(mFirstName, mLastName);
-        this.mGrade = grade;
-    }
-
-    protected Professor(Parcel in) {
-        super(in);
-        this.mGrade = in.readString();
-    }
-
     public static final Creator<Professor> CREATOR = new Creator<Professor>() {
         @Override
         public Professor createFromParcel(Parcel in) {
@@ -30,11 +17,51 @@ public class Professor extends Person {
             return new Professor[size];
         }
     };
+    private String degree;
+    private String email;
+    private String id;
+
+    public Professor() {
+    }
+
+    public Professor(String grade, String mFirstName, String mLastName) {
+        super(mFirstName, mLastName);
+        this.degree = grade;
+    }
+
+    protected Professor(Parcel in) {
+        super(in);
+        this.degree = in.readString();
+    }
+
+    public String getDegree() {
+        return degree;
+    }
+
+    public void setDegree(String degree) {
+        this.degree = degree;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
-        dest.writeString(this.mGrade);
+        dest.writeString(this.degree);
     }
 
     public int describeContents() {

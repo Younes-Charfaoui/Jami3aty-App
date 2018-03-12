@@ -19,10 +19,12 @@ public class Person implements Parcelable {
     };
     private String mFirstName, mLastName;
 
-    Person(String mFirstName, String mLastName) {
+    public Person(String mFirstName, String mLastName) {
         this.mFirstName = mFirstName;
         this.mLastName = mLastName;
     }
+
+    public Person(){}
 
 
     Person(Parcel in) {

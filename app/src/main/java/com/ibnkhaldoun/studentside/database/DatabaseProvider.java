@@ -129,7 +129,7 @@ public class DatabaseProvider extends ContentProvider {
                 for (ContentValues value :
                         values) {
                     long row = database.insert(DatabaseContract.SubjectEntry.TABLE_NAME, null, value);
-                    if (row < 0) insertedRow++;
+                    if (row > 0) insertedRow++;
                 }
                 return insertedRow;
             default:

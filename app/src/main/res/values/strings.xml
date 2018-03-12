@@ -25,7 +25,7 @@
     <string name="welcome_in_help">Welcome In Help</string>
     <string name="student_card_description">Student card in which we are demonstrating from where to get the card number</string>
     <string name="title_activity_forget_password">Forget Password</string>
-    <string name="account_search">Please enter your email to search your account</string>
+    <string name="account_search">Please enter your information to search your account</string>
     <string name="find_your_account_text">Find your account</string>
     <string name="logo_image_description">Logo image</string>
     <string name="bac_average_string">Bac average</string>
@@ -113,4 +113,10 @@
     <string name="title_activity_subjects">SubjectsActivity</string>
     <string name="subject_overview_string">Overview</string>
     <string name="subject_coefficient_string">Coefficient</string>
+    <string name="empty_subject_string">There is no subject.</string>
+    <string name="tap_to_refresh_string">Tap to refresh from the internet</string>
+    <string name="email_does_not_exits_string">This email Does not exists</string>
+    <string name="error_in_password_string">Error in Password</string>
+    <string name="rest_password_string">The reset link was sent to your email</string>
+    <string name="done">done</string>
 </resources>

@@ -1,10 +1,7 @@
 package com.ibnkhaldoun.studentside.activities;
 
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -17,15 +14,33 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.ibnkhaldoun.studentside.R;
+import com.ibnkhaldoun.studentside.asyncTask.SignUpAsyncTask;
+import com.ibnkhaldoun.studentside.interfaces.TaskListener;
+import com.ibnkhaldoun.studentside.networking.models.ForgetPasswordResponse;
+import com.ibnkhaldoun.studentside.networking.models.LoginResponse;
+import com.ibnkhaldoun.studentside.networking.models.RequestPackage;
+import com.ibnkhaldoun.studentside.networking.models.SignUpResponse;
+import com.ibnkhaldoun.studentside.networking.utilities.NetworkUtilities;
+import com.ibnkhaldoun.studentside.providers.EndPointsProvider;
 
-public class SignUpActivity extends AppCompatActivity implements View.OnFocusChangeListener {
+import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.KEY_ANDROID;
+import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.KEY_BAC;
+import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.KEY_CARD_NUMBER;
+import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.KEY_EMAIL;
+import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.KEY_PASSWORD;
+
+public class SignUpActivity extends AppCompatActivity
+        implements View.OnFocusChangeListener, TaskListener {
 
     private EditText mEmailEditText, mPasswordEditText, mCardNumberEditText, mBacAverageEditText;
     private TextInputLayout mEmailWrapper, mCardNumberWrapper, mPasswordWrapper, mBacAverageWrapper;
-
-    //private Menu mMenu;
+    private ProgressBar mProgressBar;
+    private Menu mMenu;
+    private ProgressBar loading;
+    private Button signUpButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +48,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnFocusCha
         setContentView(R.layout.activity_sign_up);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        assert getSupportActionBar() != null;
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close_white);
 
@@ -52,31 +68,39 @@ public class SignUpActivity extends AppCompatActivity implements View.OnFocusCha
         mBacAverageEditText.setOnFocusChangeListener(this);
         mEmailEditText.setOnFocusChangeListener(this);
         mPasswordEditText.setOnFocusChangeListener(this);
-        final ProgressBar loading = findViewById(R.id.loading_progressBar_signUp);
-        final Button signUpButton = findViewById(R.id.sign_up_button);
+        loading = findViewById(R.id.loading_progressBar_signUp);
+        signUpButton = findViewById(R.id.sign_up_button);
 
         signUpButton.setOnClickListener(v -> {
             if (validate()) {
                 hideKeyboard();
-                ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
-                NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
-                if (!(networkInfo != null && networkInfo.isConnected())) {
-                    Snackbar snackbar = Snackbar.make(findViewById(R.id.coordinator_view), "Sorry, no connection !", Snackbar.LENGTH_SHORT);
-                    snackbar.setAction("Try again", v1 -> {
-                        if (!(networkInfo != null && networkInfo.isConnected())) snackbar.show();
-                    });
-                    snackbar.setActionTextColor(getResources().getColor(R.color.deep_red));
-                    snackbar.show();
+
+                if (!NetworkUtilities.isConnected(this)) {
+                    Toast.makeText(this, R.string.no_internet_connection_string, Toast.LENGTH_SHORT).show();
                 } else {
                     mCardNumberWrapper.setEnabled(false);
                     mEmailWrapper.setEnabled(false);
                     mPasswordWrapper.setEnabled(false);
                     mBacAverageWrapper.setEnabled(false);
+                    mMenu.findItem(R.id.action_help).setEnabled(false);
+                    mMenu.findItem(android.R.id.home).setEnabled(false);
+                    getSupportActionBar().setHomeButtonEnabled(false);
+
+                    RequestPackage requestPackage = new RequestPackage();
+                    requestPackage.setEndPoint(EndPointsProvider.getSignUpEndpoint());
+                    requestPackage.setMethod(RequestPackage.POST);
+                    requestPackage.addParams(KEY_ANDROID, KEY_ANDROID);
+                    requestPackage.addParams(KEY_BAC, mBacAverageEditText.getText().toString());
+                    requestPackage.addParams(KEY_CARD_NUMBER, mCardNumberEditText.getText().toString());
+                    requestPackage.addParams(KEY_EMAIL, mEmailEditText.getText().toString());
+                    requestPackage.addParams(KEY_PASSWORD, mPasswordEditText.getText().toString());
+
+                    SignUpAsyncTask signUpAsyncTask = new SignUpAsyncTask(this);
+                    signUpAsyncTask.execute(requestPackage);
+
+                    signUpButton.setVisibility(View.GONE);
+                    loading.setVisibility(View.VISIBLE);
                 }
-                /*mMenu.findItem(R.id.action_help).setEnabled(false);
-                getSupportActionBar().setHomeButtonEnabled(false);
-                signUpButton.setVisibility(View.GONE);
-                loading.setVisibility(View.VISIBLE);*/
 
             }
         });
@@ -85,7 +109,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnFocusCha
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_sign_up, menu);
-
+        mMenu = menu;
         return true;
     }
 
@@ -265,5 +289,20 @@ public class SignUpActivity extends AppCompatActivity implements View.OnFocusCha
                     break;
             }
         }
+    }
+
+    @Override
+    public void onLoginCompletionListener(LoginResponse response) {
+        //do nothing here
+    }
+
+    @Override
+    public void onSignUpCompletionListener(SignUpResponse response) {
+        // TODO: 11/03/2018 add the handle here
+    }
+
+    @Override
+    public void onForgetPasswordCompletionListener(ForgetPasswordResponse response) {
+        //do nothing here
     }
 }

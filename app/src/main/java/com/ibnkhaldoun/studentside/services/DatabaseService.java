@@ -2,6 +2,7 @@ package com.ibnkhaldoun.studentside.services;
 
 import android.app.IntentService;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.Nullable;
 
 /**
@@ -25,6 +26,5 @@ public class DatabaseService extends IntentService {
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
         //todo add the schedule and the subjects to the database
-        
     }
 }

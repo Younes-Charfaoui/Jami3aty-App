@@ -26,9 +26,10 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/subject_title_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/circle_1"
+                    android:textColor="?colorAccent"
                     tools:text="Subject Title" />
 
                 <TextView
@@ -56,6 +57,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:text="@string/subject_coefficient_string"
+                    android:id="@+id/subject_coefficient_title"
                     android:textColor="?colorAccent" />
 
                 <TextView
@@ -66,7 +68,6 @@
                     android:layout_marginBottom="16dp"
                     android:layout_marginTop="4dp"
                     android:background="@drawable/circle"
-                    android:backgroundTint="@color/circle_1"
                     android:fontFamily="sans-serif-light"
                     android:gravity="center"
                     android:textColor="@android:color/white"
@@ -79,7 +80,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
+            android:id="@+id/subject_utility_title"
             android:textColor="?colorAccent"
             tools:text="Subject Utility" />
 
@@ -92,12 +93,13 @@
             android:fontFamily="sans-serif-light"
             android:textColor="@android:color/black"
             android:textSize="18sp"
-            tools:text="In this subject the student will leanr how the operating system are built and how they can iteract with th end user , we will see how stuff are implemented and some basic conspect and layers in the operating system." />
+            tools:text="In this subject the student will learn how the operating system are built and how they can iteract with th end user , we will see how stuff are implemented and some basic conspect and layers in the operating system." />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="?colorAccent"
+            android:id="@+id/subject_course_professor_title"
             tools:text="Course Professor" />
 
 
@@ -151,7 +153,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="?colorAccent"
-
+            android:id="@+id/subject_schedule_title"
             tools:text="Schedule" />
 
         <LinearLayout
@@ -164,10 +166,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/subject_overview_string"
+            android:id="@+id/subject_overview_title"
             android:textColor="?colorAccent" />
 
         <TextView
-            android:id="@+id/subject_overview_text_view"
+            android:id="@+id/subject_overview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-light"
