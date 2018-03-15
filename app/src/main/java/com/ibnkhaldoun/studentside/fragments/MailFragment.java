@@ -5,6 +5,7 @@ import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,7 +16,6 @@ import com.ibnkhaldoun.studentside.R;
 import com.ibnkhaldoun.studentside.adapters.MailAdapter;
 import com.ibnkhaldoun.studentside.models.Mail;
 
-import java.security.Security;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,6 +28,7 @@ public class MailFragment extends Fragment {
         args.putParcelableArrayList("Key", (ArrayList<? extends Parcelable>) mails);
         MailFragment fragment = new MailFragment();
         fragment.setArguments(args);
+
         return fragment;
 
     }

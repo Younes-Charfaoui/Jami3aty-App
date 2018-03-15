@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.ibnkhaldoun.studentside.activities.StudentMainActivity"
-    tools:showIn="@layout/content_main_screen">
+    tools:context="com.ibnkhaldoun.studentside.activities.ProfessorMainActivity"
+    tools:showIn="@layout/activity_professor_main">
 
-</RelativeLayout>
+</android.support.constraint.ConstraintLayout>

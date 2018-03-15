@@ -2,8 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
     android:id="@+id/subject_main_view"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.ibnkhaldoun.studentside.activities.SubjectsActivity"
@@ -12,30 +12,31 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/subject_recycler_view"
         android:layout_width="match_parent"
-        android:visibility="invisible"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:visibility="invisible" />
 
     <ProgressBar
         android:id="@+id/subject_progress_bar"
-        android:layout_centerInParent="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:layout_centerInParent="true" />
+
     <LinearLayout
-        android:visibility="invisible"
         android:id="@+id/subject_empty_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:background="?attr/selectableItemBackground"
         android:layout_centerInParent="true"
-        android:orientation="vertical">
+        android:background="?attr/selectableItemBackground"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="invisible">
 
         <ImageView
             android:layout_width="230dp"
             android:layout_height="230dp"
             android:contentDescription="@null"
             android:paddingBottom="8dp"
-            android:src="@drawable/mail_empty" />
+            android:src="@drawable/subject" />
 
         <TextView
             android:layout_width="wrap_content"

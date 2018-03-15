@@ -7,4 +7,5 @@
     android:name="com.ibnkhaldoun.studentside.fragments.SettingFragment"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.ibnkhaldoun.studentside.activities.SettingActivity"
-    tools:showIn="@layout/activity_setting"/>
+    tools:showIn="@layout/activity_setting"
+    android:id="@+id/setting_id_fragement" />

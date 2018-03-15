@@ -28,8 +28,7 @@ import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.KEY_ANDROID;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.KEY_BAC;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.KEY_CARD_NUMBER;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.KEY_EMAIL;
-import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.NETWORK_EMAIL_ERROR;
-import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.NETWORK_SUCCESS;
+import static com.ibnkhaldoun.studentside.networking.models.Response.*;
 
 public class ForgetPasswordActivity extends AppCompatActivity implements TaskListener {
 
@@ -76,7 +75,7 @@ public class ForgetPasswordActivity extends AppCompatActivity implements TaskLis
                     mEmailWrapper.setEnabled(false);
 
                     ForgetPasswordAsyncTask forgetPasswordAsyncTask =
-                            new ForgetPasswordAsyncTask((TaskListener) ForgetPasswordActivity.this);
+                            new ForgetPasswordAsyncTask(ForgetPasswordActivity.this);
                     forgetPasswordAsyncTask.execute(requestPackage);
                 } else {
                     Toast.makeText(this, R.string.no_internet_connection_string, Toast.LENGTH_SHORT).show();
@@ -141,7 +140,7 @@ public class ForgetPasswordActivity extends AppCompatActivity implements TaskLis
     @Override
     public void onForgetPasswordCompletionListener(ForgetPasswordResponse response) {
         switch (response.getStatus()) {
-            case NETWORK_SUCCESS:
+            case RESPONSE_SUCCESS:
                 mProgressBar.setVisibility(GONE);
                 mFindAccountButton.setText(R.string.done);
                 mFindAccountButton.setVisibility(VISIBLE);
@@ -152,7 +151,7 @@ public class ForgetPasswordActivity extends AppCompatActivity implements TaskLis
                 mBacAverageWrapper.setVisibility(GONE);
                 mCardNumberWrapper.setVisibility(GONE);
                 break;
-            case NETWORK_EMAIL_ERROR:
+            case RESPONSE_EMAIL_ERROR:
                 mProgressBar.setVisibility(GONE);
                 mFindAccountButton.setVisibility(VISIBLE);
                 mAccountPleaseTextView.setVisibility(VISIBLE);

@@ -20,12 +20,16 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
 import com.ibnkhaldoun.studentside.R;
+import com.ibnkhaldoun.studentside.Utilities.PreferencesManager;
 import com.ibnkhaldoun.studentside.adapters.SubjectsAdapter;
 import com.ibnkhaldoun.studentside.database.DatabaseContract;
 import com.ibnkhaldoun.studentside.networking.models.RequestPackage;
 import com.ibnkhaldoun.studentside.networking.utilities.NetworkUtilities;
 import com.ibnkhaldoun.studentside.providers.EndPointsProvider;
 import com.ibnkhaldoun.studentside.services.LoadDataService;
+
+import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_STUDENT_ID;
+import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.KEY_ANDROID;
 
 public class SubjectsActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
@@ -34,10 +38,13 @@ public class SubjectsActivity extends AppCompatActivity implements LoaderManager
     private SubjectsAdapter mAdapter;
     private LinearLayout mEmptyView;
     private ProgressBar mProgressBar;
+
     private BroadcastReceiver mSubjectReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-
+            getSupportLoaderManager()
+                    .restartLoader(SUBJECT_LOADER_ID, null, SubjectsActivity.this)
+                    .forceLoad();
         }
     };
 
@@ -50,15 +57,14 @@ public class SubjectsActivity extends AppCompatActivity implements LoaderManager
 
         mEmptyView = findViewById(R.id.subject_empty_view);
         mProgressBar = findViewById(R.id.subject_progress_bar);
+
         setupRecyclerView();
 
-        getSupportLoaderManager().initLoader(SUBJECT_LOADER_ID, null, this);
+        getSupportLoaderManager().initLoader(SUBJECT_LOADER_ID, null, this).forceLoad();
         assert getSupportActionBar() != null;
         getSupportActionBar().setHomeButtonEnabled(true);
 
-        mEmptyView.setOnClickListener(v -> {
-            getSubjectFromService();
-        });
+        mEmptyView.setOnClickListener(v -> getSubjectFromService());
 
         LocalBroadcastManager.getInstance(this).registerReceiver(mSubjectReceiver, new IntentFilter(LoadDataService.SUBJECT_ACTION));
     }
@@ -78,8 +84,9 @@ public class SubjectsActivity extends AppCompatActivity implements LoaderManager
             RequestPackage request = new RequestPackage();
             request.setMethod(RequestPackage.POST);
             request.setEndPoint(EndPointsProvider.getSubjectEndpoint());
-            // TODO: 11/03/2018 add the params and the end point
-            //request.addParams("","");
+            request.addParams(KEY_ANDROID, KEY_ANDROID);
+            PreferencesManager manager = new PreferencesManager(this);
+            request.addParams(JSON_STUDENT_ID, manager.getId());
             intent.putExtra(LoadDataService.KEY_REQUEST, request);
             intent.putExtra(LoadDataService.KEY_ACTION, LoadDataService.SUBJECT_TYPE);
             startService(intent);
@@ -117,14 +124,13 @@ public class SubjectsActivity extends AppCompatActivity implements LoaderManager
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        mProgressBar.setVisibility(View.GONE);
         if (data.getCount() != 0) {
-            mProgressBar.setVisibility(View.GONE);
             mSubjectRecyclerView.setVisibility(View.VISIBLE);
+            mAdapter.swapCursor(data);
         } else {
             mEmptyView.setVisibility(View.VISIBLE);
-            mProgressBar.setVisibility(View.GONE);
         }
-        mAdapter.swapCursor(data);
     }
 
     @Override
@@ -134,6 +140,4 @@ public class SubjectsActivity extends AppCompatActivity implements LoaderManager
         mSubjectRecyclerView.setVisibility(View.GONE);
         mAdapter.swapCursor(null);
     }
-
-
 }

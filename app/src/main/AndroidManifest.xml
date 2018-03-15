@@ -38,9 +38,11 @@
         <activity
             android:name=".activities.ForgetPasswordActivity"
             android:label="@string/title_activity_forget_password"
+            android:launchMode="singleTop"
             android:parentActivityName=".activities.LoginActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustResize">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.ibnkhaldoun.studentside.activities.LoginActivity" />
@@ -58,18 +60,18 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.MainActivity"
+            android:name=".activities.StudentMainActivity"
             android:label="@string/title_activity_main"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
             android:name=".activities.MessagesActivity"
-            android:parentActivityName=".activities.MainActivity"
+            android:parentActivityName=".activities.StudentMainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.ibnkhaldoun.studentside.activities.MainActivity" />
+                android:value="com.ibnkhaldoun.studentside.activities.StudentMainActivity" />
         </activity>
         <activity
             android:name=".activities.MessageDetailActivity"
@@ -90,12 +92,12 @@
         <activity
             android:name=".activities.DisplayDetailActivity"
             android:label="@string/title_activity_display_detail"
-            android:parentActivityName=".activities.MainActivity"
+            android:parentActivityName=".activities.StudentMainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.ibnkhaldoun.studentside.activities.MainActivity" />
+                android:value="com.ibnkhaldoun.studentside.activities.StudentMainActivity" />
         </activity>
         <activity
             android:name=".activities.MarkDetailActivity"
@@ -104,16 +106,16 @@
             android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.ibnkhaldoun.studentside.activities.MainActivity" />
+                android:value="com.ibnkhaldoun.studentside.activities.StudentMainActivity" />
         </activity>
         <activity
             android:name=".activities.MarkActivity"
             android:label="@string/title_activity_mark"
-            android:parentActivityName=".activities.MainActivity"
+            android:parentActivityName=".activities.StudentMainActivity"
             android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.ibnkhaldoun.studentside.activities.MainActivity" />
+                android:value="com.ibnkhaldoun.studentside.activities.StudentMainActivity" />
         </activity>
         <activity
             android:name=".activities.ScheduleActivity"
@@ -121,16 +123,16 @@
             android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.ibnkhaldoun.studentside.activities.MainActivity" />
+                android:value="com.ibnkhaldoun.studentside.activities.StudentMainActivity" />
         </activity>
         <activity
             android:name=".activities.NotesActivity"
             android:label="@string/title_activity_notes"
-            android:parentActivityName=".activities.MainActivity"
+            android:parentActivityName=".activities.StudentMainActivity"
             android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.ibnkhaldoun.studentside.activities.MainActivity" />
+                android:value="com.ibnkhaldoun.studentside.activities.StudentMainActivity" />
         </activity>
         <activity
             android:name=".activities.SavedActivity"
@@ -138,7 +140,7 @@
             android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.ibnkhaldoun.studentside.activities.MainActivity" />
+                android:value="com.ibnkhaldoun.studentside.activities.StudentMainActivity" />
         </activity>
         <activity
             android:name=".activities.NoteEditActivity"
@@ -152,11 +154,11 @@
         <activity
             android:name=".activities.SettingActivity"
             android:label="@string/title_activity_setting"
-            android:parentActivityName=".activities.MainActivity"
+            android:parentActivityName=".activities.StudentMainActivity"
             android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.ibnkhaldoun.studentside.activities.MainActivity" />
+                android:value="com.ibnkhaldoun.studentside.activities.StudentMainActivity" />
         </activity>
         <activity
             android:name=".activities.SubjectsDetailActivity"
@@ -172,15 +174,14 @@
             android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.ibnkhaldoun.studentside.activities.MainActivity" />
+                android:value="com.ibnkhaldoun.studentside.activities.StudentMainActivity" />
         </activity>
 
         <service
             android:name=".services.DatabaseService"
             android:exported="false" />
-
         <service
-            android:name="com.ibnkhaldoun.studentside.services.FcmTokenService"
+            android:name=".services.FcmTokenService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
@@ -193,6 +194,14 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+        <service
+            android:name=".services.LoadDataService"
+            android:exported="false" />
+
+        <activity
+            android:name=".activities.ProfessorMainActivity"
+            android:label="@string/title_activity_professor_main"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

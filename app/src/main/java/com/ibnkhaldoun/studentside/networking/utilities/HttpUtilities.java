@@ -2,17 +2,22 @@ package com.ibnkhaldoun.studentside.networking.utilities;
 
 
 import android.net.Uri;
+import android.support.annotation.Nullable;
+import android.util.Log;
 
 import com.ibnkhaldoun.studentside.networking.models.RequestPackage;
 
 import java.io.IOException;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+import okhttp3.WebSocket;
+import okhttp3.WebSocketListener;
 
 /**
  * @definition this class have the methods of
@@ -40,10 +45,14 @@ public class HttpUtilities {
         }
 
         //creating the client that will make the call.
-        OkHttpClient client = new OkHttpClient();
+        OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder();
+        clientBuilder.connectTimeout(15000, TimeUnit.MILLISECONDS);
+
+        OkHttpClient client = clientBuilder.build();
 
         //make a point to the end point.
         Request.Builder requestBuilder = new Request.Builder().url(address);
+
 
         //if the method is post we need to add the params in the multipart builder.
         if (requestPackage.getMethod().equals(RequestPackage.POST)) {
@@ -58,6 +67,15 @@ public class HttpUtilities {
 
         //creating the request based on what has been passed.
         Request request = requestBuilder.build();
+
+        client.newWebSocket(request, new WebSocketListener() {
+            @Override
+            public void onFailure(WebSocket webSocket, Throwable t, @Nullable Response response) {
+                super.onFailure(webSocket, t, response);
+                Log.i("Fuck", "onFailure: the request was failed");
+            }
+        });
+
         Response response = client.newCall(request).execute();
         if (response.isSuccessful()) {
             //this will get true only if the response code was 200 from the http.

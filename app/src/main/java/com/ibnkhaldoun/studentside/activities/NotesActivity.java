@@ -87,9 +87,7 @@ public class NotesActivity extends AppCompatActivity
                         Note note = mAdapter.removeItem(viewHolder.getAdapterPosition());
                         Uri uri = DatabaseContract.NoteEntry.CONTENT_NOTE_URI.buildUpon().appendPath(id).build();
                         Snackbar snackbar = Snackbar.make(findViewById(R.id.note_coordinator), "1 note deleted", Snackbar.LENGTH_LONG);
-                        snackbar.setAction("Undo", v -> {
-                            mAdapter.restoreItem(position, note);
-                        });
+                        snackbar.setAction("Undo", v -> mAdapter.restoreItem(position, note));
 
                         snackbar.addCallback(new Snackbar.Callback() {
                             @Override

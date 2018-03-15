@@ -28,8 +28,8 @@ import com.ibnkhaldoun.studentside.adapters.TabLayoutAdapter;
 
 import java.util.Calendar;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-
+public class StudentMainActivity extends AppCompatActivity
+        implements NavigationView.OnNavigationItemSelectedListener {
 
     private FloatingActionButton mAddMailFab;
 
@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         circleImage.setText("YC");
         circle.setColor(Utils.getCircleColor(manager.getFullName().charAt(0), this));
         nameHeader.setText(manager.getFullName());
-        String branch = manager.getGrade() + " " + manager.getBranch();
+        String branch = manager.getGrade() + " ";
         branchHeader.setText(branch);
 
         setupViewPagerAndTabLayout();

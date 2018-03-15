@@ -1,16 +1,19 @@
 package com.ibnkhaldoun.studentside.adapters;
 
 import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.ibnkhaldoun.studentside.R;
 import com.ibnkhaldoun.studentside.Utilities.Utils;
+import com.ibnkhaldoun.studentside.activities.MarkDetailActivity;
+import com.ibnkhaldoun.studentside.database.DatabaseContract;
 import com.ibnkhaldoun.studentside.models.Mark;
 
 import java.util.ArrayList;
@@ -65,6 +68,35 @@ public class MarksAdapter extends RecyclerView.Adapter<MarksAdapter.MarksViewHol
         return mMarkList.size();
     }
 
+    public void swapCursor(Cursor data) {
+        if (data != null) {
+            mMarkList = new ArrayList<>();
+            while (data.moveToNext()) {
+                String subjectName =
+                        data.getString(data.getColumnIndex(DatabaseContract.MarkEntry.COLUMN_TITLE_SUBJECT));
+                String subjectShortName =
+                        data.getString(data.getColumnIndex(DatabaseContract.MarkEntry.COLUMN_SHORT_TITLE));
+                float tdMark =
+                        Float.parseFloat(data.getString(data.getColumnIndex(DatabaseContract.MarkEntry.COLUMN_TD_MARK)));
+                float tpMark =
+                        Float.parseFloat(data.getString(data.getColumnIndex(DatabaseContract.MarkEntry.COLUMN_TP_MARK)));
+                float examMark =
+                        Float.parseFloat(data.getString(data.getColumnIndex(DatabaseContract.MarkEntry.COLUMN_EXAM_MARK)));
+                String tdProfessor =
+                        data.getString(data.getColumnIndex(DatabaseContract.SubjectEntry.COLUMN_TD_PROFESSOR));
+                String tpProfessor =
+                        data.getString(data.getColumnIndex(DatabaseContract.SubjectEntry.COLUMN_TP_PROFESSOR));
+                String courseProfessor =
+                        data.getString(data.getColumnIndex(DatabaseContract.SubjectEntry.COLUMN_COURSE_PROFESSOR));
+                long id = data.getLong(data.getColumnIndex(DatabaseContract.MarkEntry.COLUMN_ID));
+                mMarkList.add(new Mark(id, subjectName, subjectShortName,
+                        examMark, tdMark, tpMark,
+                        courseProfessor, tdProfessor, tpProfessor));
+            }
+            notifyDataSetChanged();
+        }
+    }
+
     class MarksViewHolder extends RecyclerView.ViewHolder {
 
         final LinearLayout mLinearSubject, mLinearExam, mLinearTp, mLinearTd;
@@ -82,9 +114,9 @@ public class MarksAdapter extends RecyclerView.Adapter<MarksAdapter.MarksViewHol
             mExamTextView = itemView.findViewById(R.id.mark_exam_mark_text_view);
 
             itemView.setOnClickListener(v -> {
-                //todo code to launch the detail activity of the subject
-                String display = mMarkList.get(getAdapterPosition()).getSubjectName();
-                Toast.makeText(mContext, display, Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(mContext, MarkDetailActivity.class);
+                intent.putExtra(MarkDetailActivity.KEY_MARK, mMarkList.get(getAdapterPosition()));
+                mContext.startActivity(intent);
             });
             mLinearTd = itemView.findViewById(R.id.mark_linear_TD);
             mLinearSubject = itemView.findViewById(R.id.mark_linear_layout_marks);

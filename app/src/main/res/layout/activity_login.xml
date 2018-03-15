@@ -1,20 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true">
+    android:layout_height="match_parent">
 
-    <FrameLayout
+    <ImageView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:alpha=".4"
+        android:contentDescription="@null"
+        android:scaleType="centerCrop"
+        android:src="@drawable/hami" />
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:alpha=".4"
-            android:scaleType="centerCrop"
-            android:src="@drawable/hami" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true">
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -45,7 +47,8 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginBottom="8dp"
                     android:layout_marginEnd="16dp"
-                    app:srcCompat="@drawable/ic_mail_outline" />
+                    app:srcCompat="@drawable/ic_mail_outline"
+                    android:contentDescription="@null" />
 
                 <android.support.design.widget.TextInputLayout
                     android:id="@+id/email_wrapper"
@@ -74,7 +77,8 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginBottom="8dp"
                     android:layout_marginEnd="16dp"
-                    app:srcCompat="@drawable/ic_lock_outline" />
+                    app:srcCompat="@drawable/ic_lock_outline"
+                    android:contentDescription="@null" />
 
                 <android.support.design.widget.TextInputLayout
                     android:id="@+id/password_wrapper"
@@ -169,5 +173,5 @@
                     android:theme="@style/ButtonStylesTwo" />
             </LinearLayout>
         </LinearLayout>
-    </FrameLayout>
-</ScrollView>
+    </ScrollView>
+</merge>

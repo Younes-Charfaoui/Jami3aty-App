@@ -3,10 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/schedule_choose_level"
-        android:orderInCategory="100"
-        android:title="@string/choose_level"
+        android:id="@+id/menu_mark_refresh"
+        android:title="@string/refresh"
         app:showAsAction="never" />
-    <!-- todo add the search menu item-->
-
 </menu>

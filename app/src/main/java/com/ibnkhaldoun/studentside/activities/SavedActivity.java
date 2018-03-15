@@ -34,13 +34,13 @@ public class SavedActivity extends AppCompatActivity implements LoaderManager.Lo
         mRecyclerView = findViewById(R.id.saved_recycler_view);
 
         setupRecyclerView();
-
+        assert getSupportActionBar() != null;
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     private void setupRecyclerView() {
         mAdapter = new SavedAdapter(this);
-        LinearLayoutManager manager = new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false);
+        LinearLayoutManager manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(manager);
         mRecyclerView.setHasFixedSize(true);

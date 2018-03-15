@@ -14,7 +14,7 @@
             android:layout_width="@dimen/img_width_height"
             android:layout_height="@dimen/img_width_height"
             android:src="@drawable/first_logo"
-            />
+            android:contentDescription="@null" />
 
 
         <TextView

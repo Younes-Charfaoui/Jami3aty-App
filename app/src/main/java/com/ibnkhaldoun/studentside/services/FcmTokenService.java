@@ -16,4 +16,8 @@ public class FcmTokenService extends FirebaseInstanceIdService {
     private void sendRegistrationTokenToServer(String refreshedToken) {
         /// TODO: add the code to send the token to database.
     }
+
+    public static String getCurrentToken(){
+        return FirebaseInstanceId.getInstance().getToken();
+    }
 }

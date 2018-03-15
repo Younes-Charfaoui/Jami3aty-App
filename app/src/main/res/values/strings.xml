@@ -119,4 +119,12 @@
     <string name="error_in_password_string">Error in Password</string>
     <string name="rest_password_string">The reset link was sent to your email</string>
     <string name="done">done</string>
+    <string name="account_created_succes_string">The account was created with success and the confirmation was sent to your email, please check your email to confirm.</string>
+    <string name="completed">Completed</string>
+    <string name="find_your_account">Find your account</string>
+    <string name="refresh">Refresh</string>
+    <string name="retry_string">Retry</string>
+    <string name="search">Search</string>
+    <string name="choose_level">Choose Level</string>
+    <string name="title_activity_professor_main">ProfessorMainActivity</string>
 </resources>

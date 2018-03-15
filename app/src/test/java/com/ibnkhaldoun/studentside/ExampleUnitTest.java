@@ -1,7 +1,5 @@
 package com.ibnkhaldoun.studentside;
 
-import com.ibnkhaldoun.studentside.Utilities.Utils;
-
 import org.junit.Test;
 
 import static org.junit.Assert.*;

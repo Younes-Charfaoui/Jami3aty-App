@@ -16,4 +16,17 @@ public enum UnityTypes {
                 throw new IllegalStateException();
         }
     }
+
+    public static int getUnitType(UnityTypes types) {
+        switch (types) {
+            case FUNDAMENTAL:
+                return 0;
+            case METHODOLOGICAL:
+                return 1;
+            case TRAVERSAL:
+                return 2;
+            default:
+                throw new IllegalStateException();
+        }
+    }
 }

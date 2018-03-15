@@ -39,7 +39,7 @@ public class RequestPackage implements Parcelable {
         this.mEndPoint = in.readString();
         this.mMethod = in.readString();
         int mParamsSize = in.readInt();
-        this.mParams = new HashMap<String, String>(mParamsSize);
+        this.mParams = new HashMap<>(mParamsSize);
         for (int i = 0; i < mParamsSize; i++) {
             String key = in.readString();
             String value = in.readString();

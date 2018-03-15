@@ -10,10 +10,7 @@ public class KeyDataProvider {
     public static final String KEY_BAC = "average";
     public static final String KEY_CARD_NUMBER = "number_card";
     public static final String KEY_JSON_DATA = "data";
-
-    public static final int NETWORK_SUCCESS = 200;
-    public static final int NETWORK_EMAIL_ERROR = 401;
-    public static final int NETWORK_PASSWORD_ERROR = 402;
+    public static final String KEY_TOKEN_FIREBASE= "token_device";
 
     public static final String JSON_STUDENT_ID = "_id_student";
     public static final String JSON_STUDENT_FIRST_NAME = "first_name";

@@ -44,7 +44,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
 
     private static final String SQL_QUERY_CREATE_SUBJECT = "CREATE TABLE " +
             DatabaseContract.SubjectEntry.TABLE_NAME + " ( " +
-            DatabaseContract.SubjectEntry.COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            DatabaseContract.SubjectEntry.COLUMN_ID + " INTEGER PRIMARY KEY , " +
             DatabaseContract.SubjectEntry.COLUMN_TITLE + " TEXT NOT NULL , " +
             DatabaseContract.SubjectEntry.COLUMN_SHORT_TITLE + " TEXT NOT NULL , " +
             DatabaseContract.SubjectEntry.COLUMN_COEFFICIENT + " TEXT NOT NULL , " +
@@ -52,6 +52,9 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
             DatabaseContract.SubjectEntry.COLUMN_TABLE_CONTENT + " TEXT NOT NULL , " +
             DatabaseContract.SubjectEntry.COLUMN_CREDIT + " TEXT NOT NULL , " +
             DatabaseContract.SubjectEntry.COLUMN_LEVEL + " INTEGER NOT NULL , " +
+            DatabaseContract.SubjectEntry.COLUMN_COURSE_PROFESSOR + " TEXT , " +
+            DatabaseContract.SubjectEntry.COLUMN_TD_PROFESSOR + " TEXT , " +
+            DatabaseContract.SubjectEntry.COLUMN_TP_PROFESSOR + " TEXT , " +
             DatabaseContract.SubjectEntry.COLUMN_UNITY_TYPE + " INTEGER NOT NULL ); ";
 
 
@@ -60,8 +63,20 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
     private static final String SQL_QUERY_CREATE_NOTIFICATION = "";
     private static final String SQL_QUERY_DROP_NOTIFICATION = "";
 
+    // TODO: 15/03/2018 add the querie for the mail -_-
     private static final String SQL_QUERY_CREATE_MAIL = "";
     private static final String SQL_QUERY_DROP_MAIL = "";
+
+    private static final String SQL_QUERY_CREATE_MARK = "CREATE TABLE " +
+            DatabaseContract.MarkEntry.TABLE_NAME + " ( " +
+            DatabaseContract.MarkEntry.COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            DatabaseContract.MarkEntry.COLUMN_SUBJECT_ID + " INTEGER NOT NULL , " +
+            DatabaseContract.MarkEntry.COLUMN_TITLE_SUBJECT + " TEXT NOT NULL , " +
+            DatabaseContract.MarkEntry.COLUMN_SHORT_TITLE + " TEXT NOT NULL , " +
+            DatabaseContract.MarkEntry.COLUMN_TD_MARK + " TEXT, " +
+            DatabaseContract.MarkEntry.COLUMN_TP_MARK + " TEXT, " +
+            DatabaseContract.MarkEntry.COLUMN_EXAM_MARK + " TEXT );";
+    private static final String SQL_QUERY_DROP_MARK = "DROP TABLE IF EXISTS " + DatabaseContract.MarkEntry.TABLE_NAME;
 
     DatabaseOpenHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);

@@ -21,7 +21,7 @@ public class SplashActivity extends AppCompatActivity {
         ActivityUtilities.changeStatusBarColorToTransparent(getWindow());
         PreferencesManager manager = new PreferencesManager(this);
         if (manager.isLogin()) {
-            classes = MainActivity.class;
+            classes = StudentMainActivity.class;
         }
 
         Class finalClasses = classes;

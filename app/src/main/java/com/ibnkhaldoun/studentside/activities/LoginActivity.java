@@ -26,10 +26,9 @@ import com.ibnkhaldoun.studentside.networking.models.SignUpResponse;
 import com.ibnkhaldoun.studentside.networking.utilities.NetworkUtilities;
 import com.ibnkhaldoun.studentside.providers.EndPointsProvider;
 import com.ibnkhaldoun.studentside.providers.KeyDataProvider;
+import com.ibnkhaldoun.studentside.services.FcmTokenService;
 
-import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.NETWORK_EMAIL_ERROR;
-import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.NETWORK_PASSWORD_ERROR;
-import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.NETWORK_SUCCESS;
+import static com.ibnkhaldoun.studentside.networking.models.Response.*;
 
 public class LoginActivity extends AppCompatActivity implements TaskListener {
 
@@ -71,6 +70,7 @@ public class LoginActivity extends AppCompatActivity implements TaskListener {
                     request.addParams(KeyDataProvider.KEY_ANDROID, KeyDataProvider.KEY_ANDROID);
                     request.addParams(KeyDataProvider.KEY_EMAIL, email);
                     request.addParams(KeyDataProvider.KEY_PASSWORD, password);
+                    request.addParams(KeyDataProvider.KEY_TOKEN_FIREBASE , FcmTokenService.getCurrentToken());
 
                     LoginAsyncTask loginTask = new LoginAsyncTask(this);
                     loginTask.execute(request);
@@ -141,19 +141,19 @@ public class LoginActivity extends AppCompatActivity implements TaskListener {
     public void onLoginCompletionListener(LoginResponse response) {
 
         switch (response.getStatus()) {
-            case NETWORK_SUCCESS:
+            case RESPONSE_SUCCESS:
                 PreferencesManager manager = new PreferencesManager(this);
                 if (response.isStudent()) {
                     manager.setLogin(response.getStudent().getId()
                             , response.getStudent().getFullName()
                             , Levels.getLevelString(Levels.getLevel(response.getStudent().getLevel())));
-                    startActivity(new Intent(this, MainActivity.class));
+                    startActivity(new Intent(this, StudentMainActivity.class));
                     finish();
                 } else {
                     Toast.makeText(this, "Login for professor", Toast.LENGTH_SHORT).show();
                 }
                 break;
-            case NETWORK_EMAIL_ERROR:
+            case RESPONSE_EMAIL_ERROR:
                 mEmailWrapper.setError(getString(R.string.email_does_not_exits_string));
                 mPasswordWrapper.setEnabled(true);
                 mEmailWrapper.setEnabled(true);
@@ -161,7 +161,7 @@ public class LoginActivity extends AppCompatActivity implements TaskListener {
                 mLoadingProgressBar.setVisibility(View.GONE);
                 mButtonsLinearLayout.setVisibility(View.VISIBLE);
                 break;
-            case NETWORK_PASSWORD_ERROR:
+            case RESPONSE_PASSWORD_ERROR:
                 mPasswordWrapper.setError(getString(R.string.error_in_password_string));
                 mPasswordWrapper.setEnabled(true);
                 mEmailWrapper.setEnabled(true);

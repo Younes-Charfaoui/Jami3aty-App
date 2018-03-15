@@ -1,6 +1,7 @@
 package com.ibnkhaldoun.studentside.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 
 import com.ibnkhaldoun.studentside.R;
 import com.ibnkhaldoun.studentside.Utilities.Utils;
+import com.ibnkhaldoun.studentside.activities.SubjectsDetailActivity;
 import com.ibnkhaldoun.studentside.database.DatabaseContract;
 import com.ibnkhaldoun.studentside.enums.UnityTypes;
 import com.ibnkhaldoun.studentside.models.Subject;
@@ -46,8 +48,9 @@ public class SubjectsAdapter extends RecyclerView.Adapter<SubjectsAdapter.Subjec
     }
 
     public void swapCursor(Cursor cursor) {
-        mSubjectList = new ArrayList<>();
+
         if (cursor != null) {
+            mSubjectList = new ArrayList<>();
             while (cursor.moveToNext()) {
                 String title = cursor.getString(cursor.
                         getColumnIndex(DatabaseContract.SubjectEntry.COLUMN_TITLE));
@@ -61,13 +64,19 @@ public class SubjectsAdapter extends RecyclerView.Adapter<SubjectsAdapter.Subjec
                         getColumnIndex(DatabaseContract.SubjectEntry.COLUMN_SUMMARY));
                 String tableContent = cursor.getString(cursor.
                         getColumnIndex(DatabaseContract.SubjectEntry.COLUMN_TABLE_CONTENT));
+                String tdProfessor = cursor.getString(cursor.
+                        getColumnIndex(DatabaseContract.SubjectEntry.COLUMN_TD_PROFESSOR));
+                String tpProfessor = cursor.getString(cursor.
+                        getColumnIndex(DatabaseContract.SubjectEntry.COLUMN_TP_PROFESSOR));
+                String courseProfessor = cursor.getString(cursor.
+                        getColumnIndex(DatabaseContract.SubjectEntry.COLUMN_COURSE_PROFESSOR));
                 int level = cursor.getInt(cursor.
                         getColumnIndex(DatabaseContract.SubjectEntry.COLUMN_LEVEL));
                 int unityType = cursor.getInt(cursor.
                         getColumnIndex(DatabaseContract.SubjectEntry.COLUMN_UNITY_TYPE));
                 mSubjectList.add(new Subject(title, shortTitle,
-                        summary, tableContent, credit, coefficient,
-                        UnityTypes.getUnitType(unityType), level));
+                        summary, tableContent, coefficient, credit,
+                        level, UnityTypes.getUnitType(unityType), courseProfessor, tdProfessor, tpProfessor));
             }
             notifyDataSetChanged();
         }
@@ -87,6 +96,12 @@ public class SubjectsAdapter extends RecyclerView.Adapter<SubjectsAdapter.Subjec
             super(itemView);
             mShortTitleTextView = itemView.findViewById(R.id.subject_list_item_short_title);
             mTitleTextView = itemView.findViewById(R.id.subject_list_item_title);
+
+            itemView.setOnClickListener(v -> {
+                Intent intent = new Intent(mContext, SubjectsDetailActivity.class);
+                intent.putExtra(SubjectsDetailActivity.SUBJECT_KEY,
+                        mSubjectList.get(getAdapterPosition()));
+            });
         }
     }
 }

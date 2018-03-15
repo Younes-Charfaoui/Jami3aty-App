@@ -1,17 +1,35 @@
 package com.ibnkhaldoun.studentside.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.ibnkhaldoun.studentside.enums.UnityTypes;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class Subject {
+public class Subject implements Parcelable {
+
+    public static final Parcelable.Creator<Subject> CREATOR = new Parcelable.Creator<Subject>() {
+        @Override
+        public Subject createFromParcel(Parcel source) {
+            return new Subject(source);
+        }
+
+        @Override
+        public Subject[] newArray(int size) {
+            return new Subject[size];
+        }
+    };
+    private long id;
     private String title, shortTitle;
-    private boolean hasTd, hasTP;
     private String summary, content, credit, coefficient;
-    private Professor tdProfessor, tpProfessor, courseProfessor;
+    private String tdProfessor;
+    private String tpProfessor;
+    private String courseProfessor;
     private UnityTypes unityTypes;
     private int level;
-    private List<ScheduleItem> scheduleList;
+    private List<ScheduleItem> scheduleList = new ArrayList<>();
 
     public Subject() {
     }
@@ -27,25 +45,67 @@ public class Subject {
         this.level = level;
     }
 
-    public Subject(String title, String shortTitle, boolean hasTd, boolean hasTP, String summary, String content, Professor tdProfessor, Professor tpProfessor, Professor courseProfessor, UnityTypes unityTypes) {
+    public Subject(String title, String shortTitle, String summary, String content, String coefficient, String credit, int level, UnityTypes unityTypes, String tdProfessor, String tpProfessor, String courseProfessor) {
         this.title = title;
         this.shortTitle = shortTitle;
-        this.hasTd = hasTd;
-        this.hasTP = hasTP;
         this.summary = summary;
         this.content = content;
         this.tdProfessor = tdProfessor;
         this.tpProfessor = tpProfessor;
         this.courseProfessor = courseProfessor;
         this.unityTypes = unityTypes;
+        this.level = level;
+        this.coefficient = coefficient;
+        this.credit = credit;
     }
 
-    public void setHasTd(boolean hasTd) {
-        this.hasTd = hasTd;
+    protected Subject(Parcel in) {
+        this.id = in.readLong();
+        this.title = in.readString();
+        this.shortTitle = in.readString();
+        this.summary = in.readString();
+        this.content = in.readString();
+        this.credit = in.readString();
+        this.coefficient = in.readString();
+        this.tdProfessor = in.readString();
+        this.tpProfessor = in.readString();
+        this.courseProfessor = in.readString();
+        int tmpUnityTypes = in.readInt();
+        this.unityTypes = tmpUnityTypes == -1 ? null : UnityTypes.values()[tmpUnityTypes];
+        this.level = in.readInt();
+        this.scheduleList = in.createTypedArrayList(ScheduleItem.CREATOR);
     }
 
-    public void setHasTP(boolean hasTP) {
-        this.hasTP = hasTP;
+    public String getTdProfessor() {
+        return tdProfessor;
+    }
+
+    public void setTdProfessor(String tdProfessor) {
+        this.tdProfessor = tdProfessor;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getTpProfessor() {
+        return tpProfessor;
+    }
+
+    public void setTpProfessor(String tpProfessor) {
+        this.tpProfessor = tpProfessor;
+    }
+
+    public String getCourseProfessor() {
+        return courseProfessor;
+    }
+
+    public void setCourseProfessor(String courseProfessor) {
+        this.courseProfessor = courseProfessor;
     }
 
     public List<ScheduleItem> getScheduleList() {
@@ -77,11 +137,15 @@ public class Subject {
     }
 
     public boolean itHasTd() {
-        return hasTd;
+        return this.tdProfessor != null;
     }
 
     public boolean itHasTp() {
-        return hasTP;
+        return this.tpProfessor != null;
+    }
+
+    public boolean itHasCourse() {
+        return this.courseProfessor != null;
     }
 
     public String getSummary() {
@@ -98,30 +162,6 @@ public class Subject {
 
     public void setContent(String content) {
         this.content = content;
-    }
-
-    public Professor getTdProfessor() {
-        return tdProfessor;
-    }
-
-    public void setTdProfessor(Professor tdProfessor) {
-        this.tdProfessor = tdProfessor;
-    }
-
-    public Professor getTpProfessor() {
-        return tpProfessor;
-    }
-
-    public void setTpProfessor(Professor tpProfessor) {
-        this.tpProfessor = tpProfessor;
-    }
-
-    public Professor getCourseProfessor() {
-        return courseProfessor;
-    }
-
-    public void setCourseProfessor(Professor courseProfessor) {
-        this.courseProfessor = courseProfessor;
     }
 
     public UnityTypes getUnityTypes() {
@@ -154,5 +194,27 @@ public class Subject {
 
     public void setLevel(int level) {
         this.level = level;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(this.id);
+        dest.writeString(this.title);
+        dest.writeString(this.shortTitle);
+        dest.writeString(this.summary);
+        dest.writeString(this.content);
+        dest.writeString(this.credit);
+        dest.writeString(this.coefficient);
+        dest.writeString(this.tdProfessor);
+        dest.writeString(this.tpProfessor);
+        dest.writeString(this.courseProfessor);
+        dest.writeInt(this.unityTypes == null ? -1 : this.unityTypes.ordinal());
+        dest.writeInt(this.level);
+        dest.writeTypedList(this.scheduleList);
     }
 }

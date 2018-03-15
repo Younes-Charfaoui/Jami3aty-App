@@ -1,9 +1,22 @@
 package com.ibnkhaldoun.studentside.services;
 
 import android.app.IntentService;
+import android.content.ContentValues;
 import android.content.Intent;
-import android.net.Uri;
 import android.support.annotation.Nullable;
+import android.support.v4.content.LocalBroadcastManager;
+
+import com.ibnkhaldoun.studentside.database.DatabaseContract;
+import com.ibnkhaldoun.studentside.enums.UnityTypes;
+import com.ibnkhaldoun.studentside.models.Mark;
+import com.ibnkhaldoun.studentside.models.Subject;
+
+import java.util.ArrayList;
+
+import static com.ibnkhaldoun.studentside.services.LoadDataService.MARK_ACTION;
+import static com.ibnkhaldoun.studentside.services.LoadDataService.MARK_TYPE;
+import static com.ibnkhaldoun.studentside.services.LoadDataService.SUBJECT_ACTION;
+import static com.ibnkhaldoun.studentside.services.LoadDataService.SUBJECT_TYPE;
 
 /**
  * @definition this service will do the operation of
@@ -13,6 +26,7 @@ import android.support.annotation.Nullable;
 
 public class DatabaseService extends IntentService {
 
+    public static final String KEY_CONTENT_DATA = "keyData";
 
     /**
      * Creates an IntentService.  Invoked by your subclass's constructor.
@@ -25,6 +39,84 @@ public class DatabaseService extends IntentService {
 
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
-        //todo add the schedule and the subjects to the database
+        assert intent != null;
+        int type = intent.getIntExtra(LoadDataService.KEY_ACTION, -1);
+        switch (type) {
+            case SUBJECT_TYPE:
+                insertSubject(intent.getParcelableArrayListExtra(KEY_CONTENT_DATA));
+                Intent intentSubject = new Intent(SUBJECT_ACTION);
+                LocalBroadcastManager.getInstance(this).sendBroadcast(intentSubject);
+                break;
+            case MARK_TYPE:
+                insertMarks(intent.getParcelableArrayListExtra(KEY_CONTENT_DATA));
+                Intent intentMark = new Intent(MARK_ACTION);
+                LocalBroadcastManager.getInstance(this).sendBroadcast(intentMark);
+                break;
+        }
+    }
+
+    private void insertMarks(ArrayList<Mark> markList) {
+        getContentResolver().bulkInsert(DatabaseContract
+                        .SubjectEntry.CONTENT_SUBJECT_URI,
+                getMarkContentValues(markList));
+    }
+
+    private ContentValues[] getMarkContentValues(ArrayList<Mark> list) {
+        ContentValues[] values = new ContentValues[list.size()];
+        for (int i = 0; i < list.size(); i++) {
+
+            values[i].put(DatabaseContract.MarkEntry.COLUMN_TITLE_SUBJECT,
+                    list.get(i).getSubjectName());
+            values[i].put(DatabaseContract.MarkEntry.COLUMN_SHORT_TITLE,
+                    list.get(i).getShortSubjectName());
+            values[i].put(DatabaseContract.MarkEntry.COLUMN_TD_MARK,
+                    list.get(i).getTD());
+            values[i].put(DatabaseContract.MarkEntry.COLUMN_TP_MARK,
+                    list.get(i).getTP());
+            values[i].put(DatabaseContract.MarkEntry.COLUMN_EXAM_MARK,
+                    list.get(i).getExam());
+
+            values[i].put(DatabaseContract.MarkEntry.COLUMN_SUBJECT_ID,
+                    list.get(i).getSubjectId());
+        }
+        return values;
+
+    }
+
+    private void insertSubject(ArrayList<Subject> list) {
+        getContentResolver().bulkInsert(DatabaseContract
+                        .SubjectEntry.CONTENT_SUBJECT_URI,
+                getSubjectContentValues(list));
+    }
+
+    private ContentValues[] getSubjectContentValues(ArrayList<Subject> list) {
+        ContentValues[] values = new ContentValues[list.size()];
+        for (int i = 0; i < list.size(); i++) {
+            values[i].put(DatabaseContract.SubjectEntry.COLUMN_ID,
+                    list.get(i).getId());
+            values[i].put(DatabaseContract.SubjectEntry.COLUMN_COEFFICIENT,
+                    list.get(i).getCoefficient());
+            values[i].put(DatabaseContract.SubjectEntry.COLUMN_LEVEL,
+                    list.get(i).getLevel());
+            values[i].put(DatabaseContract.SubjectEntry.COLUMN_CREDIT,
+                    list.get(i).getCredit());
+            values[i].put(DatabaseContract.SubjectEntry.COLUMN_SHORT_TITLE,
+                    list.get(i).getShortTitle());
+            values[i].put(DatabaseContract.SubjectEntry.COLUMN_TITLE,
+                    list.get(i).getTitle());
+            values[i].put(DatabaseContract.SubjectEntry.COLUMN_TD_PROFESSOR,
+                    list.get(i).getTdProfessor());
+            values[i].put(DatabaseContract.SubjectEntry.COLUMN_TP_PROFESSOR,
+                    list.get(i).getTpProfessor());
+            values[i].put(DatabaseContract.SubjectEntry.COLUMN_COURSE_PROFESSOR,
+                    list.get(i).getCourseProfessor());
+            values[i].put(DatabaseContract.SubjectEntry.COLUMN_SUMMARY,
+                    list.get(i).getSummary());
+            values[i].put(DatabaseContract.SubjectEntry.COLUMN_TABLE_CONTENT,
+                    list.get(i).getContent());
+            values[i].put(DatabaseContract.SubjectEntry.COLUMN_UNITY_TYPE,
+                    UnityTypes.getUnitType(list.get(i).getUnityTypes()));
+        }
+        return values;
     }
 }

@@ -1,5 +1,6 @@
 package com.ibnkhaldoun.studentside.networking.utilities;
 
+import com.ibnkhaldoun.studentside.models.Mark;
 import com.ibnkhaldoun.studentside.models.Professor;
 import com.ibnkhaldoun.studentside.models.Student;
 import com.ibnkhaldoun.studentside.models.Subject;
@@ -12,6 +13,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import static com.ibnkhaldoun.studentside.networking.models.Response.RESPONSE_SUCCESS;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_PROFESSOR_DEGREE;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_PROFESSOR_EMAIL;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_PROFESSOR_FIRST_NAME;
@@ -28,7 +30,6 @@ import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_STUDENT
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_STUDENT_SECTION;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.KEY_JSON_DATA;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.KEY_JSON_STATUS;
-import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.NETWORK_SUCCESS;
 
 /**
  * this class will make the role of doing the parse
@@ -39,13 +40,12 @@ public class JsonUtilities {
 
     public static LoginResponse getLoginResponse(String jsonText) {
         try {
-            LoginResponse response = new LoginResponse();
 
             JSONObject root = new JSONObject(jsonText);
             int status = Integer.parseInt(root.getString(KEY_JSON_STATUS));
-            response.setStatus(status);
+            LoginResponse response = new LoginResponse(status);
 
-            if (status == NETWORK_SUCCESS) {
+            if (status == RESPONSE_SUCCESS) {
 
                 JSONObject data = root.getJSONObject(KEY_JSON_DATA);
 
@@ -81,11 +81,23 @@ public class JsonUtilities {
     }
 
     public static SignUpResponse getSignUpResponse(String jsonText) {
-        // TODO: 11/03/2018 the code to handle the sign up response
+        try {
+            JSONObject root = new JSONObject(jsonText);
+            int status = Integer.parseInt(root.getString(KEY_JSON_STATUS));
+            return new SignUpResponse(status);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         return null;
     }
 
     public static ArrayList<Subject> getSubjectList(String response) {
+        try {
+            JSONObject root = new JSONObject(response);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         return null;
     }
 
@@ -98,6 +110,11 @@ public class JsonUtilities {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        return null;
+    }
+
+    public static ArrayList<Mark> getMarkList(String response) {
+        // TODO: 14/03/2018 add the code to parse the mark response
         return null;
     }
 }

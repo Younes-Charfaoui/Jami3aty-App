@@ -49,16 +49,16 @@ public class SubjectsDetailActivity extends AppCompatActivity {
         ((TextView) findViewById(R.id.subject_utility)).setText(subject.getSummary());
 
         ((TextView) findViewById(R.id.subject_course_professor_title)).setTextColor(colorOfSubject);
-        ((TextView) findViewById(R.id.subject_course_professor)).setText(subject.getCourseProfessor().getFullName());
+        ((TextView) findViewById(R.id.subject_course_professor)).setText(subject.getCourseProfessor());
 
         if (subject.itHasTd()) {
             findViewById(R.id.subject_td_professor_title).setVisibility(View.VISIBLE);
-            ((TextView) findViewById(R.id.subject_td_professor)).setText(subject.getTdProfessor().getFullName());
+            ((TextView) findViewById(R.id.subject_td_professor)).setText(subject.getTdProfessor());
         }
 
         if (subject.itHasTp()) {
             findViewById(R.id.subject_tp_professor_title).setVisibility(View.VISIBLE);
-            ((TextView) findViewById(R.id.subject_tp_professor)).setText(subject.getTpProfessor().getFullName());
+            ((TextView) findViewById(R.id.subject_tp_professor)).setText(subject.getTpProfessor());
         }
 
         LinearLayout scheduleLinearLayout = findViewById(R.id.subject_schedule_linear_layout);

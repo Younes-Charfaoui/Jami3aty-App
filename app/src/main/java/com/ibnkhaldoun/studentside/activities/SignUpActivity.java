@@ -14,8 +14,9 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
-
+import android.widget.LinearLayout;
 import com.ibnkhaldoun.studentside.R;
 import com.ibnkhaldoun.studentside.asyncTask.SignUpAsyncTask;
 import com.ibnkhaldoun.studentside.interfaces.TaskListener;
@@ -26,21 +27,19 @@ import com.ibnkhaldoun.studentside.networking.models.SignUpResponse;
 import com.ibnkhaldoun.studentside.networking.utilities.NetworkUtilities;
 import com.ibnkhaldoun.studentside.providers.EndPointsProvider;
 
-import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.KEY_ANDROID;
-import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.KEY_BAC;
-import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.KEY_CARD_NUMBER;
-import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.KEY_EMAIL;
-import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.KEY_PASSWORD;
+import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.*;
+import static com.ibnkhaldoun.studentside.networking.models.Response.*;
 
 public class SignUpActivity extends AppCompatActivity
         implements View.OnFocusChangeListener, TaskListener {
 
     private EditText mEmailEditText, mPasswordEditText, mCardNumberEditText, mBacAverageEditText;
     private TextInputLayout mEmailWrapper, mCardNumberWrapper, mPasswordWrapper, mBacAverageWrapper;
-    private ProgressBar mProgressBar;
     private Menu mMenu;
-    private ProgressBar loading;
-    private Button signUpButton;
+    private ProgressBar mLoadingProgressBar;
+    private Button mSignUpButton;
+    private TextView mTitleTextView , mSubTitleTextView;
+    private LinearLayout mFieldLinearLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,10 +67,15 @@ public class SignUpActivity extends AppCompatActivity
         mBacAverageEditText.setOnFocusChangeListener(this);
         mEmailEditText.setOnFocusChangeListener(this);
         mPasswordEditText.setOnFocusChangeListener(this);
-        loading = findViewById(R.id.loading_progressBar_signUp);
-        signUpButton = findViewById(R.id.sign_up_button);
+        mLoadingProgressBar = findViewById(R.id.loading_progressBar_signUp);
+        mSignUpButton = findViewById(R.id.sign_up_button);
 
-        signUpButton.setOnClickListener(v -> {
+        mTitleTextView = findViewById(R.id.sing_up_title_text_view);
+        mSubTitleTextView = findViewById(R.id.sing_up_subtitle_text_view);
+
+        mFieldLinearLayout = findViewById(R.id.sign_up_field_linear_layout);
+
+        mSignUpButton.setOnClickListener(v -> {
             if (validate()) {
                 hideKeyboard();
 
@@ -98,8 +102,8 @@ public class SignUpActivity extends AppCompatActivity
                     SignUpAsyncTask signUpAsyncTask = new SignUpAsyncTask(this);
                     signUpAsyncTask.execute(requestPackage);
 
-                    signUpButton.setVisibility(View.GONE);
-                    loading.setVisibility(View.VISIBLE);
+                    mSignUpButton.setVisibility(View.GONE);
+                    mLoadingProgressBar.setVisibility(View.VISIBLE);
                 }
 
             }
@@ -142,7 +146,6 @@ public class SignUpActivity extends AppCompatActivity
      * @return a boolean
      */
     private boolean validate() {
-
         boolean validate = true;
         String cardNumber = mCardNumberEditText.getText().toString();
         String email = mEmailEditText.getText().toString();
@@ -298,7 +301,21 @@ public class SignUpActivity extends AppCompatActivity
 
     @Override
     public void onSignUpCompletionListener(SignUpResponse response) {
-        // TODO: 11/03/2018 add the handle here
+        switch (response.getStatus()){
+            case RESPONSE_SUCCESS:
+                mSubTitleTextView.setText(R.string.account_created_succes_string);
+                mTitleTextView.setText(R.string.completed);
+                mSignUpButton.setOnClickListener(v-> finish());
+                mSignUpButton.setText(R.string.done);
+                break;
+            case RESPONSE_ACCOUNT_EXISTS :
+                mCardNumberWrapper.setError("This account of this card number already used.");
+
+                break;
+            case RESPONSE_AVERAGE_ERROR:
+                mBacAverageWrapper.setError("This average is not correct for this card number");
+                break;
+        }
     }
 
     @Override

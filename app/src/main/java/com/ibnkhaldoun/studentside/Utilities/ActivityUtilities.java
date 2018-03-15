@@ -2,8 +2,6 @@ package com.ibnkhaldoun.studentside.Utilities;
 
 import android.graphics.Color;
 import android.os.Build;
-import android.support.design.widget.Snackbar;
-import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 

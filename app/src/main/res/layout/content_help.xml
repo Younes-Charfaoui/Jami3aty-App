@@ -1,86 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.ibnkhaldoun.studentside.activities.HelpActivity"
     tools:showIn="@layout/activity_help">
 
-    <LinearLayout
+    <ImageView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="@dimen/linearLayout_padding">
+        android:layout_height="match_parent"
+        android:alpha=".4"
+        android:contentDescription="@null"
+        android:scaleType="centerCrop"
+        android:src="@drawable/hami" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="@dimen/bottom_margin"
-            android:fontFamily="sans-serif-light"
-            android:text="@string/welcome_in_help"
-            android:textColor="@color/colorAccent"
-            android:textSize="40sp" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/bottom_margin"
-            android:fontFamily="sans-serif-light"
-            android:text="@string/card_number_string"
-            android:textAppearance="@android:style/TextAppearance.Holo.Widget.ActionMode.Title" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/bottom_margin"
-            android:fontFamily="sans-serif-light"
-            android:text="@string/card_number_help" />
-
-        <ImageView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_marginBottom="@dimen/bottom_margin"
-            android:alpha="0.7"
-            android:contentDescription="@string/student_card_description"
-            android:scaleType="fitCenter"
-            android:src="@drawable/student_card" />
-
-        <TextView
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/bottom_margin"
-            android:fontFamily="sans-serif-light"
+            android:orientation="vertical"
+            android:padding="@dimen/linearLayout_padding">
 
-            android:text="@string/email_string"
-            android:textAppearance="@android:style/TextAppearance.Holo.Widget.ActionMode.Title" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="@dimen/bottom_margin"
+                android:fontFamily="sans-serif-light"
+                android:text="@string/welcome_in_help"
+                android:textColor="@color/colorAccent"
+                android:textSize="40sp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/bottom_margin"
-            android:fontFamily="sans-serif-light"
-            android:text="@string/email_help" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/bottom_margin"
+                android:fontFamily="sans-serif-light"
+                android:text="@string/card_number_string"
+                android:textAppearance="@android:style/TextAppearance.Holo.Widget.ActionMode.Title" />
 
-        <TextView
-            android:fontFamily="sans-serif-light"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/bottom_margin"
-            android:text="@string/password_string"
-            android:textAppearance="@android:style/TextAppearance.Holo.Widget.ActionMode.Title" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/bottom_margin"
+                android:fontFamily="sans-serif-light"
+                android:text="@string/card_number_help" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/bottom_margin"
-            android:fontFamily="sans-serif-light"
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginBottom="@dimen/bottom_margin"
+                android:alpha="0.7"
+                android:contentDescription="@string/student_card_description"
+                android:scaleType="fitCenter"
+                android:src="@drawable/student_card" />
 
-            android:text="@string/password_help" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/bottom_margin"
+                android:fontFamily="sans-serif-light"
 
-    </LinearLayout>
-</ScrollView>
+                android:text="@string/email_string"
+                android:textAppearance="@android:style/TextAppearance.Holo.Widget.ActionMode.Title" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/bottom_margin"
+                android:fontFamily="sans-serif-light"
+                android:text="@string/email_help" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/bottom_margin"
+                android:fontFamily="sans-serif-light"
+                android:text="@string/password_string"
+                android:textAppearance="@android:style/TextAppearance.Holo.Widget.ActionMode.Title" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/bottom_margin"
+                android:fontFamily="sans-serif-light"
+
+                android:text="@string/password_help" />
+
+        </LinearLayout>
+    </ScrollView>
+</merge>

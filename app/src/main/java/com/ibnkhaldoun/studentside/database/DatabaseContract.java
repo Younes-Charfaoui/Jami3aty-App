@@ -58,8 +58,26 @@ public class DatabaseContract implements BaseColumns {
         public static final String COLUMN_CREDIT = "credit";
         public static final String COLUMN_SUMMARY = "summary";
         public static final String COLUMN_TABLE_CONTENT = "content";
-        public static final String COLUMN_LEVEL = "content";
+        public static final String COLUMN_LEVEL = "level";
         public static final String COLUMN_UNITY_TYPE = "unityType";
+        public static final String COLUMN_TD_PROFESSOR = "tdProfessor";
+        public static final String COLUMN_TP_PROFESSOR = "tpProfessor";
+        public static final String COLUMN_COURSE_PROFESSOR = "courseProfessor";
+    }
+
+    public static class MarkEntry {
+        public static final Uri CONTENT_MARK_URI = BASE_URI.buildUpon()
+                .appendEncodedPath(PATH_MARK)
+                .build();
+        public static final String TABLE_NAME = "marks";
+        public static final String COLUMN_ID = _ID;
+        public static final String COLUMN_TITLE_SUBJECT = "subjectTitle";
+        public static final String COLUMN_SHORT_TITLE = "subjectShortTitle";
+        public static final String COLUMN_TD_MARK = "tdMark";
+        public static final String COLUMN_TP_MARK = "tpMark";
+        public static final String COLUMN_EXAM_MARK = "examMark";
+        public static final String COLUMN_SUBJECT_ID = "subjectId";
+        //todo list of the table constant
     }
 
     public class DisplayEntry {
@@ -69,16 +87,12 @@ public class DatabaseContract implements BaseColumns {
 
     public class MailEntry {
         public static final String TABLE_NAME = "mails";
+
         //todo list of the table constant
     }
 
     public class NotificationEntry {
         public static final String TABLE_NAME = "notifications";
-        //todo list of the table constant
-    }
-
-    public class MarkEntry {
-        public static final String TABLE_NAME = "marks";
         //todo list of the table constant
     }
 

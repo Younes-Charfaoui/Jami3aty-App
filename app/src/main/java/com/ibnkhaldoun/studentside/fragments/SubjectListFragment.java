@@ -41,9 +41,7 @@ public class SubjectListFragment extends DialogFragment {
         list.add("English");
         SubjectDialogAdapter adapter = new SubjectDialogAdapter(getContext(), R
                 .layout.subject_dialog_list_item, list);
-        builder.setAdapter(adapter, (dialog, which) -> {
-            mInterface.onSubjectChosen(list.get(which));
-        });
+        builder.setAdapter(adapter, (dialog, which) -> mInterface.onSubjectChosen(list.get(which)));
         return builder.create();
     }
 }

@@ -14,6 +14,7 @@ public class HelpActivity extends AppCompatActivity {
         setContentView(R.layout.activity_help);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        assert getSupportActionBar() != null;
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 

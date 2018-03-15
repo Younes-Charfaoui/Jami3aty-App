@@ -4,7 +4,6 @@ import android.os.AsyncTask;
 
 import com.ibnkhaldoun.studentside.interfaces.TaskListener;
 import com.ibnkhaldoun.studentside.networking.models.ForgetPasswordResponse;
-import com.ibnkhaldoun.studentside.networking.models.LoginResponse;
 import com.ibnkhaldoun.studentside.networking.models.RequestPackage;
 import com.ibnkhaldoun.studentside.networking.utilities.HttpUtilities;
 import com.ibnkhaldoun.studentside.networking.utilities.JsonUtilities;

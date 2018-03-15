@@ -1,12 +1,9 @@
 package com.ibnkhaldoun.studentside.security;
 
-import android.util.Base64;
-
 import com.google.common.hash.Hashing;
 
 import java.nio.charset.StandardCharsets;
 
-import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
 
 /**

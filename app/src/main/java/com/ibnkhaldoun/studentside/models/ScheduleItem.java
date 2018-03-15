@@ -22,7 +22,6 @@ public class ScheduleItem implements Parcelable {
     private String time, location;
     private String subject;
     private ClassTypes classType;
-    //todo the variable added below for just testing purpose
     private Professor professor;
 
     public ScheduleItem(String time, String location, String subject, ClassTypes classType, Professor profesor) {
@@ -31,6 +30,13 @@ public class ScheduleItem implements Parcelable {
         this.subject = subject;
         this.classType = classType;
         this.professor = profesor;
+    }
+
+    public ScheduleItem(String time, String location, String subject, ClassTypes classType) {
+        this.time = time;
+        this.location = location;
+        this.subject = subject;
+        this.classType = classType;
     }
 
     protected ScheduleItem(Parcel in) {
