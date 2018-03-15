@@ -18,6 +18,7 @@ import java.util.List;
 
 public class MessagesActivity extends AppCompatActivity {
 
+    public static final String KEY_MESSAGES = "keyMessages";
     private FloatingActionButton mAddMessageFab;
     private RecyclerView mRecyclerView;
     private MessagesAdapter mAdapter;
@@ -29,8 +30,8 @@ public class MessagesActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.messages_toolbar);
         setSupportActionBar(toolbar);
         Intent intent = getIntent();
-        Mail mail = intent.getParcelableExtra("Key");
-
+        Mail mail = intent.getParcelableExtra(KEY_MESSAGES);
+        assert getSupportActionBar() != null;
         getSupportActionBar().setTitle(mail.getProfessor().getFullName());
         toolbar.setTitle(mail.getProfessor().getFullName());
 
@@ -46,7 +47,11 @@ public class MessagesActivity extends AppCompatActivity {
         mRecyclerView.setHasFixedSize(true);
 
         mAddMessageFab.setOnClickListener(v -> {
-
+            Intent intentNewMessages = new Intent(MessagesActivity.this,
+                    NewMessageActivity.class);
+            intentNewMessages.putExtra(NewMessageActivity.KEY_PROFESSOR, mail.getProfessor());
+            intentNewMessages.putExtra(NewMessageActivity.KEY_LAUNCHER, NewMessageActivity.MESSAGE);
+            startActivity(intentNewMessages);
         });
     }
 

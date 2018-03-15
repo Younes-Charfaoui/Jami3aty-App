@@ -19,17 +19,19 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.ibnkhaldoun.studentside.R;
 import com.ibnkhaldoun.studentside.Utilities.PreferencesManager;
 import com.ibnkhaldoun.studentside.Utilities.Utils;
 import com.ibnkhaldoun.studentside.adapters.TabLayoutAdapter;
+import com.ibnkhaldoun.studentside.fragments.ProfessorListFragment;
+import com.ibnkhaldoun.studentside.interfaces.ProfessorDialogInterface;
 
 import java.util.Calendar;
 
 public class StudentMainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener,
+        ProfessorDialogInterface{
 
     private FloatingActionButton mAddMailFab;
 
@@ -60,7 +62,12 @@ public class StudentMainActivity extends AppCompatActivity
         mAddMailFab = findViewById(R.id.mail_add_professor_fab);
         mAddMailFab.setBackgroundColor(getResources().getColor(R.color.deep_red));
         mAddMailFab.hide();
-        mAddMailFab.setOnClickListener(v -> Toast.makeText(this, "Messages Fragment", Toast.LENGTH_SHORT).show());
+
+        mAddMailFab.setOnClickListener(v -> {
+            ProfessorListFragment professorListFragment =
+                    ProfessorListFragment.newInstance(null);
+            professorListFragment.show(getSupportFragmentManager(), "TAG");
+        });
 
         setupNavigationDrawer();
 
@@ -187,5 +194,10 @@ public class StudentMainActivity extends AppCompatActivity
         mTabLayout.addTab(mTabLayout.newTab().setIcon(R.drawable.ic_home));
         mTabLayout.addTab(mTabLayout.newTab().setIcon(R.drawable.ic_notifications_white));
         mTabLayout.addTab(mTabLayout.newTab().setIcon(R.drawable.ic_email_white));
+    }
+
+    @Override
+    public void onProfessorChosen(String professor, String id) {
+        
     }
 }

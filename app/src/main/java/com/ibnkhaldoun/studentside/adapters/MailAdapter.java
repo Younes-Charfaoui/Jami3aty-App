@@ -19,11 +19,10 @@ import java.util.List;
 public class MailAdapter extends RecyclerView.Adapter<MailAdapter.MailViewHolder> {
 
     private Context mContext;
-    private List<Mail> mDataList;
+    private List<Mail> mMailList;
 
-    public MailAdapter(Context mContext, List<Mail> mDataList) {
+    public MailAdapter(Context mContext) {
         this.mContext = mContext;
-        this.mDataList = mDataList;
     }
 
     @Override
@@ -36,7 +35,7 @@ public class MailAdapter extends RecyclerView.Adapter<MailAdapter.MailViewHolder
 
     @Override
     public void onBindViewHolder(MailViewHolder holder, int position) {
-        Mail mail = mDataList.get(position);
+        Mail mail = mMailList.get(position);
         holder.mProfessorShortNameTextView.setText(mail.getProfessor().getShortName());
         GradientDrawable shortNameCircle = (GradientDrawable) holder.mProfessorShortNameTextView.getBackground();
         shortNameCircle.setColor(Utils.getCircleColor(mail.getProfessor().getFirstName().charAt(0), mContext));
@@ -49,7 +48,8 @@ public class MailAdapter extends RecyclerView.Adapter<MailAdapter.MailViewHolder
 
     @Override
     public int getItemCount() {
-        return mDataList.size();
+        if (mMailList != null) return mMailList.size();
+        return 0;
     }
 
     class MailViewHolder extends RecyclerView.ViewHolder {
@@ -67,9 +67,10 @@ public class MailAdapter extends RecyclerView.Adapter<MailAdapter.MailViewHolder
             mSubjectTextView = itemView.findViewById(R.id.mail_last_subject_text_view);
             mDateTextView = itemView.findViewById(R.id.mail_date_of_mail_text_view);
             mStartView = itemView.findViewById(R.id.mail_start_view);
+
             itemView.setOnClickListener(v -> {
                 Intent intent = new Intent(mContext, MessagesActivity.class);
-                intent.putExtra("Key", mDataList.get(getAdapterPosition()));
+                intent.putExtra(MessagesActivity.KEY_MESSAGES, mMailList.get(getAdapterPosition()));
                 mContext.startActivity(intent);
             });
         }

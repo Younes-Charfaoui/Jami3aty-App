@@ -7,7 +7,7 @@
     android:padding="8dp">
 
     <View
-        android:id="@+id/subject_dialog_circle"
+        android:id="@+id/subject_professor_dialog_circle"
         android:layout_width="36dp"
         android:layout_height="36dp"
         android:layout_gravity="center_vertical"
@@ -15,7 +15,7 @@
         android:background="@drawable/circle" />
 
     <TextView
-        android:id="@+id/subject_dialog_title"
+        android:id="@+id/subject_professor_dialog_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"

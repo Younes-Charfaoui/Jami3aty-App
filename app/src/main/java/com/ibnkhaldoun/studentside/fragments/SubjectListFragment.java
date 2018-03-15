@@ -8,7 +8,7 @@ import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 
 import com.ibnkhaldoun.studentside.R;
-import com.ibnkhaldoun.studentside.adapters.SubjectDialogAdapter;
+import com.ibnkhaldoun.studentside.adapters.SubjectProfessorDialogAdapter;
 import com.ibnkhaldoun.studentside.interfaces.SubjectDialogInterface;
 
 import java.util.ArrayList;
@@ -27,6 +27,7 @@ public class SubjectListFragment extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
+        assert getActivity() != null;
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         builder.setTitle("Choose a Subject");
@@ -39,8 +40,9 @@ public class SubjectListFragment extends DialogFragment {
         list.add("Probability");
         list.add("IHM");
         list.add("English");
-        SubjectDialogAdapter adapter = new SubjectDialogAdapter(getContext(), R
-                .layout.subject_dialog_list_item, list);
+        assert getContext() != null;
+        SubjectProfessorDialogAdapter adapter = new SubjectProfessorDialogAdapter(getContext(), R
+                .layout.subject_professor_dialog_list_item, list);
         builder.setAdapter(adapter, (dialog, which) -> mInterface.onSubjectChosen(list.get(which)));
         return builder.create();
     }
