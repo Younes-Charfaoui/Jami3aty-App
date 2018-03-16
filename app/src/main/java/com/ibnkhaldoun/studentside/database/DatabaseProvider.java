@@ -40,6 +40,8 @@ public class DatabaseProvider extends ContentProvider {
 
         sUriMatcher.addURI(DatabaseContract.AUTHORITY, DatabaseContract.PATH_SUBJECT, SUBJECT);
         sUriMatcher.addURI(DatabaseContract.AUTHORITY, DatabaseContract.PATH_SUBJECT + "/#", SUBJECT_ID);
+
+        sUriMatcher.addURI(DatabaseContract.AUTHORITY, DatabaseContract.PATH_MARK, MARKS);
     }
 
     private DatabaseOpenHelper mDatabase;
@@ -132,6 +134,13 @@ public class DatabaseProvider extends ContentProvider {
                     if (row > 0) insertedRow++;
                 }
                 return insertedRow;
+            case MARKS:
+                for (ContentValues value :
+                        values) {
+                    long row = database.insert(DatabaseContract.MarkEntry.TABLE_NAME, null, value);
+                    if (row > 0) insertedRow++;
+                }
+                return insertedRow;
             default:
                 throw new IllegalStateException();
         }
@@ -170,6 +179,8 @@ public class DatabaseProvider extends ContentProvider {
                         DatabaseContract.SavedEntry.TABLE_NAME);
             case SUBJECT:
                 return database.delete(DatabaseContract.SubjectEntry.TABLE_NAME, selection, selectionArgs);
+            case MARKS:
+                return database.delete(DatabaseContract.MarkEntry.TABLE_NAME, selection, selectionArgs);
         }
         return 0;
     }

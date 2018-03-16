@@ -25,15 +25,18 @@ import com.ibnkhaldoun.studentside.R;
 import com.ibnkhaldoun.studentside.Utilities.PreferencesManager;
 import com.ibnkhaldoun.studentside.adapters.MarksAdapter;
 import com.ibnkhaldoun.studentside.database.DatabaseContract;
+import com.ibnkhaldoun.studentside.models.Mark;
 import com.ibnkhaldoun.studentside.networking.models.RequestPackage;
 import com.ibnkhaldoun.studentside.networking.utilities.NetworkUtilities;
-import com.ibnkhaldoun.studentside.providers.DataProviders;
 import com.ibnkhaldoun.studentside.providers.EndPointsProvider;
 import com.ibnkhaldoun.studentside.providers.KeyDataProvider;
 import com.ibnkhaldoun.studentside.services.LoadDataService;
 
+import java.util.ArrayList;
+
 public class MarkActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
+    public static final String KEY_MARKS = "keyMarks";
     private static final int ID_MARK_LOADER = 1182;
     private RecyclerView mRecyclerView;
     private MarksAdapter mAdapter;
@@ -43,9 +46,14 @@ public class MarkActivity extends AppCompatActivity implements LoaderManager.Loa
     private BroadcastReceiver mMarkReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            getSupportLoaderManager()
-                    .restartLoader(ID_MARK_LOADER, null, MarkActivity.this)
-                    .forceLoad();
+            ArrayList<Mark> list = intent.getParcelableArrayListExtra(KEY_MARKS);
+            mLoadingProgressBar.setVisibility(View.GONE);
+            if (list.size() != 0) {
+                mAdapter.swapList(list);
+                mRecyclerView.setVisibility(View.VISIBLE);
+            } else {
+                mEmptyLayout.setVisibility(View.VISIBLE);
+            }
         }
     };
 
@@ -76,7 +84,7 @@ public class MarkActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
     private void setupRecyclerView() {
-        mAdapter = new MarksAdapter(DataProviders.getMarkList(), this);
+        mAdapter = new MarksAdapter(this);
         LinearLayoutManager manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(manager);
         mRecyclerView.setAdapter(mAdapter);

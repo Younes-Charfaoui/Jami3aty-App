@@ -23,16 +23,20 @@ import com.ibnkhaldoun.studentside.R;
 import com.ibnkhaldoun.studentside.Utilities.PreferencesManager;
 import com.ibnkhaldoun.studentside.adapters.SubjectsAdapter;
 import com.ibnkhaldoun.studentside.database.DatabaseContract;
+import com.ibnkhaldoun.studentside.models.Subject;
 import com.ibnkhaldoun.studentside.networking.models.RequestPackage;
 import com.ibnkhaldoun.studentside.networking.utilities.NetworkUtilities;
 import com.ibnkhaldoun.studentside.providers.EndPointsProvider;
 import com.ibnkhaldoun.studentside.services.LoadDataService;
+
+import java.util.ArrayList;
 
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_STUDENT_ID;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.KEY_ANDROID;
 
 public class SubjectsActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
+    public static final String KEY_SUBJECTS = "keySubjects";
     private static final int SUBJECT_LOADER_ID = 1292;
     private RecyclerView mSubjectRecyclerView;
     private SubjectsAdapter mAdapter;
@@ -42,9 +46,15 @@ public class SubjectsActivity extends AppCompatActivity implements LoaderManager
     private BroadcastReceiver mSubjectReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            getSupportLoaderManager()
-                    .restartLoader(SUBJECT_LOADER_ID, null, SubjectsActivity.this)
-                    .forceLoad();
+            ArrayList<Subject> subjectList = intent.getParcelableArrayListExtra(KEY_SUBJECTS);
+            mProgressBar.setVisibility(View.GONE);
+            if (subjectList.size() != 0) {
+                mSubjectRecyclerView.setVisibility(View.VISIBLE);
+                mAdapter.swapList(subjectList);
+            } else {
+                mEmptyView.setVisibility(View.VISIBLE);
+            }
+
         }
     };
 
@@ -66,7 +76,8 @@ public class SubjectsActivity extends AppCompatActivity implements LoaderManager
 
         mEmptyView.setOnClickListener(v -> getSubjectFromService());
 
-        LocalBroadcastManager.getInstance(this).registerReceiver(mSubjectReceiver, new IntentFilter(LoadDataService.SUBJECT_ACTION));
+        LocalBroadcastManager.getInstance(this).registerReceiver(mSubjectReceiver,
+                new IntentFilter(LoadDataService.SUBJECT_ACTION));
     }
 
     @Override
@@ -92,9 +103,9 @@ public class SubjectsActivity extends AppCompatActivity implements LoaderManager
             startService(intent);
         } else {
             Snackbar networkSnackBar = Snackbar.make(findViewById(R.id.subject_main_view)
-                    , "No Network Available",
+                    , R.string.no_internet_connection_string,
                     Snackbar.LENGTH_SHORT);
-            networkSnackBar.setAction("Retry", v -> {
+            networkSnackBar.setAction(R.string.retry_string, v -> {
                 if (networkSnackBar.isShownOrQueued()) {
                     networkSnackBar.dismiss();
                 }

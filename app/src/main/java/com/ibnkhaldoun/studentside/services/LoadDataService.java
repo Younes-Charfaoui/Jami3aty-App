@@ -5,7 +5,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
 
+import com.ibnkhaldoun.studentside.activities.MarkActivity;
 import com.ibnkhaldoun.studentside.activities.StudentMainActivity;
+import com.ibnkhaldoun.studentside.activities.SubjectsActivity;
 import com.ibnkhaldoun.studentside.models.Mail;
 import com.ibnkhaldoun.studentside.models.Mark;
 import com.ibnkhaldoun.studentside.models.Subject;
@@ -73,6 +75,9 @@ public class LoadDataService extends IntentService {
         try {
             String response = HttpUtilities.getData(request);
             ArrayList<Subject> subjectList = JsonUtilities.getSubjectList(response);
+            Intent intentSubject = new Intent(SUBJECT_ACTION);
+            intentSubject.putExtra(SubjectsActivity.KEY_SUBJECTS, subjectList);
+            LocalBroadcastManager.getInstance(this).sendBroadcast(intentSubject);
             Intent intentDatabase = new Intent(context, DatabaseService.class);
             intentDatabase.putExtra(DatabaseService.KEY_CONTENT_DATA, subjectList);
             intentDatabase.putExtra(KEY_ACTION, SUBJECT_TYPE);
@@ -101,6 +106,9 @@ public class LoadDataService extends IntentService {
         try {
             String response = HttpUtilities.getData(request);
             ArrayList<Mark> markList = JsonUtilities.getMarkList(response);
+            Intent intentMark = new Intent(MARK_ACTION);
+            intentMark.putExtra(MarkActivity.KEY_MARKS, markList);
+            LocalBroadcastManager.getInstance(this).sendBroadcast(intentMark);
             Intent intentDatabase = new Intent(context, DatabaseService.class);
             intentDatabase.putExtra(DatabaseService.KEY_CONTENT_DATA, markList);
             intentDatabase.putExtra(KEY_ACTION, MARK_TYPE);

@@ -82,6 +82,11 @@ public class SubjectsAdapter extends RecyclerView.Adapter<SubjectsAdapter.Subjec
         }
     }
 
+    public void swapList(List<Subject> list) {
+        this.mSubjectList = list;
+        notifyDataSetChanged();
+    }
+
     @Override
     public int getItemCount() {
         if (mSubjectList != null) return mSubjectList.size();

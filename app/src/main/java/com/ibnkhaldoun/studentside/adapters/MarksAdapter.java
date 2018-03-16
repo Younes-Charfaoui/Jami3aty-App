@@ -25,8 +25,7 @@ public class MarksAdapter extends RecyclerView.Adapter<MarksAdapter.MarksViewHol
     private List<Mark> mMarkList = new ArrayList<>();
     private Context mContext;
 
-    public MarksAdapter(List<Mark> dataList, Context context) {
-        this.mMarkList = dataList;
+    public MarksAdapter(Context context) {
         this.mContext = context;
     }
 
@@ -95,6 +94,11 @@ public class MarksAdapter extends RecyclerView.Adapter<MarksAdapter.MarksViewHol
             }
             notifyDataSetChanged();
         }
+    }
+
+    public void swapList(List<Mark> markList) {
+        this.mMarkList = markList;
+        notifyDataSetChanged();
     }
 
     class MarksViewHolder extends RecyclerView.ViewHolder {

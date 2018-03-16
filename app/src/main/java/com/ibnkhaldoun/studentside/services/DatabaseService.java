@@ -4,7 +4,6 @@ import android.app.IntentService;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.support.annotation.Nullable;
-import android.support.v4.content.LocalBroadcastManager;
 
 import com.ibnkhaldoun.studentside.database.DatabaseContract;
 import com.ibnkhaldoun.studentside.enums.UnityTypes;
@@ -13,9 +12,7 @@ import com.ibnkhaldoun.studentside.models.Subject;
 
 import java.util.ArrayList;
 
-import static com.ibnkhaldoun.studentside.services.LoadDataService.MARK_ACTION;
 import static com.ibnkhaldoun.studentside.services.LoadDataService.MARK_TYPE;
-import static com.ibnkhaldoun.studentside.services.LoadDataService.SUBJECT_ACTION;
 import static com.ibnkhaldoun.studentside.services.LoadDataService.SUBJECT_TYPE;
 
 /**
@@ -44,21 +41,22 @@ public class DatabaseService extends IntentService {
         switch (type) {
             case SUBJECT_TYPE:
                 insertSubject(intent.getParcelableArrayListExtra(KEY_CONTENT_DATA));
-                Intent intentSubject = new Intent(SUBJECT_ACTION);
-                LocalBroadcastManager.getInstance(this).sendBroadcast(intentSubject);
                 break;
             case MARK_TYPE:
-                insertMarks(intent.getParcelableArrayListExtra(KEY_CONTENT_DATA));
-                Intent intentMark = new Intent(MARK_ACTION);
-                LocalBroadcastManager.getInstance(this).sendBroadcast(intentMark);
+                int data = insertMarks(intent.getParcelableArrayListExtra(KEY_CONTENT_DATA));
                 break;
         }
     }
 
-    private void insertMarks(ArrayList<Mark> markList) {
-        getContentResolver().bulkInsert(DatabaseContract
-                        .SubjectEntry.CONTENT_SUBJECT_URI,
-                getMarkContentValues(markList));
+    private int insertMarks(ArrayList<Mark> markList) {
+        if (markList.size() != 0) {
+            getContentResolver().delete(DatabaseContract.MarkEntry.CONTENT_MARK_URI,
+                    null, null);
+            return getContentResolver().bulkInsert(DatabaseContract
+                            .SubjectEntry.CONTENT_SUBJECT_URI,
+                    getMarkContentValues(markList));
+        }
+        return 0;
     }
 
     private ContentValues[] getMarkContentValues(ArrayList<Mark> list) {
@@ -84,9 +82,14 @@ public class DatabaseService extends IntentService {
     }
 
     private void insertSubject(ArrayList<Subject> list) {
-        getContentResolver().bulkInsert(DatabaseContract
-                        .SubjectEntry.CONTENT_SUBJECT_URI,
-                getSubjectContentValues(list));
+
+        if (list.size() != 0) {
+            getContentResolver().delete(DatabaseContract.SubjectEntry.CONTENT_SUBJECT_URI,
+                    null, null);
+            getContentResolver().bulkInsert(DatabaseContract
+                            .SubjectEntry.CONTENT_SUBJECT_URI,
+                    getSubjectContentValues(list));
+        }
     }
 
     private ContentValues[] getSubjectContentValues(ArrayList<Subject> list) {

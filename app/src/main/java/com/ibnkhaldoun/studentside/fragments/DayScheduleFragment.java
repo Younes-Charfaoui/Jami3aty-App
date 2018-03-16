@@ -22,7 +22,6 @@ import java.util.List;
 public class DayScheduleFragment extends Fragment {
 
     public static DayScheduleFragment newInstance(List<ScheduleItem> scheduleItemList) {
-
         Bundle args = new Bundle();
         args.putParcelableArrayList("Key", (ArrayList<? extends Parcelable>) scheduleItemList);
         DayScheduleFragment fragment = new DayScheduleFragment();

@@ -8,5 +8,11 @@
         android:title="@string/choose_level"
         app:showAsAction="never" />
     <!-- todo add the search menu item-->
+    <item
+        android:id="@+id/schedule_download"
+        android:orderInCategory="101"
+        android:title="@string/download_all_schedules"
+        app:showAsAction="never" />
+
 
 </menu>
