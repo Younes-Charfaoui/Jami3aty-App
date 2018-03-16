@@ -7,35 +7,34 @@ import android.os.Parcelable;
 public class Message implements Parcelable {
 
 
+    public static final Parcelable.Creator<Message> CREATOR = new Parcelable.Creator<Message>() {
+        @Override
+        public Message createFromParcel(Parcel source) {
+            return new Message(source);
+        }
+
+        @Override
+        public Message[] newArray(int size) {
+            return new Message[size];
+        }
+    };
     private boolean in;
     private String subject, text, date;
 
-    public Person getSender() {
-        return sender;
-    }
 
-    public void setSender(Person sender) {
-        this.sender = sender;
-    }
-
-    public Person getReceiver() {
-        return receiver;
-    }
-
-    public void setReceiver(Person receiver) {
-        this.receiver = receiver;
-    }
-
-    private Person sender, receiver;
-
-    public Message(String subject, String text, String date, Person sender, Person receiver) {
+    public Message(String subject, String text, String date, boolean in) {
         this.subject = subject;
         this.text = text;
         this.date = date;
-        this.receiver = receiver;
-        this.sender = sender;
+        this.in = in;
     }
 
+    protected Message(Parcel in) {
+        this.in = in.readByte() != 0;
+        this.subject = in.readString();
+        this.text = in.readString();
+        this.date = in.readString();
+    }
 
     public String getSubject() {
         return subject;
@@ -80,28 +79,6 @@ public class Message implements Parcelable {
         dest.writeString(this.subject);
         dest.writeString(this.text);
         dest.writeString(this.date);
-        dest.writeParcelable(this.sender, flags);
-        dest.writeParcelable(this.receiver, flags);
+
     }
-
-    protected Message(Parcel in) {
-        this.in = in.readByte() != 0;
-        this.subject = in.readString();
-        this.text = in.readString();
-        this.date = in.readString();
-        this.sender = in.readParcelable(Person.class.getClassLoader());
-        this.receiver = in.readParcelable(Person.class.getClassLoader());
-    }
-
-    public static final Parcelable.Creator<Message> CREATOR = new Parcelable.Creator<Message>() {
-        @Override
-        public Message createFromParcel(Parcel source) {
-            return new Message(source);
-        }
-
-        @Override
-        public Message[] newArray(int size) {
-            return new Message[size];
-        }
-    };
 }

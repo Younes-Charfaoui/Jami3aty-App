@@ -5,19 +5,32 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.ibnkhaldoun.studentside.providers.DataProviders;
 import com.ibnkhaldoun.studentside.fragments.DisplaysFragment;
 import com.ibnkhaldoun.studentside.fragments.MailFragment;
 import com.ibnkhaldoun.studentside.fragments.NotificationFragment;
+import com.ibnkhaldoun.studentside.models.Display;
+import com.ibnkhaldoun.studentside.models.Mail;
+import com.ibnkhaldoun.studentside.models.Notification;
+
+import java.util.List;
 
 public class TabLayoutAdapter extends FragmentPagerAdapter {
 
     private int mNumbersOfTabs;
     private int CurrentState;
+    private List<Mail> mMailList;
+    private List<Notification> mNotificationList;
+    private List<Display> mDisplayList;
 
     public TabLayoutAdapter(FragmentManager fm, int numbersOfTab) {
         super(fm);
         this.mNumbersOfTabs = numbersOfTab;
+    }
+
+    public void setLists(List<Display> displays, List<Notification> notifications, List<Mail> mails) {
+        this.mMailList = mails;
+        this.mDisplayList = displays;
+        this.mNotificationList = notifications;
     }
 
     public void setCurrentState(int currentState) {
@@ -29,11 +42,11 @@ public class TabLayoutAdapter extends FragmentPagerAdapter {
 
         switch (position) {
             case 0:
-                return DisplaysFragment.newInstance(DataProviders.getDisplayList());
+                return DisplaysFragment.newInstance(mDisplayList);
             case 1:
-                return NotificationFragment.newInstance(DataProviders.getNotificationList());
+                return NotificationFragment.newInstance(mNotificationList);
             case 2:
-                return MailFragment.newInstance(DataProviders.getMailList());
+                return MailFragment.newInstance(mMailList);
             default:
                 return null;
         }

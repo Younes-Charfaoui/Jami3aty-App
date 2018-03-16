@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.ibnkhaldoun.studentside.R;
-import com.ibnkhaldoun.studentside.Utilities.Utils;
+import com.ibnkhaldoun.studentside.Utilities.Utilities;
 import com.ibnkhaldoun.studentside.activities.SubjectsDetailActivity;
 import com.ibnkhaldoun.studentside.database.DatabaseContract;
 import com.ibnkhaldoun.studentside.enums.UnityTypes;
@@ -44,7 +44,7 @@ public class SubjectsAdapter extends RecyclerView.Adapter<SubjectsAdapter.Subjec
         Subject subject = mSubjectList.get(position);
         holder.mTitleTextView.setText(subject.getTitle());
         holder.mShortTitleTextView.setText(subject.getShortTitle());
-        holder.mShortTitleTextView.setBackgroundColor(Utils.getCircleColor(subject.getTitle().charAt(0), mContext));
+        holder.mShortTitleTextView.setBackgroundColor(Utilities.getCircleColor(subject.getTitle().charAt(0), mContext));
     }
 
     public void swapCursor(Cursor cursor) {

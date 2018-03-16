@@ -3,7 +3,10 @@ package com.ibnkhaldoun.studentside.services;
 import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.content.LocalBroadcastManager;
 
+import com.ibnkhaldoun.studentside.activities.StudentMainActivity;
+import com.ibnkhaldoun.studentside.models.Mail;
 import com.ibnkhaldoun.studentside.models.Mark;
 import com.ibnkhaldoun.studentside.models.Subject;
 import com.ibnkhaldoun.studentside.networking.models.RequestPackage;
@@ -28,6 +31,7 @@ public class LoadDataService extends IntentService {
     public static final String SCHEDULE_ACTION = "scheduleAction";
     public static final String MARK_ACTION = "markAction";
     public static final String SUBJECT_ACTION = "subjectAction";
+    public static final String NOTIFICATION_ACTION = "notificationAction";
 
     public static final int DISPLAY_TYPE = 1;
     public static final int MAIL_TYPE = 2;
@@ -35,6 +39,7 @@ public class LoadDataService extends IntentService {
     public static final int MARK_TYPE = 4;
     public static final int SUBJECT_TYPE = 5;
     public static final int ALL_TYPE = 6;
+    public static final int NOTIFICATION_TYPE = 7;
 
     public static final String KEY_ACTION = "Action";
     public static final String KEY_DATA = "data";
@@ -49,6 +54,7 @@ public class LoadDataService extends IntentService {
         RequestPackage request = intent.getParcelableExtra(KEY_REQUEST);
         switch (type) {
             case MAIL_TYPE:
+                mailCall(request, this);
                 break;
             case SCHEDULE_TYPE:
                 break;
@@ -77,13 +83,24 @@ public class LoadDataService extends IntentService {
     }
 
     private void mailCall(RequestPackage requestPackage, Context context) {
-
+        try {
+            String response = HttpUtilities.getData(requestPackage);
+            ArrayList<Mail> mailList = JsonUtilities.getMailList(response);
+            Intent intentToMails = new Intent(MAIL_ACTION);
+            intentToMails.putExtra(StudentMainActivity.KEY_MAILS, mailList);
+            LocalBroadcastManager.getInstance(context).sendBroadcast(intentToMails);
+            Intent intentToDatabase = new Intent(context, DatabaseService.class);
+            intentToDatabase.putExtra(DatabaseService.KEY_CONTENT_DATA, mailList);
+            startService(intentToDatabase);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void markCall(RequestPackage request, Context context) {
         try {
             String response = HttpUtilities.getData(request);
-            ArrayList<Mark> markList= JsonUtilities.getMarkList(response);
+            ArrayList<Mark> markList = JsonUtilities.getMarkList(response);
             Intent intentDatabase = new Intent(context, DatabaseService.class);
             intentDatabase.putExtra(DatabaseService.KEY_CONTENT_DATA, markList);
             intentDatabase.putExtra(KEY_ACTION, MARK_TYPE);

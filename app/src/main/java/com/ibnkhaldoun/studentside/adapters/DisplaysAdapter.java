@@ -12,7 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ibnkhaldoun.studentside.R;
-import com.ibnkhaldoun.studentside.Utilities.Utils;
+import com.ibnkhaldoun.studentside.Utilities.Utilities;
 import com.ibnkhaldoun.studentside.activities.DisplayDetailActivity;
 import com.ibnkhaldoun.studentside.models.Display;
 
@@ -24,14 +24,13 @@ public class DisplaysAdapter extends RecyclerView.Adapter<DisplaysAdapter.Displa
     private Context mContext;
     private List<Display> mDataList;
 
-    public DisplaysAdapter(Context mContext, List<Display> mDataList) {
+    public DisplaysAdapter(Context mContext) {
         this.mContext = mContext;
-        this.mDataList = mDataList;
     }
 
     @Override
     public DisplayViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        
+
         View view = LayoutInflater.from(mContext)
                 .inflate(R.layout.display_list_item, parent, false);
         return new DisplayViewHolder(view);
@@ -42,7 +41,7 @@ public class DisplaysAdapter extends RecyclerView.Adapter<DisplaysAdapter.Displa
         Display display = mDataList.get(position);
         holder.mProfessorShortNameTv.setText(display.getProfessor().getShortName());
         GradientDrawable circleImage = (GradientDrawable) holder.mProfessorShortNameTv.getBackground();
-        circleImage.setColor(Utils.getCircleColor(display.getProfessor().getShortName().charAt(0), mContext));
+        circleImage.setColor(Utilities.getCircleColor(display.getProfessor().getShortName().charAt(0), mContext));
         holder.mProfessorNameTv.setText(display.getProfessor().getFullName());
         holder.mDateTimeTv.setText(display.getDate());
         holder.mTextTv.setText(display.getText());
@@ -51,7 +50,13 @@ public class DisplaysAdapter extends RecyclerView.Adapter<DisplaysAdapter.Displa
 
     @Override
     public int getItemCount() {
-        return mDataList.size();
+        if (mDataList != null) return mDataList.size();
+        return 0;
+    }
+
+    public void swapList(List<Display> displayList) {
+        this.mDataList = displayList;
+        notifyDataSetChanged();
     }
 
     class DisplayViewHolder extends RecyclerView.ViewHolder {

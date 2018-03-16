@@ -11,7 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ibnkhaldoun.studentside.R;
-import com.ibnkhaldoun.studentside.Utilities.Utils;
+import com.ibnkhaldoun.studentside.Utilities.Utilities;
 import com.ibnkhaldoun.studentside.models.Comment;
 import com.ibnkhaldoun.studentside.models.Display;
 
@@ -39,7 +39,7 @@ public class DisplayDetailActivity extends AppCompatActivity {
         professorShortNameTextView.setText(display.getProfessor().getShortName());
 
         GradientDrawable circle = (GradientDrawable) professorShortNameTextView.getBackground();
-        circle.setColor(Utils.getCircleColor(display.getProfessor().getShortName().charAt(0), this));
+        circle.setColor(Utilities.getCircleColor(display.getProfessor().getShortName().charAt(0), this));
 
         TextView professorNameTextView = findViewById(R.id.display_detail_professor_name_text_view);
         professorNameTextView.setText(display.getProfessor().getFullName());
@@ -53,9 +53,7 @@ public class DisplayDetailActivity extends AppCompatActivity {
         TextView numberOfNoteTextView = findViewById(R.id.display_detail_number_of_notes);
         if (display.getCommentList().size() != 0) {
             numberOfNoteTextView.setText(display.getCommentList().size() + " note");
-
         } else {
-
             numberOfNoteTextView.setText("No note");
         }
         View separatorView = findViewById(R.id.display_detail_notes_separator);
@@ -92,7 +90,7 @@ public class DisplayDetailActivity extends AppCompatActivity {
         noteShortNameTextView.setText(shortName);
 
         GradientDrawable circleNoteShortName = (GradientDrawable) noteShortNameTextView.getBackground();
-        circleNoteShortName.setColor(Utils.getCircleColor(shortName.charAt(0), this));
+        circleNoteShortName.setColor(Utilities.getCircleColor(shortName.charAt(0), this));
 
         TextView noteNamePersonTextView = noteView.findViewById(R.id.note_of_display_person_name_text_view);
         noteNamePersonTextView.setText(name);

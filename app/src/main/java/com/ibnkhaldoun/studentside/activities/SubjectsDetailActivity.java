@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.ibnkhaldoun.studentside.R;
 import com.ibnkhaldoun.studentside.Utilities.ActivityUtilities;
-import com.ibnkhaldoun.studentside.Utilities.Utils;
+import com.ibnkhaldoun.studentside.Utilities.Utilities;
 import com.ibnkhaldoun.studentside.models.Subject;
 
 
@@ -32,7 +32,7 @@ public class SubjectsDetailActivity extends AppCompatActivity {
         getSupportActionBar().setTitle(subject.getShortTitle());
         getSupportActionBar().setHomeButtonEnabled(true);
 
-        int colorOfSubject = Utils.getCircleColor(subject.getTitle().charAt(0), this);
+        int colorOfSubject = Utilities.getCircleColor(subject.getTitle().charAt(0), this);
         ActivityUtilities.changeStatusBarColor(getWindow(), colorOfSubject);
 
         ((TextView) findViewById(R.id.subject_title_title)).setTextColor(colorOfSubject);

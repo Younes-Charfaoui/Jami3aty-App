@@ -10,7 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.ibnkhaldoun.studentside.R;
-import com.ibnkhaldoun.studentside.Utilities.Utils;
+import com.ibnkhaldoun.studentside.Utilities.Utilities;
 
 import java.util.List;
 
@@ -34,7 +34,7 @@ public class SubjectProfessorDialogAdapter extends ArrayAdapter<String> {
         TextView textView = convertView.findViewById(R.id.subject_professor_dialog_title);
         textView.setText(mSubjectList.get(position));
         View circleView = convertView.findViewById(R.id.subject_professor_dialog_circle);
-        circleView.setBackgroundColor(Utils.getCircleColor(mSubjectList.get(position).charAt(0), getContext()));
+        circleView.setBackgroundColor(Utilities.getCircleColor(mSubjectList.get(position).charAt(0), getContext()));
         return convertView;
     }
 

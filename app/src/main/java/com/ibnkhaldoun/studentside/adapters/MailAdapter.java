@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.ibnkhaldoun.studentside.R;
-import com.ibnkhaldoun.studentside.Utilities.Utils;
+import com.ibnkhaldoun.studentside.Utilities.Utilities;
 import com.ibnkhaldoun.studentside.activities.MessagesActivity;
 import com.ibnkhaldoun.studentside.models.Mail;
 
@@ -38,11 +38,11 @@ public class MailAdapter extends RecyclerView.Adapter<MailAdapter.MailViewHolder
         Mail mail = mMailList.get(position);
         holder.mProfessorShortNameTextView.setText(mail.getProfessor().getShortName());
         GradientDrawable shortNameCircle = (GradientDrawable) holder.mProfessorShortNameTextView.getBackground();
-        shortNameCircle.setColor(Utils.getCircleColor(mail.getProfessor().getFirstName().charAt(0), mContext));
+        shortNameCircle.setColor(Utilities.getCircleColor(mail.getProfessor().getFirstName().charAt(0), mContext));
         holder.mProfessorNameTextView.setText(mail.getProfessor().getFullName());
         holder.mSubjectTextView.setText(mail.getMessages().get(mail.getMessages().size() - 1).getSubject());
         holder.mDateTextView.setText(mail.getMessages().get(mail.getMessages().size() - 1).getDate());
-        holder.mStartView.setBackgroundColor(Utils.getCircleColor(mail.getProfessor().getFirstName().charAt(0), mContext));
+        holder.mStartView.setBackgroundColor(Utilities.getCircleColor(mail.getProfessor().getFirstName().charAt(0), mContext));
     }
 
 
@@ -50,6 +50,11 @@ public class MailAdapter extends RecyclerView.Adapter<MailAdapter.MailViewHolder
     public int getItemCount() {
         if (mMailList != null) return mMailList.size();
         return 0;
+    }
+
+    public void setMailList(List<Mail> list) {
+        this.mMailList = list;
+        notifyDataSetChanged();
     }
 
     class MailViewHolder extends RecyclerView.ViewHolder {
@@ -75,6 +80,4 @@ public class MailAdapter extends RecyclerView.Adapter<MailAdapter.MailViewHolder
             });
         }
     }
-
-
 }

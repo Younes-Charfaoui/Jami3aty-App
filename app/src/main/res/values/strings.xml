@@ -131,4 +131,6 @@
     <string name="send_string">send</string>
     <string name="save_draft_string">Save draft</string>
     <string name="title_activity_draft">DraftActivity</string>
+    <string name="tap_to_refresh_from_the_internet">Tap to refresh from the Internet.</string>
+    <string name="there_are_no_displays">There are no Displays.</string>
 </resources>

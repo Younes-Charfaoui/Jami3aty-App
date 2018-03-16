@@ -6,7 +6,7 @@ import android.support.v4.content.ContextCompat;
 import com.ibnkhaldoun.studentside.R;
 
 
-public final class Utils {
+public final class Utilities {
 
     public static int getMarkColor(float mark, Context context) {
         if (mark >= 10) return ContextCompat.getColor(context, R.color.deep_green);
@@ -91,5 +91,23 @@ public final class Utils {
     public static String getShortName(String name) {
         //todo code to get two chars from string
         return Character.toString(name.charAt(0));
+    }
+
+    public static String getFirstName(String fullName) throws ArrayIndexOutOfBoundsException {
+        if (fullName.contains(" ")) {
+            String[] names = fullName.split(" ");
+            return names[0];
+        } else {
+            return fullName;
+        }
+    }
+
+    public static String getLastName(String fullName) throws ArrayIndexOutOfBoundsException {
+        if (fullName.contains(" ")) {
+            String[] names = fullName.split(" ");
+            return names[2];
+        } else {
+            return fullName;
+        }
     }
 }

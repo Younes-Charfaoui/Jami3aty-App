@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import com.ibnkhaldoun.studentside.activities.NoteEditActivity;
 import com.ibnkhaldoun.studentside.R;
-import com.ibnkhaldoun.studentside.Utilities.Utils;
+import com.ibnkhaldoun.studentside.Utilities.Utilities;
 import com.ibnkhaldoun.studentside.database.DatabaseContract;
 import com.ibnkhaldoun.studentside.models.Note;
 
@@ -43,10 +43,10 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NotesViewHol
     public void onBindViewHolder(NotesViewHolder holder, int position) {
         Note note = mNoteList.get(position);
         holder.itemView.setTag(note.getId());
-        holder.mStarterView.setBackgroundColor(Utils.getCircleColor(note.getSubject().charAt(0), mContext));
+        holder.mStarterView.setBackgroundColor(Utilities.getCircleColor(note.getSubject().charAt(0), mContext));
         holder.mSubjectTextView.setText(note.getSubject());
         GradientDrawable drawable = (GradientDrawable) holder.mSubjectTextView.getBackground();
-        drawable.setColor(Utils.getCircleColor(note.getSubject().charAt(0), mContext));
+        drawable.setColor(Utilities.getCircleColor(note.getSubject().charAt(0), mContext));
         holder.mNoteTextView.setText(note.getNote());
     }
 

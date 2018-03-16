@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ibnkhaldoun.studentside.R;
-import com.ibnkhaldoun.studentside.Utilities.Utils;
+import com.ibnkhaldoun.studentside.Utilities.Utilities;
 import com.ibnkhaldoun.studentside.models.Notification;
 
 import java.util.List;
@@ -36,7 +36,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         Notification notification = mNotificationList.get(position);
         holder.mShortTextView.setText(notification.getProfessor().getShortName());
         GradientDrawable circle = (GradientDrawable) holder.mShortTextView.getBackground();
-        circle.setColor(Utils.getCircleColor(notification.getProfessor().getShortName().charAt(0), mContext));
+        circle.setColor(Utilities.getCircleColor(notification.getProfessor().getShortName().charAt(0), mContext));
         holder.mTextTextView.setText(notification.getText());
         switch (notification.getType()) {
             case AVIS:

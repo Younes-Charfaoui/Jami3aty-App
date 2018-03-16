@@ -11,7 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ibnkhaldoun.studentside.R;
-import com.ibnkhaldoun.studentside.Utilities.Utils;
+import com.ibnkhaldoun.studentside.Utilities.Utilities;
 import com.ibnkhaldoun.studentside.activities.MarkDetailActivity;
 import com.ibnkhaldoun.studentside.database.DatabaseContract;
 import com.ibnkhaldoun.studentside.models.Mark;
@@ -42,8 +42,8 @@ public class MarksAdapter extends RecyclerView.Adapter<MarksAdapter.MarksViewHol
     public void onBindViewHolder(MarksViewHolder holder, int position) {
         Mark mark = mMarkList.get(position);
         holder.mShortSubjectTextView.setText(mark.getShortSubjectName());
-        holder.mLinearSubject.setBackgroundColor(Utils.getCircleColor(mark.getSubjectName().charAt(0), mContext));
-        holder.mShortSubjectTextView.setBackgroundColor(Utils.getCircleColor(mark.getShortSubjectName().charAt(0), mContext));
+        holder.mLinearSubject.setBackgroundColor(Utilities.getCircleColor(mark.getSubjectName().charAt(0), mContext));
+        holder.mShortSubjectTextView.setBackgroundColor(Utilities.getCircleColor(mark.getShortSubjectName().charAt(0), mContext));
         holder.mExamTextView.setText(String.valueOf(mark.getExam()));
 
 

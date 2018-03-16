@@ -11,7 +11,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import java.util.ArrayList;
 import com.ibnkhaldoun.studentside.R;
-import com.ibnkhaldoun.studentside.Utilities.Utils;
+import com.ibnkhaldoun.studentside.Utilities.Utilities;
 import com.ibnkhaldoun.studentside.database.DatabaseContract;
 import com.ibnkhaldoun.studentside.models.Saved;
 
@@ -36,9 +36,9 @@ public class SavedAdapter extends RecyclerView.Adapter<SavedAdapter.SavedViewHol
     @Override
     public void onBindViewHolder(SavedViewHolder holder, int position) {
         Saved saved = mSavedList.get(position);
-        holder.mProfessorShortNameTv.setText(Utils.getShortName(saved.getProfessor()));
+        holder.mProfessorShortNameTv.setText(Utilities.getShortName(saved.getProfessor()));
         GradientDrawable circleImage = (GradientDrawable) holder.mProfessorShortNameTv.getBackground();
-        circleImage.setColor(Utils.getCircleColor(saved.getProfessor().charAt(0), mContext));
+        circleImage.setColor(Utilities.getCircleColor(saved.getProfessor().charAt(0), mContext));
         holder.mProfessorNameTv.setText(saved.getProfessor());
         holder.mDateTimeTv.setText(saved.getDate());
         holder.mTextTv.setText(saved.getText());

@@ -10,24 +10,27 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "university.db";
     private static final int DATABASE_VERSION = 1;
 
-    private static final String SQL_QUERY_CREATE_NOTE = "CREATE TABLE " +
+    private static final String BASE_DROP = "DROP TABLE IF EXISTS ";
+    private static final String BASE_CREATE = "CREATE TABLE ";
+
+    private static final String SQL_QUERY_CREATE_NOTE = BASE_CREATE +
             DatabaseContract.NoteEntry.TABLE_NAME + " ( " +
             DatabaseContract.NoteEntry.COLUMN_NOTE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             DatabaseContract.NoteEntry.COLUMN_NOTE_TEXT + " TEXT NOT NULL, " +
             DatabaseContract.NoteEntry.COLUMN_NOTE_SUBJECT + " TEXT NOT NULL);";
 
-    private static final String SQL_QUERY_DROP_NOTE = "DROP TABLE IF EXISTS " + DatabaseContract.NoteEntry.TABLE_NAME;
+    private static final String SQL_QUERY_DROP_NOTE = BASE_DROP + DatabaseContract.NoteEntry.TABLE_NAME;
 
-    private static final String SQL_QUERY_CREATE_SAVED = "CREATE TABLE " +
+    private static final String SQL_QUERY_CREATE_SAVED = BASE_CREATE +
             DatabaseContract.SavedEntry.TABLE_NAME + " ( " +
             DatabaseContract.SavedEntry.COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             DatabaseContract.SavedEntry.COLUMN_NAME + " TEXT NOT NULL, " +
             DatabaseContract.SavedEntry.COLUMN_DATE + " TEXT NOT NULL, " +
             DatabaseContract.SavedEntry.COLUMN_DISPLAY_TEXT + " TEXT NOT NULL);";
 
-    private static final String SQL_QUERY_DROP_SAVED = "DROP TABLE IF EXISTS " + DatabaseContract.SavedEntry.TABLE_NAME;
+    private static final String SQL_QUERY_DROP_SAVED = BASE_DROP + DatabaseContract.SavedEntry.TABLE_NAME;
 
-    private static final String SQL_QUERY_CREATE_NOTE_DISPLAY = "CREATE TABLE " +
+    private static final String SQL_QUERY_CREATE_NOTE_DISPLAY = BASE_CREATE +
             DatabaseContract.NoteOfDisplaysEntry.TABLE_NAME + " ( " +
             DatabaseContract.NoteOfDisplaysEntry.COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             DatabaseContract.NoteOfDisplaysEntry.COLUMN_NAME + " TEXT NOT NULL, " +
@@ -37,12 +40,12 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
             "REFERENCES " + DatabaseContract.SavedEntry.TABLE_NAME +
             "(" + DatabaseContract.SavedEntry.COLUMN_ID + "));";
 
-    private static final String SQL_QUERY_DROP_NOTE_DISPLAY = "DROP TABLE IF EXISTS " + DatabaseContract.NoteOfDisplaysEntry.TABLE_NAME;
+    private static final String SQL_QUERY_DROP_NOTE_DISPLAY = BASE_DROP + DatabaseContract.NoteOfDisplaysEntry.TABLE_NAME;
 
     private static final String SQL_QUERY_CREATE_DISPLAY = "";
     private static final String SQL_QUERY_DROP_DISPLAY = "";
 
-    private static final String SQL_QUERY_CREATE_SUBJECT = "CREATE TABLE " +
+    private static final String SQL_QUERY_CREATE_SUBJECT = BASE_CREATE +
             DatabaseContract.SubjectEntry.TABLE_NAME + " ( " +
             DatabaseContract.SubjectEntry.COLUMN_ID + " INTEGER PRIMARY KEY , " +
             DatabaseContract.SubjectEntry.COLUMN_TITLE + " TEXT NOT NULL , " +
@@ -58,16 +61,25 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
             DatabaseContract.SubjectEntry.COLUMN_UNITY_TYPE + " INTEGER NOT NULL ); ";
 
 
-    private static final String SQL_QUERY_DROP_SUBJECT = "DROP TABLE IF EXISTS " + DatabaseContract.SubjectEntry.TABLE_NAME;
+    private static final String SQL_QUERY_DROP_SUBJECT = BASE_DROP + DatabaseContract.SubjectEntry.TABLE_NAME;
 
     private static final String SQL_QUERY_CREATE_NOTIFICATION = "";
     private static final String SQL_QUERY_DROP_NOTIFICATION = "";
 
-    // TODO: 15/03/2018 add the querie for the mail -_-
-    private static final String SQL_QUERY_CREATE_MAIL = "";
-    private static final String SQL_QUERY_DROP_MAIL = "";
 
-    private static final String SQL_QUERY_CREATE_MARK = "CREATE TABLE " +
+    private static final String SQL_QUERY_CREATE_MAIL = BASE_CREATE +
+            DatabaseContract.MailEntry.TABLE_NAME + " ( " +
+            DatabaseContract.MailEntry.COLUMN_ID + " INTEGER PRIMARY KEY, " +
+            DatabaseContract.MailEntry.COLUMN_PROFESSOR_NAME + " TEXT NOT NULL, " +
+            DatabaseContract.MailEntry.COLUMN_PROFESSOR_ID + " INTEGER NOT NULL, " +
+            DatabaseContract.MailEntry.COLUMN_DATE + " TEXT NOT NULL, " +
+            DatabaseContract.MailEntry.COLUMN_SENDER + " BOOLEAN NOT NULL, " +
+            DatabaseContract.MailEntry.COLUMN_MESSAGE_SUBJECT + " TEXT NOT NULL, " +
+            DatabaseContract.MailEntry.COLUMN_MESSAGE + " TEXT NOT NULL );";
+
+    private static final String SQL_QUERY_DROP_MAIL = BASE_DROP + DatabaseContract.MailEntry.TABLE_NAME;
+
+    private static final String SQL_QUERY_CREATE_MARK = BASE_CREATE +
             DatabaseContract.MarkEntry.TABLE_NAME + " ( " +
             DatabaseContract.MarkEntry.COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             DatabaseContract.MarkEntry.COLUMN_SUBJECT_ID + " INTEGER NOT NULL , " +
@@ -76,7 +88,8 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
             DatabaseContract.MarkEntry.COLUMN_TD_MARK + " TEXT, " +
             DatabaseContract.MarkEntry.COLUMN_TP_MARK + " TEXT, " +
             DatabaseContract.MarkEntry.COLUMN_EXAM_MARK + " TEXT );";
-    private static final String SQL_QUERY_DROP_MARK = "DROP TABLE IF EXISTS " + DatabaseContract.MarkEntry.TABLE_NAME;
+
+    private static final String SQL_QUERY_DROP_MARK = BASE_DROP + DatabaseContract.MarkEntry.TABLE_NAME;
 
     DatabaseOpenHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -84,14 +97,15 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase database) {
-        //todo code to create the tables
+
         //database.execSQL(SQL_QUERY_CREATE_DISPLAY);
         database.execSQL(SQL_QUERY_CREATE_NOTE_DISPLAY);
         database.execSQL(SQL_QUERY_CREATE_NOTE);
         database.execSQL(SQL_QUERY_CREATE_SUBJECT);
         //database.execSQL(SQL_QUERY_CREATE_NOTIFICATION);
         database.execSQL(SQL_QUERY_CREATE_SAVED);
-        //database.execSQL(SQL_QUERY_CREATE_MAIL);
+        database.execSQL(SQL_QUERY_CREATE_MARK);
+        database.execSQL(SQL_QUERY_CREATE_MAIL);
     }
 
     @Override
@@ -103,7 +117,8 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
 //        database.execSQL(SQL_QUERY_DROP_NOTIFICATION);
         database.execSQL(SQL_QUERY_DROP_SAVED);
         database.execSQL(SQL_QUERY_DROP_SUBJECT);
-//        database.execSQL(SQL_QUERY_DROP_MAIL);
+        database.execSQL(SQL_QUERY_DROP_MAIL);
+        database.execSQL(SQL_QUERY_DROP_MARK);
         onCreate(database);
     }
 }

@@ -18,7 +18,7 @@ import com.ibnkhaldoun.studentside.database.DatabaseContract;
 
 public class SavedActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
-    private static final int ID_LOADER = 727;
+    private static final int ID_SAVED_LOADER = 727;
     private RecyclerView mRecyclerView;
     private LinearLayout mEmptyView;
     private SavedAdapter mAdapter;
@@ -50,14 +50,13 @@ public class SavedActivity extends AppCompatActivity implements LoaderManager.Lo
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         String[] projection = {"*"};
         switch (id) {
-            case ID_LOADER:
+            case ID_SAVED_LOADER:
                 return new CursorLoader(this,
                         DatabaseContract.SavedEntry.CONTENT_SAVED_URI,
                         projection, null, null, null);
             default:
                 throw new IllegalStateException();
         }
-
     }
 
     @Override

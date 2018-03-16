@@ -1,5 +1,7 @@
 package com.ibnkhaldoun.studentside.fragments;
 
+import android.content.Context;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
@@ -10,19 +12,32 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.ibnkhaldoun.studentside.R;
 import com.ibnkhaldoun.studentside.adapters.DisplaysAdapter;
+import com.ibnkhaldoun.studentside.interfaces.DataFragmentInterface;
+import com.ibnkhaldoun.studentside.interfaces.LoadingDataCallbacks;
 import com.ibnkhaldoun.studentside.models.Display;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.ibnkhaldoun.studentside.activities.StudentMainActivity.DISPLAY_TYPE;
 
-public class DisplaysFragment extends Fragment {
+
+public class DisplaysFragment extends Fragment
+        implements LoadingDataCallbacks {
+
+    private ProgressBar mLoadingProgressBar;
+    private LinearLayout mEmptyLayout;
+    private RecyclerView mDisplaysRecyclerView;
+    private DisplaysAdapter mAdapter;
+    private DataFragmentInterface mInterface;
 
     public static DisplaysFragment newInstance(List<Display> list) {
-
         Bundle args = new Bundle();
         args.putParcelableArrayList("Key", (ArrayList<? extends Parcelable>) list);
         DisplaysFragment fragment = new DisplaysFragment();
@@ -30,19 +45,85 @@ public class DisplaysFragment extends Fragment {
         return fragment;
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mInterface = (DataFragmentInterface) context;
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_displays, container, false);
+        mLoadingProgressBar = view.findViewById(R.id.display_progress_bar);
+        mDisplaysRecyclerView = view.findViewById(R.id.displays_recycler_view);
+        mEmptyLayout = view.findViewById(R.id.display_empty_view);
 
         assert getArguments() != null;
         List<Display> displays = getArguments().getParcelableArrayList("Key");
-        RecyclerView recyclerView = view.findViewById(R.id.displays_recycler_view);
+
+        mEmptyLayout.setOnClickListener(v -> mInterface.onNeedData(DISPLAY_TYPE));
+
         LinearLayoutManager manager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
-        DisplaysAdapter adapter = new DisplaysAdapter(getContext(), displays);
-        recyclerView.setLayoutManager(manager);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setHasFixedSize(true);
+        mAdapter = new DisplaysAdapter(getContext());
+        mAdapter.swapList(displays);
+        mDisplaysRecyclerView.setLayoutManager(manager);
+        mDisplaysRecyclerView.setAdapter(mAdapter);
+        mDisplaysRecyclerView.setHasFixedSize(true);
+
         return view;
+    }
+
+    @Override
+    public void onNetworkLoadedSucceed(int type, List list) {
+        if (type == DISPLAY_TYPE) {
+            mLoadingProgressBar.setVisibility(View.GONE);
+            if (list.size() != 0) {
+                mAdapter.swapList(list);
+                mEmptyLayout.setVisibility(View.GONE);
+                mDisplaysRecyclerView.setVisibility(View.VISIBLE);
+            } else {
+                mEmptyLayout.setVisibility(View.VISIBLE);
+                mDisplaysRecyclerView.setVisibility(View.GONE);
+            }
+        }
+    }
+
+    @Override
+    public void onNetworkStartLoading(int type) {
+        if (type == DISPLAY_TYPE) {
+            mLoadingProgressBar.setVisibility(View.VISIBLE);
+            mDisplaysRecyclerView.setVisibility(View.GONE);
+            mEmptyLayout.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void onNetworkLoadingFailed(int type, int errorType) {
+        if (type == DISPLAY_TYPE) {
+            switch (errorType) {
+                case INTERNET_ERROR:
+                    Toast.makeText(getContext(),
+                            R.string.no_internet_connection_string,
+                            Toast.LENGTH_SHORT).show();
+                    break;
+            }
+        }
+    }
+
+    @Override
+    public void onDatabaseLoadingFinished(int type, Cursor cursor) {
+        if (type == DISPLAY_TYPE) {
+
+        }
+    }
+
+    @Override
+    public void onDatabaseStartLoading(int type) {
+        if (type == DISPLAY_TYPE) {
+            mLoadingProgressBar.setVisibility(View.VISIBLE);
+            mDisplaysRecyclerView.setVisibility(View.GONE);
+            mEmptyLayout.setVisibility(View.GONE);
+        }
     }
 }

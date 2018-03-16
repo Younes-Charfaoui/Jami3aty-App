@@ -1,5 +1,6 @@
 package com.ibnkhaldoun.studentside.networking.utilities;
 
+import com.ibnkhaldoun.studentside.models.Mail;
 import com.ibnkhaldoun.studentside.models.Mark;
 import com.ibnkhaldoun.studentside.models.Professor;
 import com.ibnkhaldoun.studentside.models.Student;
@@ -115,6 +116,11 @@ public class JsonUtilities {
 
     public static ArrayList<Mark> getMarkList(String response) {
         // TODO: 14/03/2018 add the code to parse the mark response
+        return null;
+    }
+
+    public static ArrayList<Mail> getMailList(String response) {
+        // TODO: 15/03/2018 add the code to parse the mail response
         return null;
     }
 }

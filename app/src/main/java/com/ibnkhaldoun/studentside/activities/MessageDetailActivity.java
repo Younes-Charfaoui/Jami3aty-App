@@ -10,7 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ibnkhaldoun.studentside.R;
-import com.ibnkhaldoun.studentside.Utilities.Utils;
+import com.ibnkhaldoun.studentside.Utilities.Utilities;
 import com.ibnkhaldoun.studentside.models.Message;
 
 public class MessageDetailActivity extends AppCompatActivity {
@@ -37,7 +37,7 @@ public class MessageDetailActivity extends AppCompatActivity {
 
 
         GradientDrawable circle = (GradientDrawable) senderShortNameTextView.getBackground();
-        circle.setColor(Utils.getCircleColor(message.getSender().getShortName().charAt(0), this));
+        circle.setColor(Utilities.getCircleColor(message.getSender().getShortName().charAt(0), this));
         TextView senderNameTextView = findViewById(R.id.message_detail_sender_name);
         senderNameTextView.setText(message.getSender().getFullName());
 
