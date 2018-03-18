@@ -19,19 +19,18 @@ import android.widget.Toast;
 import android.widget.LinearLayout;
 import com.ibnkhaldoun.studentside.R;
 import com.ibnkhaldoun.studentside.asyncTask.SignUpAsyncTask;
-import com.ibnkhaldoun.studentside.interfaces.TaskListener;
-import com.ibnkhaldoun.studentside.networking.models.ForgetPasswordResponse;
-import com.ibnkhaldoun.studentside.networking.models.LoginResponse;
+import com.ibnkhaldoun.studentside.interfaces.SignUpTaskListener;
 import com.ibnkhaldoun.studentside.networking.models.RequestPackage;
 import com.ibnkhaldoun.studentside.networking.models.SignUpResponse;
 import com.ibnkhaldoun.studentside.networking.utilities.NetworkUtilities;
 import com.ibnkhaldoun.studentside.providers.EndPointsProvider;
 
+import static android.view.View.GONE;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.*;
 import static com.ibnkhaldoun.studentside.networking.models.Response.*;
 
 public class SignUpActivity extends AppCompatActivity
-        implements View.OnFocusChangeListener, TaskListener {
+        implements View.OnFocusChangeListener, SignUpTaskListener {
 
     private EditText mEmailEditText, mPasswordEditText, mCardNumberEditText, mBacAverageEditText;
     private TextInputLayout mEmailWrapper, mCardNumberWrapper, mPasswordWrapper, mBacAverageWrapper;
@@ -102,7 +101,7 @@ public class SignUpActivity extends AppCompatActivity
                     SignUpAsyncTask signUpAsyncTask = new SignUpAsyncTask(this);
                     signUpAsyncTask.execute(requestPackage);
 
-                    mSignUpButton.setVisibility(View.GONE);
+                    mSignUpButton.setVisibility(GONE);
                     mLoadingProgressBar.setVisibility(View.VISIBLE);
                 }
 
@@ -141,8 +140,8 @@ public class SignUpActivity extends AppCompatActivity
     }
 
     /**
-     * validate a set of inputs with specificthings
-     *
+     * validate a set of inputs with specific things
+     * and constraints.
      * @return a boolean
      */
     private boolean validate() {
@@ -295,11 +294,6 @@ public class SignUpActivity extends AppCompatActivity
     }
 
     @Override
-    public void onLoginCompletionListener(LoginResponse response) {
-        //do nothing here
-    }
-
-    @Override
     public void onSignUpCompletionListener(SignUpResponse response) {
         switch (response.getStatus()){
             case RESPONSE_SUCCESS:
@@ -307,6 +301,7 @@ public class SignUpActivity extends AppCompatActivity
                 mTitleTextView.setText(R.string.completed);
                 mSignUpButton.setOnClickListener(v-> finish());
                 mSignUpButton.setText(R.string.done);
+                mFieldLinearLayout.setVisibility(GONE);
                 break;
             case RESPONSE_ACCOUNT_EXISTS :
                 mCardNumberWrapper.setError("This account of this card number already used.");
@@ -316,10 +311,5 @@ public class SignUpActivity extends AppCompatActivity
                 mBacAverageWrapper.setError("This average is not correct for this card number");
                 break;
         }
-    }
-
-    @Override
-    public void onForgetPasswordCompletionListener(ForgetPasswordResponse response) {
-        //do nothing here
     }
 }

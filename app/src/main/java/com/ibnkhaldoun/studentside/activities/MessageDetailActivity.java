@@ -10,10 +10,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ibnkhaldoun.studentside.R;
+import com.ibnkhaldoun.studentside.Utilities.PreferencesManager;
 import com.ibnkhaldoun.studentside.Utilities.Utilities;
 import com.ibnkhaldoun.studentside.models.Message;
+import com.ibnkhaldoun.studentside.models.Professor;
 
 public class MessageDetailActivity extends AppCompatActivity {
+
+    public static final String KEY_MESSAGE = "keyMessage";
+    public static final String KEY_PROFESSOR = "keyProfessor";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,24 +30,35 @@ public class MessageDetailActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        Message message = getIntent().getParcelableExtra("Key");
+        Message message = getIntent().getParcelableExtra(KEY_MESSAGE);
+        Professor professor = getIntent().getParcelableExtra(KEY_PROFESSOR);
         getSupportActionBar().setTitle(message.getSubject());
         toolbar.setTitle(message.getSubject());
 
         TextView subjectTextView = findViewById(R.id.message_detail_subject);
         subjectTextView.setText(message.getSubject());
+        PreferencesManager manager = new PreferencesManager(this);
 
         TextView senderShortNameTextView = findViewById(R.id.message_detail_sender_short_name);
-        senderShortNameTextView.setText(message.getSender().getShortName());
-
-
         GradientDrawable circle = (GradientDrawable) senderShortNameTextView.getBackground();
-        circle.setColor(Utilities.getCircleColor(message.getSender().getShortName().charAt(0), this));
-        TextView senderNameTextView = findViewById(R.id.message_detail_sender_name);
-        senderNameTextView.setText(message.getSender().getFullName());
 
+        TextView senderNameTextView = findViewById(R.id.message_detail_sender_name);
         TextView receiverTextView = findViewById(R.id.message_detail_receiver);
-        receiverTextView.setText(String.format("to %s", message.getReceiver().getFullName()));
+
+        if (message.isIn()) {
+            senderShortNameTextView.setText(professor.getShortName());
+            circle.setColor(Utilities.getCircleColor(professor.getShortName().charAt(0), this));
+            senderNameTextView.setText(professor.getFullName());
+
+            receiverTextView.setText(String.format("to %s", manager.getFullName()));
+        } else {
+
+            senderShortNameTextView.setText(manager.getFullName());
+            circle.setColor(Utilities.getCircleColor(manager.getFullName().charAt(0), this));
+            senderNameTextView.setText(manager.getFullName());
+            receiverTextView.setText(String.format("to %s", professor.getFullName()));
+        }
+
 
         TextView textTextView = findViewById(R.id.message_detail_text);
         textTextView.setText(message.getText());

@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.ibnkhaldoun.studentside.R;
 import com.ibnkhaldoun.studentside.activities.MessageDetailActivity;
 import com.ibnkhaldoun.studentside.models.Message;
+import com.ibnkhaldoun.studentside.models.Professor;
 
 import java.util.List;
 
@@ -20,10 +21,12 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.Messag
 
     private Context mContext;
     private List<Message> mMessagesList;
+    private Professor mProfessor;
 
-    public MessagesAdapter(Context mContext, List<Message> mMessagesList) {
+    public MessagesAdapter(Context mContext, List<Message> mMessagesList, Professor professor) {
         this.mContext = mContext;
         this.mMessagesList = mMessagesList;
+        this.mProfessor=professor;
     }
 
     @Override
@@ -59,6 +62,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.Messag
             mDateTextView = itemView.findViewById(R.id.message_date);
             itemView.setOnClickListener(v -> {
                 Intent intent = new Intent(mContext, MessageDetailActivity.class);
+                intent.putExtra("Key", mMessagesList.get(getAdapterPosition()));
                 intent.putExtra("Key", mMessagesList.get(getAdapterPosition()));
                 mContext.startActivity(intent);
             });

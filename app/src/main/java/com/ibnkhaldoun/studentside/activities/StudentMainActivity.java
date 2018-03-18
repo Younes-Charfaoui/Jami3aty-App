@@ -33,9 +33,11 @@ import com.ibnkhaldoun.studentside.Utilities.PreferencesManager;
 import com.ibnkhaldoun.studentside.Utilities.Utilities;
 import com.ibnkhaldoun.studentside.adapters.TabLayoutAdapter;
 import com.ibnkhaldoun.studentside.database.DatabaseContract;
+import com.ibnkhaldoun.studentside.fragments.DisplaysFragment;
+import com.ibnkhaldoun.studentside.fragments.MailFragment;
+import com.ibnkhaldoun.studentside.fragments.NotificationFragment;
 import com.ibnkhaldoun.studentside.fragments.ProfessorListFragment;
 import com.ibnkhaldoun.studentside.interfaces.DataFragmentInterface;
-import com.ibnkhaldoun.studentside.interfaces.LoadingDataCallbacks;
 import com.ibnkhaldoun.studentside.interfaces.ProfessorDialogInterface;
 import com.ibnkhaldoun.studentside.networking.models.RequestPackage;
 import com.ibnkhaldoun.studentside.networking.utilities.NetworkUtilities;
@@ -46,17 +48,24 @@ import com.ibnkhaldoun.studentside.services.LoadDataService;
 
 import java.util.Calendar;
 
+import static com.ibnkhaldoun.studentside.fragments.BaseMainFragment.INTERNET_ERROR;
+
 public class StudentMainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         ProfessorDialogInterface, DataFragmentInterface, LoaderManager.LoaderCallbacks<Cursor> {
 
     public static final String KEY_MAILS = "keyMails";
+
+    //the types of the fragments
     public static final int MAIL_TYPE = 15;
     public static final int DISPLAY_TYPE = 11;
     public static final int NOTIFICATION_TYPE = 10;
+
+    //the Loader ID's for the database work
     private static final int DISPLAY_LOADER_ID = 190;
     private static final int MAIL_LOADER_ID = 191;
     private static final int NOTIFICATION_LOADER_ID = 192;
+
     private FloatingActionButton mAddMailFab;
     private ViewPager mMainViewPager;
     private TabLayout mTabLayout;
@@ -65,9 +74,16 @@ public class StudentMainActivity extends AppCompatActivity
     private NavigationView mNavigation;
 
     private String[] mPagerTitles;
-    private LoadingDataCallbacks fragmentsCallbacks = (LoadingDataCallbacks) this;
+
+    private DisplaysFragment mDisplayFragment;
+    private NotificationFragment mNotificationFragment;
+    private MailFragment mMailFragment;
 
 
+    /**
+     * the receiver which will listen when the data has been downloaded from the
+     * internet and pass them to the fragments
+     */
     private BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -76,8 +92,7 @@ public class StudentMainActivity extends AppCompatActivity
                 case LoadDataService.DISPLAY_ACTION:
                     break;
                 case LoadDataService.MAIL_ACTION:
-                    fragmentsCallbacks.onNetworkLoadedSucceed(MAIL_TYPE,
-                            intent.getParcelableArrayListExtra(KEY_MAILS));
+                    mMailFragment.onNetworkLoadedSucceed(intent.getParcelableArrayListExtra(KEY_MAILS));
                     break;
                 case LoadDataService.NOTIFICATION_ACTION:
                     break;
@@ -85,6 +100,11 @@ public class StudentMainActivity extends AppCompatActivity
         }
     };
 
+    /**
+     * the onCreate method which in we have done most of the
+     * initialisation work also with some thing else.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -116,11 +136,16 @@ public class StudentMainActivity extends AppCompatActivity
         TextView nameHeader = mNavigation.getHeaderView(0).findViewById(R.id.name_header_textView);
         TextView branchHeader = mNavigation.getHeaderView(0).findViewById(R.id.branch_header_textView);
         TextView circleImage = mNavigation.getHeaderView(0).findViewById(R.id.nav_imageView);
+
         GradientDrawable circle = (GradientDrawable) circleImage.getBackground();
+
         PreferencesManager manager = new PreferencesManager(this);
+
         circleImage.setText(Utilities.getFirstName(manager.getFullName()).charAt(0) +
                 Utilities.getLastName(manager.getFullName()).charAt(0));
+
         circle.setColor(Utilities.getCircleColor(manager.getFullName().charAt(0), this));
+
         nameHeader.setText(manager.getFullName());
         String branch = manager.getGrade() + " ";
         branchHeader.setText(branch);
@@ -134,18 +159,31 @@ public class StudentMainActivity extends AppCompatActivity
         LocalBroadcastManager.getInstance(this).registerReceiver(mReceiver,
                 filter);
 
-
-        getSupportLoaderManager().initLoader(DISPLAY_LOADER_ID, null, this);
-        getSupportLoaderManager().initLoader(NOTIFICATION_LOADER_ID, null, this);
-        getSupportLoaderManager().initLoader(MAIL_LOADER_ID, null, this);
+        getSupportLoaderManager().initLoader(DISPLAY_LOADER_ID, null, this).forceLoad();
+        getSupportLoaderManager().initLoader(NOTIFICATION_LOADER_ID, null, this).forceLoad();
+        getSupportLoaderManager().initLoader(MAIL_LOADER_ID, null, this).forceLoad();
     }
 
+    /**
+     * Class method for inflating the menu from
+     * the resources.
+     * @param menu
+     * @return
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main_screen, menu);
         return true;
     }
 
+    /**
+     * this method wil handle the user interaction with the
+     * navigation drawer menu , it will make the corresponded
+     * action for all the items.
+     *
+     * @param item
+     * @return a boolean indicating that the item was selected.
+     */
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
@@ -178,6 +216,10 @@ public class StudentMainActivity extends AppCompatActivity
         return true;
     }
 
+    /**
+     * as this method will be called this code will handle
+     * the case if the the navigation drawer was open or not.
+     */
     @Override
     public void onBackPressed() {
         if (mDrawer.isDrawerOpen(GravityCompat.START)) {
@@ -187,7 +229,10 @@ public class StudentMainActivity extends AppCompatActivity
         }
     }
 
-    //helper method to initialize the view pager and the tab layout
+    /**
+     * this method is a helper method for initializing the
+     * view pager and the tab layout.
+     */
     private void setupViewPagerAndTabLayout() {
         setupTabIcons();
         TabLayoutAdapter adapter = new TabLayoutAdapter(getSupportFragmentManager(), mTabLayout.getTabCount());
@@ -219,7 +264,10 @@ public class StudentMainActivity extends AppCompatActivity
         });
     }
 
-    //helper method to set the navigation drawer and get a reference to it
+    /**
+     * this method is a helper method for initializing the
+     * navigation drawer.
+     */
     private void setupNavigationDrawer() {
         mDrawer = findViewById(R.id.drawer_main_screen_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -244,7 +292,10 @@ public class StudentMainActivity extends AppCompatActivity
         mNavigation.setNavigationItemSelectedListener(this);
     }
 
-    //method to add icons to the TabLayout
+    /**
+     * this method is a helper method for initializing the
+     * tabs that in the tab layout.
+     */
     private void setupTabIcons() {
         if (mTabLayout.getTabCount() > 0) {
             mTabLayout.removeAllTabs();
@@ -254,38 +305,117 @@ public class StudentMainActivity extends AppCompatActivity
         mTabLayout.addTab(mTabLayout.newTab().setIcon(R.drawable.ic_email_white));
     }
 
+    /**
+     * this method was implemented by the {@link ProfessorDialogInterface}
+     * for the purpose of communicating with the fragment of which
+     * the user can choose a professor to send mails to it.
+     *
+     * @param professor
+     * @param id
+     */
     @Override
     public void onProfessorChosen(String professor, String id) {
 
     }
 
+    /**
+     * this method was implemented by the {@link DataFragmentInterface}
+     * for the purpose of communicating with the {@link DisplaysFragment} to download
+     * data when it needed.
+     *
+     * @param which
+     */
     @Override
-    public void onNeedData(int type) {
+    public void onNeedData(DisplaysFragment which) {
         if (NetworkUtilities.isConnected(this)) {
-            fragmentsCallbacks.onNetworkStartLoading(type);
-            switch (type) {
-                case MAIL_TYPE:
-                    RequestPackage request = new RequestPackage();
-                    request.setMethod(RequestPackage.POST);
-                    request.setEndPoint(EndPointsProvider.getMailEndPoint());
-                    PreferencesManager manager = new PreferencesManager(this);
-                    request.addParams(KeyDataProvider.KEY_ANDROID, KeyDataProvider.KEY_ANDROID);
-                    request.addParams(KeyDataProvider.JSON_STUDENT_ID, manager.getId());
-                    Intent intent = new Intent(this, LoadDataService.class);
-                    intent.putExtra(LoadDataService.KEY_REQUEST, request);
-                    intent.putExtra(LoadDataService.KEY_ACTION, LoadDataService.MAIL_TYPE);
-                    startService(intent);
-                    break;
-                case DISPLAY_TYPE:
-                    break;
-                case NOTIFICATION_TYPE:
-                    break;
-            }
+            which.onNetworkStartLoading();
+
         } else {
-            fragmentsCallbacks.onNetworkLoadingFailed(type, LoadingDataCallbacks.INTERNET_ERROR);
+            which.onNetworkLoadingFailed(INTERNET_ERROR);
         }
     }
 
+    /**
+     * this method was implemented by the {@link DataFragmentInterface}
+     * for the purpose of communicating with the {@link NotificationFragment} to download
+     * data when it needed.
+     *
+     * @param which
+     */
+    @Override
+    public void onNeedData(NotificationFragment which) {
+
+        if (NetworkUtilities.isConnected(this)) {
+            which.onNetworkStartLoading();
+
+        } else {
+            which.onNetworkLoadingFailed(INTERNET_ERROR);
+        }
+    }
+
+    /**
+     * this method was implemented by the {@link DataFragmentInterface}
+     * for the purpose of communicating with the {@link MailFragment} to download
+     * data when it needed.
+     *
+     * @param which
+     */
+    @Override
+    public void onNeedData(MailFragment which) {
+
+        if (NetworkUtilities.isConnected(this)) {
+            which.onNetworkStartLoading();
+            RequestPackage request = new RequestPackage();
+            request.setMethod(RequestPackage.POST);
+            request.setEndPoint(EndPointsProvider.getMailEndPoint());
+            PreferencesManager manager = new PreferencesManager(this);
+            request.addParams(KeyDataProvider.KEY_ANDROID, KeyDataProvider.KEY_ANDROID);
+            request.addParams(KeyDataProvider.JSON_STUDENT_ID, manager.getId());
+            Intent intent = new Intent(this, LoadDataService.class);
+            intent.putExtra(LoadDataService.KEY_REQUEST, request);
+            intent.putExtra(LoadDataService.KEY_ACTION, LoadDataService.MAIL_TYPE);
+            startService(intent);
+        } else {
+            which.onNetworkLoadingFailed(INTERNET_ERROR);
+        }
+    }
+
+    /**
+     * this method was implemented by the {@link DataFragmentInterface}
+     * for the purpose of communicating with the {@link DisplaysFragment} to hold reference
+     * to it for future communications.
+     * @param displaysFragment
+     */
+    @Override
+    public void onAttach(DisplaysFragment displaysFragment) {
+        mDisplayFragment = displaysFragment;
+    }
+
+    /**
+     * this method was implemented by the {@link DataFragmentInterface}
+     * for the purpose of communicating with the {@link MailFragment} to hold reference
+     * to it for future communications.
+     * @param mailFragment
+     */
+    @Override
+    public void onAttach(MailFragment mailFragment) {
+        mMailFragment = mailFragment;
+    }
+
+    /**
+     * this method was implemented by the {@link DataFragmentInterface}
+     * for the purpose of communicating with the {@link NotificationFragment} to hold reference
+     * to it for future communications.
+     * @param notificationFragment
+     */
+    @Override
+    public void onAttach(NotificationFragment notificationFragment) {
+        mNotificationFragment = notificationFragment;
+    }
+
+    /**
+     * we had override this method for unregister receivers.
+     */
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -302,7 +432,7 @@ public class StudentMainActivity extends AppCompatActivity
                 // TODO: 16/03/2018 code to launch for notifications
                 return null;
             case MAIL_LOADER_ID:
-                fragmentsCallbacks.onDatabaseStartLoading(MAIL_TYPE);
+                mMailFragment.onDatabaseStartLoading();
                 return new CursorLoader(this, DatabaseContract.MailEntry.CONTENT_MAIL_URI
                         , new String[]{"*"}, null, null, null);
             default:
@@ -320,7 +450,7 @@ public class StudentMainActivity extends AppCompatActivity
                 // TODO: 16/03/2018 code to deliver result for notification fragment
                 break;
             case MAIL_LOADER_ID:
-                fragmentsCallbacks.onDatabaseLoadingFinished(MAIL_TYPE, data);
+                mMailFragment.onDatabaseLoadingFinished(data);
                 break;
         }
     }
@@ -335,7 +465,7 @@ public class StudentMainActivity extends AppCompatActivity
                 // TODO: 16/03/2018 code to deliver result for notification fragment
                 break;
             case MAIL_LOADER_ID:
-                fragmentsCallbacks.onDatabaseStartLoading(MAIL_TYPE);
+                mMailFragment.onDatabaseStartLoading();
         }
     }
 }

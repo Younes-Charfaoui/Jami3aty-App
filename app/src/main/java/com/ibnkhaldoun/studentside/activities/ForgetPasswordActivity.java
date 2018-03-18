@@ -14,23 +14,22 @@ import android.widget.Toast;
 
 import com.ibnkhaldoun.studentside.R;
 import com.ibnkhaldoun.studentside.asyncTask.ForgetPasswordAsyncTask;
-import com.ibnkhaldoun.studentside.interfaces.TaskListener;
+import com.ibnkhaldoun.studentside.interfaces.ForgetPasswordTaskListener;
 import com.ibnkhaldoun.studentside.networking.models.ForgetPasswordResponse;
-import com.ibnkhaldoun.studentside.networking.models.LoginResponse;
 import com.ibnkhaldoun.studentside.networking.models.RequestPackage;
-import com.ibnkhaldoun.studentside.networking.models.SignUpResponse;
 import com.ibnkhaldoun.studentside.networking.utilities.NetworkUtilities;
 import com.ibnkhaldoun.studentside.providers.EndPointsProvider;
 
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
+import static com.ibnkhaldoun.studentside.networking.models.Response.RESPONSE_EMAIL_ERROR;
+import static com.ibnkhaldoun.studentside.networking.models.Response.RESPONSE_SUCCESS;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.KEY_ANDROID;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.KEY_BAC;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.KEY_CARD_NUMBER;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.KEY_EMAIL;
-import static com.ibnkhaldoun.studentside.networking.models.Response.*;
 
-public class ForgetPasswordActivity extends AppCompatActivity implements TaskListener {
+public class ForgetPasswordActivity extends AppCompatActivity implements ForgetPasswordTaskListener {
 
     private TextView mAccountPleaseTextView;
     private Button mFindAccountButton;
@@ -128,16 +127,6 @@ public class ForgetPasswordActivity extends AppCompatActivity implements TaskLis
     }
 
     @Override
-    public void onLoginCompletionListener(LoginResponse response) {
-        // do nothing here
-    }
-
-    @Override
-    public void onSignUpCompletionListener(SignUpResponse response) {
-        // do nothing here
-    }
-
-    @Override
     public void onForgetPasswordCompletionListener(ForgetPasswordResponse response) {
         switch (response.getStatus()) {
             case RESPONSE_SUCCESS:
@@ -155,7 +144,7 @@ public class ForgetPasswordActivity extends AppCompatActivity implements TaskLis
                 mProgressBar.setVisibility(GONE);
                 mFindAccountButton.setVisibility(VISIBLE);
                 mAccountPleaseTextView.setVisibility(VISIBLE);
-                mAccountPleaseTextView.setText("The information provided can't lead to an email");
+                mAccountPleaseTextView.setText(R.string.cant_find_email);
                 mAccountPleaseTextView.setTextColor(Color.RED);
                 mEmailWrapper.setEnabled(true);
                 mBacAverageWrapper.setEnabled(true);

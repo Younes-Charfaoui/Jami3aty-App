@@ -18,21 +18,19 @@ import com.ibnkhaldoun.studentside.Utilities.ActivityUtilities;
 import com.ibnkhaldoun.studentside.Utilities.PreferencesManager;
 import com.ibnkhaldoun.studentside.asyncTask.LoginAsyncTask;
 import com.ibnkhaldoun.studentside.enums.Levels;
-import com.ibnkhaldoun.studentside.interfaces.TaskListener;
-import com.ibnkhaldoun.studentside.networking.models.ForgetPasswordResponse;
+import com.ibnkhaldoun.studentside.interfaces.LoginTaskListener;
 import com.ibnkhaldoun.studentside.networking.models.LoginResponse;
 import com.ibnkhaldoun.studentside.networking.models.RequestPackage;
-import com.ibnkhaldoun.studentside.networking.models.SignUpResponse;
 import com.ibnkhaldoun.studentside.networking.utilities.NetworkUtilities;
 import com.ibnkhaldoun.studentside.providers.EndPointsProvider;
 import com.ibnkhaldoun.studentside.providers.KeyDataProvider;
-import com.ibnkhaldoun.studentside.services.FcmTokenService;
 
-import static com.ibnkhaldoun.studentside.networking.models.Response.*;
+import static com.ibnkhaldoun.studentside.networking.models.Response.RESPONSE_EMAIL_ERROR;
+import static com.ibnkhaldoun.studentside.networking.models.Response.RESPONSE_PASSWORD_ERROR;
+import static com.ibnkhaldoun.studentside.networking.models.Response.RESPONSE_SUCCESS;
 
-public class LoginActivity extends AppCompatActivity implements TaskListener {
+public class LoginActivity extends AppCompatActivity implements LoginTaskListener {
 
-    private final static int LOGIN_ID_LOADER = 126;
     private EditText mEmailEditText, mPasswordEditText;
     private TextInputLayout mEmailWrapper, mPasswordWrapper;
     private ProgressBar mLoadingProgressBar;
@@ -70,7 +68,7 @@ public class LoginActivity extends AppCompatActivity implements TaskListener {
                     request.addParams(KeyDataProvider.KEY_ANDROID, KeyDataProvider.KEY_ANDROID);
                     request.addParams(KeyDataProvider.KEY_EMAIL, email);
                     request.addParams(KeyDataProvider.KEY_PASSWORD, password);
-                    request.addParams(KeyDataProvider.KEY_TOKEN_FIREBASE , FcmTokenService.getCurrentToken());
+
 
                     LoginAsyncTask loginTask = new LoginAsyncTask(this);
                     loginTask.execute(request);
@@ -136,49 +134,52 @@ public class LoginActivity extends AppCompatActivity implements TaskListener {
         }
     }
 
-
+    /**
+     * this method has been implemented by the {@link LoginTaskListener}
+     * which take care for delivering the result from the async task
+     * back to this activity to take an action with this things.
+     * @param response
+     */
     @Override
     public void onLoginCompletionListener(LoginResponse response) {
+        if (response != null) {
 
-        switch (response.getStatus()) {
-            case RESPONSE_SUCCESS:
-                PreferencesManager manager = new PreferencesManager(this);
-                if (response.isStudent()) {
-                    manager.setLogin(response.getStudent().getId()
-                            , response.getStudent().getFullName()
-                            , Levels.getLevelString(Levels.getLevel(response.getStudent().getLevel())));
-                    startActivity(new Intent(this, StudentMainActivity.class));
-                    finish();
-                } else {
-                    Toast.makeText(this, "Login for professor", Toast.LENGTH_SHORT).show();
-                }
-                break;
-            case RESPONSE_EMAIL_ERROR:
-                mEmailWrapper.setError(getString(R.string.email_does_not_exits_string));
-                mPasswordWrapper.setEnabled(true);
-                mEmailWrapper.setEnabled(true);
-                mPasswordEditText.setText(null);
-                mLoadingProgressBar.setVisibility(View.GONE);
-                mButtonsLinearLayout.setVisibility(View.VISIBLE);
-                break;
-            case RESPONSE_PASSWORD_ERROR:
-                mPasswordWrapper.setError(getString(R.string.error_in_password_string));
-                mPasswordWrapper.setEnabled(true);
-                mEmailWrapper.setEnabled(true);
-                mPasswordEditText.setText(null);
-                mLoadingProgressBar.setVisibility(View.GONE);
-                mButtonsLinearLayout.setVisibility(View.VISIBLE);
-                break;
+            switch (response.getStatus()) {
+                case RESPONSE_SUCCESS:
+                    PreferencesManager manager = new PreferencesManager(this);
+                    if (response.isStudent()) {
+                        manager.setLogin(response.getStudent().getId()
+                                , response.getStudent().getFullName()
+                                , Levels.getLevelString(Levels.getLevel(response.getStudent().getLevel())));
+                        startActivity(new Intent(this, StudentMainActivity.class));
+                        finish();
+                    } else {
+                        Toast.makeText(this, "Login for professor", Toast.LENGTH_SHORT).show();
+                    }
+                    break;
+                case RESPONSE_EMAIL_ERROR:
+                    mEmailWrapper.setError(getString(R.string.email_does_not_exits_string));
+                    mPasswordWrapper.setEnabled(true);
+                    mEmailWrapper.setEnabled(true);
+                    mPasswordEditText.setText(null);
+                    mLoadingProgressBar.setVisibility(View.GONE);
+                    mButtonsLinearLayout.setVisibility(View.VISIBLE);
+                    break;
+                case RESPONSE_PASSWORD_ERROR:
+                    mPasswordWrapper.setError(getString(R.string.error_in_password_string));
+                    mPasswordWrapper.setEnabled(true);
+                    mEmailWrapper.setEnabled(true);
+                    mPasswordEditText.setText(null);
+                    mLoadingProgressBar.setVisibility(View.GONE);
+                    mButtonsLinearLayout.setVisibility(View.VISIBLE);
+                    break;
+            }
+        } else {
+            Toast.makeText(this, "Can't Connect to the server , please try later", Toast.LENGTH_SHORT).show();
+            mPasswordWrapper.setEnabled(true);
+            mEmailWrapper.setEnabled(true);
+            mLoadingProgressBar.setVisibility(View.GONE);
+            mButtonsLinearLayout.setVisibility(View.VISIBLE);
         }
-    }
-
-    @Override
-    public void onSignUpCompletionListener(SignUpResponse response) {
-        // do nothing here
-    }
-
-    @Override
-    public void onForgetPasswordCompletionListener(ForgetPasswordResponse response) {
-        // do nothing here
     }
 }

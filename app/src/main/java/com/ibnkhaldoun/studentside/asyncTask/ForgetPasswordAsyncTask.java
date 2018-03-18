@@ -2,7 +2,7 @@ package com.ibnkhaldoun.studentside.asyncTask;
 
 import android.os.AsyncTask;
 
-import com.ibnkhaldoun.studentside.interfaces.TaskListener;
+import com.ibnkhaldoun.studentside.interfaces.ForgetPasswordTaskListener;
 import com.ibnkhaldoun.studentside.networking.models.ForgetPasswordResponse;
 import com.ibnkhaldoun.studentside.networking.models.RequestPackage;
 import com.ibnkhaldoun.studentside.networking.utilities.HttpUtilities;
@@ -13,9 +13,9 @@ import java.io.IOException;
 
 public class ForgetPasswordAsyncTask extends AsyncTask<RequestPackage, Void, ForgetPasswordResponse> {
 
-    private TaskListener mTaskListener;
+    private ForgetPasswordTaskListener mTaskListener;
 
-    public ForgetPasswordAsyncTask(TaskListener listener) {
+    public ForgetPasswordAsyncTask(ForgetPasswordTaskListener listener) {
         this.mTaskListener = listener;
     }
 

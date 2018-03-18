@@ -13,8 +13,8 @@ public class Mark implements Parcelable {
     private String tpProfessor;
     private long subjectId;
 
-    public Mark(long id ,String subjectName, String shortSubjectName, float mExam, float mTD, float mTP, String courseProfessor, String tdProfessor, String tpProfessor) {
-        this.subjectId = id;
+    public Mark(long subjectId ,String subjectName, String shortSubjectName, float mExam, float mTD, float mTP, String courseProfessor, String tdProfessor, String tpProfessor) {
+        this.subjectId = subjectId;
         this.subjectName = subjectName;
         this.shortSubjectName = shortSubjectName;
         this.mExam = mExam;

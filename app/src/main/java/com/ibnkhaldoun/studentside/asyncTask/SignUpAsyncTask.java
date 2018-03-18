@@ -2,7 +2,7 @@ package com.ibnkhaldoun.studentside.asyncTask;
 
 import android.os.AsyncTask;
 
-import com.ibnkhaldoun.studentside.interfaces.TaskListener;
+import com.ibnkhaldoun.studentside.interfaces.SignUpTaskListener;
 import com.ibnkhaldoun.studentside.networking.models.RequestPackage;
 import com.ibnkhaldoun.studentside.networking.models.SignUpResponse;
 import com.ibnkhaldoun.studentside.networking.utilities.HttpUtilities;
@@ -13,9 +13,9 @@ import java.io.IOException;
 
 public class SignUpAsyncTask extends AsyncTask<RequestPackage, Void, SignUpResponse> {
 
-    private TaskListener mTaskListener;
+    private SignUpTaskListener mTaskListener;
 
-    public SignUpAsyncTask(TaskListener listener) {
+    public SignUpAsyncTask(SignUpTaskListener listener) {
         this.mTaskListener = listener;
     }
 

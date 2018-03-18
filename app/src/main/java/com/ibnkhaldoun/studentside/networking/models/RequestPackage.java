@@ -30,9 +30,10 @@ public class RequestPackage implements Parcelable {
     public static final String POST = "POST";
     private String mEndPoint;
     private String mMethod;
-    private Map<String, String> mParams = new HashMap<>();
+    private Map<String, String> mParams ;
 
     public RequestPackage() {
+        mParams = new HashMap<>();
     }
 
     protected RequestPackage(Parcel in) {

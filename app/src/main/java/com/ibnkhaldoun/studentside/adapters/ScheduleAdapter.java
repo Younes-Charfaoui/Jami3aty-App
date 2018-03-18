@@ -22,9 +22,8 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.Schedu
     private Context mContext;
     private List<ScheduleItem> mScheduleList;
 
-    public ScheduleAdapter(Context mContext, List<ScheduleItem> mScheduleList) {
+    public ScheduleAdapter(Context mContext) {
         this.mContext = mContext;
-        this.mScheduleList = mScheduleList;
     }
 
     @Override
@@ -50,7 +49,13 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.Schedu
 
     @Override
     public int getItemCount() {
-        return mScheduleList.size();
+        if (mScheduleList != null) return mScheduleList.size();
+        return 0;
+    }
+
+    public void setList(List<ScheduleItem> list) {
+        this.mScheduleList = list;
+        notifyDataSetChanged();
     }
 
     class ScheduleViewHolder extends RecyclerView.ViewHolder {

@@ -40,7 +40,7 @@ public class MessagesActivity extends AppCompatActivity {
 
         mAddMessageFab = findViewById(R.id.messages_fab);
         mRecyclerView = findViewById(R.id.messages_recycler_view);
-        mAdapter = new MessagesAdapter(this, list);
+        mAdapter = new MessagesAdapter(this, list,mail.getProfessor());
         mRecyclerView.setAdapter(mAdapter);
         LinearLayoutManager manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(manager);

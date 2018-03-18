@@ -12,6 +12,8 @@ import android.widget.Toast;
 import com.ibnkhaldoun.studentside.R;
 import com.ibnkhaldoun.studentside.adapters.SchedulePagerAdapter;
 
+import java.util.Calendar;
+
 public class ScheduleActivity extends AppCompatActivity {
 
     private Toolbar mToolbar;
@@ -26,7 +28,9 @@ public class ScheduleActivity extends AppCompatActivity {
         setSupportActionBar(mToolbar);
         mTabLayout = findViewById(R.id.schedule_tab_layout);
         mViewPager = findViewById(R.id.schedule_view_pager);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        if (getSupportActionBar() != null)
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         setupViewPagerAndTabLayout();
     }
@@ -43,8 +47,11 @@ public class ScheduleActivity extends AppCompatActivity {
             case android.R.id.home:
                 onBackPressed();
                 break;
-            case R.id.schedule_choose_level:
-                Toast.makeText(this, "Choose", Toast.LENGTH_SHORT).show();
+            case R.id.menu_schedule_choose_level:
+                Toast.makeText(this, "Choose level", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.menu_schedule_download:
+                Toast.makeText(this, "Download", Toast.LENGTH_SHORT).show();
                 break;
         }
         return true;
@@ -62,6 +69,7 @@ public class ScheduleActivity extends AppCompatActivity {
         setupDaysTabLayout();
         SchedulePagerAdapter adapter = new SchedulePagerAdapter(getSupportFragmentManager(), mTabLayout.getTabCount());
         mViewPager.setAdapter(adapter);
+
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTabLayout));
         mTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -79,5 +87,25 @@ public class ScheduleActivity extends AppCompatActivity {
 
             }
         });
+
+        Calendar calendar = Calendar.getInstance();
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        switch (day) {
+            case Calendar.SUNDAY:
+                mViewPager.setCurrentItem(0);
+                break;
+            case Calendar.MONDAY:
+                mViewPager.setCurrentItem(1);
+                break;
+            case Calendar.TUESDAY:
+                mViewPager.setCurrentItem(2);
+                break;
+            case Calendar.WEDNESDAY:
+                mViewPager.setCurrentItem(3);
+                break;
+            case Calendar.THURSDAY:
+                mViewPager.setCurrentItem(4);
+                break;
+        }
     }
 }

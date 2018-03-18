@@ -20,9 +20,8 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     private Context mContext;
     private List<Notification> mNotificationList;
 
-    public NotificationAdapter(Context mContext, List<Notification> mDataList) {
+    public NotificationAdapter(Context mContext) {
         this.mContext = mContext;
-        this.mNotificationList = mDataList;
     }
 
     @Override
@@ -53,7 +52,13 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
     @Override
     public int getItemCount() {
-        return mNotificationList.size();
+        if (mNotificationList != null) return mNotificationList.size();
+        return 0;
+    }
+
+    public void swapList(List<Notification> notificationList) {
+        this.mNotificationList = notificationList;
+        notifyDataSetChanged();
     }
 
     public class NotificationViewHolder extends RecyclerView.ViewHolder {

@@ -11,7 +11,8 @@ import com.ibnkhaldoun.studentside.fragments.DayScheduleFragment;
 public class SchedulePagerAdapter extends FragmentPagerAdapter {
     private int numberOfTabs;
 
-    public SchedulePagerAdapter(FragmentManager fm, int numberOfTabs) {
+    public SchedulePagerAdapter(FragmentManager fm,
+                                int numberOfTabs) {
         super(fm);
         this.numberOfTabs = numberOfTabs;
     }

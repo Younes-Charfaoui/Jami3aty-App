@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.ibnkhaldoun.studentside.R;
 import com.ibnkhaldoun.studentside.adapters.ScheduleAdapter;
@@ -21,9 +22,15 @@ import java.util.List;
 
 public class DayScheduleFragment extends Fragment {
 
+    private static final String KEY_INNER_DATA = "keyInnerData";
+
+    private ScheduleAdapter mAdapter;
+    private RecyclerView mDayScheduleRecyclerView;
+    private ProgressBar mLoadingProgressbar;
+
     public static DayScheduleFragment newInstance(List<ScheduleItem> scheduleItemList) {
         Bundle args = new Bundle();
-        args.putParcelableArrayList("Key", (ArrayList<? extends Parcelable>) scheduleItemList);
+        args.putParcelableArrayList(KEY_INNER_DATA, (ArrayList<? extends Parcelable>) scheduleItemList);
         DayScheduleFragment fragment = new DayScheduleFragment();
         fragment.setArguments(args);
         return fragment;
@@ -34,12 +41,19 @@ public class DayScheduleFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.day_schedule_fragment, container, false);
         assert getArguments() != null;
-        RecyclerView dayScheduleRecyclerView = view.findViewById(R.id.day_schedule_recycler);
+        mDayScheduleRecyclerView = view.findViewById(R.id.day_schedule_recycler);
+        mLoadingProgressbar = view.findViewById(R.id.day_schedule_progress);
+
         LinearLayoutManager manager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
-        ScheduleAdapter adapter = new ScheduleAdapter(getContext(), getArguments().getParcelableArrayList("Key"));
-        dayScheduleRecyclerView.setAdapter(adapter);
-        dayScheduleRecyclerView.setLayoutManager(manager);
-        dayScheduleRecyclerView.setHasFixedSize(true);
+        if (getArguments() != null) {
+            if (getArguments().getParcelableArrayList(KEY_INNER_DATA) != null) {
+
+            }
+        }
+        mAdapter = new ScheduleAdapter(getContext());
+        mDayScheduleRecyclerView.setAdapter(mAdapter);
+        mDayScheduleRecyclerView.setLayoutManager(manager);
+        mDayScheduleRecyclerView.setHasFixedSize(true);
         return view;
     }
 }

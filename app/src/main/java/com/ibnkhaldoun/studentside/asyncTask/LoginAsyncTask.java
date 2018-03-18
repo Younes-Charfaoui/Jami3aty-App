@@ -1,8 +1,9 @@
 package com.ibnkhaldoun.studentside.asyncTask;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
-import com.ibnkhaldoun.studentside.interfaces.TaskListener;
+import com.ibnkhaldoun.studentside.interfaces.LoginTaskListener;
 import com.ibnkhaldoun.studentside.networking.models.LoginResponse;
 import com.ibnkhaldoun.studentside.networking.models.RequestPackage;
 import com.ibnkhaldoun.studentside.networking.utilities.HttpUtilities;
@@ -13,9 +14,9 @@ import java.io.IOException;
 
 public class LoginAsyncTask extends AsyncTask<RequestPackage, Void, LoginResponse> {
 
-    private TaskListener mTaskListener;
+    private LoginTaskListener mTaskListener;
 
-    public LoginAsyncTask(TaskListener listener) {
+    public LoginAsyncTask(LoginTaskListener listener) {
         this.mTaskListener = listener;
     }
 
@@ -26,10 +27,14 @@ public class LoginAsyncTask extends AsyncTask<RequestPackage, Void, LoginRespons
 
     @Override
     protected LoginResponse doInBackground(RequestPackage... requestPackages) {
+
         try {
+            Log.i("End", "doInBackground: the end point " + requestPackages[0].getEndPoint());
             String response = HttpUtilities.getData(requestPackages[0]);
+            Log.i("Data", "doInBackground: " + response);
             return JsonUtilities.getLoginResponse(response);
         } catch (IOException e) {
+            Log.i("Data", "doInBackground: it was an IOException");
             e.printStackTrace();
         }
         return null;

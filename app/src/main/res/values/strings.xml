@@ -134,4 +134,5 @@
     <string name="tap_to_refresh_from_the_internet">Tap to refresh from the Internet.</string>
     <string name="there_are_no_displays">There are no Displays.</string>
     <string name="download_all_schedules">Download all schedules</string>
+    <string name="cant_find_email">The information\'s provided can\'t lead to an email</string>
 </resources>

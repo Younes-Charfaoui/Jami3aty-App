@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -21,7 +20,6 @@ import com.ibnkhaldoun.studentside.Utilities.Utilities;
 import com.ibnkhaldoun.studentside.adapters.MailAdapter;
 import com.ibnkhaldoun.studentside.database.DatabaseContract;
 import com.ibnkhaldoun.studentside.interfaces.DataFragmentInterface;
-import com.ibnkhaldoun.studentside.interfaces.LoadingDataCallbacks;
 import com.ibnkhaldoun.studentside.models.Mail;
 import com.ibnkhaldoun.studentside.models.Message;
 import com.ibnkhaldoun.studentside.models.Professor;
@@ -32,7 +30,7 @@ import java.util.List;
 import static com.ibnkhaldoun.studentside.activities.StudentMainActivity.MAIL_TYPE;
 
 
-public class MailFragment extends Fragment implements LoadingDataCallbacks {
+public class MailFragment extends BaseMainFragment<Mail> {
 
     private LinearLayout mEmptyLayout;
     private RecyclerView mMailRecyclerView;
@@ -40,6 +38,7 @@ public class MailFragment extends Fragment implements LoadingDataCallbacks {
     private ProgressBar mLoadingProgressBar;
 
     private DataFragmentInterface mailInterface;
+
 
     public static MailFragment newInstance(List<Mail> mails) {
         Bundle args = new Bundle();
@@ -53,17 +52,20 @@ public class MailFragment extends Fragment implements LoadingDataCallbacks {
     public void onAttach(Context context) {
         super.onAttach(context);
         mailInterface = (DataFragmentInterface) context;
+        mailInterface.onAttach(this);
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_mail, container, false);
+
+
         mMailRecyclerView = view.findViewById(R.id.mail_recycler_view);
         mLoadingProgressBar = view.findViewById(R.id.mail_progress_bar);
         mEmptyLayout = view.findViewById(R.id.mail_empty_view);
 
-        mEmptyLayout.setOnClickListener(v -> mailInterface.onNeedData(MAIL_TYPE));
+        mEmptyLayout.setOnClickListener(v -> mailInterface.onNeedData(this));
 
         assert getArguments() != null;
         List<Mail> mailList = getArguments().getParcelableArrayList("Key");
@@ -78,55 +80,52 @@ public class MailFragment extends Fragment implements LoadingDataCallbacks {
         return view;
     }
 
-
     @Override
-    public void onNetworkLoadedSucceed(int type, List list) {
-        if (type == MAIL_TYPE) {
-            mLoadingProgressBar.setVisibility(View.GONE);
-            if (list.size() != 0) {
-                mAdapter.setMailList(list);
-                mEmptyLayout.setVisibility(View.GONE);
-                mMailRecyclerView.setVisibility(View.VISIBLE);
-            } else {
-                mEmptyLayout.setVisibility(View.VISIBLE);
-                mMailRecyclerView.setVisibility(View.GONE);
-            }
-        }
-    }
+    public void onNetworkLoadedSucceed(List<Mail> list) {
 
-    @Override
-    public void onNetworkStartLoading(int type) {
-        if (type == MAIL_TYPE) {
+        mLoadingProgressBar.setVisibility(View.GONE);
+        if (list.size() != 0) {
+            mAdapter.setMailList(list);
             mEmptyLayout.setVisibility(View.GONE);
+            mMailRecyclerView.setVisibility(View.VISIBLE);
+        } else {
+            mEmptyLayout.setVisibility(View.VISIBLE);
             mMailRecyclerView.setVisibility(View.GONE);
-            mLoadingProgressBar.setVisibility(View.VISIBLE);
+
         }
     }
 
     @Override
-    public void onNetworkLoadingFailed(int type, int errorType) {
-        if (type == MAIL_TYPE) {
-            switch (errorType) {
-                case INTERNET_ERROR:
-                    Toast.makeText(getContext(),
-                            R.string.no_internet_connection_string,
-                            Toast.LENGTH_SHORT).show();
-                    break;
-            }
-        }
+    public void onNetworkStartLoading() {
+        mEmptyLayout.setVisibility(View.GONE);
+        mMailRecyclerView.setVisibility(View.GONE);
+        mLoadingProgressBar.setVisibility(View.VISIBLE);
     }
 
     @Override
-    public void onDatabaseLoadingFinished(int type, Cursor cursor) {
-        if (type == MAIL_TYPE) {
-            mLoadingProgressBar.setVisibility(View.GONE);
-            if (cursor.getCount() != 0) {
-                mAdapter.setMailList(getMailsFromCursor(cursor));
-                mMailRecyclerView.setVisibility(View.VISIBLE);
-            } else {
-                mEmptyLayout.setVisibility(View.VISIBLE);
-            }
+    public void onNetworkLoadingFailed(int errorType) {
+
+        switch (errorType) {
+            case INTERNET_ERROR:
+                Toast.makeText(getContext(),
+                        R.string.no_internet_connection_string,
+                        Toast.LENGTH_SHORT).show();
+                break;
         }
+
+    }
+
+    @Override
+    public void onDatabaseLoadingFinished(Cursor cursor) {
+
+        mLoadingProgressBar.setVisibility(View.GONE);
+        if (cursor.getCount() != 0) {
+            mAdapter.setMailList(getMailsFromCursor(cursor));
+            mMailRecyclerView.setVisibility(View.VISIBLE);
+        } else {
+            mEmptyLayout.setVisibility(View.VISIBLE);
+        }
+
     }
 
     private List<Mail> getMailsFromCursor(Cursor cursor) {
@@ -159,11 +158,14 @@ public class MailFragment extends Fragment implements LoadingDataCallbacks {
     }
 
     @Override
-    public void onDatabaseStartLoading(int type) {
-        if (type == MAIL_TYPE) {
-            mLoadingProgressBar.setVisibility(View.VISIBLE);
-            mMailRecyclerView.setVisibility(View.GONE);
-            mEmptyLayout.setVisibility(View.GONE);
-        }
+    public void onDatabaseStartLoading() {
+        mLoadingProgressBar.setVisibility(View.VISIBLE);
+        mMailRecyclerView.setVisibility(View.GONE);
+        mEmptyLayout.setVisibility(View.GONE);
+    }
+
+    @Override
+    public int getBaseType() {
+        return MAIL_TYPE;
     }
 }
