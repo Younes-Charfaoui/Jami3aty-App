@@ -13,10 +13,11 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.LinearLayout;
+
 import com.ibnkhaldoun.studentside.R;
 import com.ibnkhaldoun.studentside.asyncTask.SignUpAsyncTask;
 import com.ibnkhaldoun.studentside.interfaces.SignUpTaskListener;
@@ -26,19 +27,32 @@ import com.ibnkhaldoun.studentside.networking.utilities.NetworkUtilities;
 import com.ibnkhaldoun.studentside.providers.EndPointsProvider;
 
 import static android.view.View.GONE;
-import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.*;
-import static com.ibnkhaldoun.studentside.networking.models.Response.*;
+import static android.view.View.VISIBLE;
+import static com.ibnkhaldoun.studentside.networking.models.Response.IO_EXCEPTION;
+import static com.ibnkhaldoun.studentside.networking.models.Response.JSON_EXCEPTION;
+import static com.ibnkhaldoun.studentside.networking.models.Response.RESPONSE_AVERAGE_ERROR;
+import static com.ibnkhaldoun.studentside.networking.models.Response.RESPONSE_CARD_EXIST;
+import static com.ibnkhaldoun.studentside.networking.models.Response.RESPONSE_CARD_NOT_EXIST;
+import static com.ibnkhaldoun.studentside.networking.models.Response.RESPONSE_EMAIL_ERROR;
+import static com.ibnkhaldoun.studentside.networking.models.Response.RESPONSE_SUCCESS;
+import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.KEY_ANDROID;
+import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.KEY_BAC;
+import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.KEY_CARD_NUMBER;
+import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.KEY_EMAIL;
+import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.KEY_PASSWORD;
 
 public class SignUpActivity extends AppCompatActivity
         implements View.OnFocusChangeListener, SignUpTaskListener {
 
     private EditText mEmailEditText, mPasswordEditText, mCardNumberEditText, mBacAverageEditText;
     private TextInputLayout mEmailWrapper, mCardNumberWrapper, mPasswordWrapper, mBacAverageWrapper;
-    private Menu mMenu;
+    //private Menu mMenu;
     private ProgressBar mLoadingProgressBar;
     private Button mSignUpButton;
-    private TextView mTitleTextView , mSubTitleTextView;
+    private TextView mTitleTextView, mSubTitleTextView;
     private LinearLayout mFieldLinearLayout;
+
+    private MenuItem back, help;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,8 +99,8 @@ public class SignUpActivity extends AppCompatActivity
                     mEmailWrapper.setEnabled(false);
                     mPasswordWrapper.setEnabled(false);
                     mBacAverageWrapper.setEnabled(false);
-                    mMenu.findItem(R.id.action_help).setEnabled(false);
-                    mMenu.findItem(android.R.id.home).setEnabled(false);
+
+
                     getSupportActionBar().setHomeButtonEnabled(false);
 
                     RequestPackage requestPackage = new RequestPackage();
@@ -102,7 +116,7 @@ public class SignUpActivity extends AppCompatActivity
                     signUpAsyncTask.execute(requestPackage);
 
                     mSignUpButton.setVisibility(GONE);
-                    mLoadingProgressBar.setVisibility(View.VISIBLE);
+                    mLoadingProgressBar.setVisibility(VISIBLE);
                 }
 
             }
@@ -112,7 +126,6 @@ public class SignUpActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_sign_up, menu);
-        mMenu = menu;
         return true;
     }
 
@@ -124,7 +137,7 @@ public class SignUpActivity extends AppCompatActivity
                 startActivity(new Intent(this, HelpActivity.class));
                 break;
             case android.R.id.home:
-                if (isEmpty()) {
+                if (isEmpty() || mFieldLinearLayout.getVisibility() == GONE) {
                     finish();
                 } else {
                     new AlertDialog.Builder(this)
@@ -142,6 +155,7 @@ public class SignUpActivity extends AppCompatActivity
     /**
      * validate a set of inputs with specific things
      * and constraints.
+     *
      * @return a boolean
      */
     private boolean validate() {
@@ -295,20 +309,69 @@ public class SignUpActivity extends AppCompatActivity
 
     @Override
     public void onSignUpCompletionListener(SignUpResponse response) {
-        switch (response.getStatus()){
+        switch (response.getStatus()) {
             case RESPONSE_SUCCESS:
                 mSubTitleTextView.setText(R.string.account_created_succes_string);
                 mTitleTextView.setText(R.string.completed);
-                mSignUpButton.setOnClickListener(v-> finish());
+                mSignUpButton.setOnClickListener(v -> finish());
                 mSignUpButton.setText(R.string.done);
+                mSignUpButton.setVisibility(VISIBLE);
+                mLoadingProgressBar.setVisibility(GONE);
                 mFieldLinearLayout.setVisibility(GONE);
                 break;
-            case RESPONSE_ACCOUNT_EXISTS :
-                mCardNumberWrapper.setError("This account of this card number already used.");
-
+            case RESPONSE_CARD_EXIST:
+                mCardNumberWrapper.setError(getString(R.string.card_number_is_used));
+                mCardNumberWrapper.setEnabled(true);
+                mEmailWrapper.setEnabled(true);
+                mPasswordWrapper.setEnabled(true);
+                mBacAverageWrapper.setEnabled(true);
+                mSignUpButton.setVisibility(VISIBLE);
+                mLoadingProgressBar.setVisibility(GONE);
+                break;
+            case RESPONSE_CARD_NOT_EXIST:
+                mCardNumberWrapper.setError(getString(R.string.card_number_does_not_exist));
+                mCardNumberWrapper.setEnabled(true);
+                mEmailWrapper.setEnabled(true);
+                mPasswordWrapper.setEnabled(true);
+                mBacAverageWrapper.setEnabled(true);
+                mSignUpButton.setVisibility(VISIBLE);
+                mLoadingProgressBar.setVisibility(GONE);
                 break;
             case RESPONSE_AVERAGE_ERROR:
-                mBacAverageWrapper.setError("This average is not correct for this card number");
+                mBacAverageWrapper.setError(getString(R.string.average_is_incorrect));
+                mCardNumberWrapper.setEnabled(true);
+                mEmailWrapper.setEnabled(true);
+                mPasswordWrapper.setEnabled(true);
+                mBacAverageWrapper.setEnabled(true);
+                mSignUpButton.setVisibility(VISIBLE);
+                mLoadingProgressBar.setVisibility(GONE);
+                break;
+            case RESPONSE_EMAIL_ERROR:
+                mEmailWrapper.setError(getString(R.string.email_used));
+                mCardNumberWrapper.setEnabled(true);
+                mEmailWrapper.setEnabled(true);
+                mPasswordWrapper.setEnabled(true);
+                mBacAverageWrapper.setEnabled(true);
+                mSignUpButton.setVisibility(VISIBLE);
+                mLoadingProgressBar.setVisibility(GONE);
+                break;
+            case JSON_EXCEPTION:
+                Toast.makeText(this, R.string.errior_json, Toast.LENGTH_SHORT).show();
+                mCardNumberWrapper.setEnabled(true);
+                mEmailWrapper.setEnabled(true);
+                mPasswordWrapper.setEnabled(true);
+                mBacAverageWrapper.setEnabled(true);
+                mSignUpButton.setVisibility(VISIBLE);
+                mLoadingProgressBar.setVisibility(GONE);
+                break;
+            case IO_EXCEPTION:
+                Toast.makeText(this, R.string.error_io_exception, Toast.LENGTH_SHORT).show();
+                mCardNumberWrapper.setEnabled(true);
+                mEmailWrapper.setEnabled(true);
+                mPasswordWrapper.setEnabled(true);
+                mBacAverageWrapper.setEnabled(true);
+                mSignUpButton.setVisibility(VISIBLE);
+                mLoadingProgressBar.setVisibility(GONE);
                 break;
         }
     }

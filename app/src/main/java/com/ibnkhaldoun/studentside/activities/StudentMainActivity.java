@@ -103,6 +103,7 @@ public class StudentMainActivity extends AppCompatActivity
     /**
      * the onCreate method which in we have done most of the
      * initialisation work also with some thing else.
+     *
      * @param savedInstanceState
      */
     @Override
@@ -140,9 +141,9 @@ public class StudentMainActivity extends AppCompatActivity
         GradientDrawable circle = (GradientDrawable) circleImage.getBackground();
 
         PreferencesManager manager = new PreferencesManager(this);
-
-        circleImage.setText(Utilities.getFirstName(manager.getFullName()).charAt(0) +
-                Utilities.getLastName(manager.getFullName()).charAt(0));
+        String text = Character.toString(Utilities.getFirstName(manager.getFullName()).charAt(0)) +
+                Character.toString(Utilities.getLastName(manager.getFullName()).charAt(0));
+        circleImage.setText(text);
 
         circle.setColor(Utilities.getCircleColor(manager.getFullName().charAt(0), this));
 
@@ -159,14 +160,15 @@ public class StudentMainActivity extends AppCompatActivity
         LocalBroadcastManager.getInstance(this).registerReceiver(mReceiver,
                 filter);
 
-        getSupportLoaderManager().initLoader(DISPLAY_LOADER_ID, null, this).forceLoad();
-        getSupportLoaderManager().initLoader(NOTIFICATION_LOADER_ID, null, this).forceLoad();
-        getSupportLoaderManager().initLoader(MAIL_LOADER_ID, null, this).forceLoad();
+        //getSupportLoaderManager().initLoader(DISPLAY_LOADER_ID, null, this).forceLoad();
+        //getSupportLoaderManager().initLoader(NOTIFICATION_LOADER_ID, null, this).forceLoad();
+        //getSupportLoaderManager().initLoader(MAIL_LOADER_ID, null, this).forceLoad();
     }
 
     /**
      * Class method for inflating the menu from
      * the resources.
+     *
      * @param menu
      * @return
      */
@@ -384,6 +386,7 @@ public class StudentMainActivity extends AppCompatActivity
      * this method was implemented by the {@link DataFragmentInterface}
      * for the purpose of communicating with the {@link DisplaysFragment} to hold reference
      * to it for future communications.
+     *
      * @param displaysFragment
      */
     @Override
@@ -395,6 +398,7 @@ public class StudentMainActivity extends AppCompatActivity
      * this method was implemented by the {@link DataFragmentInterface}
      * for the purpose of communicating with the {@link MailFragment} to hold reference
      * to it for future communications.
+     *
      * @param mailFragment
      */
     @Override
@@ -406,6 +410,7 @@ public class StudentMainActivity extends AppCompatActivity
      * this method was implemented by the {@link DataFragmentInterface}
      * for the purpose of communicating with the {@link NotificationFragment} to hold reference
      * to it for future communications.
+     *
      * @param notificationFragment
      */
     @Override

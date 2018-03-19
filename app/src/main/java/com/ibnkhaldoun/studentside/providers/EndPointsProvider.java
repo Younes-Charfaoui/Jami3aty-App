@@ -2,15 +2,15 @@ package com.ibnkhaldoun.studentside.providers;
 
 /**
  * @definition this class has the constant for the different
- * end point in the application
+ * end point in the application.
  */
 
 public final class EndPointsProvider {
 
-    private static final String BASE = "http://10.0.2.2/";
+    private static final String BASE = "http://192.168.1.5/";
     private final static String LOGIN_ENDPOINT = BASE + "jami3aty/users/login";
     private static final String SIGN_UP_ENDPOINT = BASE + "jami3aty/users/register";
-    private final static String FORGET_PASSWORD_ENDPOINT = BASE + "jami3aty/users/forgetpassword";
+    private final static String FORGET_PASSWORD_ENDPOINT = BASE + "jami3aty/users/forgotpass";
     private final static String SUBJECT_ENDPOINT = BASE + "jami3aty/users/subjects";
     private final static String MARK_ENDPOINT = BASE + "jami3aty/users/marks";
     private final static String MAIL_ENDPOINT = BASE + "jami3aty/users/mails";

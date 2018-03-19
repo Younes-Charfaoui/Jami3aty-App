@@ -27,14 +27,15 @@ public class LoginAsyncTask extends AsyncTask<RequestPackage, Void, LoginRespons
 
     @Override
     protected LoginResponse doInBackground(RequestPackage... requestPackages) {
-
+        Log.i("Test", "Background");
         try {
             Log.i("End", "doInBackground: the end point " + requestPackages[0].getEndPoint());
+            Log.i("Ismail", " Before Executing ");
             String response = HttpUtilities.getData(requestPackages[0]);
             Log.i("Data", "doInBackground: " + response);
             return JsonUtilities.getLoginResponse(response);
         } catch (IOException e) {
-            Log.i("Data", "doInBackground: it was an IOException");
+            Log.i("Ismail", "doInBackground: it was an IOException");
             e.printStackTrace();
         }
         return null;

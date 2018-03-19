@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Patterns;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,20 +23,21 @@ import com.ibnkhaldoun.studentside.providers.EndPointsProvider;
 
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
+import static com.ibnkhaldoun.studentside.networking.models.Response.IO_EXCEPTION;
+import static com.ibnkhaldoun.studentside.networking.models.Response.JSON_EXCEPTION;
 import static com.ibnkhaldoun.studentside.networking.models.Response.RESPONSE_EMAIL_ERROR;
 import static com.ibnkhaldoun.studentside.networking.models.Response.RESPONSE_SUCCESS;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.KEY_ANDROID;
-import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.KEY_BAC;
-import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.KEY_CARD_NUMBER;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.KEY_EMAIL;
 
 public class ForgetPasswordActivity extends AppCompatActivity implements ForgetPasswordTaskListener {
 
     private TextView mAccountPleaseTextView;
     private Button mFindAccountButton;
-    private EditText mEmailEditText, mCardNumberEditText, mBacAverageEditText;
-    private TextInputLayout mEmailWrapper, mCardNumberWrapper, mBacAverageWrapper;
+    private EditText mEmailEditText;
+    private TextInputLayout mEmailWrapper;
     private ProgressBar mProgressBar;
+    private ImageView mEmailImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,10 +51,7 @@ public class ForgetPasswordActivity extends AppCompatActivity implements ForgetP
         mAccountPleaseTextView = findViewById(R.id.account_search_textView);
         mEmailEditText = findViewById(R.id.input_email_forget_password);
         mEmailWrapper = findViewById(R.id.email_wrapper_forget_password);
-        mCardNumberEditText = findViewById(R.id.input_card_number_forget_password);
-        mCardNumberWrapper = findViewById(R.id.card_number_wrapper_forget_password);
-        mBacAverageEditText = findViewById(R.id.input_bac_forget_password);
-        mBacAverageWrapper = findViewById(R.id.bac_wrapper_forget_password);
+        mEmailImage = findViewById(R.id.email_image_view);
         mProgressBar = findViewById(R.id.forget_password_progress_bar);
 
 
@@ -65,8 +64,6 @@ public class ForgetPasswordActivity extends AppCompatActivity implements ForgetP
                     requestPackage.setMethod(RequestPackage.POST);
                     requestPackage.addParams(KEY_ANDROID, KEY_ANDROID);
                     requestPackage.addParams(KEY_EMAIL, mEmailEditText.getText().toString());
-                    requestPackage.addParams(KEY_CARD_NUMBER, mCardNumberEditText.getText().toString());
-                    requestPackage.addParams(KEY_BAC, mBacAverageEditText.getText().toString());
 
                     mProgressBar.setVisibility(VISIBLE);
                     mFindAccountButton.setVisibility(GONE);
@@ -84,20 +81,10 @@ public class ForgetPasswordActivity extends AppCompatActivity implements ForgetP
     }
 
     private boolean validate() {
-        boolean validate = true;
-        String cardNumber = mCardNumberEditText.getText().toString();
-        String email = mEmailEditText.getText().toString();
-        String bacAverage = mBacAverageEditText.getText().toString();
 
-        if (cardNumber.isEmpty()) {
-            mCardNumberWrapper.setError(getResources().getString(R.string.card_number_empty));
-            validate = false;
-        } else if (cardNumber.length() != 8) {
-            mCardNumberWrapper.setError(getResources().getString(R.string.valid_card_number));
-            validate = false;
-        } else {
-            mCardNumberWrapper.setError(null);
-        }
+        boolean validate = true;
+
+        String email = mEmailEditText.getText().toString();
 
         if (email.isEmpty()) {
             mEmailWrapper.setError(getResources().getString(R.string.email_empty));
@@ -109,21 +96,7 @@ public class ForgetPasswordActivity extends AppCompatActivity implements ForgetP
             mEmailWrapper.setError(null);
         }
 
-        if (bacAverage.isEmpty()) {
-            mBacAverageWrapper.setError(getResources().getString(R.string.bac_average_empty));
-            validate = false;
-        } else if (!validAverage(bacAverage)) {
-            mBacAverageWrapper.setError(getResources().getString(R.string.bac_average_invalid));
-            validate = false;
-        } else {
-            mBacAverageWrapper.setError(null);
-        }
         return validate;
-    }
-
-    private boolean validAverage(String average) {
-        double averageDouble = Double.parseDouble(average);
-        return !(averageDouble < 10 || averageDouble >= 20);
     }
 
     @Override
@@ -136,9 +109,9 @@ public class ForgetPasswordActivity extends AppCompatActivity implements ForgetP
                 mAccountPleaseTextView.setText(R.string.rest_password_string);
                 mAccountPleaseTextView.setVisibility(VISIBLE);
                 mAccountPleaseTextView.setTextColor(Color.BLACK);
+                mFindAccountButton.setOnClickListener(v -> finish());
+                mEmailImage.setVisibility(GONE);
                 mEmailWrapper.setVisibility(GONE);
-                mBacAverageWrapper.setVisibility(GONE);
-                mCardNumberWrapper.setVisibility(GONE);
                 break;
             case RESPONSE_EMAIL_ERROR:
                 mProgressBar.setVisibility(GONE);
@@ -147,8 +120,22 @@ public class ForgetPasswordActivity extends AppCompatActivity implements ForgetP
                 mAccountPleaseTextView.setText(R.string.cant_find_email);
                 mAccountPleaseTextView.setTextColor(Color.RED);
                 mEmailWrapper.setEnabled(true);
-                mBacAverageWrapper.setEnabled(true);
-                mCardNumberWrapper.setEnabled(true);
+                break;
+            case JSON_EXCEPTION:
+                mProgressBar.setVisibility(GONE);
+                mFindAccountButton.setVisibility(VISIBLE);
+                mAccountPleaseTextView.setVisibility(VISIBLE);
+                mAccountPleaseTextView.setTextColor(Color.RED);
+                mEmailWrapper.setEnabled(true);
+                Toast.makeText(this, R.string.errior_json, Toast.LENGTH_SHORT).show();
+                break;
+            case IO_EXCEPTION:
+                mProgressBar.setVisibility(GONE);
+                mFindAccountButton.setVisibility(VISIBLE);
+                mAccountPleaseTextView.setVisibility(VISIBLE);
+                mAccountPleaseTextView.setTextColor(Color.RED);
+                mEmailWrapper.setEnabled(true);
+                Toast.makeText(this, R.string.error_io_exception, Toast.LENGTH_SHORT).show();
                 break;
         }
     }

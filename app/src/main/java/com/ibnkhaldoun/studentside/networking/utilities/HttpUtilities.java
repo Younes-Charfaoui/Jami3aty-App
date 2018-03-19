@@ -68,6 +68,7 @@ public class HttpUtilities {
         //creating the request based on what has been passed.
         Request request = requestBuilder.build();
 
+        Log.i("Ismail","before the call");
         Response response = client.newCall(request).execute();
 
         if (response.isSuccessful()) {

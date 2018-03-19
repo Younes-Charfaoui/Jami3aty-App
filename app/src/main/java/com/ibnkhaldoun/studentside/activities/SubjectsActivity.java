@@ -54,7 +54,6 @@ public class SubjectsActivity extends AppCompatActivity implements LoaderManager
             } else {
                 mEmptyView.setVisibility(View.VISIBLE);
             }
-
         }
     };
 

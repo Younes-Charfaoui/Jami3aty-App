@@ -25,7 +25,7 @@
     <string name="welcome_in_help">Welcome In Help</string>
     <string name="student_card_description">Student card in which we are demonstrating from where to get the card number</string>
     <string name="title_activity_forget_password">Forget Password</string>
-    <string name="account_search">Please enter your information to search your account</string>
+    <string name="account_search">Please enter your email to search your account</string>
     <string name="find_your_account_text">Find your account</string>
     <string name="logo_image_description">Logo image</string>
     <string name="bac_average_string">Bac average</string>
@@ -134,5 +134,11 @@
     <string name="tap_to_refresh_from_the_internet">Tap to refresh from the Internet.</string>
     <string name="there_are_no_displays">There are no Displays.</string>
     <string name="download_all_schedules">Download all schedules</string>
-    <string name="cant_find_email">The information\'s provided can\'t lead to an email</string>
+    <string name="cant_find_email">This email does not correspond to any account</string>
+    <string name="email_used">This email already used.</string>
+    <string name="average_is_incorrect">This average is not correct for this card number</string>
+    <string name="card_number_does_not_exist">This card number does not correspond to any student.</string>
+    <string name="card_number_is_used">This account of this card number already used.</string>
+    <string name="error_io_exception">Error when getting connecting to server, check your connection</string>
+    <string name="errior_json">Error when getting response from server</string>
 </resources>

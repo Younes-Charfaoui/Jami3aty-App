@@ -7,6 +7,7 @@ import com.ibnkhaldoun.studentside.models.Student;
 import com.ibnkhaldoun.studentside.models.Subject;
 import com.ibnkhaldoun.studentside.networking.models.ForgetPasswordResponse;
 import com.ibnkhaldoun.studentside.networking.models.LoginResponse;
+import com.ibnkhaldoun.studentside.networking.models.Response;
 import com.ibnkhaldoun.studentside.networking.models.SignUpResponse;
 
 import org.json.JSONException;
@@ -14,6 +15,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import static com.ibnkhaldoun.studentside.networking.models.Response.JSON_EXCEPTION;
 import static com.ibnkhaldoun.studentside.networking.models.Response.RESPONSE_SUCCESS;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_PROFESSOR_DEGREE;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_PROFESSOR_EMAIL;
@@ -43,7 +45,9 @@ public class JsonUtilities {
         try {
 
             JSONObject root = new JSONObject(jsonText);
-            int status = Integer.parseInt(root.getString(KEY_JSON_STATUS));
+
+            int status = root.getInt(KEY_JSON_STATUS);
+
             LoginResponse response = new LoginResponse(status);
 
             if (status == RESPONSE_SUCCESS) {
@@ -76,20 +80,23 @@ public class JsonUtilities {
             }
             return response;
         } catch (JSONException e) {
-            e.printStackTrace();
+            return new LoginResponse(JSON_EXCEPTION);
         }
-        return null;
+
     }
 
     public static SignUpResponse getSignUpResponse(String jsonText) {
         try {
+
             JSONObject root = new JSONObject(jsonText);
-            int status = Integer.parseInt(root.getString(KEY_JSON_STATUS));
+            int status = root.getInt(KEY_JSON_STATUS);
+
             return new SignUpResponse(status);
         } catch (JSONException e) {
+
             e.printStackTrace();
+            return new SignUpResponse(JSON_EXCEPTION);
         }
-        return null;
     }
 
     public static ArrayList<Subject> getSubjectList(String response) {
@@ -109,9 +116,10 @@ public class JsonUtilities {
                     parseInt(new JSONObject(response)
                             .getString(KEY_JSON_STATUS)));
         } catch (JSONException e) {
-            e.printStackTrace();
+
+            return new ForgetPasswordResponse(Response.JSON_EXCEPTION);
         }
-        return null;
+
     }
 
     public static ArrayList<Mark> getMarkList(String response) {

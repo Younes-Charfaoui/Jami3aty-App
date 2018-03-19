@@ -105,7 +105,7 @@ public final class Utilities {
     public static String getLastName(String fullName) throws ArrayIndexOutOfBoundsException {
         if (fullName.contains(" ")) {
             String[] names = fullName.split(" ");
-            return names[2];
+            return names[1];
         } else {
             return fullName;
         }

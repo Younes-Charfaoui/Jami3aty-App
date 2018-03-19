@@ -5,6 +5,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -25,6 +26,8 @@ import com.ibnkhaldoun.studentside.networking.utilities.NetworkUtilities;
 import com.ibnkhaldoun.studentside.providers.EndPointsProvider;
 import com.ibnkhaldoun.studentside.providers.KeyDataProvider;
 
+import static com.ibnkhaldoun.studentside.networking.models.Response.IO_EXCEPTION;
+import static com.ibnkhaldoun.studentside.networking.models.Response.JSON_EXCEPTION;
 import static com.ibnkhaldoun.studentside.networking.models.Response.RESPONSE_EMAIL_ERROR;
 import static com.ibnkhaldoun.studentside.networking.models.Response.RESPONSE_PASSWORD_ERROR;
 import static com.ibnkhaldoun.studentside.networking.models.Response.RESPONSE_SUCCESS;
@@ -138,11 +141,12 @@ public class LoginActivity extends AppCompatActivity implements LoginTaskListene
      * this method has been implemented by the {@link LoginTaskListener}
      * which take care for delivering the result from the async task
      * back to this activity to take an action with this things.
+     *
      * @param response
      */
     @Override
     public void onLoginCompletionListener(LoginResponse response) {
-        if (response != null) {
+
 
             switch (response.getStatus()) {
                 case RESPONSE_SUCCESS:
@@ -173,13 +177,23 @@ public class LoginActivity extends AppCompatActivity implements LoginTaskListene
                     mLoadingProgressBar.setVisibility(View.GONE);
                     mButtonsLinearLayout.setVisibility(View.VISIBLE);
                     break;
+                case JSON_EXCEPTION:
+                    Toast.makeText(this, R.string.errior_json, Toast.LENGTH_SHORT).show();
+                    mPasswordWrapper.setEnabled(true);
+                    mEmailWrapper.setEnabled(true);
+                    mLoadingProgressBar.setVisibility(View.GONE);
+                    mButtonsLinearLayout.setVisibility(View.VISIBLE);
+                    break;
+                case IO_EXCEPTION:
+                    Toast.makeText(this, R.string.error_io_exception, Toast.LENGTH_SHORT).show();
+                    mPasswordWrapper.setEnabled(true);
+                    mEmailWrapper.setEnabled(true);
+                    mLoadingProgressBar.setVisibility(View.GONE);
+                    mButtonsLinearLayout.setVisibility(View.VISIBLE);
+                    break;
             }
-        } else {
-            Toast.makeText(this, "Can't Connect to the server , please try later", Toast.LENGTH_SHORT).show();
-            mPasswordWrapper.setEnabled(true);
-            mEmailWrapper.setEnabled(true);
-            mLoadingProgressBar.setVisibility(View.GONE);
-            mButtonsLinearLayout.setVisibility(View.VISIBLE);
-        }
+
+
+
     }
 }
