@@ -8,7 +8,8 @@ import com.ibnkhaldoun.studentside.enums.ClassTypes;
 
 
 public class ScheduleItem implements Parcelable {
-    public static final Creator<ScheduleItem> CREATOR = new Creator<ScheduleItem>() {
+
+    public static final Parcelable.Creator<ScheduleItem> CREATOR = new Parcelable.Creator<ScheduleItem>() {
         @Override
         public ScheduleItem createFromParcel(Parcel source) {
             return new ScheduleItem(source);
@@ -21,10 +22,10 @@ public class ScheduleItem implements Parcelable {
     };
     private String time, location;
     private String subject;
-    private ClassTypes classType;
+    private int classType;
     private Professor professor;
 
-    public ScheduleItem(String time, String location, String subject, ClassTypes classType, Professor profesor) {
+    public ScheduleItem(String time, String location, String subject, int classType, Professor profesor) {
         this.time = time;
         this.location = location;
         this.subject = subject;
@@ -32,7 +33,8 @@ public class ScheduleItem implements Parcelable {
         this.professor = profesor;
     }
 
-    public ScheduleItem(String time, String location, String subject, ClassTypes classType) {
+
+    public ScheduleItem(String time, String location, String subject, int classType) {
         this.time = time;
         this.location = location;
         this.subject = subject;
@@ -43,8 +45,7 @@ public class ScheduleItem implements Parcelable {
         this.time = in.readString();
         this.location = in.readString();
         this.subject = in.readString();
-        int tmpClassType = in.readInt();
-        this.classType = tmpClassType == -1 ? null : ClassTypes.values()[tmpClassType];
+        this.classType = in.readInt();
         this.professor = in.readParcelable(Professor.class.getClassLoader());
     }
 
@@ -68,8 +69,15 @@ public class ScheduleItem implements Parcelable {
         return subject;
     }
 
-    public ClassTypes getClassType() {
+    public int getClassType() {
         return classType;
+    }
+
+    @Override
+    public String toString() {
+        return this.getTime() + ", " +
+                ClassTypes.getStringFormat(this.classType) +
+                " at" + this.getLocation();
     }
 
     @Override
@@ -82,14 +90,7 @@ public class ScheduleItem implements Parcelable {
         dest.writeString(this.time);
         dest.writeString(this.location);
         dest.writeString(this.subject);
-        dest.writeInt(this.classType == null ? -1 : this.classType.ordinal());
+        dest.writeInt(this.classType);
         dest.writeParcelable(this.professor, flags);
-    }
-
-    @Override
-    public String toString() {
-        return this.getTime() + ", " +
-                ClassTypes.getStringFormat(this.classType) +
-                " at" + this.getLocation();
     }
 }

@@ -140,5 +140,10 @@
     <string name="card_number_does_not_exist">This card number does not correspond to any student.</string>
     <string name="card_number_is_used">This account of this card number already used.</string>
     <string name="error_io_exception">Error when getting connecting to server, check your connection</string>
-    <string name="errior_json">Error when getting response from server</string>
+    <string name="error_json">Error when getting response from server</string>
+    <string name="sunday">Sunday</string>
+    <string name="monday">Monday</string>
+    <string name="tuesday">Tuesday</string>
+    <string name="wednesday">Wednesday</string>
+    <string name="thursday">thursday</string>
 </resources>

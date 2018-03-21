@@ -5,7 +5,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -178,7 +177,7 @@ public class LoginActivity extends AppCompatActivity implements LoginTaskListene
                     mButtonsLinearLayout.setVisibility(View.VISIBLE);
                     break;
                 case JSON_EXCEPTION:
-                    Toast.makeText(this, R.string.errior_json, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, R.string.error_json, Toast.LENGTH_SHORT).show();
                     mPasswordWrapper.setEnabled(true);
                     mEmailWrapper.setEnabled(true);
                     mLoadingProgressBar.setVisibility(View.GONE);

@@ -18,6 +18,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.ibnkhaldoun.studentside.R;
 import com.ibnkhaldoun.studentside.Utilities.PreferencesManager;
@@ -27,6 +28,7 @@ import com.ibnkhaldoun.studentside.models.Subject;
 import com.ibnkhaldoun.studentside.networking.models.RequestPackage;
 import com.ibnkhaldoun.studentside.networking.utilities.NetworkUtilities;
 import com.ibnkhaldoun.studentside.providers.EndPointsProvider;
+import com.ibnkhaldoun.studentside.services.DatabaseService;
 import com.ibnkhaldoun.studentside.services.LoadDataService;
 
 import java.util.ArrayList;
@@ -34,25 +36,45 @@ import java.util.ArrayList;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_STUDENT_ID;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.KEY_ANDROID;
 
+/**
+ * @definition this activity will handle the user subject and it's
+ * interaction with the list and it's implementation.
+ */
 public class SubjectsActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
+    //constant to extract the content of the intent.
     public static final String KEY_SUBJECTS = "keySubjects";
+
+    //id for the loader.
     private static final int SUBJECT_LOADER_ID = 1292;
+
+    // the basic the UI views of the Activity.
     private RecyclerView mSubjectRecyclerView;
     private SubjectsAdapter mAdapter;
-    private LinearLayout mEmptyView;
+    private LinearLayout mEmptyLayout;
     private ProgressBar mProgressBar;
 
+    /**
+     * this broadcast receiver will Receive the subject after they had been downloaded
+     * by the {@link LoadDataService} Intent service , which will broadcast this subject ,
+     * and pass it to the {@link DatabaseService} which will put this subject's in the database.
+     */
     private BroadcastReceiver mSubjectReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             ArrayList<Subject> subjectList = intent.getParcelableArrayListExtra(KEY_SUBJECTS);
-            mProgressBar.setVisibility(View.GONE);
-            if (subjectList.size() != 0) {
-                mSubjectRecyclerView.setVisibility(View.VISIBLE);
-                mAdapter.swapList(subjectList);
+            if (subjectList != null) {
+                mProgressBar.setVisibility(View.GONE);
+                if (subjectList.size() != 0) {
+                    mSubjectRecyclerView.setVisibility(View.VISIBLE);
+                    mAdapter.swapList(subjectList);
+                } else {
+                    mEmptyLayout.setVisibility(View.VISIBLE);
+                }
             } else {
-                mEmptyView.setVisibility(View.VISIBLE);
+                mProgressBar.setVisibility(View.GONE);
+                mEmptyLayout.setVisibility(View.VISIBLE);
+                Toast.makeText(context, R.string.error_io_exception, Toast.LENGTH_SHORT).show();
             }
         }
     };
@@ -64,7 +86,7 @@ public class SubjectsActivity extends AppCompatActivity implements LoaderManager
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        mEmptyView = findViewById(R.id.subject_empty_view);
+        mEmptyLayout = findViewById(R.id.subject_empty_view);
         mProgressBar = findViewById(R.id.subject_progress_bar);
 
         setupRecyclerView();
@@ -73,8 +95,9 @@ public class SubjectsActivity extends AppCompatActivity implements LoaderManager
         assert getSupportActionBar() != null;
         getSupportActionBar().setHomeButtonEnabled(true);
 
-        mEmptyView.setOnClickListener(v -> getSubjectFromService());
+        mEmptyLayout.setOnClickListener(v -> getSubjectFromService());
 
+        //the local broadcast Manager to register our BroadcastReceiver.
         LocalBroadcastManager.getInstance(this).registerReceiver(mSubjectReceiver,
                 new IntentFilter(LoadDataService.SUBJECT_ACTION));
     }
@@ -82,20 +105,25 @@ public class SubjectsActivity extends AppCompatActivity implements LoaderManager
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        //the local broadcast Manager to unregister our BroadcastReceiver.
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mSubjectReceiver);
     }
 
+    /**
+     * this helper method will try to get the subject from the internet
+     * if ther is connection of course.
+     */
     private void getSubjectFromService() {
         if (NetworkUtilities.isConnected(this)) {
-            mEmptyView.setVisibility(View.GONE);
+            mEmptyLayout.setVisibility(View.GONE);
             mSubjectRecyclerView.setVisibility(View.GONE);
             mProgressBar.setVisibility(View.VISIBLE);
             Intent intent = new Intent(this, LoadDataService.class);
             RequestPackage request = new RequestPackage();
             request.setMethod(RequestPackage.POST);
             request.setEndPoint(EndPointsProvider.getSubjectEndpoint());
-            request.addParams(KEY_ANDROID, KEY_ANDROID);
             PreferencesManager manager = new PreferencesManager(this);
+            request.addParams(KEY_ANDROID, KEY_ANDROID);
             request.addParams(JSON_STUDENT_ID, manager.getId());
             intent.putExtra(LoadDataService.KEY_REQUEST, request);
             intent.putExtra(LoadDataService.KEY_ACTION, LoadDataService.SUBJECT_TYPE);
@@ -114,6 +142,9 @@ public class SubjectsActivity extends AppCompatActivity implements LoaderManager
         }
     }
 
+    /**
+     * helper method to initialize the recycler view and it components.
+     */
     private void setupRecyclerView() {
         mSubjectRecyclerView = findViewById(R.id.subject_recycler_view);
         mAdapter = new SubjectsAdapter(this);
@@ -123,15 +154,30 @@ public class SubjectsActivity extends AppCompatActivity implements LoaderManager
         mSubjectRecyclerView.setHasFixedSize(true);
     }
 
+    /**
+     * the famous method that will initialize the loader and create it.
+     *
+     * @param id   this is the ID of the loader.
+     * @param args this is the bundle that have been passed throw the
+     *             initialization method.
+     * @return
+     */
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-
+        mProgressBar.setVisibility(View.VISIBLE);
+        mEmptyLayout.setVisibility(View.GONE);
+        mSubjectRecyclerView.setVisibility(View.GONE);
         return new CursorLoader(
                 this,
                 DatabaseContract.SubjectEntry.CONTENT_SUBJECT_URI,
                 new String[]{"*"}, null, null, null);
     }
 
+    /**
+     * this callback is called when the loader finish working.
+     *
+     * @param loader
+     */
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         mProgressBar.setVisibility(View.GONE);
@@ -139,14 +185,19 @@ public class SubjectsActivity extends AppCompatActivity implements LoaderManager
             mSubjectRecyclerView.setVisibility(View.VISIBLE);
             mAdapter.swapCursor(data);
         } else {
-            mEmptyView.setVisibility(View.VISIBLE);
+            mEmptyLayout.setVisibility(View.VISIBLE);
         }
     }
 
+    /**
+     * this callback is called when the loader reset.
+     *
+     * @param loader
+     */
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
         mProgressBar.setVisibility(View.VISIBLE);
-        mEmptyView.setVisibility(View.GONE);
+        mEmptyLayout.setVisibility(View.GONE);
         mSubjectRecyclerView.setVisibility(View.GONE);
         mAdapter.swapCursor(null);
     }

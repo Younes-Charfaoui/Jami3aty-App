@@ -75,6 +75,8 @@ public class LoadDataService extends IntentService {
         try {
             String response = HttpUtilities.getData(request);
             ArrayList<Subject> subjectList = JsonUtilities.getSubjectList(response);
+
+
             Intent intentSubject = new Intent(SUBJECT_ACTION);
             intentSubject.putExtra(SubjectsActivity.KEY_SUBJECTS, subjectList);
             LocalBroadcastManager.getInstance(this).sendBroadcast(intentSubject);
@@ -82,6 +84,7 @@ public class LoadDataService extends IntentService {
             intentDatabase.putExtra(DatabaseService.KEY_CONTENT_DATA, subjectList);
             intentDatabase.putExtra(KEY_ACTION, SUBJECT_TYPE);
             startService(intentDatabase);
+
         } catch (IOException e) {
             e.printStackTrace();
         }

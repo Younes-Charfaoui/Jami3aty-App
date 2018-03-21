@@ -38,13 +38,13 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         circle.setColor(Utilities.getCircleColor(notification.getProfessor().getShortName().charAt(0), mContext));
         holder.mTextTextView.setText(notification.getText());
         switch (notification.getType()) {
-            case AVIS:
+            case 1:
                 holder.mImageImageView.setImageResource(R.drawable.ic_mail_outline);
                 break;
-            case MARKS:
+            case 2:
                 holder.mImageImageView.setImageResource(R.drawable.ic_lock_outline);
                 break;
-            case CONSULTATION:
+            case 3:
                 holder.mImageImageView.setImageResource(R.drawable.ic_calendar_new);
                 break;
         }

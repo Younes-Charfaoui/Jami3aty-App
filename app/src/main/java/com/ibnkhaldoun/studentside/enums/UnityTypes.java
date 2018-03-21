@@ -1,10 +1,14 @@
 package com.ibnkhaldoun.studentside.enums;
 
 
-public enum UnityTypes {
-    FUNDAMENTAL, METHODOLOGICAL, TRAVERSAL;
+public final class UnityTypes {
 
-    public static UnityTypes getUnitType(int number) {
+    public static final int FUNDAMENTAL = 1;
+    public static final int METHODOLOGICAL = 2;
+    public static final int TRAVERSAL = 3;
+
+
+    public static int getUnitType(int number) {
         switch (number) {
             case 0:
                 return FUNDAMENTAL;
@@ -17,16 +21,5 @@ public enum UnityTypes {
         }
     }
 
-    public static int getUnitType(UnityTypes types) {
-        switch (types) {
-            case FUNDAMENTAL:
-                return 0;
-            case METHODOLOGICAL:
-                return 1;
-            case TRAVERSAL:
-                return 2;
-            default:
-                throw new IllegalStateException();
-        }
-    }
+
 }

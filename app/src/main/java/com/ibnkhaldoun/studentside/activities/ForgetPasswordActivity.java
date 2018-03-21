@@ -127,7 +127,7 @@ public class ForgetPasswordActivity extends AppCompatActivity implements ForgetP
                 mAccountPleaseTextView.setVisibility(VISIBLE);
                 mAccountPleaseTextView.setTextColor(Color.RED);
                 mEmailWrapper.setEnabled(true);
-                Toast.makeText(this, R.string.errior_json, Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.error_json, Toast.LENGTH_SHORT).show();
                 break;
             case IO_EXCEPTION:
                 mProgressBar.setVisibility(GONE);

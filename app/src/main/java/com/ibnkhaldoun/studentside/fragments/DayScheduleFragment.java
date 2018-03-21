@@ -45,12 +45,13 @@ public class DayScheduleFragment extends Fragment {
         mLoadingProgressbar = view.findViewById(R.id.day_schedule_progress);
 
         LinearLayoutManager manager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+        mAdapter = new ScheduleAdapter(getContext());
         if (getArguments() != null) {
             if (getArguments().getParcelableArrayList(KEY_INNER_DATA) != null) {
+                mAdapter.setList(getArguments().getParcelableArrayList(KEY_INNER_DATA));
 
             }
         }
-        mAdapter = new ScheduleAdapter(getContext());
         mDayScheduleRecyclerView.setAdapter(mAdapter);
         mDayScheduleRecyclerView.setLayoutManager(manager);
         mDayScheduleRecyclerView.setHasFixedSize(true);

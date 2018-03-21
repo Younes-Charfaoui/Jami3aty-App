@@ -11,9 +11,10 @@ public final class EndPointsProvider {
     private final static String LOGIN_ENDPOINT = BASE + "jami3aty/users/login";
     private static final String SIGN_UP_ENDPOINT = BASE + "jami3aty/users/register";
     private final static String FORGET_PASSWORD_ENDPOINT = BASE + "jami3aty/users/forgotpass";
-    private final static String SUBJECT_ENDPOINT = BASE + "jami3aty/users/subjects";
+    private final static String SUBJECT_ENDPOINT = BASE + "jami3aty/pages/modules";
     private final static String MARK_ENDPOINT = BASE + "jami3aty/users/marks";
     private final static String MAIL_ENDPOINT = BASE + "jami3aty/users/mails";
+
 
     public static String getSubjectEndpoint() {
         return SUBJECT_ENDPOINT;

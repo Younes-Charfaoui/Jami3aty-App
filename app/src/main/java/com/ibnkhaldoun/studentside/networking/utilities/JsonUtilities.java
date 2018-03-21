@@ -10,10 +10,13 @@ import com.ibnkhaldoun.studentside.networking.models.LoginResponse;
 import com.ibnkhaldoun.studentside.networking.models.Response;
 import com.ibnkhaldoun.studentside.networking.models.SignUpResponse;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import static com.ibnkhaldoun.studentside.networking.models.Response.JSON_EXCEPTION;
 import static com.ibnkhaldoun.studentside.networking.models.Response.RESPONSE_SUCCESS;
@@ -31,6 +34,19 @@ import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_STUDENT
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_STUDENT_LAST_NAME;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_STUDENT_LEVEL;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_STUDENT_SECTION;
+import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_SUBJECT_COEFFICIENT;
+import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_SUBJECT_CONTENT;
+import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_SUBJECT_CREDIT;
+import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_SUBJECT_DATA;
+import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_SUBJECT_ID;
+import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_SUBJECT_PROFESSOR_DEGREE;
+import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_SUBJECT_PROFESSOR_F_NAME;
+import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_SUBJECT_PROFESSOR_L_NAME;
+import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_SUBJECT_SHORT_TITLE;
+import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_SUBJECT_SUMMARY;
+import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_SUBJECT_TITLE;
+import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_SUBJECT_TYPE;
+import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_SUBJECT_UNITY_TYPE;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.KEY_JSON_DATA;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.KEY_JSON_STATUS;
 
@@ -102,7 +118,10 @@ public class JsonUtilities {
     public static ArrayList<Subject> getSubjectList(String response) {
         try {
             JSONObject root = new JSONObject(response);
-
+            int status = root.getInt(KEY_JSON_STATUS);
+            if (status != 200) return null;
+            JSONArray subjects = root.getJSONArray(JSON_SUBJECT_DATA);
+            return getSubjectFromJsonArray(subjects);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -130,5 +149,35 @@ public class JsonUtilities {
     public static ArrayList<Mail> getMailList(String response) {
         // TODO: 15/03/2018 add the code to parse the mail response
         return null;
+    }
+
+    private static ArrayList<Subject> getSubjectFromJsonArray(JSONArray array) throws JSONException {
+        Map<Long, Subject> map = new HashMap<>();
+        for (int i = 0; i < array.length(); i++) {
+            long id = array.getJSONObject(i).getInt(JSON_SUBJECT_ID);
+            String title = array.getJSONObject(i).getString(JSON_SUBJECT_TITLE);
+            String short_title = array.getJSONObject(i).getString(JSON_SUBJECT_SHORT_TITLE);
+            String coefficient = array.getJSONObject(i).getString(JSON_SUBJECT_COEFFICIENT);
+            String content = array.getJSONObject(i).getString(JSON_SUBJECT_CONTENT);
+            String summary = array.getJSONObject(i).getString(JSON_SUBJECT_SUMMARY);
+            String credit = array.getJSONObject(i).getString(JSON_SUBJECT_CREDIT);
+            int unityType = array.getJSONObject(i).getInt(JSON_SUBJECT_UNITY_TYPE);
+            int type = array.getJSONObject(i).getInt(JSON_SUBJECT_TYPE);
+            String professorName = array.getJSONObject(i).getString(JSON_SUBJECT_PROFESSOR_DEGREE) + " " + array.getJSONObject(i).getString(JSON_SUBJECT_PROFESSOR_F_NAME) + " " + array.getJSONObject(i).getString(JSON_SUBJECT_PROFESSOR_L_NAME);
+            Subject subjectOut = map.containsKey(id) ? map.get(id) : new Subject(title, short_title, summary, content, credit, coefficient, unityType);
+            switch (type) {
+                case 1:
+                    subjectOut.setCourseProfessor(professorName);
+                    break;
+                case 2:
+                    subjectOut.setTdProfessor(professorName);
+                    break;
+                case 3:
+                    subjectOut.setTpProfessor(professorName);
+                    break;
+            }
+            map.put(id, subjectOut);
+        }
+        return (ArrayList<Subject>) map.values();
     }
 }

@@ -4,8 +4,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.ibnkhaldoun.studentside.providers.DataProviders;
 import com.ibnkhaldoun.studentside.fragments.DayScheduleFragment;
+import com.ibnkhaldoun.studentside.providers.DataProviders;
 
 
 public class SchedulePagerAdapter extends FragmentPagerAdapter {

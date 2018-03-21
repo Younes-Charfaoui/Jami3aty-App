@@ -356,7 +356,7 @@ public class SignUpActivity extends AppCompatActivity
                 mLoadingProgressBar.setVisibility(GONE);
                 break;
             case JSON_EXCEPTION:
-                Toast.makeText(this, R.string.errior_json, Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.error_json, Toast.LENGTH_SHORT).show();
                 mCardNumberWrapper.setEnabled(true);
                 mEmailWrapper.setEnabled(true);
                 mPasswordWrapper.setEnabled(true);

@@ -3,15 +3,13 @@ package com.ibnkhaldoun.studentside.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.ibnkhaldoun.studentside.enums.PostTypes;
-
 public class Notification implements Parcelable {
 
     private Professor professor;
     private String date, text;
-    private PostTypes type;
+    private int type;
 
-    public Notification(Professor professor, String date, String text, PostTypes type) {
+    public Notification(Professor professor, String date, String text, int type) {
         this.professor = professor;
         this.date = date;
         this.text = text;
@@ -42,11 +40,11 @@ public class Notification implements Parcelable {
         this.text = text;
     }
 
-    public PostTypes getType() {
+    public int getType() {
         return type;
     }
 
-    public void setType(PostTypes type) {
+    public void setType(int type) {
         this.type = type;
     }
 
@@ -60,15 +58,14 @@ public class Notification implements Parcelable {
         dest.writeParcelable(this.professor, flags);
         dest.writeString(this.date);
         dest.writeString(this.text);
-        dest.writeInt(this.type == null ? -1 : this.type.ordinal());
+        dest.writeInt(this.type);
     }
 
     protected Notification(Parcel in) {
         this.professor = in.readParcelable(Professor.class.getClassLoader());
         this.date = in.readString();
         this.text = in.readString();
-        int tmpType = in.readInt();
-        this.type = tmpType == -1 ? null : PostTypes.values()[tmpType];
+        this.type = in.readInt();
     }
 
     public static final Parcelable.Creator<Notification> CREATOR = new Parcelable.Creator<Notification>() {

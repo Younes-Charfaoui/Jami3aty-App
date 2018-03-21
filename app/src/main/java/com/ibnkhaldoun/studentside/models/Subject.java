@@ -2,11 +2,7 @@ package com.ibnkhaldoun.studentside.models;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-
-import com.ibnkhaldoun.studentside.enums.UnityTypes;
-
-import java.util.ArrayList;
-import java.util.List;
+import android.support.annotation.NonNull;
 
 public class Subject implements Parcelable {
 
@@ -21,20 +17,22 @@ public class Subject implements Parcelable {
             return new Subject[size];
         }
     };
+
     private long id;
     private String title, shortTitle;
     private String summary, content, credit, coefficient;
     private String tdProfessor;
     private String tpProfessor;
     private String courseProfessor;
-    private UnityTypes unityTypes;
-    private int level;
-    private List<ScheduleItem> scheduleList = new ArrayList<>();
+    private int unityTypes;
+
 
     public Subject() {
     }
 
-    public Subject(String title, String shortTitle, String summary, String content, String credit, String coefficient, UnityTypes unityTypes, int level) {
+    public Subject(@NonNull String title, @NonNull String shortTitle,
+                   @NonNull String summary, @NonNull String content, @NonNull String credit,
+                   @NonNull String coefficient, int unityTypes) {
         this.title = title;
         this.shortTitle = shortTitle;
         this.summary = summary;
@@ -42,22 +40,8 @@ public class Subject implements Parcelable {
         this.credit = credit;
         this.coefficient = coefficient;
         this.unityTypes = unityTypes;
-        this.level = level;
     }
 
-    public Subject(String title, String shortTitle, String summary, String content, String coefficient, String credit, int level, UnityTypes unityTypes, String tdProfessor, String tpProfessor, String courseProfessor) {
-        this.title = title;
-        this.shortTitle = shortTitle;
-        this.summary = summary;
-        this.content = content;
-        this.tdProfessor = tdProfessor;
-        this.tpProfessor = tpProfessor;
-        this.courseProfessor = courseProfessor;
-        this.unityTypes = unityTypes;
-        this.level = level;
-        this.coefficient = coefficient;
-        this.credit = credit;
-    }
 
     protected Subject(Parcel in) {
         this.id = in.readLong();
@@ -70,10 +54,7 @@ public class Subject implements Parcelable {
         this.tdProfessor = in.readString();
         this.tpProfessor = in.readString();
         this.courseProfessor = in.readString();
-        int tmpUnityTypes = in.readInt();
-        this.unityTypes = tmpUnityTypes == -1 ? null : UnityTypes.values()[tmpUnityTypes];
-        this.level = in.readInt();
-        this.scheduleList = in.createTypedArrayList(ScheduleItem.CREATOR);
+        this.unityTypes = in.readInt();
     }
 
     public String getTdProfessor() {
@@ -108,18 +89,6 @@ public class Subject implements Parcelable {
         this.courseProfessor = courseProfessor;
     }
 
-    public List<ScheduleItem> getScheduleList() {
-        return this.scheduleList;
-    }
-
-    public void setScheduleList(List<ScheduleItem> scheduleList) {
-        this.scheduleList = scheduleList;
-    }
-
-    public void addScheduleItem(ScheduleItem item) {
-        scheduleList.add(item);
-    }
-
     public String getTitle() {
         return title;
     }
@@ -132,28 +101,8 @@ public class Subject implements Parcelable {
         return shortTitle;
     }
 
-    public void setShortTitle(String shortTitle) {
-        this.shortTitle = shortTitle;
-    }
-
-    public boolean itHasTd() {
-        return this.tdProfessor != null;
-    }
-
-    public boolean itHasTp() {
-        return this.tpProfessor != null;
-    }
-
-    public boolean itHasCourse() {
-        return this.courseProfessor != null;
-    }
-
     public String getSummary() {
         return summary;
-    }
-
-    public void setSummary(String summary) {
-        this.summary = summary;
     }
 
     public String getContent() {
@@ -164,36 +113,16 @@ public class Subject implements Parcelable {
         this.content = content;
     }
 
-    public UnityTypes getUnityTypes() {
+    public int getUnityTypes() {
         return unityTypes;
-    }
-
-    public void setUnityTypes(UnityTypes unityTypes) {
-        this.unityTypes = unityTypes;
     }
 
     public String getCoefficient() {
         return coefficient;
     }
 
-    public void setCoefficient(String coefficient) {
-        this.coefficient = coefficient;
-    }
-
     public String getCredit() {
         return credit;
-    }
-
-    public void setCredit(String credit) {
-        this.credit = credit;
-    }
-
-    public int getLevel() {
-        return level;
-    }
-
-    public void setLevel(int level) {
-        this.level = level;
     }
 
     @Override
@@ -213,8 +142,6 @@ public class Subject implements Parcelable {
         dest.writeString(this.tdProfessor);
         dest.writeString(this.tpProfessor);
         dest.writeString(this.courseProfessor);
-        dest.writeInt(this.unityTypes == null ? -1 : this.unityTypes.ordinal());
-        dest.writeInt(this.level);
-        dest.writeTypedList(this.scheduleList);
+        dest.writeInt(this.unityTypes);
     }
 }

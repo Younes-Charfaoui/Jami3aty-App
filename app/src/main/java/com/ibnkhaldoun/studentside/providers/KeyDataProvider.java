@@ -1,7 +1,7 @@
 package com.ibnkhaldoun.studentside.providers;
 
 
-public class KeyDataProvider {
+public final class KeyDataProvider {
 
     public static final String KEY_JSON_STATUS = "status";
     public static final String KEY_ANDROID = "ajax";
@@ -10,7 +10,7 @@ public class KeyDataProvider {
     public static final String KEY_BAC = "average";
     public static final String KEY_CARD_NUMBER = "number_card";
     public static final String KEY_JSON_DATA = "data";
-    public static final String KEY_TOKEN_FIREBASE= "token_device";
+    public static final String KEY_TOKEN_FIREBASE = "token_device";
 
     public static final String JSON_STUDENT_ID = "_id_student";
     public static final String JSON_STUDENT_FIRST_NAME = "first_name";
@@ -27,5 +27,19 @@ public class KeyDataProvider {
     public static final String JSON_PROFESSOR_LAST_NAME = "last_name";
     public static final String JSON_PROFESSOR_DEGREE = "degree";
     public static final String JSON_PROFESSOR_EMAIL = "email";
+
+    public final static String JSON_SUBJECT_ID = "_id_subject";
+    public final static String JSON_SUBJECT_DATA = "data";
+    public final static String JSON_SUBJECT_TITLE = "title";
+    public final static String JSON_SUBJECT_SHORT_TITLE = "short_title";
+    public final static String JSON_SUBJECT_COEFFICIENT = "coefficient";
+    public final static String JSON_SUBJECT_CREDIT = "credit";
+    public final static String JSON_SUBJECT_TYPE = "type";
+    public final static String JSON_SUBJECT_SUMMARY = "summary";
+    public final static String JSON_SUBJECT_CONTENT = "table_of_content";
+    public final static String JSON_SUBJECT_UNITY_TYPE = "unity_type";
+    public final static String JSON_SUBJECT_PROFESSOR_F_NAME = "first_name";
+    public final static String JSON_SUBJECT_PROFESSOR_L_NAME = "last_name";
+    public final static String JSON_SUBJECT_PROFESSOR_DEGREE = "degree";
 
 }

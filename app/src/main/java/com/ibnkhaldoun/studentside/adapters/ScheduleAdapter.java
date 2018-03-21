@@ -44,7 +44,8 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.Schedu
         holder.mScheduleLocationAndProfessor.setText(placeAndProfessor);
         holder.mSeparatorView.setBackgroundColor(Utilities.getCircleColor(scheduleItem.getSubject().charAt(0), mContext));
         GradientDrawable circle = (GradientDrawable) holder.mCircleImage.getBackground();
-        circle.setColor(Utilities.getCircleColor(scheduleItem.getProfessor().getFirstName().charAt(0), mContext));
+        if (circle != null)
+            circle.setColor(Utilities.getCircleColor(scheduleItem.getProfessor().getFirstName().charAt(0), mContext));
     }
 
     @Override

@@ -5,19 +5,21 @@ package com.ibnkhaldoun.studentside.enums;
  * definition of the level that a student can
  * be found
  */
-public enum Levels {
+public final  class Levels {
 
-    LICENCE_THREE,
-    LICENCE_TWO,
-    LICENCE_ONE,
-    MASTER_GL_ONE,
-    MASTER_GL_TWO,
-    MASTER_GI_ONE,
-    MASTER_GI_TWO,
-    MASTER_RT_ONE,
-    MASTER_RT_TWO;
+    public static final int LICENCE_ONE = 1;
+    public static final int LICENCE_TWO = 2;
+    public static final int LICENCE_THREE = 3;
 
-    public static Levels getLevel(int level) {
+    public static final int MASTER_GL_ONE = 4;
+    public static final int MASTER_GL_TWO = 5;
+    public static final int MASTER_GI_ONE = 6;
+    public static final int MASTER_GI_TWO = 7;
+    public static final int MASTER_RT_ONE = 8;
+    public static final int MASTER_RT_TWO = 9;
+
+
+    public static int getLevel(int level) {
         switch (level) {
             case 1:
             case 2:
@@ -57,7 +59,7 @@ public enum Levels {
         }
     }
 
-    public static String getLevelString(Levels level) {
+    public static String getLevelString(int level) {
         switch (level) {
             case LICENCE_ONE:
                 return "L1 Computer Science";

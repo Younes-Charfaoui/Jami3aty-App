@@ -150,18 +150,6 @@
             android:textSize="18sp"
             tools:text="Hattab Nourdeen" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="?colorAccent"
-            android:id="@+id/subject_schedule_title"
-            tools:text="Schedule" />
-
-        <LinearLayout
-            android:id="@+id/subject_schedule_linear_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" />
 
         <TextView
             android:layout_width="wrap_content"
