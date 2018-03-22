@@ -3,6 +3,7 @@ package com.ibnkhaldoun.studentside.adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.drawable.GradientDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +14,6 @@ import com.ibnkhaldoun.studentside.R;
 import com.ibnkhaldoun.studentside.Utilities.Utilities;
 import com.ibnkhaldoun.studentside.activities.SubjectsDetailActivity;
 import com.ibnkhaldoun.studentside.database.DatabaseContract;
-import com.ibnkhaldoun.studentside.enums.UnityTypes;
 import com.ibnkhaldoun.studentside.models.Subject;
 
 import java.util.ArrayList;
@@ -44,7 +44,8 @@ public class SubjectsAdapter extends RecyclerView.Adapter<SubjectsAdapter.Subjec
         Subject subject = mSubjectList.get(position);
         holder.mTitleTextView.setText(subject.getTitle());
         holder.mShortTitleTextView.setText(subject.getShortTitle());
-        holder.mShortTitleTextView.setBackgroundColor(Utilities.getCircleColor(subject.getTitle().charAt(0), mContext));
+        GradientDrawable circle = (GradientDrawable) holder.mShortTitleTextView.getBackground();
+        circle.setColor(Utilities.getCircleColor(subject.getTitle().charAt(0), mContext));
     }
 
     public void swapCursor(Cursor cursor) {
@@ -75,8 +76,8 @@ public class SubjectsAdapter extends RecyclerView.Adapter<SubjectsAdapter.Subjec
                 int unityType = cursor.getInt(cursor.
                         getColumnIndex(DatabaseContract.SubjectEntry.COLUMN_UNITY_TYPE));
                 mSubjectList.add(new Subject(title, shortTitle,
-                        summary, tableContent, coefficient, credit,
-                        level, UnityTypes.getUnitType(unityType), courseProfessor, tdProfessor, tpProfessor));
+                        summary, tableContent, credit, coefficient,
+                        tdProfessor, tpProfessor, courseProfessor, unityType, level));
             }
             notifyDataSetChanged();
         }
@@ -106,6 +107,7 @@ public class SubjectsAdapter extends RecyclerView.Adapter<SubjectsAdapter.Subjec
                 Intent intent = new Intent(mContext, SubjectsDetailActivity.class);
                 intent.putExtra(SubjectsDetailActivity.SUBJECT_KEY,
                         mSubjectList.get(getAdapterPosition()));
+                mContext.startActivity(intent);
             });
         }
     }

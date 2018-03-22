@@ -4,8 +4,10 @@ package com.ibnkhaldoun.studentside.Utilities;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 public class PreferencesManager {
+    private static final String TAG = "manager";
 
     private static final int PRIVATE_MODE = 0;
     private static final String PREFERENCE_NAME = "sliders";
@@ -14,6 +16,11 @@ public class PreferencesManager {
     private static final String FULL_NAME = "fullName";
     private static final String GRADE = "grade";
     private static final String ID = "id";
+
+    private static final String LEVEL = "level";
+    private static final String GROUP = "group";
+    private static final String SECTION = "section";
+
     private SharedPreferences mPreferences;
     private SharedPreferences.Editor mEditor;
 
@@ -36,11 +43,15 @@ public class PreferencesManager {
         return mPreferences.getBoolean(LOGIN, false);
     }
 
-    public void setLogin(String id, String fullName, String grade) {
+    public void setLogin(String id, String fullName, String grade,
+                         String group, String section, String level) {
         mEditor.putBoolean(LOGIN, true);
         mEditor.putString(ID, id);
         mEditor.putString(FULL_NAME, fullName);
         mEditor.putString(GRADE, grade);
+        mEditor.putString(LEVEL, level);
+        mEditor.putString(SECTION, section);
+        mEditor.putString(GROUP, group);
         mEditor.commit();
     }
 
@@ -48,7 +59,23 @@ public class PreferencesManager {
         return mPreferences.getString(ID, null);
     }
 
+    public String getGroup() {
+        String hello = mPreferences.getString(GROUP, null);
+        Log.i(TAG, "getGroup: " + hello);
+        return hello;
+    }
 
+    public String getSection() {
+        String hello = mPreferences.getString(SECTION, null);
+        Log.i(TAG, "getSection: " + hello);
+        return hello;
+    }
+
+    public String getLevel() {
+        String hello = mPreferences.getString(LEVEL, null);
+        Log.i(TAG, "getLevel: " + hello);
+        return hello;
+    }
 
     public String getGrade() {
         return mPreferences.getString(GRADE, null);

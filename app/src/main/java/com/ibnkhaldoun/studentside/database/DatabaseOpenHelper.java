@@ -47,7 +47,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
 
     private static final String SQL_QUERY_CREATE_SUBJECT = BASE_CREATE +
             DatabaseContract.SubjectEntry.TABLE_NAME + " ( " +
-            DatabaseContract.SubjectEntry.COLUMN_ID + " INTEGER PRIMARY KEY , " +
+            DatabaseContract.SubjectEntry.COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT , " +
             DatabaseContract.SubjectEntry.COLUMN_TITLE + " TEXT NOT NULL , " +
             DatabaseContract.SubjectEntry.COLUMN_SHORT_TITLE + " TEXT NOT NULL , " +
             DatabaseContract.SubjectEntry.COLUMN_COEFFICIENT + " TEXT NOT NULL , " +

@@ -147,51 +147,53 @@ public class LoginActivity extends AppCompatActivity implements LoginTaskListene
     public void onLoginCompletionListener(LoginResponse response) {
 
 
-            switch (response.getStatus()) {
-                case RESPONSE_SUCCESS:
-                    PreferencesManager manager = new PreferencesManager(this);
-                    if (response.isStudent()) {
-                        manager.setLogin(response.getStudent().getId()
-                                , response.getStudent().getFullName()
-                                , Levels.getLevelString(Levels.getLevel(response.getStudent().getLevel())));
-                        startActivity(new Intent(this, StudentMainActivity.class));
-                        finish();
-                    } else {
-                        Toast.makeText(this, "Login for professor", Toast.LENGTH_SHORT).show();
-                    }
-                    break;
-                case RESPONSE_EMAIL_ERROR:
-                    mEmailWrapper.setError(getString(R.string.email_does_not_exits_string));
-                    mPasswordWrapper.setEnabled(true);
-                    mEmailWrapper.setEnabled(true);
-                    mPasswordEditText.setText(null);
-                    mLoadingProgressBar.setVisibility(View.GONE);
-                    mButtonsLinearLayout.setVisibility(View.VISIBLE);
-                    break;
-                case RESPONSE_PASSWORD_ERROR:
-                    mPasswordWrapper.setError(getString(R.string.error_in_password_string));
-                    mPasswordWrapper.setEnabled(true);
-                    mEmailWrapper.setEnabled(true);
-                    mPasswordEditText.setText(null);
-                    mLoadingProgressBar.setVisibility(View.GONE);
-                    mButtonsLinearLayout.setVisibility(View.VISIBLE);
-                    break;
-                case JSON_EXCEPTION:
-                    Toast.makeText(this, R.string.error_json, Toast.LENGTH_SHORT).show();
-                    mPasswordWrapper.setEnabled(true);
-                    mEmailWrapper.setEnabled(true);
-                    mLoadingProgressBar.setVisibility(View.GONE);
-                    mButtonsLinearLayout.setVisibility(View.VISIBLE);
-                    break;
-                case IO_EXCEPTION:
-                    Toast.makeText(this, R.string.error_io_exception, Toast.LENGTH_SHORT).show();
-                    mPasswordWrapper.setEnabled(true);
-                    mEmailWrapper.setEnabled(true);
-                    mLoadingProgressBar.setVisibility(View.GONE);
-                    mButtonsLinearLayout.setVisibility(View.VISIBLE);
-                    break;
-            }
-
+        switch (response.getStatus()) {
+            case RESPONSE_SUCCESS:
+                PreferencesManager manager = new PreferencesManager(this);
+                if (response.isStudent()) {
+                    manager.setLogin(response.getStudent().getId()
+                            , response.getStudent().getFullName()
+                            , Levels.getLevelString(Levels.getLevel(response.getStudent().getLevel()))
+                            , String.valueOf(response.getStudent().getGroup())
+                            , String.valueOf(response.getStudent().getSection())
+                            , String.valueOf(response.getStudent().getLevel()));
+                    startActivity(new Intent(this, StudentMainActivity.class));
+                    finish();
+                } else {
+                    Toast.makeText(this, "Login for professor", Toast.LENGTH_SHORT).show();
+                }
+                break;
+            case RESPONSE_EMAIL_ERROR:
+                mEmailWrapper.setError(getString(R.string.email_does_not_exits_string));
+                mPasswordWrapper.setEnabled(true);
+                mEmailWrapper.setEnabled(true);
+                mPasswordEditText.setText(null);
+                mLoadingProgressBar.setVisibility(View.GONE);
+                mButtonsLinearLayout.setVisibility(View.VISIBLE);
+                break;
+            case RESPONSE_PASSWORD_ERROR:
+                mPasswordWrapper.setError(getString(R.string.error_in_password_string));
+                mPasswordWrapper.setEnabled(true);
+                mEmailWrapper.setEnabled(true);
+                mPasswordEditText.setText(null);
+                mLoadingProgressBar.setVisibility(View.GONE);
+                mButtonsLinearLayout.setVisibility(View.VISIBLE);
+                break;
+            case JSON_EXCEPTION:
+                Toast.makeText(this, R.string.error_json, Toast.LENGTH_SHORT).show();
+                mPasswordWrapper.setEnabled(true);
+                mEmailWrapper.setEnabled(true);
+                mLoadingProgressBar.setVisibility(View.GONE);
+                mButtonsLinearLayout.setVisibility(View.VISIBLE);
+                break;
+            case IO_EXCEPTION:
+                Toast.makeText(this, R.string.error_io_exception, Toast.LENGTH_SHORT).show();
+                mPasswordWrapper.setEnabled(true);
+                mEmailWrapper.setEnabled(true);
+                mLoadingProgressBar.setVisibility(View.GONE);
+                mButtonsLinearLayout.setVisibility(View.VISIBLE);
+                break;
+        }
 
 
     }

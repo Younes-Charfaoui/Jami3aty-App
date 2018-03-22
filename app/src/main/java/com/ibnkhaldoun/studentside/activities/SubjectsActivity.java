@@ -15,6 +15,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -33,7 +35,9 @@ import com.ibnkhaldoun.studentside.services.LoadDataService;
 
 import java.util.ArrayList;
 
-import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_STUDENT_ID;
+import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_STUDENT_GROUP;
+import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_STUDENT_LEVEL;
+import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_STUDENT_SECTION;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.KEY_ANDROID;
 
 /**
@@ -63,6 +67,7 @@ public class SubjectsActivity extends AppCompatActivity implements LoaderManager
         @Override
         public void onReceive(Context context, Intent intent) {
             ArrayList<Subject> subjectList = intent.getParcelableArrayListExtra(KEY_SUBJECTS);
+            //if it was null then the response was not correct.
             if (subjectList != null) {
                 mProgressBar.setVisibility(View.GONE);
                 if (subjectList.size() != 0) {
@@ -86,6 +91,7 @@ public class SubjectsActivity extends AppCompatActivity implements LoaderManager
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        // getting reference to the views.
         mEmptyLayout = findViewById(R.id.subject_empty_view);
         mProgressBar = findViewById(R.id.subject_progress_bar);
 
@@ -93,13 +99,29 @@ public class SubjectsActivity extends AppCompatActivity implements LoaderManager
 
         getSupportLoaderManager().initLoader(SUBJECT_LOADER_ID, null, this).forceLoad();
         assert getSupportActionBar() != null;
-        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mEmptyLayout.setOnClickListener(v -> getSubjectFromService());
 
         //the local broadcast Manager to register our BroadcastReceiver.
         LocalBroadcastManager.getInstance(this).registerReceiver(mSubjectReceiver,
                 new IntentFilter(LoadDataService.SUBJECT_ACTION));
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_subject, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.subject_refresh:
+                getSubjectFromService();
+                break;
+        }
+        return true;
     }
 
     @Override
@@ -124,7 +146,9 @@ public class SubjectsActivity extends AppCompatActivity implements LoaderManager
             request.setEndPoint(EndPointsProvider.getSubjectEndpoint());
             PreferencesManager manager = new PreferencesManager(this);
             request.addParams(KEY_ANDROID, KEY_ANDROID);
-            request.addParams(JSON_STUDENT_ID, manager.getId());
+            request.addParams(JSON_STUDENT_SECTION, manager.getSection());
+            request.addParams(JSON_STUDENT_LEVEL, manager.getLevel());
+            request.addParams(JSON_STUDENT_GROUP, manager.getGroup());
             intent.putExtra(LoadDataService.KEY_REQUEST, request);
             intent.putExtra(LoadDataService.KEY_ACTION, LoadDataService.SUBJECT_TYPE);
             startService(intent);

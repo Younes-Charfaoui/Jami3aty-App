@@ -146,8 +146,8 @@ public class StudentMainActivity extends AppCompatActivity
         circleImage.setText(text);
 
         circle.setColor(Utilities.getCircleColor(manager.getFullName().charAt(0), this));
-
-        nameHeader.setText(manager.getFullName());
+        String h = manager.getGroup() + " " + manager.getLevel() + " " + manager.getSection();
+        nameHeader.setText(h);
         String branch = manager.getGrade() + " ";
         branchHeader.setText(branch);
 

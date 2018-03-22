@@ -15,9 +15,9 @@
         android:padding="@dimen/linearLayout_padding">
 
         <LinearLayout
-            android:baselineAligned="false"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:baselineAligned="false"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -30,8 +30,9 @@
                     android:id="@+id/subject_title_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="?colorAccent"
-                    tools:text="Subject Title" />
+                    android:text="@string/subject_title"
+                    android:fontFamily="sans-serif-medium"
+                    android:textColor="?colorAccent" />
 
                 <TextView
                     android:id="@+id/subject_title"
@@ -54,11 +55,12 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/subject_coefficient_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:text="@string/subject_coefficient_string"
-                    android:id="@+id/subject_coefficient_title"
+                    android:fontFamily="sans-serif-medium"
                     android:textColor="?colorAccent" />
 
                 <TextView
@@ -79,11 +81,12 @@
 
 
         <TextView
+            android:id="@+id/subject_utility_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/subject_utility_title"
-            android:textColor="?colorAccent"
-            tools:text="Subject Utility" />
+            android:text="@string/subject_utility"
+            android:fontFamily="sans-serif-medium"
+            android:textColor="?colorAccent" />
 
 
         <TextView
@@ -97,11 +100,13 @@
             tools:text="In this subject the student will learn how the operating system are built and how they can iteract with th end user , we will see how stuff are implemented and some basic conspect and layers in the operating system." />
 
         <TextView
+            android:id="@+id/subject_course_professor_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-medium"
+            android:text="@string/course_professor"
             android:textColor="?colorAccent"
-            android:id="@+id/subject_course_professor_title"
-            tools:text="Course Professor" />
+            android:visibility="gone" />
 
 
         <TextView
@@ -112,14 +117,17 @@
             android:fontFamily="sans-serif-light"
             android:textColor="@android:color/black"
             android:textSize="18sp"
+            android:visibility="gone"
             tools:text="Ouared Aek" />
 
         <TextView
             android:id="@+id/subject_td_professor_title"
             android:layout_width="wrap_content"
+            android:fontFamily="sans-serif-medium"
             android:layout_height="wrap_content"
+            android:text="@string/td_professor"
             android:textColor="?colorAccent"
-            tools:text="TD Professor" />
+            android:visibility="gone" />
 
 
         <TextView
@@ -130,14 +138,17 @@
             android:fontFamily="sans-serif-light"
             android:textColor="@android:color/black"
             android:textSize="18sp"
+            android:visibility="gone"
             tools:text="Ouared Aek" />
 
         <TextView
             android:id="@+id/subject_tp_professor_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-medium"
+            android:text="@string/tp_professor"
             android:textColor="?colorAccent"
-            tools:text="TP Professor" />
+            android:visibility="gone" />
 
 
         <TextView
@@ -148,23 +159,89 @@
             android:fontFamily="sans-serif-light"
             android:textColor="@android:color/black"
             android:textSize="18sp"
+            android:visibility="gone"
             tools:text="Hattab Nourdeen" />
 
-
         <TextView
+            android:id="@+id/subject_overview_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-medium"
             android:text="@string/subject_overview_string"
-            android:id="@+id/subject_overview_title"
             android:textColor="?colorAccent" />
 
         <TextView
             android:id="@+id/subject_overview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
             android:fontFamily="sans-serif-light"
             android:textColor="@android:color/black"
             android:textSize="18sp"
             tools:text="this is a sample test" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:baselineAligned="false"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/subject_unity_type_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/unity_type"
+                    android:fontFamily="sans-serif-medium"
+                    android:textColor="?colorAccent" />
+
+                <TextView
+                    android:id="@+id/subject_unity_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:fontFamily="sans-serif-light"
+                    android:textColor="@android:color/black"
+                    android:textSize="18sp"
+                    tools:text="Unity Fondametal" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/subject_credit_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/credit"
+                    android:fontFamily="sans-serif-medium"
+                    android:textColor="?colorAccent" />
+
+                <TextView
+                    android:id="@+id/subject_credit"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginBottom="16dp"
+                    android:layout_marginTop="4dp"
+                    android:background="@drawable/circle"
+                    android:fontFamily="sans-serif-medium"
+                    android:gravity="center"
+                    android:textColor="@android:color/white"
+                    android:textSize="24sp"
+                    tools:text="4" />
+            </LinearLayout>
+
+        </LinearLayout>
     </LinearLayout>
 </ScrollView>

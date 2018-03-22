@@ -2,7 +2,7 @@ package com.ibnkhaldoun.studentside.models;
 
 
 public class Student extends Person {
-    boolean confirmed;
+    private boolean confirmed;
     private String id;
     private String email;
     private int level, group, section;

@@ -25,14 +25,14 @@ public class Subject implements Parcelable {
     private String tpProfessor;
     private String courseProfessor;
     private int unityTypes;
-
+    private int level;
 
     public Subject() {
     }
 
     public Subject(@NonNull String title, @NonNull String shortTitle,
                    @NonNull String summary, @NonNull String content, @NonNull String credit,
-                   @NonNull String coefficient, int unityTypes) {
+                   @NonNull String coefficient, int unityTypes ,int level) {
         this.title = title;
         this.shortTitle = shortTitle;
         this.summary = summary;
@@ -40,6 +40,7 @@ public class Subject implements Parcelable {
         this.credit = credit;
         this.coefficient = coefficient;
         this.unityTypes = unityTypes;
+        this.level = level;
     }
 
 
@@ -55,6 +56,25 @@ public class Subject implements Parcelable {
         this.tpProfessor = in.readString();
         this.courseProfessor = in.readString();
         this.unityTypes = in.readInt();
+        this.level = in.readInt();
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public Subject(String title, String shortTitle, String summary, String content, String credit, String coefficient, String tdProfessor, String tpProfessor, String courseProfessor, int unityTypes , int level) {
+
+        this.title = title;
+        this.shortTitle = shortTitle;
+        this.summary = summary;
+        this.content = content;
+        this.credit = credit;
+        this.coefficient = coefficient;
+        this.tdProfessor = tdProfessor;
+        this.tpProfessor = tpProfessor;
+        this.courseProfessor = courseProfessor;
+        this.unityTypes = unityTypes;
     }
 
     public String getTdProfessor() {
@@ -143,5 +163,11 @@ public class Subject implements Parcelable {
         dest.writeString(this.tpProfessor);
         dest.writeString(this.courseProfessor);
         dest.writeInt(this.unityTypes);
+        dest.writeInt(this.level);
+    }
+
+    @Override
+    public String toString() {
+        return credit + " " + coefficient+ " "+level + courseProfessor ;
     }
 }

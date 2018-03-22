@@ -61,7 +61,7 @@ public class DatabaseService extends IntentService {
 
     private ContentValues[] getMarkContentValues(ArrayList<Mark> list) {
         ContentValues[] values = new ContentValues[list.size()];
-        for (int i = 0; i < list.size(); i++) {
+        for (int i = 0; i < values.length; i++) {
 
             values[i].put(DatabaseContract.MarkEntry.COLUMN_TITLE_SUBJECT,
                     list.get(i).getSubjectName());
@@ -95,8 +95,7 @@ public class DatabaseService extends IntentService {
     private ContentValues[] getSubjectContentValues(ArrayList<Subject> list) {
         ContentValues[] values = new ContentValues[list.size()];
         for (int i = 0; i < list.size(); i++) {
-            values[i].put(DatabaseContract.SubjectEntry.COLUMN_ID,
-                    list.get(i).getId());
+            values[i] = new ContentValues();
             values[i].put(DatabaseContract.SubjectEntry.COLUMN_COEFFICIENT,
                     list.get(i).getCoefficient());
             values[i].put(DatabaseContract.SubjectEntry.COLUMN_LEVEL,

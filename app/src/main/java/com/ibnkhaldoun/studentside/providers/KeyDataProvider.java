@@ -34,12 +34,12 @@ public final class KeyDataProvider {
     public final static String JSON_SUBJECT_SHORT_TITLE = "short_title";
     public final static String JSON_SUBJECT_COEFFICIENT = "coefficient";
     public final static String JSON_SUBJECT_CREDIT = "credit";
-    public final static String JSON_SUBJECT_TYPE = "type";
     public final static String JSON_SUBJECT_SUMMARY = "summary";
     public final static String JSON_SUBJECT_CONTENT = "table_of_content";
     public final static String JSON_SUBJECT_UNITY_TYPE = "unity_type";
-    public final static String JSON_SUBJECT_PROFESSOR_F_NAME = "first_name";
-    public final static String JSON_SUBJECT_PROFESSOR_L_NAME = "last_name";
-    public final static String JSON_SUBJECT_PROFESSOR_DEGREE = "degree";
+    public final static String JSON_SUBJECT_PROFESSOR_TP = "tp_prof";
+    public final static String JSON_SUBJECT_PROFESSOR_COURSE = "course_prof";
+    public final static String JSON_SUBJECT_PROFESSOR_TD = "td_prof";
+    public final static String JSON_SUBJECT_LEVEL = "level";
 
 }

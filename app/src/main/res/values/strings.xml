@@ -110,7 +110,7 @@
     <string name="saved_empty_title_string">There is no saved post</string>
     <string name="get_started_saved_string">Get started by saving a post from home screen</string>
     <string name="title_activity_subjects_detail">SubjectsDetailActivity</string>
-    <string name="title_activity_subjects">SubjectsActivity</string>
+    <string name="title_activity_subjects">Subjects</string>
     <string name="subject_overview_string">Overview</string>
     <string name="subject_coefficient_string">Coefficient</string>
     <string name="empty_subject_string">There is no subject.</string>
@@ -146,4 +146,14 @@
     <string name="tuesday">Tuesday</string>
     <string name="wednesday">Wednesday</string>
     <string name="thursday">thursday</string>
+    <string name="subject_title">Subject Title</string>
+    <string name="subject_utility">Subject Utility</string>
+    <string name="course_professor">Course Professor</string>
+    <string name="td_professor">TD Professor</string>
+    <string name="tp_professor">TP Professor</string>
+    <string name="unity_type">Unity type</string>
+    <string name="credit">Credit</string>
+    <string name="fundamental_unity">Fundamental</string>
+    <string name="methodological_unity">Methodological</string>
+    <string name="traversal_unity">Traversal</string>
 </resources>

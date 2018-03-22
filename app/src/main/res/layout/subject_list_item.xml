@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="72dp"
+    android:background="?attr/selectableItemBackground"
     android:orientation="horizontal"
     android:padding="8dp">
     <!-- todo add the miising things to make a layout -->
@@ -20,11 +21,11 @@
         tools:text="OSL2" />
 
     <TextView
+        android:id="@+id/subject_list_item_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:layout_marginStart="36dp"
         android:textSize="18sp"
-        android:id="@+id/subject_list_item_title"
         tools:text="Operating System 2" />
 </LinearLayout>
