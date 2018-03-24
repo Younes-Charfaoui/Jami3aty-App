@@ -99,8 +99,10 @@ public class DatabaseContract implements BaseColumns {
         //todo list of the table constant
     }
 
-    public class ScheduleEntry {
+    public static class ScheduleEntry {
         static final String TABLE_NAME = "schedules";
         //todo list of the table constant
+        public static final Uri CONTENT_SCHEDULE_URI = BASE_URI.buildUpon()
+                .appendPath(PATH_SCHEDULE).build();
     }
 }

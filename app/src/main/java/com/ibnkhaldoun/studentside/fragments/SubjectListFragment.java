@@ -18,12 +18,12 @@ import java.util.List;
 public class SubjectListFragment extends DialogFragment {
 
     public SubjectDialogInterface mInterface;
+    private static final String KEY = "key";
 
     public static SubjectListFragment newInstance(List<String> list) {
-
         Bundle args = new Bundle();
 
-        args.putStringArrayList("Key", (ArrayList<String>) list);
+        args.putStringArrayList(KEY, (ArrayList<String>) list);
         SubjectListFragment fragment = new SubjectListFragment();
         fragment.setArguments(args);
         return fragment;
@@ -41,13 +41,17 @@ public class SubjectListFragment extends DialogFragment {
         assert getActivity() != null;
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
-        builder.setTitle("Choose a Subject");
+        builder.setTitle(R.string.choose_subject);
 
-        ArrayList<String> list = getArguments().getStringArrayList("Key");
-        assert getContext() != null;
+        assert getArguments() != null;
+
+        ArrayList<String> list = getArguments().getStringArrayList(KEY);
+
         SubjectProfessorDialogAdapter adapter = new SubjectProfessorDialogAdapter(getContext(), R
                 .layout.subject_professor_dialog_list_item, list);
+
         builder.setAdapter(adapter, (dialog, which) -> mInterface.onSubjectChosen(list.get(which)));
+
         return builder.create();
     }
 }

@@ -98,14 +98,16 @@ public class SubjectsActivity extends AppCompatActivity implements LoaderManager
         setupRecyclerView();
 
         getSupportLoaderManager().initLoader(SUBJECT_LOADER_ID, null, this).forceLoad();
-        assert getSupportActionBar() != null;
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
         mEmptyLayout.setOnClickListener(v -> getSubjectFromService());
 
         //the local broadcast Manager to register our BroadcastReceiver.
         LocalBroadcastManager.getInstance(this).registerReceiver(mSubjectReceiver,
                 new IntentFilter(LoadDataService.SUBJECT_ACTION));
+
+        if (getSupportActionBar() != null)
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
@@ -119,6 +121,9 @@ public class SubjectsActivity extends AppCompatActivity implements LoaderManager
         switch (item.getItemId()) {
             case R.id.subject_refresh:
                 getSubjectFromService();
+                break;
+            case android.R.id.home:
+                onBackPressed();
                 break;
         }
         return true;

@@ -4,39 +4,37 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.ibnkhaldoun.studentside.enums.Day;
 import com.ibnkhaldoun.studentside.fragments.DayScheduleFragment;
 import com.ibnkhaldoun.studentside.providers.DataProviders;
 
 
 public class SchedulePagerAdapter extends FragmentPagerAdapter {
-    private int numberOfTabs;
 
-    public SchedulePagerAdapter(FragmentManager fm,
-                                int numberOfTabs) {
+    public SchedulePagerAdapter(FragmentManager fm ) {
         super(fm);
-        this.numberOfTabs = numberOfTabs;
     }
 
     @Override
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return DayScheduleFragment.newInstance(DataProviders.getSundayList());
+                return DayScheduleFragment.newInstance(DataProviders.getSundayList(), Day.SUNDAY);
             case 1:
-                return DayScheduleFragment.newInstance(DataProviders.getMondayList());
+                return DayScheduleFragment.newInstance(DataProviders.getMondayList(), Day.MONDAY);
             case 2:
-                return DayScheduleFragment.newInstance(DataProviders.getTuesdayList());
+                return DayScheduleFragment.newInstance(DataProviders.getTuesdayList(), Day.TUESDAY);
             case 3:
-                return DayScheduleFragment.newInstance(DataProviders.getWednesdayList());
+                return DayScheduleFragment.newInstance(DataProviders.getWednesdayList(), Day.WEDNESDAY);
             case 4:
-                return DayScheduleFragment.newInstance(DataProviders.getThursdayList());
+                return DayScheduleFragment.newInstance(DataProviders.getThursdayList(), Day.THURSDAY);
             default:
-                return DayScheduleFragment.newInstance(DataProviders.getMondayList());
+                return DayScheduleFragment.newInstance(DataProviders.getMondayList(), Day.TUESDAY);
         }
     }
 
     @Override
     public int getCount() {
-        return numberOfTabs;
+        return 5;
     }
 }

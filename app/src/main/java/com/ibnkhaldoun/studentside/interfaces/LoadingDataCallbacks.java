@@ -1,14 +1,15 @@
 package com.ibnkhaldoun.studentside.interfaces;
 
 import android.database.Cursor;
+import android.os.Parcelable;
 
 import java.util.List;
 
 
-public interface LoadingDataCallbacks {
+public interface LoadingDataCallbacks<D>  {
     int INTERNET_ERROR = 100;
 
-    void onNetworkLoadedSucceed(int type, List list);
+    void onNetworkLoadedSucceed(int type, List<D> list);
 
     void onNetworkStartLoading(int type);
 

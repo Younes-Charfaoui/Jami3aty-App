@@ -16,7 +16,7 @@ public final class UnityTypes {
     private static final int FUNDAMENTAL = 1;
     private static final int METHODOLOGICAL = 2;
     private static final int TRAVERSAL = 3;
-
+    private static final int DISCOVERY = 4;
 
     //the method to convert from number to String.
     public static int getUnitType(int number) {
@@ -27,8 +27,10 @@ public final class UnityTypes {
                 return R.string.methodological_unity;
             case TRAVERSAL:
                 return R.string.traversal_unity;
+            case DISCOVERY:
+                return R.string.discovery_unity;
             default:
-                throw new IllegalStateException();
+                return R.string.methodological_unity;
         }
     }
 

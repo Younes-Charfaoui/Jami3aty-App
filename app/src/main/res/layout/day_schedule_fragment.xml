@@ -1,18 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/day_schedule_recycler"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:visibility="gone" />
 
     <ProgressBar
         android:id="@+id/day_schedule_progress"
         android:layout_width="72dp"
+        android:layout_height="72dp"
         android:layout_centerInParent="true"
+        android:visibility="visible" />
+
+    <LinearLayout
+        android:id="@+id/schedule_empty_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+
         android:visibility="gone"
-        android:layout_height="72dp" />
+        tools:ignore="UseCompoundDrawables">
+
+        <ImageView
+            android:layout_width="190dp"
+            android:layout_height="190dp"
+            android:layout_marginBottom="8dp"
+            android:contentDescription="@null"
+            android:paddingBottom="8dp"
+            android:src="@drawable/saved" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-medium"
+            android:paddingBottom="5dp"
+            android:text="@string/there_is_no_study_today"
+            android:textAppearance="?android:textAppearanceMedium" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif"
+            android:text="@string/take_the_opportunity_to_write_new_code"
+            android:textAppearance="?android:textAppearanceSmall" />
+
+    </LinearLayout>
+
 
 </RelativeLayout>

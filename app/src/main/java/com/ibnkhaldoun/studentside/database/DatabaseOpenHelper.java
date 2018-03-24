@@ -23,7 +23,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
 
     private static final String SQL_QUERY_CREATE_SAVED = BASE_CREATE +
             DatabaseContract.SavedEntry.TABLE_NAME + " ( " +
-            DatabaseContract.SavedEntry.COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            DatabaseContract.SavedEntry.COLUMN_ID + " INTEGER PRIMARY KEY , " +
             DatabaseContract.SavedEntry.COLUMN_NAME + " TEXT NOT NULL, " +
             DatabaseContract.SavedEntry.COLUMN_DATE + " TEXT NOT NULL, " +
             DatabaseContract.SavedEntry.COLUMN_DISPLAY_TEXT + " TEXT NOT NULL);";

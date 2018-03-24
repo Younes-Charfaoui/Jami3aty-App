@@ -4,6 +4,8 @@ import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.ibnkhaldoun.studentside.R;
@@ -23,6 +25,7 @@ public class SubjectsDetailActivity extends AppCompatActivity {
 
     // the key with which we had take out the subject from the Intent.
     public static final String SUBJECT_KEY = "subjectKey";
+    private final static String TAG = "subjectDetail";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,6 +99,7 @@ public class SubjectsDetailActivity extends AppCompatActivity {
 
         //setting up the unity type text view.
         ((TextView) findViewById(R.id.subject_unity_type_title)).setTextColor(colorOfSubject);
+        Log.i(TAG, "onCreate: ht e subject type is " + subject.getUnityTypes());
         ((TextView) findViewById(R.id.subject_unity_type)).setText(UnityTypes.getUnitType(subject.getUnityTypes()));
 
         //setting up the color and the text for the credit
@@ -104,5 +108,16 @@ public class SubjectsDetailActivity extends AppCompatActivity {
         GradientDrawable circleCredit = (GradientDrawable) textCredit.getBackground();
         circleCredit.setColor(colorOfSubject);
         textCredit.setText(subject.getCredit());
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
+        }
+        return true;
     }
 }

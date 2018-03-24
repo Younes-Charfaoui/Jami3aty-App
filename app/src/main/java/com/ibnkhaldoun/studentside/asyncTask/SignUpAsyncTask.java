@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.ibnkhaldoun.studentside.interfaces.SignUpTaskListener;
 import com.ibnkhaldoun.studentside.networking.models.RequestPackage;
+import com.ibnkhaldoun.studentside.networking.models.Response;
 import com.ibnkhaldoun.studentside.networking.models.SignUpResponse;
 import com.ibnkhaldoun.studentside.networking.utilities.HttpUtilities;
 import com.ibnkhaldoun.studentside.networking.utilities.JsonUtilities;
@@ -28,7 +29,7 @@ public class SignUpAsyncTask extends AsyncTask<RequestPackage, Void, SignUpRespo
 
     @Override
     protected SignUpResponse doInBackground(RequestPackage... requestPackages) {
-        try {ArrayMap<String, String> map = new ArrayMap<>();
+        try {
             Log.i("sign", "doInBackground: the background stared");
             String response = HttpUtilities.getData(requestPackages[0]);
             Log.i("sign", "doInBackground: the response " + response);
@@ -36,7 +37,7 @@ public class SignUpAsyncTask extends AsyncTask<RequestPackage, Void, SignUpRespo
         } catch (IOException e) {
             e.printStackTrace();
             Log.i("sign", "doInBackground: it was IOEXception");
+            return new SignUpResponse(Response.RESPONSE_SUCCESS);
         }
-        return null;
     }
 }

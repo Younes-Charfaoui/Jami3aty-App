@@ -1,0 +1,101 @@
+{
+  "status": 200,
+  "data": [
+    {
+      "title": "Operating System I",
+      "coefficient": "3",
+      "credit": "4",
+      "summary": "Analyse1",
+      "table_of_content": "Analyse1",
+      "unity_type": "1",
+      "short_title": "OS1",
+      "level": "4",
+      "tp_prof": "Phd Ouared Abdelkader",
+      "course_prof": "Phd Ouared Abdelkader"
+    },
+    {
+      "title": "Graph Theory",
+      "coefficient": "2",
+      "credit": "4",
+      "summary": "Analyse1",
+      "table_of_content": "Analyse1",
+      "unity_type": "1",
+      "short_title": "GT",
+      "level": "4",
+      "tp_prof": "Dr Belarbi mustafa",
+      "course_prof": "Dr Belarbi mustafa"
+    },
+    {
+      "title": "Web Developments",
+      "coefficient": "2",
+      "credit": "4",
+      "summary": "Analyse1",
+      "table_of_content": "Analyse1",
+      "unity_type": "1",
+      "short_title": "WD",
+      "level": "4",
+      "tp_prof": "Dr Belarbi mustafa",
+      "course_prof": "Dr Belarbi mustafa"
+    },
+    {
+      "title": "English 4",
+      "coefficient": "2",
+      "credit": "4",
+      "summary": "Analyse1",
+      "table_of_content": "Analyse1",
+      "unity_type": "1",
+      "short_title": "ENG4",
+      "level": "4",
+      "tp_prof": "Dr Lakmeche Zaouai",
+      "course_prof": "Dr Lakmeche Zaouai"
+    },
+    {
+      "title": "Juridic aspects",
+      "coefficient": "2",
+      "credit": "4",
+      "summary": "Analyse1",
+      "table_of_content": "Analyse1",
+      "unity_type": "1",
+      "short_title": "JA",
+      "level": "4",
+      "tp_prof": "Dr Lakmeche Zaouai",
+      "course_prof": "Dr Lakmeche Zaouai"
+    },
+    {
+      "title": "Software Engineering 1",
+      "coefficient": "0",
+      "credit": "1",
+      "summary": "1",
+      "table_of_content": "2",
+      "unity_type": "4",
+      "short_title": "SE1",
+      "level": "4",
+      "td_prof": "Dr Bekar Khaled",
+      "course_prof": "Dr Bekar Khaled"
+    },
+    {
+      "title": "Data base",
+      "coefficient": "2",
+      "credit": "4",
+      "summary": "Analyse1",
+      "table_of_content": "Analyse1",
+      "unity_type": "1",
+      "short_title": "DB",
+      "level": "4",
+      "tp_prof": "Dr lakhdari aicha",
+      "course_prof": "Dr lakhdari aicha"
+    },
+    {
+      "title": "Networking",
+      "coefficient": "3",
+      "credit": "4",
+      "summary": "Analyse1",
+      "table_of_content": "Analyse1",
+      "unity_type": "1",
+      "short_title": "NT",
+      "level": "4",
+      "course_prof": "Dr mostfaoui sidahmed",
+      "tp_prof": "Dr mostfaoui sidahmed"
+    }
+  ]
+}

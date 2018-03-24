@@ -5,6 +5,7 @@ import android.util.Log;
 import com.ibnkhaldoun.studentside.models.Mail;
 import com.ibnkhaldoun.studentside.models.Mark;
 import com.ibnkhaldoun.studentside.models.Professor;
+import com.ibnkhaldoun.studentside.models.Saved;
 import com.ibnkhaldoun.studentside.models.Student;
 import com.ibnkhaldoun.studentside.models.Subject;
 import com.ibnkhaldoun.studentside.networking.models.ForgetPasswordResponse;
@@ -163,7 +164,7 @@ public class JsonUtilities {
             String title = array.getJSONObject(i).getString(JSON_SUBJECT_TITLE);
             String short_title = array.getJSONObject(i).getString(JSON_SUBJECT_SHORT_TITLE);
             String coefficient = array.getJSONObject(i).getString(JSON_SUBJECT_COEFFICIENT);
-            Log.i(TAG, "getSubjectFromJsonArray: co " + coefficient);
+
             String content = array.getJSONObject(i).getString(JSON_SUBJECT_CONTENT);
             String summary = array.getJSONObject(i).getString(JSON_SUBJECT_SUMMARY);
             String credit = array.getJSONObject(i).getString(JSON_SUBJECT_CREDIT);
@@ -184,5 +185,9 @@ public class JsonUtilities {
             subjects.add(subject);
         }
         return subjects;
+    }
+
+    public static ArrayList<Saved> getSavedList(String response) throws JSONException{
+        return null;
     }
 }

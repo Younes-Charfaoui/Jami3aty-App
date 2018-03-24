@@ -9,12 +9,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import java.util.ArrayList;
+
 import com.ibnkhaldoun.studentside.R;
 import com.ibnkhaldoun.studentside.Utilities.Utilities;
 import com.ibnkhaldoun.studentside.database.DatabaseContract;
 import com.ibnkhaldoun.studentside.models.Saved;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -61,6 +62,11 @@ public class SavedAdapter extends RecyclerView.Adapter<SavedAdapter.SavedViewHol
                 mSavedList.add(new Saved(id, professor, text, date));
             }
         }
+        notifyDataSetChanged();
+    }
+
+    public void swapList(ArrayList<Saved> savedList) {
+        this.mSavedList = savedList;
         notifyDataSetChanged();
     }
 

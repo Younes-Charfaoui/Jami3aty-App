@@ -4,15 +4,17 @@ import android.app.IntentService;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import com.ibnkhaldoun.studentside.database.DatabaseContract;
-import com.ibnkhaldoun.studentside.enums.UnityTypes;
 import com.ibnkhaldoun.studentside.models.Mark;
+import com.ibnkhaldoun.studentside.models.Saved;
 import com.ibnkhaldoun.studentside.models.Subject;
 
 import java.util.ArrayList;
 
 import static com.ibnkhaldoun.studentside.services.LoadDataService.MARK_TYPE;
+import static com.ibnkhaldoun.studentside.services.LoadDataService.SAVED_TYPE;
 import static com.ibnkhaldoun.studentside.services.LoadDataService.SUBJECT_TYPE;
 
 /**
@@ -24,6 +26,7 @@ import static com.ibnkhaldoun.studentside.services.LoadDataService.SUBJECT_TYPE;
 public class DatabaseService extends IntentService {
 
     public static final String KEY_CONTENT_DATA = "keyData";
+    private static final String TAG = "databaseS";
 
     /**
      * Creates an IntentService.  Invoked by your subclass's constructor.
@@ -45,7 +48,30 @@ public class DatabaseService extends IntentService {
             case MARK_TYPE:
                 int data = insertMarks(intent.getParcelableArrayListExtra(KEY_CONTENT_DATA));
                 break;
+            case SAVED_TYPE:
+                insertSaved(intent.getParcelableArrayListExtra(KEY_CONTENT_DATA));
+                break;
+
         }
+    }
+
+    private void insertSaved(ArrayList<Saved> savedList) {
+        getContentResolver().delete(DatabaseContract.SavedEntry.CONTENT_SAVED_URI,
+                null, null);
+        getContentResolver().bulkInsert(DatabaseContract.SavedEntry.CONTENT_SAVED_URI,
+                getSavedContentValue(savedList));
+    }
+
+    private ContentValues[] getSavedContentValue(ArrayList<Saved> savedList) {
+        ContentValues[] values = new ContentValues[savedList.size()];
+        for (int i = 0; i < savedList.size(); i++) {
+            values[i] = new ContentValues();
+            values[i].put(DatabaseContract.SavedEntry.COLUMN_ID, savedList.get(i).getId());
+            values[i].put(DatabaseContract.SavedEntry.COLUMN_DATE, savedList.get(i).getDate());
+            values[i].put(DatabaseContract.SavedEntry.COLUMN_NAME, savedList.get(i).getProfessor());
+            values[i].put(DatabaseContract.SavedEntry.COLUMN_DISPLAY_TEXT, savedList.get(i).getText());
+        }
+        return values;
     }
 
     private int insertMarks(ArrayList<Mark> markList) {
@@ -117,7 +143,8 @@ public class DatabaseService extends IntentService {
             values[i].put(DatabaseContract.SubjectEntry.COLUMN_TABLE_CONTENT,
                     list.get(i).getContent());
             values[i].put(DatabaseContract.SubjectEntry.COLUMN_UNITY_TYPE,
-                    UnityTypes.getUnitType(list.get(i).getUnityTypes()));
+                    list.get(i).getUnityTypes());
+            Log.i(TAG, "getSubjectContentValues: " + list.get(i).getUnityTypes());
         }
         return values;
     }
