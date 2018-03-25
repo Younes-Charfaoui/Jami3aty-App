@@ -1,21 +1,37 @@
 package com.ibnkhaldoun.studentside.activities;
 
+import android.content.BroadcastReceiver;
 import android.content.ContentValues;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.ibnkhaldoun.studentside.R;
+import com.ibnkhaldoun.studentside.Utilities.PreferencesManager;
 import com.ibnkhaldoun.studentside.database.DatabaseContract;
 import com.ibnkhaldoun.studentside.fragments.SubjectListFragment;
 import com.ibnkhaldoun.studentside.interfaces.SubjectDialogInterface;
+import com.ibnkhaldoun.studentside.networking.models.RequestPackage;
+import com.ibnkhaldoun.studentside.networking.utilities.NetworkUtilities;
+import com.ibnkhaldoun.studentside.providers.EndPointsProvider;
+import com.ibnkhaldoun.studentside.services.LoadDataService;
+
+import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_STUDENT_GROUP;
+import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_STUDENT_LEVEL;
+import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_STUDENT_SECTION;
+import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.KEY_ANDROID;
+import static com.ibnkhaldoun.studentside.services.LoadDataService.SUBJECT_INNER_ACTION;
 
 public class NoteEditActivity extends AppCompatActivity implements SubjectDialogInterface {
 
@@ -31,22 +47,48 @@ public class NoteEditActivity extends AppCompatActivity implements SubjectDialog
     private String idCurrent;
     private Uri pathToNote;
 
+    private BroadcastReceiver mSubjectListReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+        }
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_note_edit);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        assert getSupportActionBar() != null;
+
 
         mSubjectEditText = findViewById(R.id.note_edit_subject_edit_text);
         mNoteEditText = findViewById(R.id.note_edit_note_edit_text);
-        toolbar.setTitle("New Note");
-        getSupportActionBar().setTitle("New Note");
+
+        if (!new PreferencesManager(this, PreferencesManager.SUBJECT).isSubjectsExists()
+                && NetworkUtilities.isConnected(this)) {
+            PreferencesManager manager = new PreferencesManager(this, PreferencesManager.STUDENT);
+
+            RequestPackage request = new RequestPackage();
+            request.setMethod(RequestPackage.POST);
+            request.setEndPoint(EndPointsProvider.getSubjectEndpoint());
+            Intent intent = new Intent(this, LoadDataService.class);
+            request.addParams(KEY_ANDROID, KEY_ANDROID);
+            request.addParams(JSON_STUDENT_SECTION, manager.getSection());
+            request.addParams(JSON_STUDENT_LEVEL, manager.getLevel());
+            request.addParams(JSON_STUDENT_GROUP, manager.getGroup());
+            intent.putExtra(LoadDataService.KEY_REQUEST, request);
+            intent.putExtra(LoadDataService.KEY_ACTION, LoadDataService.SUBJECT_IN_TYPE);
+            startService(intent);
+            LocalBroadcastManager.getInstance(this).registerReceiver(mSubjectListReceiver,
+                    new IntentFilter(SUBJECT_INNER_ACTION));
+        }
+        toolbar.setTitle(R.string.new_note);
+        if (getSupportActionBar() != null)
+            getSupportActionBar().setTitle(R.string.new_note);
         sender = getIntent().getStringExtra(KEY_SENDER);
         if (sender.equals(KEY_MODIFY)) {
-            getSupportActionBar().setTitle("Modify Note");
-            toolbar.setTitle("Modify Note");
+            getSupportActionBar().setTitle(R.string.modify_note);
+            toolbar.setTitle(R.string.modify_note);
             idCurrent = getIntent().getStringExtra(KEY_ID);
             pathToNote = DatabaseContract.NoteEntry
                     .CONTENT_NOTE_URI
@@ -56,15 +98,17 @@ public class NoteEditActivity extends AppCompatActivity implements SubjectDialog
 
             Cursor cursor = getContentResolver().query(pathToNote, new String[]{"*"},
                     null, null, null);
-            assert cursor != null;
-            cursor.moveToFirst();
-            mSubjectEditText.setText(cursor.getString(cursor.getColumnIndex(DatabaseContract.NoteEntry.COLUMN_NOTE_SUBJECT)));
-            mNoteEditText.setText(cursor.getString(cursor.getColumnIndex(DatabaseContract.NoteEntry.COLUMN_NOTE_TEXT)));
-            cursor.close();
+            if (cursor != null) {
+                cursor.moveToFirst();
+                mSubjectEditText.setText(cursor.getString(cursor.getColumnIndex(DatabaseContract.NoteEntry.COLUMN_NOTE_SUBJECT)));
+                mNoteEditText.setText(cursor.getString(cursor.getColumnIndex(DatabaseContract.NoteEntry.COLUMN_NOTE_TEXT)));
+                cursor.close();
+            }
         }
 
         mSubjectEditText.setOnClickListener(v -> {
-            SubjectListFragment dialog = new SubjectListFragment();
+            PreferencesManager manager = new PreferencesManager(this, PreferencesManager.SUBJECT);
+            SubjectListFragment dialog = SubjectListFragment.newInstance(manager.getSubjects());
             dialog.setCancelable(true);
             dialog.show(getSupportFragmentManager(), "TAG");
         });
@@ -103,8 +147,8 @@ public class NoteEditActivity extends AppCompatActivity implements SubjectDialog
                 break;
             case R.id.note_edit_menu_delete:
                 new AlertDialog.Builder(this)
-                        .setTitle("Are you sure to delete the note")
-                        .setPositiveButton("Delete", (dialog, which) -> {
+                        .setTitle(R.string.delete_note_confirmation)
+                        .setPositiveButton(R.string.delete_string, (dialog, which) -> {
                             Uri uri = DatabaseContract.NoteEntry.CONTENT_NOTE_URI
                                     .buildUpon()
                                     .appendPath(idCurrent)
@@ -113,7 +157,7 @@ public class NoteEditActivity extends AppCompatActivity implements SubjectDialog
                             getContentResolver().delete(uri, null, null);
                             finish();
                         })
-                        .setNegativeButton("No", null)
+                        .setNegativeButton(android.R.string.no, null)
                         .show();
                 break;
         }
@@ -132,17 +176,23 @@ public class NoteEditActivity extends AppCompatActivity implements SubjectDialog
     public boolean validate() {
 
         boolean valid = true;
-
+        Snackbar snackbar;
         if (mNoteEditText.getText().toString().isEmpty()) {
-            Toast.makeText(this, "Please add something", Toast.LENGTH_SHORT).show();
+            snackbar = Snackbar.make(findViewById(R.id.note_main_view), R.string.add_somthing
+                    , Snackbar.LENGTH_SHORT);
+            if (snackbar.isShownOrQueued()) snackbar.dismiss();
+            snackbar.show();
             valid = false;
         }
 
         if (mSubjectEditText.getText().toString().isEmpty()) {
-            Toast.makeText(this, "Please Choose Subject", Toast.LENGTH_SHORT).show();
+            snackbar = Snackbar.make(findViewById(R.id.note_main_view),
+                    R.string.choose_subject_please
+                    , Snackbar.LENGTH_SHORT);
+            if (snackbar.isShownOrQueued()) snackbar.dismiss();
+            snackbar.show();
             valid = false;
         }
-
         return valid;
     }
 
@@ -156,7 +206,13 @@ public class NoteEditActivity extends AppCompatActivity implements SubjectDialog
     }
 
     @Override
-    public void onSubjectChosen(String s) {
-        mSubjectEditText.setText(s);
+    public void onSubjectChosen(String subject) {
+        mSubjectEditText.setText(subject);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mSubjectListReceiver);
     }
 }

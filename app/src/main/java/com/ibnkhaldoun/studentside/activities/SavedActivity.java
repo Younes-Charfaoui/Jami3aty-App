@@ -34,6 +34,7 @@ import java.util.ArrayList;
 
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
+import static com.ibnkhaldoun.studentside.Utilities.PreferencesManager.STUDENT;
 import static com.ibnkhaldoun.studentside.networking.models.RequestPackage.POST;
 import static com.ibnkhaldoun.studentside.networking.models.Response.IO_EXCEPTION;
 import static com.ibnkhaldoun.studentside.networking.models.Response.JSON_EXCEPTION;
@@ -203,7 +204,7 @@ public class SavedActivity extends AppCompatActivity
             request.setEndPoint(EndPointsProvider.getSavedEndPoint());
             request.setMethod(POST);
             request.addParams(KEY_ANDROID, KEY_ANDROID);
-            request.addParams(JSON_STUDENT_ID, new PreferencesManager(this).getId());
+            request.addParams(JSON_STUDENT_ID, new PreferencesManager(this,STUDENT).getId());
             Intent serviceIntent = new Intent(this, LoadDataService.class);
             serviceIntent.putExtra(KEY_REQUEST, request);
             serviceIntent.putExtra(KEY_ACTION, SAVED_TYPE);

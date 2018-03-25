@@ -15,6 +15,8 @@ import com.ibnkhaldoun.studentside.Utilities.Utilities;
 import com.ibnkhaldoun.studentside.models.Message;
 import com.ibnkhaldoun.studentside.models.Professor;
 
+import static com.ibnkhaldoun.studentside.Utilities.PreferencesManager.STUDENT;
+
 public class MessageDetailActivity extends AppCompatActivity {
 
     public static final String KEY_MESSAGE = "keyMessage";
@@ -37,7 +39,7 @@ public class MessageDetailActivity extends AppCompatActivity {
 
         TextView subjectTextView = findViewById(R.id.message_detail_subject);
         subjectTextView.setText(message.getSubject());
-        PreferencesManager manager = new PreferencesManager(this);
+        PreferencesManager manager = new PreferencesManager(this,STUDENT);
 
         TextView senderShortNameTextView = findViewById(R.id.message_detail_sender_short_name);
         GradientDrawable circle = (GradientDrawable) senderShortNameTextView.getBackground();

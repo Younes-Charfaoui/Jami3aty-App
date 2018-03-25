@@ -24,12 +24,17 @@ import com.ibnkhaldoun.studentside.networking.models.RequestPackage;
 import com.ibnkhaldoun.studentside.networking.utilities.NetworkUtilities;
 import com.ibnkhaldoun.studentside.providers.EndPointsProvider;
 import com.ibnkhaldoun.studentside.providers.KeyDataProvider;
+import com.ibnkhaldoun.studentside.services.LoadDataService;
 
 import static com.ibnkhaldoun.studentside.networking.models.Response.IO_EXCEPTION;
 import static com.ibnkhaldoun.studentside.networking.models.Response.JSON_EXCEPTION;
 import static com.ibnkhaldoun.studentside.networking.models.Response.RESPONSE_EMAIL_ERROR;
 import static com.ibnkhaldoun.studentside.networking.models.Response.RESPONSE_PASSWORD_ERROR;
 import static com.ibnkhaldoun.studentside.networking.models.Response.RESPONSE_SUCCESS;
+import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_STUDENT_GROUP;
+import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_STUDENT_LEVEL;
+import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_STUDENT_SECTION;
+import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.KEY_ANDROID;
 
 public class LoginActivity extends AppCompatActivity implements LoginTaskListener {
 
@@ -149,7 +154,7 @@ public class LoginActivity extends AppCompatActivity implements LoginTaskListene
 
         switch (response.getStatus()) {
             case RESPONSE_SUCCESS:
-                PreferencesManager manager = new PreferencesManager(this);
+                PreferencesManager manager = new PreferencesManager(this, PreferencesManager.STUDENT);
                 if (response.isStudent()) {
                     manager.setLogin(response.getStudent().getId()
                             , response.getStudent().getFullName()
@@ -158,6 +163,17 @@ public class LoginActivity extends AppCompatActivity implements LoginTaskListene
                             , String.valueOf(response.getStudent().getSection())
                             , String.valueOf(response.getStudent().getLevel()));
                     startActivity(new Intent(this, StudentMainActivity.class));
+                    RequestPackage request = new RequestPackage();
+                    request.setMethod(RequestPackage.POST);
+                    request.setEndPoint(EndPointsProvider.getSubjectEndpoint());
+                    Intent intent = new Intent(this, LoadDataService.class);
+                    request.addParams(KEY_ANDROID, KEY_ANDROID);
+                    request.addParams(JSON_STUDENT_SECTION, manager.getSection());
+                    request.addParams(JSON_STUDENT_LEVEL, manager.getLevel());
+                    request.addParams(JSON_STUDENT_GROUP, manager.getGroup());
+                    intent.putExtra(LoadDataService.KEY_REQUEST, request);
+                    intent.putExtra(LoadDataService.KEY_ACTION, LoadDataService.SUBJECT_IN_TYPE);
+                    startService(intent);
                     finish();
                 } else {
                     Toast.makeText(this, "Login for professor", Toast.LENGTH_SHORT).show();

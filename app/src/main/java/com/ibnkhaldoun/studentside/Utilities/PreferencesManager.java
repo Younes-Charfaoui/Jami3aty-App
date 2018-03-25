@@ -4,30 +4,56 @@ package com.ibnkhaldoun.studentside.Utilities;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+
 
 public class PreferencesManager {
-    private static final String TAG = "manager";
+    public static final int CONFIG = 1;
+    public static final int STUDENT = 2;
+    public static final int SUBJECT = 3;
+    public static final int UNIVERSITY = 4;
 
+    private static final String TAG = "manager";
     private static final int PRIVATE_MODE = 0;
-    private static final String PREFERENCE_NAME = "sliders";
+    private static final String PREFERENCE_CONFIGURATION_NAME = "sliders";
+    private static final String PREFERENCE_STUDENT_NAME = "student";
+    private static final String PREFERENCE_SUBJECTS_NAME = "subjects";
+    private static final String PREFERENCE_UNIVERSITY_NAME = "university";
     private static final String FIRST_TIME = "isFirstTime";
     private static final String LOGIN = "login";
     private static final String FULL_NAME = "fullName";
     private static final String GRADE = "grade";
     private static final String ID = "id";
-
     private static final String LEVEL = "level";
     private static final String GROUP = "group";
     private static final String SECTION = "section";
+    private static final String SUBJECTS = "subjects";
 
     private SharedPreferences mPreferences;
     private SharedPreferences.Editor mEditor;
 
     @SuppressLint("CommitPrefEdits")
-    public PreferencesManager(Context mContext) {
-        mPreferences = mContext.getSharedPreferences(PREFERENCE_NAME, PRIVATE_MODE);
+    public PreferencesManager(Context mContext, int type) {
+        mPreferences = mContext.getSharedPreferences(getSharedPreferencesFile(type), PRIVATE_MODE);
         mEditor = mPreferences.edit();
+    }
+
+    private String getSharedPreferencesFile(int type) {
+        switch (type) {
+            case CONFIG:
+                return PREFERENCE_CONFIGURATION_NAME;
+            case STUDENT:
+                return PREFERENCE_STUDENT_NAME;
+            case SUBJECT:
+                return PREFERENCE_SUBJECTS_NAME;
+            case UNIVERSITY:
+                return PREFERENCE_UNIVERSITY_NAME;
+            default:
+                return PREFERENCE_CONFIGURATION_NAME;
+        }
     }
 
     public boolean isFirstTimeLaunched() {
@@ -60,21 +86,15 @@ public class PreferencesManager {
     }
 
     public String getGroup() {
-        String hello = mPreferences.getString(GROUP, null);
-        Log.i(TAG, "getGroup: " + hello);
-        return hello;
+        return mPreferences.getString(GROUP, null);
     }
 
     public String getSection() {
-        String hello = mPreferences.getString(SECTION, null);
-        Log.i(TAG, "getSection: " + hello);
-        return hello;
+        return mPreferences.getString(SECTION, null);
     }
 
     public String getLevel() {
-        String hello = mPreferences.getString(LEVEL, null);
-        Log.i(TAG, "getLevel: " + hello);
-        return hello;
+        return mPreferences.getString(LEVEL, null);
     }
 
     public String getGrade() {
@@ -83,5 +103,20 @@ public class PreferencesManager {
 
     public String getFullName() {
         return mPreferences.getString(FULL_NAME, null);
+    }
+
+    public void addSubjects(ArrayList<String> subjects) {
+        Set<String> setOfSubjects = new HashSet<>(subjects);
+        mEditor.putStringSet(SUBJECTS, setOfSubjects);
+    }
+
+    @SuppressWarnings("ConstantConditions")
+    public ArrayList<String> getSubjects() {
+        Set<String> set = mPreferences.getStringSet(SUBJECTS, null);
+        return new ArrayList<>(set);
+    }
+
+    public boolean isSubjectsExists() {
+        return mPreferences.getStringSet(SUBJECTS, null) != null;
     }
 }

@@ -34,6 +34,8 @@ import com.ibnkhaldoun.studentside.services.LoadDataService;
 
 import java.util.ArrayList;
 
+import static com.ibnkhaldoun.studentside.Utilities.PreferencesManager.STUDENT;
+
 public class MarkActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
     public static final String KEY_MARKS = "keyMarks";
@@ -142,7 +144,7 @@ public class MarkActivity extends AppCompatActivity implements LoaderManager.Loa
             RequestPackage request = new RequestPackage();
             request.setEndPoint(EndPointsProvider.getMarksEndPoint());
             request.setMethod(RequestPackage.POST);
-            PreferencesManager manager = new PreferencesManager(this);
+            PreferencesManager manager = new PreferencesManager(this,STUDENT);
             request.addParams(KeyDataProvider.JSON_STUDENT_ID, manager.getId());
             Intent intent = new Intent(this, LoadDataService.class);
             intent.putExtra(LoadDataService.KEY_ACTION, LoadDataService.MARK_TYPE);

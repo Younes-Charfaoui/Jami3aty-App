@@ -4,14 +4,16 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.ibnkhaldoun.studentside.enums.Day;
-import com.ibnkhaldoun.studentside.fragments.DayScheduleFragment;
-import com.ibnkhaldoun.studentside.providers.DataProviders;
+import com.ibnkhaldoun.studentside.fragments.DayMondayFragment;
+import com.ibnkhaldoun.studentside.fragments.DaySundayFragment;
+import com.ibnkhaldoun.studentside.fragments.DayThursdayFragment;
+import com.ibnkhaldoun.studentside.fragments.DayTuesdayFragment;
+import com.ibnkhaldoun.studentside.fragments.DayWednesdayFragment;
 
 
 public class SchedulePagerAdapter extends FragmentPagerAdapter {
 
-    public SchedulePagerAdapter(FragmentManager fm ) {
+    public SchedulePagerAdapter(FragmentManager fm) {
         super(fm);
     }
 
@@ -19,17 +21,17 @@ public class SchedulePagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return DayScheduleFragment.newInstance(DataProviders.getSundayList(), Day.SUNDAY);
+                return new DaySundayFragment();
             case 1:
-                return DayScheduleFragment.newInstance(DataProviders.getMondayList(), Day.MONDAY);
+                return new DayMondayFragment();
             case 2:
-                return DayScheduleFragment.newInstance(DataProviders.getTuesdayList(), Day.TUESDAY);
+                return new DayTuesdayFragment();
             case 3:
-                return DayScheduleFragment.newInstance(DataProviders.getWednesdayList(), Day.WEDNESDAY);
+                return new DayWednesdayFragment();
             case 4:
-                return DayScheduleFragment.newInstance(DataProviders.getThursdayList(), Day.THURSDAY);
+                return new DayThursdayFragment();
             default:
-                return DayScheduleFragment.newInstance(DataProviders.getMondayList(), Day.TUESDAY);
+                throw new IllegalStateException();
         }
     }
 

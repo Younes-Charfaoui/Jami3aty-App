@@ -4,8 +4,7 @@ package com.ibnkhaldoun.studentside.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.ibnkhaldoun.studentside.enums.Levels;
-
+import java.util.ArrayList;
 import java.util.List;
 
 public class Schedule implements Parcelable {
@@ -23,10 +22,14 @@ public class Schedule implements Parcelable {
     private int dayOfSchedule;
     private List<ScheduleItem> scheduleItemList;
 
-    public Schedule(int dayOfSchedule, List<ScheduleItem> scheduleItemList, Levels promo) {
+    public Schedule(int dayOfSchedule, List<ScheduleItem> scheduleItemList) {
         this.dayOfSchedule = dayOfSchedule;
         this.scheduleItemList = scheduleItemList;
+    }
 
+    public Schedule(int dayOfSchedule) {
+        this.dayOfSchedule = dayOfSchedule;
+        this.scheduleItemList = new ArrayList<>();
     }
 
     protected Schedule(Parcel in) {
@@ -40,6 +43,10 @@ public class Schedule implements Parcelable {
 
     public List<ScheduleItem> getScheduleItemList() {
         return scheduleItemList;
+    }
+
+    public void setScheduleItemList(List<ScheduleItem> scheduleItemList) {
+        this.scheduleItemList = scheduleItemList;
     }
 
     @Override

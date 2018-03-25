@@ -19,7 +19,7 @@ public class SubjectProfessorDialogAdapter extends ArrayAdapter<String> {
 
     private List<String> mSubjectList;
 
-    public SubjectProfessorDialogAdapter(@NonNull Context context, int resource, @NonNull List<String> objects) {
+    public SubjectProfessorDialogAdapter(@NonNull Context context, int resource, List<String> objects) {
         super(context, resource, objects);
         mSubjectList = objects;
     }

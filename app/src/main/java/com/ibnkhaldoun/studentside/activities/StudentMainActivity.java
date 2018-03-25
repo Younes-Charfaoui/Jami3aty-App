@@ -48,6 +48,7 @@ import com.ibnkhaldoun.studentside.services.LoadDataService;
 
 import java.util.Calendar;
 
+import static com.ibnkhaldoun.studentside.Utilities.PreferencesManager.STUDENT;
 import static com.ibnkhaldoun.studentside.fragments.BaseMainFragment.INTERNET_ERROR;
 
 public class StudentMainActivity extends AppCompatActivity
@@ -140,16 +141,14 @@ public class StudentMainActivity extends AppCompatActivity
 
         GradientDrawable circle = (GradientDrawable) circleImage.getBackground();
 
-        PreferencesManager manager = new PreferencesManager(this);
+        PreferencesManager manager = new PreferencesManager(this,STUDENT);
         String text = Character.toString(Utilities.getFirstName(manager.getFullName()).charAt(0)) +
                 Character.toString(Utilities.getLastName(manager.getFullName()).charAt(0));
         circleImage.setText(text);
 
         circle.setColor(Utilities.getCircleColor(manager.getFullName().charAt(0), this));
-        String h = manager.getGroup() + " " + manager.getLevel() + " " + manager.getSection();
-        nameHeader.setText(h);
-        String branch = manager.getGrade() + " ";
-        branchHeader.setText(branch);
+        nameHeader.setText(manager.getFullName());
+        branchHeader.setText(manager.getGrade());
 
         setupViewPagerAndTabLayout();
 
@@ -370,7 +369,7 @@ public class StudentMainActivity extends AppCompatActivity
             RequestPackage request = new RequestPackage();
             request.setMethod(RequestPackage.POST);
             request.setEndPoint(EndPointsProvider.getMailEndPoint());
-            PreferencesManager manager = new PreferencesManager(this);
+            PreferencesManager manager = new PreferencesManager(this,STUDENT);
             request.addParams(KeyDataProvider.KEY_ANDROID, KeyDataProvider.KEY_ANDROID);
             request.addParams(KeyDataProvider.JSON_STUDENT_ID, manager.getId());
             Intent intent = new Intent(this, LoadDataService.class);

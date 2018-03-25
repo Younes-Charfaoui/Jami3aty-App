@@ -159,7 +159,7 @@
     <string name="monday">Monday</string>
     <string name="tuesday">Tuesday</string>
     <string name="wednesday">Wednesday</string>
-    <string name="thursday">thursday</string>
+    <string name="thursday">Thursday</string>
     <string name="subject_title">Subject Title</string>
     <string name="subject_utility">Subject Utility</string>
     <string name="course_professor">Course Professor</string>
@@ -176,4 +176,10 @@
     <string name="choose_level">Choose Level</string>
     <string name="there_is_no_study_today">There is no study today.</string>
     <string name="take_the_opportunity_to_write_new_code">Take the opportunity to write new code .</string>
+    <string name="new_note">New Note</string>
+    <string name="modify_note">Modify Note</string>
+    <string name="delete_string">Delete</string>
+    <string name="delete_note_confirmation">Are you sure to delete the note</string>
+    <string name="add_somthing">Please enter something</string>
+    <string name="choose_subject_please">Please Choose Subject</string>
 </resources>

@@ -61,11 +61,26 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
             DatabaseContract.SubjectEntry.COLUMN_UNITY_TYPE + " INTEGER NOT NULL ); ";
 
 
-    private static final String SQL_QUERY_DROP_SUBJECT = BASE_DROP + DatabaseContract.SubjectEntry.TABLE_NAME;
+    private static final String SQL_QUERY_DROP_SUBJECT = BASE_DROP +
+            DatabaseContract.SubjectEntry.TABLE_NAME;
 
     private static final String SQL_QUERY_CREATE_NOTIFICATION = "";
     private static final String SQL_QUERY_DROP_NOTIFICATION = "";
 
+    private static final String SQL_QUERY_CREATE_SCHEDULE = BASE_CREATE +
+            DatabaseContract.ScheduleEntry.TABLE_NAME + " ( " +
+            DatabaseContract.ScheduleEntry.COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+            DatabaseContract.ScheduleEntry.COLUMN_LEVEL + " INTEGER NOT NULL , " +
+            DatabaseContract.ScheduleEntry.COLUMN_GROUP + " INTEGER NOT NULL , " +
+            DatabaseContract.ScheduleEntry.COLUMN_SECTION + " INTEGER NOT NULL , " +
+            DatabaseContract.ScheduleEntry.COLUMN_DAY + " INTEGER NOT NULL , " +
+            DatabaseContract.ScheduleEntry.COLUMN_HOUR + " INTEGER NOT NULL , " +
+            DatabaseContract.ScheduleEntry.COLUMN_PLACE + " TEXT NOT NULL , " +
+            DatabaseContract.ScheduleEntry.COLUMN_PROFESSOR + " TEXT NOT NULL , " +
+            DatabaseContract.ScheduleEntry.COLUMN_SUBJECT + " TEXT NOT NULL ); ";
+
+    private static final String SQL_QUERY_DROP_SCHEDULE = BASE_DROP +
+            DatabaseContract.ScheduleEntry.TABLE_NAME;
 
     private static final String SQL_QUERY_CREATE_MAIL = BASE_CREATE +
             DatabaseContract.MailEntry.TABLE_NAME + " ( " +
@@ -89,7 +104,8 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
             DatabaseContract.MarkEntry.COLUMN_TP_MARK + " TEXT, " +
             DatabaseContract.MarkEntry.COLUMN_EXAM_MARK + " TEXT );";
 
-    private static final String SQL_QUERY_DROP_MARK = BASE_DROP + DatabaseContract.MarkEntry.TABLE_NAME;
+    private static final String SQL_QUERY_DROP_MARK = BASE_DROP +
+            DatabaseContract.MarkEntry.TABLE_NAME;
 
     DatabaseOpenHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -102,7 +118,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
         database.execSQL(SQL_QUERY_CREATE_NOTE_DISPLAY);
         database.execSQL(SQL_QUERY_CREATE_NOTE);
         database.execSQL(SQL_QUERY_CREATE_SUBJECT);
-        //database.execSQL(SQL_QUERY_CREATE_NOTIFICATION);
+        database.execSQL(SQL_QUERY_CREATE_SCHEDULE);
         database.execSQL(SQL_QUERY_CREATE_SAVED);
         database.execSQL(SQL_QUERY_CREATE_MARK);
         database.execSQL(SQL_QUERY_CREATE_MAIL);
@@ -110,11 +126,10 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase database, int oldVersion, int newVersion) {
-        //todo code to drop the table
         //database.execSQL(SQL_QUERY_DROP_DISPLAY);
         database.execSQL(SQL_QUERY_DROP_NOTE_DISPLAY);
         database.execSQL(SQL_QUERY_DROP_NOTE);
-//        database.execSQL(SQL_QUERY_DROP_NOTIFICATION);
+       database.execSQL(SQL_QUERY_DROP_SCHEDULE);
         database.execSQL(SQL_QUERY_DROP_SAVED);
         database.execSQL(SQL_QUERY_DROP_SUBJECT);
         database.execSQL(SQL_QUERY_DROP_MAIL);

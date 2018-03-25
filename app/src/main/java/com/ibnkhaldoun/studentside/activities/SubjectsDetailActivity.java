@@ -4,7 +4,6 @@ import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
 
@@ -95,11 +94,11 @@ public class SubjectsDetailActivity extends AppCompatActivity {
 
         //setting up the overview of the subject.
         ((TextView) findViewById(R.id.subject_overview_title)).setTextColor(colorOfSubject);
-        ((TextView) findViewById(R.id.subject_overview)).setText(subject.getContent());
+        String content = subject.getContent().replace("$", ".\n-");
+        ((TextView) findViewById(R.id.subject_overview)).setText(content);
 
         //setting up the unity type text view.
         ((TextView) findViewById(R.id.subject_unity_type_title)).setTextColor(colorOfSubject);
-        Log.i(TAG, "onCreate: ht e subject type is " + subject.getUnityTypes());
         ((TextView) findViewById(R.id.subject_unity_type)).setText(UnityTypes.getUnitType(subject.getUnityTypes()));
 
         //setting up the color and the text for the credit

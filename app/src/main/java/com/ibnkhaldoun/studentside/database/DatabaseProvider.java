@@ -20,6 +20,7 @@ public class DatabaseProvider extends ContentProvider {
     private final static int NOTIFICATION = 500;
     private final static int MAIL = 600;
     private final static int SUBJECT = 700;
+    private final static int SCHEDULE = 800;
 
     private final static int DISPLAY_ID = 101;
     private final static int NOTES_ID = 201;
@@ -28,6 +29,7 @@ public class DatabaseProvider extends ContentProvider {
     private final static int NOTIFICATION_ID = 501;
     private final static int MAIL_ID = 601;
     private final static int SUBJECT_ID = 701;
+    private final static int SCHEDULE_LEVEL_GROUP_SECTION = 801;
 
     private final static UriMatcher sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
@@ -42,6 +44,10 @@ public class DatabaseProvider extends ContentProvider {
         sUriMatcher.addURI(DatabaseContract.AUTHORITY, DatabaseContract.PATH_SUBJECT + "/#", SUBJECT_ID);
 
         sUriMatcher.addURI(DatabaseContract.AUTHORITY, DatabaseContract.PATH_MARK, MARKS);
+
+        sUriMatcher.addURI(DatabaseContract.AUTHORITY, DatabaseContract.PATH_SCHEDULE, SCHEDULE);
+        sUriMatcher.addURI(DatabaseContract.AUTHORITY, DatabaseContract.PATH_SCHEDULE + "/#/#/#",
+                SCHEDULE_LEVEL_GROUP_SECTION);
     }
 
     private DatabaseOpenHelper mDatabase;
@@ -93,11 +99,21 @@ public class DatabaseProvider extends ContentProvider {
                 cursor = database.query(DatabaseContract.SubjectEntry.TABLE_NAME, projection,
                         selection, selectionArgs, null, null, sortOrder);
                 break;
+            case SCHEDULE_LEVEL_GROUP_SECTION:
+                selection = DatabaseContract.ScheduleEntry.COLUMN_LEVEL + "=? AND " +
+                        DatabaseContract.ScheduleEntry.COLUMN_SECTION + "=? AND " +
+                        DatabaseContract.ScheduleEntry.COLUMN_GROUP + "=? ";
+                selectionArgs = new String[]{String.valueOf(uri.getPathSegments().get(1))
+                        , String.valueOf(uri.getPathSegments().get(2)),
+                        String.valueOf(uri.getPathSegments().get(3))};
+                cursor = database.query(DatabaseContract.ScheduleEntry.TABLE_NAME,
+                        projection, selection, selectionArgs, null, null, null);
+                break;
             default:
                 throw new IllegalArgumentException();
         }
-        assert getContext() != null;
-        cursor.setNotificationUri(getContext().getContentResolver(), uri);
+        if (getContext() != null)
+            cursor.setNotificationUri(getContext().getContentResolver(), uri);
         return cursor;
     }
 

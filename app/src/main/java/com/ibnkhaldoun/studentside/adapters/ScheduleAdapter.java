@@ -3,6 +3,7 @@ package com.ibnkhaldoun.studentside.adapters;
 
 import android.content.Context;
 import android.graphics.drawable.GradientDrawable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,10 +12,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ibnkhaldoun.studentside.R;
-import com.ibnkhaldoun.studentside.Utilities.Utilities;
 import com.ibnkhaldoun.studentside.models.ScheduleItem;
 
 import java.util.List;
+
+import static com.ibnkhaldoun.studentside.R.color.colorPrimary;
 
 
 public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ScheduleViewHolder> {
@@ -35,17 +37,15 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.Schedu
     @Override
     public void onBindViewHolder(ScheduleViewHolder holder, int position) {
         ScheduleItem scheduleItem = mScheduleList.get(position);
-        holder.mTimeTextView.setText(scheduleItem.getTime());
-        if (Integer.parseInt(Character.toString(scheduleItem.getTime().charAt(0))) > 12) {
+        holder.mTimeTextView.setText(getTime(scheduleItem.getTime()));
+        if (Integer.parseInt(Character.toString(getTime(scheduleItem.getTime()).charAt(0))) > 12) {
             holder.itemView.setBackgroundColor(mContext.getResources().getColor(R.color.active_schedule));
         }
         holder.mScheduleSubject.setText(scheduleItem.getSubject());
-        String placeAndProfessor = scheduleItem.getLocation() + ", " + scheduleItem.getProfessor().getFullName();
+        String placeAndProfessor = scheduleItem.getLocation() + ", " + scheduleItem.getProfessor();
         holder.mScheduleLocationAndProfessor.setText(placeAndProfessor);
-        holder.mSeparatorView.setBackgroundColor(Utilities.getCircleColor(scheduleItem.getSubject().charAt(0), mContext));
-        GradientDrawable circle = (GradientDrawable) holder.mCircleImage.getBackground();
-        if (circle != null)
-            circle.setColor(Utilities.getCircleColor(scheduleItem.getProfessor().getFirstName().charAt(0), mContext));
+        holder.mCircleImage.setColorFilter(ContextCompat.getColor(mContext,colorPrimary));
+
     }
 
     @Override
@@ -57,6 +57,25 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.Schedu
     public void setList(List<ScheduleItem> list) {
         this.mScheduleList = list;
         notifyDataSetChanged();
+    }
+
+    private String getTime(int time) {
+        switch (time) {
+            case 1:
+                return "8:00";
+            case 2:
+                return "9:30";
+            case 3:
+                return "11:00";
+            case 4:
+                return "12:30";
+            case 5:
+                return "14:00";
+            case 6:
+                return "15:30";
+            default:
+                return "8:00";
+        }
     }
 
     class ScheduleViewHolder extends RecyclerView.ViewHolder {

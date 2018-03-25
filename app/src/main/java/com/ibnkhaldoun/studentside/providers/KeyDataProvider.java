@@ -42,4 +42,9 @@ public final class KeyDataProvider {
     public final static String JSON_SUBJECT_PROFESSOR_TD = "td_prof";
     public final static String JSON_SUBJECT_LEVEL = "level";
 
+    public static final String JSON_DAY_SCHEDULE = "day_schedule";
+    public static final String JSON_PLACE_SCHEDULE = "place";
+    public static final String JSON_NAME_SCHEDULE = "fullName";
+    public static final String JSON_TITLE_SCHEDULE = "title";
+    public static final String JSON_HOUR_SCHEDULE = "hour_start_schedule";
 }

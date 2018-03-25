@@ -1,11 +1,14 @@
 package com.ibnkhaldoun.studentside.networking.utilities;
 
 import android.util.Log;
+import android.util.SparseArray;
 
 import com.ibnkhaldoun.studentside.models.Mail;
 import com.ibnkhaldoun.studentside.models.Mark;
 import com.ibnkhaldoun.studentside.models.Professor;
 import com.ibnkhaldoun.studentside.models.Saved;
+import com.ibnkhaldoun.studentside.models.Schedule;
+import com.ibnkhaldoun.studentside.models.ScheduleItem;
 import com.ibnkhaldoun.studentside.models.Student;
 import com.ibnkhaldoun.studentside.models.Subject;
 import com.ibnkhaldoun.studentside.networking.models.ForgetPasswordResponse;
@@ -21,6 +24,10 @@ import java.util.ArrayList;
 
 import static com.ibnkhaldoun.studentside.networking.models.Response.JSON_EXCEPTION;
 import static com.ibnkhaldoun.studentside.networking.models.Response.RESPONSE_SUCCESS;
+import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_DAY_SCHEDULE;
+import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_HOUR_SCHEDULE;
+import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_NAME_SCHEDULE;
+import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_PLACE_SCHEDULE;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_PROFESSOR_DEGREE;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_PROFESSOR_EMAIL;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_PROFESSOR_FIRST_NAME;
@@ -47,6 +54,7 @@ import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_SUBJECT
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_SUBJECT_SUMMARY;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_SUBJECT_TITLE;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_SUBJECT_UNITY_TYPE;
+import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_TITLE_SCHEDULE;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.KEY_JSON_DATA;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.KEY_JSON_STATUS;
 
@@ -121,7 +129,7 @@ public class JsonUtilities {
 
     public static ArrayList<Subject> getSubjectList(String response) {
         try {
-            Log.i(TAG, "getSubjectList: response " + response);
+
             JSONObject root = new JSONObject(response);
             int status = root.getInt(KEY_JSON_STATUS);
             if (status != 200) return null;
@@ -157,7 +165,6 @@ public class JsonUtilities {
     }
 
 
-
     private static ArrayList<Subject> getSubjectFromJsonArray(JSONArray array) throws JSONException {
         ArrayList<Subject> subjects = new ArrayList<>();
         for (int i = 0; i < array.length(); i++) {
@@ -187,7 +194,30 @@ public class JsonUtilities {
         return subjects;
     }
 
-    public static ArrayList<Saved> getSavedList(String response) throws JSONException{
+    public static ArrayList<Saved> getSavedList(String response) throws JSONException {
         return null;
+    }
+
+    public static SparseArray<Schedule> getSchedulesList(String response) throws JSONException {
+        SparseArray<Schedule> schedules = new SparseArray<>();
+        JSONObject root = new JSONObject(response);
+
+        int status = root.getInt(KEY_JSON_STATUS);
+        if (status != 200) throw new JSONException("Code was not 200");
+        JSONArray data = root.getJSONArray(JSON_SUBJECT_DATA);
+        for (int i = 0; i < data.length(); i++) {
+            JSONObject object = data.getJSONObject(i);
+            int day = object.getInt(JSON_DAY_SCHEDULE);
+            Schedule schedule = schedules.get(day, null) != null ? schedules.get(day)
+                    : new Schedule(day);
+            int time = object.getInt(JSON_HOUR_SCHEDULE);
+            String place = object.getString(JSON_PLACE_SCHEDULE);
+            String subject = object.getString(JSON_TITLE_SCHEDULE);
+            String professor = object.getString(JSON_NAME_SCHEDULE);
+            ScheduleItem item = new ScheduleItem(time, place, subject, professor);
+            schedule.getScheduleItemList().add(item);
+            schedules.put(day, schedule);
+        }
+        return schedules;
     }
 }

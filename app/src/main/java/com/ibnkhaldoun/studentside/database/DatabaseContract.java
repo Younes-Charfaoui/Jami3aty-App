@@ -100,9 +100,18 @@ public class DatabaseContract implements BaseColumns {
     }
 
     public static class ScheduleEntry {
-        static final String TABLE_NAME = "schedules";
-        //todo list of the table constant
         public static final Uri CONTENT_SCHEDULE_URI = BASE_URI.buildUpon()
                 .appendPath(PATH_SCHEDULE).build();
+
+        static final String TABLE_NAME = "schedules";
+        public static final String COLUMN_ID = _ID;
+        public static final String COLUMN_SUBJECT = "subjectTitle";
+        public static final String COLUMN_PROFESSOR = "professorName";
+        public static final String COLUMN_GROUP = "groupStudent";
+        public static final String COLUMN_SECTION = "sectionStudent";
+        public static final String COLUMN_LEVEL = "levelStudent";
+        public static final String COLUMN_HOUR = "hour";
+        public static final String COLUMN_PLACE = "place";
+        public static final String COLUMN_DAY = "day";
     }
 }

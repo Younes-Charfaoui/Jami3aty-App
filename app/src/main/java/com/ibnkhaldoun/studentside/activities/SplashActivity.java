@@ -9,6 +9,8 @@ import com.ibnkhaldoun.studentside.R;
 import com.ibnkhaldoun.studentside.Utilities.ActivityUtilities;
 import com.ibnkhaldoun.studentside.Utilities.PreferencesManager;
 
+import static com.ibnkhaldoun.studentside.Utilities.PreferencesManager.STUDENT;
+
 public class SplashActivity extends AppCompatActivity {
 
     private static final long SPLASH_TIME = 3000;
@@ -19,7 +21,7 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(R.layout.activity_slpash);
         Class classes = WelcomeActivity.class;
         ActivityUtilities.changeStatusBarColorToTransparent(getWindow());
-        PreferencesManager manager = new PreferencesManager(this);
+        PreferencesManager manager = new PreferencesManager(this,STUDENT);
         if (manager.isLogin()) {
             classes = StudentMainActivity.class;
         }

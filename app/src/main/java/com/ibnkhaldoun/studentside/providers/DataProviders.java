@@ -44,26 +44,7 @@ public final class DataProviders {
         professorList.add(new Professor("Dr.", "Mezzoug", "Karim"));
         professorList.add(new Professor("Dr.", "Siabdelhadi", "Ahmed"));
         professorList.add(new Professor("Dr.", "Benoudaa", "Habib"));
-        sundayList.add(new ScheduleItem("8:00", "Amphis C", "Compilation", ClassTypes.COURSE_NUMBER, professorList.get(6)));
-        sundayList.add(new ScheduleItem("9:30", "Amphis B", "Operating System", ClassTypes.COURSE_NUMBER, professorList.get(1)));
-        sundayList.add(new ScheduleItem("11:00", "Class 14", "Operating System", ClassTypes.TD_NUMBER, professorList.get(1)));
-        sundayList.add(new ScheduleItem("14:00", "Amphis C", "Compilation", ClassTypes.TD_NUMBER, professorList.get(6)));
-        sundayList.add(new ScheduleItem("15:30", "Labo 4", "IHM", ClassTypes.TD_NUMBER, professorList.get(9)));
 
-        mondayList.add(new ScheduleItem("9:30", "Class 7", "Linear Programming", ClassTypes.TD_NUMBER, professorList.get(2)));
-        mondayList.add(new ScheduleItem("11:00", "Labo 3", "Compilation", ClassTypes.TP_NUMBER, professorList.get(6)));
-        mondayList.add(new ScheduleItem("15:30", "Labo 2", "Logical programming", ClassTypes.TP_NUMBER, professorList.get(3)));
-
-        tuesdayList.add(new ScheduleItem("8:00", "Amphi A", "IHM", ClassTypes.COURSE_NUMBER, professorList.get(9)));
-        tuesdayList.add(new ScheduleItem("9:30", "Amphi B", "Logical programming", ClassTypes.COURSE_NUMBER, professorList.get(3)));
-        tuesdayList.add(new ScheduleItem("11:00", "Amphi B", "Linear programming", ClassTypes.COURSE_NUMBER, professorList.get(2)));
-
-        wednesdayList.add(new ScheduleItem("9:30", "Class 12", "Software Engineering", ClassTypes.TD_NUMBER, professorList.get(2)));
-        wednesdayList.add(new ScheduleItem("11:00", "Amphi C", "Compilation", ClassTypes.COURSE_NUMBER, professorList.get(6)));
-        wednesdayList.add(new ScheduleItem("14:00", "Labo 3", "Operating System", ClassTypes.TP_NUMBER, professorList.get(5)));
-
-        thursdayList.add(new ScheduleItem("8:00", "Amphi A", "Probability", ClassTypes.COURSE_NUMBER, professorList.get(7)));
-        thursdayList.add(new ScheduleItem("9:00", "Class 14", "Probability", ClassTypes.TD_NUMBER, professorList.get(7)));
 
 
         markList.add(new Mark(1, "CD", "Compiler Design", 15f, 15, 15, "Benghani Abdelmalk", "Benghani Abdelmalk", "Daoud Amine"));

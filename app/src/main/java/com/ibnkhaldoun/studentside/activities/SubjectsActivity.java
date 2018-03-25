@@ -149,7 +149,7 @@ public class SubjectsActivity extends AppCompatActivity implements LoaderManager
             RequestPackage request = new RequestPackage();
             request.setMethod(RequestPackage.POST);
             request.setEndPoint(EndPointsProvider.getSubjectEndpoint());
-            PreferencesManager manager = new PreferencesManager(this);
+            PreferencesManager manager = new PreferencesManager(this , PreferencesManager.STUDENT);
             request.addParams(KEY_ANDROID, KEY_ANDROID);
             request.addParams(JSON_STUDENT_SECTION, manager.getSection());
             request.addParams(JSON_STUDENT_LEVEL, manager.getLevel());

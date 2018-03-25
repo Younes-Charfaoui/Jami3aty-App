@@ -20,40 +20,30 @@ public class ScheduleItem implements Parcelable {
             return new ScheduleItem[size];
         }
     };
-    private String time, location;
-    private String subject;
-    private int classType;
-    private Professor professor;
+    private int time;
+    private String subject, location;
+    private String professor;
 
-    public ScheduleItem(String time, String location, String subject, int classType, Professor profesor) {
+    public ScheduleItem(int time, String location, String subject, String professor) {
         this.time = time;
         this.location = location;
         this.subject = subject;
-        this.classType = classType;
-        this.professor = profesor;
+        this.professor = professor;
     }
 
-
-    public ScheduleItem(String time, String location, String subject, int classType) {
-        this.time = time;
-        this.location = location;
-        this.subject = subject;
-        this.classType = classType;
-    }
 
     protected ScheduleItem(Parcel in) {
-        this.time = in.readString();
+        this.time = in.readInt();
         this.location = in.readString();
         this.subject = in.readString();
-        this.classType = in.readInt();
-        this.professor = in.readParcelable(Professor.class.getClassLoader());
+        this.professor = in.readString();
     }
 
-    public Professor getProfessor() {
+    public String getProfessor() {
         return professor;
     }
 
-    public String getTime() {
+    public int getTime() {
         return time;
     }
 
@@ -69,16 +59,6 @@ public class ScheduleItem implements Parcelable {
         return subject;
     }
 
-    public int getClassType() {
-        return classType;
-    }
-
-    @Override
-    public String toString() {
-        return this.getTime() + ", " +
-                ClassTypes.getStringFormat(this.classType) +
-                " at" + this.getLocation();
-    }
 
     @Override
     public int describeContents() {
@@ -87,10 +67,9 @@ public class ScheduleItem implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.time);
+        dest.writeInt(this.time);
         dest.writeString(this.location);
         dest.writeString(this.subject);
-        dest.writeInt(this.classType);
-        dest.writeParcelable(this.professor, flags);
+        dest.writeString(this.professor);
     }
 }

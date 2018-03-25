@@ -17,8 +17,8 @@ import java.util.List;
 
 public class SubjectListFragment extends DialogFragment {
 
-    public SubjectDialogInterface mInterface;
     private static final String KEY = "key";
+    public SubjectDialogInterface mInterface;
 
     public static SubjectListFragment newInstance(List<String> list) {
         Bundle args = new Bundle();
@@ -47,10 +47,12 @@ public class SubjectListFragment extends DialogFragment {
 
         ArrayList<String> list = getArguments().getStringArrayList(KEY);
 
+        assert getContext() != null;
         SubjectProfessorDialogAdapter adapter = new SubjectProfessorDialogAdapter(getContext(), R
                 .layout.subject_professor_dialog_list_item, list);
 
-        builder.setAdapter(adapter, (dialog, which) -> mInterface.onSubjectChosen(list.get(which)));
+        if (list != null)
+            builder.setAdapter(adapter, (dialog, which) -> mInterface.onSubjectChosen(list.get(which)));
 
         return builder.create();
     }

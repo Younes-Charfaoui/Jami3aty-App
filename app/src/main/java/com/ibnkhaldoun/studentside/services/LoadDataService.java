@@ -4,17 +4,20 @@ import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 
+import com.ibnkhaldoun.studentside.Utilities.PreferencesManager;
 import com.ibnkhaldoun.studentside.activities.MarkActivity;
 import com.ibnkhaldoun.studentside.activities.SavedActivity;
+import com.ibnkhaldoun.studentside.activities.ScheduleActivity;
 import com.ibnkhaldoun.studentside.activities.StudentMainActivity;
 import com.ibnkhaldoun.studentside.activities.SubjectsActivity;
 import com.ibnkhaldoun.studentside.models.Mail;
 import com.ibnkhaldoun.studentside.models.Mark;
 import com.ibnkhaldoun.studentside.models.Saved;
+import com.ibnkhaldoun.studentside.models.Schedule;
 import com.ibnkhaldoun.studentside.models.Subject;
 import com.ibnkhaldoun.studentside.networking.models.RequestPackage;
-import com.ibnkhaldoun.studentside.networking.models.Response;
 import com.ibnkhaldoun.studentside.networking.utilities.HttpUtilities;
 import com.ibnkhaldoun.studentside.networking.utilities.JsonUtilities;
 
@@ -23,7 +26,8 @@ import org.json.JSONException;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import static com.ibnkhaldoun.studentside.networking.models.Response.*;
+import static com.ibnkhaldoun.studentside.networking.models.Response.IO_EXCEPTION;
+import static com.ibnkhaldoun.studentside.networking.models.Response.JSON_EXCEPTION;
 import static com.ibnkhaldoun.studentside.services.DatabaseService.KEY_CONTENT_DATA;
 
 /**
@@ -41,6 +45,7 @@ public class LoadDataService extends IntentService {
     public static final String SCHEDULE_ACTION = "scheduleAction";
     public static final String MARK_ACTION = "markAction";
     public static final String SUBJECT_ACTION = "subjectAction";
+    public static final String SUBJECT_INNER_ACTION = "subjectAction";
     public static final String NOTIFICATION_ACTION = "notificationAction";
 
     public static final int DISPLAY_TYPE = 1;
@@ -48,9 +53,10 @@ public class LoadDataService extends IntentService {
     public static final int SCHEDULE_TYPE = 3;
     public static final int MARK_TYPE = 4;
     public static final int SUBJECT_TYPE = 5;
-    public static final int SAVED_TYPE = 8;
     public static final int ALL_TYPE = 6;
     public static final int NOTIFICATION_TYPE = 7;
+    public static final int SAVED_TYPE = 8;
+    public static final int SUBJECT_IN_TYPE = 9;
 
     public static final String KEY_ACTION = "Action";
     public static final String KEY_DATA = "data";
@@ -59,7 +65,6 @@ public class LoadDataService extends IntentService {
 
     public static final String ACTION_ERROR = "errorAction";
 
-    // TODO: 22/03/2018 add a broadcast for the case when an exception occur.
     public LoadDataService() {
         super("LoadDataService");
     }
@@ -73,6 +78,7 @@ public class LoadDataService extends IntentService {
                 mailCall(request, this);
                 break;
             case SCHEDULE_TYPE:
+                scheduleCall(request, this);
                 break;
             case DISPLAY_TYPE:
                 break;
@@ -82,9 +88,47 @@ public class LoadDataService extends IntentService {
             case SUBJECT_TYPE:
                 subjectCall(request, this);
                 break;
+            case SUBJECT_IN_TYPE:
+                subjectInnerCall(request, this);
+                break;
             case SAVED_TYPE:
                 savedCall(request, this);
                 break;
+        }
+    }
+
+    private void subjectInnerCall(RequestPackage request, Context context) {
+        try {
+            String response = HttpUtilities.getData(request);
+            ArrayList<Subject> subjectList = JsonUtilities.getSubjectList(response);
+            ArrayList<String> subjectsStrings = new ArrayList<>();
+            if (subjectList != null) for (Subject subject : subjectList) {
+                subjectsStrings.add(subject.getTitle());
+            }
+            new PreferencesManager(context, PreferencesManager.SUBJECT).addSubjects(subjectsStrings);
+            Intent intentDatabase = new Intent(context, DatabaseService.class);
+            intentDatabase.putExtra(KEY_CONTENT_DATA, subjectList);
+            intentDatabase.putExtra(KEY_ACTION, SUBJECT_TYPE);
+            startService(intentDatabase);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void scheduleCall(RequestPackage request, Context context) {
+        try {
+            String response = HttpUtilities.getData(request);
+            Log.i("Service", "scheduleCall: " + response);
+            Intent intentSchedule = new Intent(SCHEDULE_ACTION);
+            intentSchedule.putExtra(ScheduleActivity.KEY_SCHEDULE, response);
+            LocalBroadcastManager.getInstance(this).sendBroadcast(intentSchedule);
+            Intent intentDatabase = new Intent(context, DatabaseService.class);
+            intentDatabase.putExtra(KEY_ACTION, SCHEDULE_TYPE);
+            intentDatabase.putExtra(KEY_CONTENT_DATA, response);
+            context.startService(intentDatabase);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(ACTION_ERROR).putExtra(KEY_ERROR, IO_EXCEPTION));
         }
     }
 
