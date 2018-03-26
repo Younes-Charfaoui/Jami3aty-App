@@ -55,6 +55,7 @@ import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_SUBJECT
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_SUBJECT_TITLE;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_SUBJECT_UNITY_TYPE;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_TITLE_SCHEDULE;
+import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_TYPE_SCHEDULE;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.KEY_JSON_DATA;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.KEY_JSON_STATUS;
 
@@ -205,16 +206,20 @@ public class JsonUtilities {
         int status = root.getInt(KEY_JSON_STATUS);
         if (status != 200) throw new JSONException("Code was not 200");
         JSONArray data = root.getJSONArray(JSON_SUBJECT_DATA);
+        int level = root.getInt(JSON_STUDENT_LEVEL),
+                section = root.getInt(JSON_STUDENT_SECTION),
+                group = root.getInt(JSON_STUDENT_GROUP);
         for (int i = 0; i < data.length(); i++) {
             JSONObject object = data.getJSONObject(i);
             int day = object.getInt(JSON_DAY_SCHEDULE);
             Schedule schedule = schedules.get(day, null) != null ? schedules.get(day)
-                    : new Schedule(day);
+                    : new Schedule(day, level, section, group);
             int time = object.getInt(JSON_HOUR_SCHEDULE);
             String place = object.getString(JSON_PLACE_SCHEDULE);
             String subject = object.getString(JSON_TITLE_SCHEDULE);
             String professor = object.getString(JSON_NAME_SCHEDULE);
-            ScheduleItem item = new ScheduleItem(time, place, subject, professor);
+            int type = object.getInt(JSON_TYPE_SCHEDULE);
+            ScheduleItem item = new ScheduleItem(time, place, subject, professor, type);
             schedule.getScheduleItemList().add(item);
             schedules.put(day, schedule);
         }

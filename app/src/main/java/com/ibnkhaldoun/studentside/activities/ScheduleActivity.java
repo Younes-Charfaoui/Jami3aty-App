@@ -50,8 +50,14 @@ import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 import static com.ibnkhaldoun.studentside.Utilities.PreferencesManager.STUDENT;
 import static com.ibnkhaldoun.studentside.database.DatabaseContract.ScheduleEntry.COLUMN_DAY;
+import static com.ibnkhaldoun.studentside.database.DatabaseContract.ScheduleEntry.COLUMN_GROUP;
 import static com.ibnkhaldoun.studentside.database.DatabaseContract.ScheduleEntry.COLUMN_HOUR;
+import static com.ibnkhaldoun.studentside.database.DatabaseContract.ScheduleEntry.COLUMN_LEVEL;
 import static com.ibnkhaldoun.studentside.database.DatabaseContract.ScheduleEntry.COLUMN_PLACE;
+import static com.ibnkhaldoun.studentside.database.DatabaseContract.ScheduleEntry.COLUMN_PROFESSOR;
+import static com.ibnkhaldoun.studentside.database.DatabaseContract.ScheduleEntry.COLUMN_SECTION;
+import static com.ibnkhaldoun.studentside.database.DatabaseContract.ScheduleEntry.COLUMN_SUBJECT;
+import static com.ibnkhaldoun.studentside.database.DatabaseContract.ScheduleEntry.COLUMN_TYPE;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_STUDENT_GROUP;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_STUDENT_LEVEL;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_STUDENT_SECTION;
@@ -67,7 +73,7 @@ import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.KEY_ANDROID;
  * these fragments are managed by the view pager and the tab layout views to handle
  * user interactions and some callbacks and method are present in both sides to
  * communicate between this activity , fragments ,tab layout and the view pager.
- *
+ * <p>
  * this activity implements the loader manager call backs to load data from the database
  * and also the schedules callback to get reference to the fragments of each day
  * to pass data to it.
@@ -106,7 +112,7 @@ public class ScheduleActivity extends AppCompatActivity
             mViewPager.setVisibility(VISIBLE);
             mLoadingProgressBar.setVisibility(GONE);
             String response = intent.getStringExtra(KEY_SCHEDULE);
-            Log.i("Schedule", "onReceive: " + response);
+
             try {
                 mCurrentSchedule = JsonUtilities.getSchedulesList(response);
                 for (int i = 0; i < mCurrentSchedule.size(); i++) {
@@ -142,6 +148,7 @@ public class ScheduleActivity extends AppCompatActivity
     /**
      * the famous method on create will be responsible for th initialization work
      * and
+     *
      * @param savedInstanceState
      */
     @Override
@@ -194,7 +201,7 @@ public class ScheduleActivity extends AppCompatActivity
             mLoadingProgressBar.setVisibility(VISIBLE);
             RequestPackage request = new RequestPackage();
             if (type == SCHEDULE_TYPE)
-                request.setEndPoint(EndPointsProvider.getScheduleEndpoint());
+                request.setEndPoint(EndPointsProvider.getScheduleEndpoint() + "/all");
             else request.setEndPoint(EndPointsProvider.getExamScheduleEndpoint());
             request.setMethod(RequestPackage.POST);
             PreferencesManager manager = new PreferencesManager(this, STUDENT);
@@ -280,24 +287,32 @@ public class ScheduleActivity extends AppCompatActivity
         });
 
         Calendar calendar = Calendar.getInstance();
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        int day = calendar.get(Calendar.DAY_OF_WEEK);
+        Log.i("Schedule", "setupViewPagerAndTabLayout: " + day);
         switch (day) {
             case Calendar.SUNDAY:
+                Log.i("Schedule", "setupViewPagerAndTabLayout: it was sunday " );
                 mViewPager.setCurrentItem(0);
                 break;
             case Calendar.MONDAY:
+                Log.i("Schedule", "setupViewPagerAndTabLayout: it was monday " );
                 mViewPager.setCurrentItem(1);
                 break;
             case Calendar.TUESDAY:
+                Log.i("Schedule", "setupViewPagerAndTabLayout: it was tuesday " );
                 mViewPager.setCurrentItem(2);
                 break;
             case Calendar.WEDNESDAY:
+                Log.i("Schedule", "setupViewPagerAndTabLayout: it was wednesday " );
                 mViewPager.setCurrentItem(3);
                 break;
             case Calendar.THURSDAY:
+                Log.i("Schedule", "setupViewPagerAndTabLayout: it was thursday " );
                 mViewPager.setCurrentItem(4);
                 break;
         }
+
+
     }
 
     @Override
@@ -314,7 +329,7 @@ public class ScheduleActivity extends AppCompatActivity
                         .appendEncodedPath(manager.getSection())
                         .appendEncodedPath(manager.getGroup())
                         .build();
-
+                Log.i("Schedule", "onCreateLoader: " + pathToSchedule.toString());
                 return new CursorLoader(this,
                         pathToSchedule,
                         new String[]{"*"}, null, null, null);
@@ -337,15 +352,21 @@ public class ScheduleActivity extends AppCompatActivity
     private void sendSchedulesToFragments(Cursor data) {
         if (data.getCount() != 0) {
             SparseArray<Schedule> schedules = new SparseArray<>();
-
+            Log.i("Schedule", "sendSchedulesToFragments: the count of cursor was "
+                    + data.getCount());
             while (data.moveToNext()) {
                 int day = data.getInt(data.getColumnIndex(COLUMN_DAY));
-                Schedule schedule = schedules.get(day, null) != null ? schedules.get(day) : new Schedule(day);
+                int level = data.getInt(data.getColumnIndex(COLUMN_LEVEL));
+                int section = data.getInt(data.getColumnIndex(COLUMN_SECTION));
+                int group = data.getInt(data.getColumnIndex(COLUMN_GROUP));
+                Schedule schedule = schedules.get(day, null) != null ? schedules.get(day)
+                        : new Schedule(day, level, section, group);
                 int time = data.getInt(data.getColumnIndex(COLUMN_HOUR));
                 String place = data.getString(data.getColumnIndex(COLUMN_PLACE));
-                String subject = data.getString(data.getColumnIndex(COLUMN_PLACE));
-                String professor = data.getString(data.getColumnIndex(COLUMN_PLACE));
-                ScheduleItem item = new ScheduleItem(time, place, subject, professor);
+                String subject = data.getString(data.getColumnIndex(COLUMN_SUBJECT));
+                String professor = data.getString(data.getColumnIndex(COLUMN_PROFESSOR));
+                int type = data.getInt(data.getColumnIndex(COLUMN_TYPE));
+                ScheduleItem item = new ScheduleItem(time, place, subject, professor, type);
                 schedule.getScheduleItemList().add(item);
                 schedules.put(day, schedule);
                 mCurrentSchedule = schedules;
@@ -355,6 +376,8 @@ public class ScheduleActivity extends AppCompatActivity
                 int day = schedules.keyAt(i);
                 switchFragments(day, schedules);
             }
+        }else {
+            Log.i("Schedule", "sendSchedulesToFragments: the count of cursor was 0");
         }
         mLoadingProgressBar.setVisibility(GONE);
         mViewPager.setVisibility(VISIBLE);

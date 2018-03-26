@@ -80,7 +80,7 @@ public final  class Levels {
             case MASTER_RT_TWO:
                 return "M2 RT Computer Science";
             default:
-                throw new IllegalStateException();
+                return "L1 Computer Science";
         }
     }
 }

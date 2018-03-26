@@ -7,7 +7,7 @@ package com.ibnkhaldoun.studentside.providers;
 
 public final class EndPointsProvider {
 
-    private static final String BASE = "http://192.168.33.2/";
+    private static final String BASE = "http://192.168.1.2/";
     private final static String LOGIN_ENDPOINT = BASE + "jami3aty/users/login";
     private static final String SIGN_UP_ENDPOINT = BASE + "jami3aty/users/register";
     private final static String FORGET_PASSWORD_ENDPOINT = BASE + "jami3aty/users/forgotpass";
@@ -16,13 +16,11 @@ public final class EndPointsProvider {
     private final static String MAIL_ENDPOINT = BASE + "jami3aty/users/mails";
     private final static String SAVED_ENDPOINT = BASE + "jami3aty/saved";
     private final static String EXAM_ENDPOINT = BASE + "jami3aty/exams";
+    private final static String SCHEDULE_ENDPOINT = BASE + "jami3aty/schedules";
 
     public static String getScheduleEndpoint() {
         return SCHEDULE_ENDPOINT;
     }
-
-    private final static String SCHEDULE_ENDPOINT = BASE + "jami3aty/schedules";
-
 
     public static String getSubjectEndpoint() {
         return SUBJECT_ENDPOINT;

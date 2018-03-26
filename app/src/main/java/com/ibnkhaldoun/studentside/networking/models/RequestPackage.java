@@ -28,6 +28,7 @@ public class RequestPackage implements Parcelable {
     //public constant we need in the process of making http calls
     public static final String GET = "GET";
     public static final String POST = "POST";
+    public static final String NONE = "NONE";
     private String mEndPoint;
     private String mMethod;
     private Map<String, String> mParams ;

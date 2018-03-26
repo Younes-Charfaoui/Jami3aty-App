@@ -77,6 +77,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
             DatabaseContract.ScheduleEntry.COLUMN_HOUR + " INTEGER NOT NULL , " +
             DatabaseContract.ScheduleEntry.COLUMN_PLACE + " TEXT NOT NULL , " +
             DatabaseContract.ScheduleEntry.COLUMN_PROFESSOR + " TEXT NOT NULL , " +
+            DatabaseContract.ScheduleEntry.COLUMN_TYPE + " INTEGER NOT NULL , " +
             DatabaseContract.ScheduleEntry.COLUMN_SUBJECT + " TEXT NOT NULL ); ";
 
     private static final String SQL_QUERY_DROP_SCHEDULE = BASE_DROP +

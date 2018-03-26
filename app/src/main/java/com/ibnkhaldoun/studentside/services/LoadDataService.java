@@ -135,7 +135,7 @@ public class LoadDataService extends IntentService {
     private void scheduleCall(RequestPackage request, Context context) {
         try {
             String response = HttpUtilities.getData(request);
-            Log.i("Service", "scheduleCall: " + response);
+
             Intent intentSchedule = new Intent(SCHEDULE_ACTION);
             intentSchedule.putExtra(ScheduleActivity.KEY_SCHEDULE, response);
             LocalBroadcastManager.getInstance(this).sendBroadcast(intentSchedule);

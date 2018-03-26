@@ -144,22 +144,27 @@ public class DatabaseProvider extends ContentProvider {
         SQLiteDatabase database = mDatabase.getWritableDatabase();
         switch (match) {
             case SUBJECT:
-                for (ContentValues value :
-                        values) {
-                    long row = database.insert(DatabaseContract.SubjectEntry.TABLE_NAME, null, value);
-                    if (row > 0) insertedRow++;
-                }
-                return insertedRow;
+                return insertMultipleRows(values, insertedRow, database,
+                        DatabaseContract.SubjectEntry.TABLE_NAME);
             case MARKS:
-                for (ContentValues value :
-                        values) {
-                    long row = database.insert(DatabaseContract.MarkEntry.TABLE_NAME, null, value);
-                    if (row > 0) insertedRow++;
-                }
-                return insertedRow;
+                return insertMultipleRows(values, insertedRow, database,
+                        DatabaseContract.MarkEntry.TABLE_NAME);
+            case SCHEDULE:
+                return insertMultipleRows(values, insertedRow, database,
+                        DatabaseContract.ScheduleEntry.TABLE_NAME);
             default:
                 throw new IllegalStateException();
         }
+    }
+
+    private int insertMultipleRows(@NonNull ContentValues[] values,
+                                   int insertedRow, SQLiteDatabase database , String table) {
+        for (ContentValues value :
+                values) {
+            long row = database.insert(table, null, value);
+            if (row > 0) insertedRow++;
+        }
+        return insertedRow;
     }
 
     private Uri insertData(Uri uri, ContentValues values, String table) {
@@ -204,9 +209,9 @@ public class DatabaseProvider extends ContentProvider {
                 selectionArgs = new String[]{String.valueOf(uri.getPathSegments().get(1))
                         , String.valueOf(uri.getPathSegments().get(2)),
                         String.valueOf(uri.getPathSegments().get(3))};
-                database.delete(DatabaseContract.ScheduleEntry.TABLE_NAME,
+                return database.delete(DatabaseContract.ScheduleEntry.TABLE_NAME,
                         selection, selectionArgs);
-                break;
+
         }
         return 0;
     }

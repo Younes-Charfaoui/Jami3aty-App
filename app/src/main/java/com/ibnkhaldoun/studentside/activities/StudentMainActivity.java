@@ -64,7 +64,9 @@ public class StudentMainActivity extends AppCompatActivity
     private static final int DISPLAY_LOADER_ID = 190;
     private static final int MAIL_LOADER_ID = 191;
     private static final int NOTIFICATION_LOADER_ID = 192;
+
     public static StudentMainActivity ACTIVITY;
+
     private FloatingActionButton mAddMailFab;
     private ViewPager mMainViewPager;
     private TabLayout mTabLayout;

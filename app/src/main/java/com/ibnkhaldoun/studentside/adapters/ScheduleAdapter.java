@@ -2,7 +2,6 @@ package com.ibnkhaldoun.studentside.adapters;
 
 
 import android.content.Context;
-import android.graphics.drawable.GradientDrawable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -44,8 +43,8 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.Schedu
         holder.mScheduleSubject.setText(scheduleItem.getSubject());
         String placeAndProfessor = scheduleItem.getLocation() + ", " + scheduleItem.getProfessor();
         holder.mScheduleLocationAndProfessor.setText(placeAndProfessor);
-        holder.mCircleImage.setColorFilter(ContextCompat.getColor(mContext,colorPrimary));
-
+        holder.mCircleImage.setColorFilter(ContextCompat.getColor(mContext, colorPrimary));
+        holder.mTypeScheduleTextView.setText(getType(scheduleItem.getType()));
     }
 
     @Override
@@ -78,10 +77,24 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.Schedu
         }
     }
 
+    private String getType(int type) {
+        switch (type) {
+            case 1:
+                return "Course";
+            case 2:
+                return "TD";
+            case 3:
+                return "TP";
+            default:
+                return "Course";
+        }
+    }
+
     class ScheduleViewHolder extends RecyclerView.ViewHolder {
-        private TextView mTimeTextView, mScheduleSubject, mScheduleLocationAndProfessor;
+        private TextView mTimeTextView, mScheduleSubject,
+                mScheduleLocationAndProfessor, mTypeScheduleTextView;
         private ImageView mCircleImage;
-        private View mSeparatorView;
+
 
         ScheduleViewHolder(View itemView) {
             super(itemView);
@@ -89,7 +102,7 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.Schedu
             mScheduleSubject = itemView.findViewById(R.id.schedule_subject);
             mScheduleLocationAndProfessor = itemView.findViewById(R.id.schedule_location_and_professor);
             mCircleImage = itemView.findViewById(R.id.schedule_circle);
-            mSeparatorView = itemView.findViewById(R.id.schedule_separator);
+            mTypeScheduleTextView = itemView.findViewById(R.id.schedule_type);
         }
     }
 }

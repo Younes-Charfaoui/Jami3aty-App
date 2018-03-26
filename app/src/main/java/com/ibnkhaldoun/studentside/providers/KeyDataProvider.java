@@ -47,4 +47,5 @@ public final class KeyDataProvider {
     public static final String JSON_NAME_SCHEDULE = "fullName";
     public static final String JSON_TITLE_SCHEDULE = "title";
     public static final String JSON_HOUR_SCHEDULE = "hour_start_schedule";
+    public static final String JSON_TYPE_SCHEDULE = "type";
 }

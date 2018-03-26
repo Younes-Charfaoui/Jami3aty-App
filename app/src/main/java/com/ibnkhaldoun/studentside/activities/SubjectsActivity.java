@@ -44,7 +44,8 @@ import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.KEY_ANDROID;
  * @definition this activity will handle the user subject and it's
  * interaction with the list and it's implementation.
  */
-public class SubjectsActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
+public class SubjectsActivity extends AppCompatActivity implements
+        LoaderManager.LoaderCallbacks<Cursor> {
 
     //constant to extract the content of the intent.
     public static final String KEY_SUBJECTS = "keySubjects";
@@ -148,7 +149,7 @@ public class SubjectsActivity extends AppCompatActivity implements LoaderManager
             Intent intent = new Intent(this, LoadDataService.class);
             RequestPackage request = new RequestPackage();
             request.setMethod(RequestPackage.POST);
-            request.setEndPoint(EndPointsProvider.getSubjectEndpoint());
+            request.setEndPoint(EndPointsProvider.getSubjectEndpoint() + "/all");
             PreferencesManager manager = new PreferencesManager(this , PreferencesManager.STUDENT);
             request.addParams(KEY_ANDROID, KEY_ANDROID);
             request.addParams(JSON_STUDENT_SECTION, manager.getSection());

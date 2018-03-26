@@ -3,6 +3,7 @@ package com.ibnkhaldoun.studentside.models;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.SparseArray;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,20 +22,39 @@ public class Schedule implements Parcelable {
     };
     private int dayOfSchedule;
     private List<ScheduleItem> scheduleItemList;
+    private int level;
 
-    public Schedule(int dayOfSchedule, List<ScheduleItem> scheduleItemList) {
-        this.dayOfSchedule = dayOfSchedule;
-        this.scheduleItemList = scheduleItemList;
+    public int getLevel() {
+        return level;
     }
 
-    public Schedule(int dayOfSchedule) {
+    public int getSection() {
+        return section;
+    }
+
+    public int getGroup() {
+        return group;
+    }
+
+    private int section;
+    private int group;
+
+    public Schedule(int dayOfSchedule,
+                    int level, int section, int group) {
         this.dayOfSchedule = dayOfSchedule;
         this.scheduleItemList = new ArrayList<>();
+        this.level = level;
+        this.section = section;
+        this.group = group;
     }
+
 
     protected Schedule(Parcel in) {
         this.dayOfSchedule = in.readInt();
         this.scheduleItemList = in.createTypedArrayList(ScheduleItem.CREATOR);
+        this.level = in.readInt();
+        this.section = in.readInt();
+        this.group = in.readInt();
     }
 
     public int getDayOfSchedule() {
@@ -58,5 +78,16 @@ public class Schedule implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(this.dayOfSchedule);
         dest.writeTypedList(this.scheduleItemList);
+        dest.writeInt(this.level);
+        dest.writeInt(this.section);
+        dest.writeInt(this.group);
+    }
+
+    public static ArrayList<Schedule> getScheduleList(SparseArray<Schedule> sparse) {
+        ArrayList<Schedule> returnedList = new ArrayList<>();
+        for (int i = 0; i < sparse.size(); i++) {
+            returnedList.add(sparse.get(sparse.keyAt(i)));
+        }
+        return returnedList;
     }
 }

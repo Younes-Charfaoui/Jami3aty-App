@@ -113,5 +113,6 @@ public class DatabaseContract implements BaseColumns {
         public static final String COLUMN_HOUR = "hour";
         public static final String COLUMN_PLACE = "place";
         public static final String COLUMN_DAY = "day";
+        public static final String COLUMN_TYPE = "type";
     }
 }

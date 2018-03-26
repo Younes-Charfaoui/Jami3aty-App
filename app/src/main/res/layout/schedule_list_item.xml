@@ -7,15 +7,32 @@
     android:orientation="horizontal"
     android:padding="8dp">
 
-    <TextView
-        android:id="@+id/schedule_time"
+    <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="5"
-        android:fontFamily="sans-serif-light"
-        android:textSize="16sp"
         android:gravity="center"
-        tools:text="8:00" />
+        android:orientation="vertical">
+
+
+        <TextView
+            android:id="@+id/schedule_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-thin"
+            android:gravity="center"
+            android:textSize="16sp"
+            tools:text="TP" />
+        <TextView
+            android:id="@+id/schedule_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-light"
+            android:gravity="center"
+            android:textSize="18sp"
+            tools:text="8:00" />
+    </LinearLayout>
+
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -44,18 +61,18 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="19"
-        android:padding="8dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="8dp">
 
         <TextView
             android:id="@+id/schedule_subject"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-light"
-            android:drawableStart="@drawable/ic_lightbulb_outline_black"
             android:drawablePadding="8dp"
-            android:textSize="18sp"
+            android:drawableStart="@drawable/ic_lightbulb_outline_black"
+            android:fontFamily="sans-serif-light"
             android:singleLine="true"
+            android:textSize="18sp"
             tools:drawableTint="@color/colorPrimary"
             tools:text="Compiler Design" />
 
@@ -65,11 +82,11 @@
             android:layout_height="fill_parent"
             android:drawablePadding="8dp"
             android:drawableStart="@drawable/ic_person_outline_black"
-            tools:drawableTint="@color/colorPrimary"
             android:fontFamily="sans-serif-thin"
             android:gravity="center_vertical"
-            android:textSize="16sp"
             android:singleLine="true"
+            android:textSize="16sp"
+            tools:drawableTint="@color/colorPrimary"
             tools:text="Amphi B , Benghani Abdelmalk" />
 
 

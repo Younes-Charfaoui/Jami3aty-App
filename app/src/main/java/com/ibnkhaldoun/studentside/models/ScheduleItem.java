@@ -4,8 +4,6 @@ package com.ibnkhaldoun.studentside.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.ibnkhaldoun.studentside.enums.ClassTypes;
-
 
 public class ScheduleItem implements Parcelable {
 
@@ -23,12 +21,14 @@ public class ScheduleItem implements Parcelable {
     private int time;
     private String subject, location;
     private String professor;
+    private int type;
 
-    public ScheduleItem(int time, String location, String subject, String professor) {
+    public ScheduleItem(int time, String location, String subject, String professor, int type) {
         this.time = time;
         this.location = location;
         this.subject = subject;
         this.professor = professor;
+        this.type = type;
     }
 
 
@@ -37,6 +37,7 @@ public class ScheduleItem implements Parcelable {
         this.location = in.readString();
         this.subject = in.readString();
         this.professor = in.readString();
+        this.type = in.readInt();
     }
 
     public String getProfessor() {
@@ -71,5 +72,14 @@ public class ScheduleItem implements Parcelable {
         dest.writeString(this.location);
         dest.writeString(this.subject);
         dest.writeString(this.professor);
+        dest.writeInt(this.type);
+    }
+
+    public int getType() {
+        return this.type;
+    }
+
+    public void setType(int type){
+        this.type = type;
     }
 }

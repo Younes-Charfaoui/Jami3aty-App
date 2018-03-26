@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.Nullable;
 import android.util.Log;
-import android.util.SparseArray;
 
 import com.ibnkhaldoun.studentside.database.DatabaseContract;
 import com.ibnkhaldoun.studentside.models.Mark;
@@ -68,7 +67,8 @@ public class DatabaseService extends IntentService {
 
     private void insertSchedules(String stringExtra) {
         try {
-            SparseArray<Schedule> schedules = JsonUtilities.getSchedulesList(stringExtra);
+            ArrayList<Schedule> schedules = Schedule.
+                    getScheduleList(JsonUtilities.getSchedulesList(stringExtra));
             int group = new JSONObject(stringExtra).getInt(KeyDataProvider.JSON_STUDENT_GROUP);
             int level = new JSONObject(stringExtra).getInt(KeyDataProvider.JSON_STUDENT_LEVEL);
             int section = new JSONObject(stringExtra).getInt(KeyDataProvider.JSON_STUDENT_SECTION);
@@ -78,33 +78,34 @@ public class DatabaseService extends IntentService {
                     .appendPath(String.valueOf(section))
                     .appendPath(String.valueOf(group))
                     .build();
-            getContentResolver().delete(pathToSchedule,
+            Log.i(TAG, "insertSchedules: " + pathToSchedule.toString());
+            int data = getContentResolver().delete(pathToSchedule,
                     null, null);
-            getContentResolver().bulkInsert(DatabaseContract.ScheduleEntry.CONTENT_SCHEDULE_URI,
-                    getScheduleValues(schedules, level, section, group));
+            Log.i(TAG, "insertSchedules: the removed data was " + data);
+            int dataIn =getContentResolver().bulkInsert(DatabaseContract.ScheduleEntry.CONTENT_SCHEDULE_URI,
+                    getScheduleValues(schedules));
+            Log.i(TAG, "insertSchedules: the inserted data was " + dataIn);
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
 
-    private ContentValues[] getScheduleValues(SparseArray<Schedule> schedules,
-                                              int level, int section, int group) {
+    private ContentValues[] getScheduleValues(ArrayList<Schedule> schedules) {
         ArrayList<ContentValues> values = new ArrayList<>();
 
         for (int i = 0; i < schedules.size(); i++) {
-            int key = schedules.keyAt(i);
-            Schedule schedule = schedules.get(key);
+            Schedule schedule = schedules.get(i);
             for (int j = 0; j < schedule.getScheduleItemList().size(); j++) {
                 ContentValues value = new ContentValues();
 
                 value.put(DatabaseContract.ScheduleEntry.COLUMN_DAY,
                         schedule.getDayOfSchedule());
                 value.put(DatabaseContract.ScheduleEntry.COLUMN_GROUP,
-                        group);
+                        schedule.getGroup());
                 value.put(DatabaseContract.ScheduleEntry.COLUMN_SECTION,
-                        section);
+                        schedule.getSection());
                 value.put(DatabaseContract.ScheduleEntry.COLUMN_LEVEL,
-                        level);
+                        schedule.getLevel());
                 value.put(DatabaseContract.ScheduleEntry.COLUMN_HOUR,
                         schedule.getScheduleItemList().get(j).getTime());
                 value.put(DatabaseContract.ScheduleEntry.COLUMN_PLACE,
@@ -113,11 +114,14 @@ public class DatabaseService extends IntentService {
                         schedule.getScheduleItemList().get(j).getProfessor());
                 value.put(DatabaseContract.ScheduleEntry.COLUMN_SUBJECT,
                         schedule.getScheduleItemList().get(j).getSubject());
+                value.put(DatabaseContract.ScheduleEntry.COLUMN_TYPE,
+                        schedule.getScheduleItemList().get(j).getType());
                 values.add(value);
             }
 
         }
-        return (ContentValues[]) values.toArray();
+
+        return values.toArray(new ContentValues[values.size()]);
     }
 
     private void insertSaved(ArrayList<Saved> savedList) {
