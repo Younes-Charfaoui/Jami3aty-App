@@ -67,26 +67,38 @@ import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.KEY_ANDROID;
  * these fragments are managed by the view pager and the tab layout views to handle
  * user interactions and some callbacks and method are present in both sides to
  * communicate between this activity , fragments ,tab layout and the view pager.
+ *
+ * this activity implements the loader manager call backs to load data from the database
+ * and also the schedules callback to get reference to the fragments of each day
+ * to pass data to it.
  */
 
 public class ScheduleActivity extends AppCompatActivity
         implements ScheduleCallbacks, LoaderManager.LoaderCallbacks<Cursor> {
 
+    //key to get inn incoming data from the service
     public static final String KEY_SCHEDULE = "keySchedule";
+
     private static final int ID_SCHEDULE_LOADER = 891;
     private static final int EXAM_TYPE = 16;
     private static final int SCHEDULE_TYPE = 17;
+
     private Toolbar mToolbar;
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
     private ProgressBar mLoadingProgressBar;
+
+    //the fragments to use in each day
     private DaySundayFragment mSundayFragment;
     private DayMondayFragment mMondayFragment;
     private DayTuesdayFragment mTuesdayFragment;
     private DayWednesdayFragment mWednesdayFragment;
     private DayThursdayFragment mThursdayFragment;
+
+    //the data provider which gonna hold the days and it correspond schedule.
     private SparseArray<Schedule> mCurrentSchedule;
 
+    //the receiver from the service which will load the data from the internet
     private BroadcastReceiver mScheduleReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -107,6 +119,7 @@ public class ScheduleActivity extends AppCompatActivity
         }
     };
 
+    //receiver will get notified if an error will occur in the service.
     private BroadcastReceiver mFailReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -126,6 +139,11 @@ public class ScheduleActivity extends AppCompatActivity
         }
     };
 
+    /**
+     * the famous method on create will be responsible for th initialization work
+     * and
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

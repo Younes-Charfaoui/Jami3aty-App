@@ -182,4 +182,16 @@
     <string name="delete_note_confirmation">Are you sure to delete the note</string>
     <string name="add_somthing">Please enter something</string>
     <string name="choose_subject_please">Please Choose Subject</string>
+    <string name="key_notification_display">displayNotification</string>
+    <string name="key_notification_message">messageNotification</string>
+    <string name="key_reminder_class">classReminders</string>
+    <string name="key_reminder_exam">examReminders</string>
+    <string name="key_reminder_consultation">consultationReminders</string>
+    <string name="key_feedback">feedback</string>
+    <string name="key_privacy">privacy</string>
+    <string name="key_term_of_use">termOfUse</string>
+    <string name="key_sign_out" translatable="false">signOut</string>
+    <string name="sign_out">Sign out</string>
+    <string name="logout_confirmation">Are you sure you wish to sign out.</string>
+    <string name="yes">Yes</string>
 </resources>

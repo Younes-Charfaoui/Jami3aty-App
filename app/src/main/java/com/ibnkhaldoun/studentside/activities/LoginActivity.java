@@ -53,7 +53,7 @@ public class LoginActivity extends AppCompatActivity implements LoginTaskListene
         }
         ActivityUtilities.changeStatusBarColorToTransparent(getWindow());
         mEmailEditText = findViewById(R.id.input_email);
-        mEmailEditText.setText("ismail@gmail.com");
+        mEmailEditText.setText("mxcsyounes@gmail.com");
         mPasswordEditText = findViewById(R.id.input_password);
         mPasswordEditText.setText("hellohello");
         mPasswordWrapper = findViewById(R.id.password_wrapper);
@@ -174,6 +174,12 @@ public class LoginActivity extends AppCompatActivity implements LoginTaskListene
                     intent.putExtra(LoadDataService.KEY_REQUEST, request);
                     intent.putExtra(LoadDataService.KEY_ACTION, LoadDataService.SUBJECT_IN_TYPE);
                     startService(intent);
+                    request.setMethod(RequestPackage.POST);
+                    request.setEndPoint(EndPointsProvider.getScheduleEndpoint());
+                    Intent intentSchedule = new Intent(this, LoadDataService.class);
+                    intentSchedule.putExtra(LoadDataService.KEY_REQUEST, request);
+                    intentSchedule.putExtra(LoadDataService.KEY_ACTION, LoadDataService.SCHEDULE_IN_TYPE);
+                    //startService(intentSchedule);
                     finish();
                 } else {
                     Toast.makeText(this, "Login for professor", Toast.LENGTH_SHORT).show();
@@ -210,7 +216,5 @@ public class LoginActivity extends AppCompatActivity implements LoginTaskListene
                 mButtonsLinearLayout.setVisibility(View.VISIBLE);
                 break;
         }
-
-
     }
 }

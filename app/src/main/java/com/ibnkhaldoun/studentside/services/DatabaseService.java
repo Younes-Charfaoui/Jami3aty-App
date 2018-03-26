@@ -3,18 +3,27 @@ package com.ibnkhaldoun.studentside.services;
 import android.app.IntentService;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import android.util.SparseArray;
 
 import com.ibnkhaldoun.studentside.database.DatabaseContract;
 import com.ibnkhaldoun.studentside.models.Mark;
 import com.ibnkhaldoun.studentside.models.Saved;
+import com.ibnkhaldoun.studentside.models.Schedule;
 import com.ibnkhaldoun.studentside.models.Subject;
+import com.ibnkhaldoun.studentside.networking.utilities.JsonUtilities;
+import com.ibnkhaldoun.studentside.providers.KeyDataProvider;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
 import static com.ibnkhaldoun.studentside.services.LoadDataService.MARK_TYPE;
 import static com.ibnkhaldoun.studentside.services.LoadDataService.SAVED_TYPE;
+import static com.ibnkhaldoun.studentside.services.LoadDataService.SCHEDULE_TYPE;
 import static com.ibnkhaldoun.studentside.services.LoadDataService.SUBJECT_TYPE;
 
 /**
@@ -51,8 +60,64 @@ public class DatabaseService extends IntentService {
             case SAVED_TYPE:
                 insertSaved(intent.getParcelableArrayListExtra(KEY_CONTENT_DATA));
                 break;
+            case SCHEDULE_TYPE:
+                insertSchedules(intent.getStringExtra(KEY_CONTENT_DATA));
+                break;
+        }
+    }
+
+    private void insertSchedules(String stringExtra) {
+        try {
+            SparseArray<Schedule> schedules = JsonUtilities.getSchedulesList(stringExtra);
+            int group = new JSONObject(stringExtra).getInt(KeyDataProvider.JSON_STUDENT_GROUP);
+            int level = new JSONObject(stringExtra).getInt(KeyDataProvider.JSON_STUDENT_LEVEL);
+            int section = new JSONObject(stringExtra).getInt(KeyDataProvider.JSON_STUDENT_SECTION);
+            Uri pathToSchedule = DatabaseContract.ScheduleEntry.CONTENT_SCHEDULE_URI.
+                    buildUpon()
+                    .appendPath(String.valueOf(level))
+                    .appendPath(String.valueOf(section))
+                    .appendPath(String.valueOf(group))
+                    .build();
+            getContentResolver().delete(pathToSchedule,
+                    null, null);
+            getContentResolver().bulkInsert(DatabaseContract.ScheduleEntry.CONTENT_SCHEDULE_URI,
+                    getScheduleValues(schedules, level, section, group));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private ContentValues[] getScheduleValues(SparseArray<Schedule> schedules,
+                                              int level, int section, int group) {
+        ArrayList<ContentValues> values = new ArrayList<>();
+
+        for (int i = 0; i < schedules.size(); i++) {
+            int key = schedules.keyAt(i);
+            Schedule schedule = schedules.get(key);
+            for (int j = 0; j < schedule.getScheduleItemList().size(); j++) {
+                ContentValues value = new ContentValues();
+
+                value.put(DatabaseContract.ScheduleEntry.COLUMN_DAY,
+                        schedule.getDayOfSchedule());
+                value.put(DatabaseContract.ScheduleEntry.COLUMN_GROUP,
+                        group);
+                value.put(DatabaseContract.ScheduleEntry.COLUMN_SECTION,
+                        section);
+                value.put(DatabaseContract.ScheduleEntry.COLUMN_LEVEL,
+                        level);
+                value.put(DatabaseContract.ScheduleEntry.COLUMN_HOUR,
+                        schedule.getScheduleItemList().get(j).getTime());
+                value.put(DatabaseContract.ScheduleEntry.COLUMN_PLACE,
+                        schedule.getScheduleItemList().get(j).getLocation());
+                value.put(DatabaseContract.ScheduleEntry.COLUMN_PROFESSOR,
+                        schedule.getScheduleItemList().get(j).getProfessor());
+                value.put(DatabaseContract.ScheduleEntry.COLUMN_SUBJECT,
+                        schedule.getScheduleItemList().get(j).getSubject());
+                values.add(value);
+            }
 
         }
+        return (ContentValues[]) values.toArray();
     }
 
     private void insertSaved(ArrayList<Saved> savedList) {

@@ -56,17 +56,15 @@ public class StudentMainActivity extends AppCompatActivity
         ProfessorDialogInterface, DataFragmentInterface, LoaderManager.LoaderCallbacks<Cursor> {
 
     public static final String KEY_MAILS = "keyMails";
-
     //the types of the fragments
     public static final int MAIL_TYPE = 15;
     public static final int DISPLAY_TYPE = 11;
     public static final int NOTIFICATION_TYPE = 10;
-
     //the Loader ID's for the database work
     private static final int DISPLAY_LOADER_ID = 190;
     private static final int MAIL_LOADER_ID = 191;
     private static final int NOTIFICATION_LOADER_ID = 192;
-
+    public static StudentMainActivity ACTIVITY;
     private FloatingActionButton mAddMailFab;
     private ViewPager mMainViewPager;
     private TabLayout mTabLayout;
@@ -111,7 +109,7 @@ public class StudentMainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_screen_drawer);
-
+        ACTIVITY = this;
         //getting the arrays
         mPagerTitles = getResources().getStringArray(R.array.pager_titles_array_string);
 
@@ -141,7 +139,7 @@ public class StudentMainActivity extends AppCompatActivity
 
         GradientDrawable circle = (GradientDrawable) circleImage.getBackground();
 
-        PreferencesManager manager = new PreferencesManager(this,STUDENT);
+        PreferencesManager manager = new PreferencesManager(this, STUDENT);
         String text = Character.toString(Utilities.getFirstName(manager.getFullName()).charAt(0)) +
                 Character.toString(Utilities.getLastName(manager.getFullName()).charAt(0));
         circleImage.setText(text);
@@ -203,11 +201,11 @@ public class StudentMainActivity extends AppCompatActivity
             case R.id.nav_saved:
                 startActivity(new Intent(this, SavedActivity.class));
                 break;
-
             case R.id.nav_subject:
                 startActivity(new Intent(this, SubjectsActivity.class));
+                break;
             case R.id.nav_setting:
-
+                startActivity(new Intent(this, SettingActivity.class));
                 break;
             case R.id.nav_help:
                 break;
@@ -369,7 +367,7 @@ public class StudentMainActivity extends AppCompatActivity
             RequestPackage request = new RequestPackage();
             request.setMethod(RequestPackage.POST);
             request.setEndPoint(EndPointsProvider.getMailEndPoint());
-            PreferencesManager manager = new PreferencesManager(this,STUDENT);
+            PreferencesManager manager = new PreferencesManager(this, STUDENT);
             request.addParams(KeyDataProvider.KEY_ANDROID, KeyDataProvider.KEY_ANDROID);
             request.addParams(KeyDataProvider.JSON_STUDENT_ID, manager.getId());
             Intent intent = new Intent(this, LoadDataService.class);

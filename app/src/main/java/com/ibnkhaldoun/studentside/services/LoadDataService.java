@@ -15,7 +15,6 @@ import com.ibnkhaldoun.studentside.activities.SubjectsActivity;
 import com.ibnkhaldoun.studentside.models.Mail;
 import com.ibnkhaldoun.studentside.models.Mark;
 import com.ibnkhaldoun.studentside.models.Saved;
-import com.ibnkhaldoun.studentside.models.Schedule;
 import com.ibnkhaldoun.studentside.models.Subject;
 import com.ibnkhaldoun.studentside.networking.models.RequestPackage;
 import com.ibnkhaldoun.studentside.networking.utilities.HttpUtilities;
@@ -57,6 +56,7 @@ public class LoadDataService extends IntentService {
     public static final int NOTIFICATION_TYPE = 7;
     public static final int SAVED_TYPE = 8;
     public static final int SUBJECT_IN_TYPE = 9;
+    public static final int SCHEDULE_IN_TYPE = 10;
 
     public static final String KEY_ACTION = "Action";
     public static final String KEY_DATA = "data";
@@ -94,18 +94,35 @@ public class LoadDataService extends IntentService {
             case SAVED_TYPE:
                 savedCall(request, this);
                 break;
+            case SCHEDULE_IN_TYPE:
+                scheduleInnerCall(request, this);
+        }
+    }
+
+    private void scheduleInnerCall(RequestPackage request, Context context) {
+        try {
+            String response = HttpUtilities.getData(request);
+            Intent intentDatabase = new Intent(context, DatabaseService.class);
+            intentDatabase.putExtra(DatabaseService.KEY_CONTENT_DATA, response);
+            intentDatabase.putExtra(LoadDataService.KEY_ACTION, LoadDataService.SCHEDULE_TYPE);
+            startService(intentDatabase);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
     private void subjectInnerCall(RequestPackage request, Context context) {
         try {
             String response = HttpUtilities.getData(request);
+
             ArrayList<Subject> subjectList = JsonUtilities.getSubjectList(response);
             ArrayList<String> subjectsStrings = new ArrayList<>();
             if (subjectList != null) for (Subject subject : subjectList) {
                 subjectsStrings.add(subject.getTitle());
             }
-            new PreferencesManager(context, PreferencesManager.SUBJECT).addSubjects(subjectsStrings);
+            PreferencesManager manager = new
+                    PreferencesManager(context, PreferencesManager.SUBJECT);
+            manager.addSubjects(subjectsStrings);
             Intent intentDatabase = new Intent(context, DatabaseService.class);
             intentDatabase.putExtra(KEY_CONTENT_DATA, subjectList);
             intentDatabase.putExtra(KEY_ACTION, SUBJECT_TYPE);

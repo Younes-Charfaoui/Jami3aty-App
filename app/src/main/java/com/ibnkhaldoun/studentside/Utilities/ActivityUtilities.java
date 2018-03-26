@@ -1,5 +1,6 @@
 package com.ibnkhaldoun.studentside.Utilities;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;
 import android.view.Window;
@@ -23,5 +24,10 @@ public final class ActivityUtilities {
         }
     }
 
-
+    public static void logOut(Context context) {
+        new PreferencesManager(context, PreferencesManager.STUDENT)
+                .removePreference();
+        new PreferencesManager(context, PreferencesManager.SUBJECT)
+                .removePreference();
+    }
 }

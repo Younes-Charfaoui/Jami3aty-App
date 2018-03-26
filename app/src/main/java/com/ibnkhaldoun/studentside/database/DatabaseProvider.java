@@ -197,6 +197,16 @@ public class DatabaseProvider extends ContentProvider {
                 return database.delete(DatabaseContract.SubjectEntry.TABLE_NAME, selection, selectionArgs);
             case MARKS:
                 return database.delete(DatabaseContract.MarkEntry.TABLE_NAME, selection, selectionArgs);
+            case SCHEDULE_LEVEL_GROUP_SECTION:
+                selection = DatabaseContract.ScheduleEntry.COLUMN_LEVEL + "=? AND " +
+                        DatabaseContract.ScheduleEntry.COLUMN_SECTION + "=? AND " +
+                        DatabaseContract.ScheduleEntry.COLUMN_GROUP + "=? ";
+                selectionArgs = new String[]{String.valueOf(uri.getPathSegments().get(1))
+                        , String.valueOf(uri.getPathSegments().get(2)),
+                        String.valueOf(uri.getPathSegments().get(3))};
+                database.delete(DatabaseContract.ScheduleEntry.TABLE_NAME,
+                        selection, selectionArgs);
+                break;
         }
         return 0;
     }

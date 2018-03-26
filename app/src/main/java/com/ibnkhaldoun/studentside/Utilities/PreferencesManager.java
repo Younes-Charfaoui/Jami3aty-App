@@ -4,6 +4,7 @@ package com.ibnkhaldoun.studentside.Utilities;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -18,7 +19,7 @@ public class PreferencesManager {
 
     private static final String TAG = "manager";
     private static final int PRIVATE_MODE = 0;
-    private static final String PREFERENCE_CONFIGURATION_NAME = "sliders";
+    private static final String PREFERENCE_CONFIGURATION_NAME = "configuration";
     private static final String PREFERENCE_STUDENT_NAME = "student";
     private static final String PREFERENCE_SUBJECTS_NAME = "subjects";
     private static final String PREFERENCE_UNIVERSITY_NAME = "university";
@@ -108,6 +109,7 @@ public class PreferencesManager {
     public void addSubjects(ArrayList<String> subjects) {
         Set<String> setOfSubjects = new HashSet<>(subjects);
         mEditor.putStringSet(SUBJECTS, setOfSubjects);
+        mEditor.commit();
     }
 
     @SuppressWarnings("ConstantConditions")
@@ -118,5 +120,9 @@ public class PreferencesManager {
 
     public boolean isSubjectsExists() {
         return mPreferences.getStringSet(SUBJECTS, null) != null;
+    }
+
+    void removePreference(){
+        mEditor.clear().commit();
     }
 }

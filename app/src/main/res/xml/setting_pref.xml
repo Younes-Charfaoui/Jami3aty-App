@@ -2,32 +2,43 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <PreferenceCategory android:title="Notification">
-        <CheckBoxPreference android:defaultValue="true" android:title="Displays Notification" />
-        <CheckBoxPreference android:title="Message Notification" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:title="Displays Notification"
+            android:key="@string/key_notification_display"/>
+        <CheckBoxPreference
+            android:title="Message Notification"
+            android:defaultValue="true"
+            android:key="@string/key_notification_message"/>
     </PreferenceCategory>
     <PreferenceCategory android:title="Reminders">
 
         <SwitchPreference
-            android:defaultValue="false"
-            android:key="Reminders"
+            android:defaultValue="true"
+            android:key="@string/key_reminder_class"
             android:title="Class Reminders" />
 
         <SwitchPreference
-            android:defaultValue="false"
-            android:key="Reminders"
+            android:defaultValue="true"
+            android:key="@string/key_reminder_exam"
             android:title="Exam Reminders" />
 
         <SwitchPreference
-            android:defaultValue="false"
-            android:key="Reminders"
+            android:defaultValue="true"
+            android:key="@string/key_reminder_consultation"
             android:title="Consultation Reminders" />
     </PreferenceCategory>
     <PreferenceCategory
         android:icon="@drawable/ic_delete"
         android:title="About">
-        <Preference android:title="Feedback and Support" />
-        <Preference android:title="Privacy" />
-        <Preference android:title="Term of Use" />
+        <Preference
+            android:title="Feedback and Support"
+            android:key="@string/key_feedback"/>
+        <Preference android:title="Privacy"  android:key="@string/key_privacy"/>
+        <Preference android:title="Term of Use"
+            android:key="@string/key_term_of_use"/>
     </PreferenceCategory>
-    <Preference android:title="Sign out" />
+    <Preference android:title="Sign out"
+        android:key="@string/key_sign_out"
+         />
 </PreferenceScreen>
