@@ -5,7 +5,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class Saved implements Parcelable {
-    //todo : add code to use the saved object
+
     private long id;
     private String professor,text,date;
 

@@ -6,6 +6,8 @@ import android.os.Build;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.ibnkhaldoun.studentside.database.DatabaseContract;
+
 
 public final class ActivityUtilities {
 
@@ -29,5 +31,15 @@ public final class ActivityUtilities {
                 .removePreference();
         new PreferencesManager(context, PreferencesManager.SUBJECT)
                 .removePreference();
+        context.getContentResolver()
+                .delete(DatabaseContract.ScheduleEntry.CONTENT_SCHEDULE_URI
+                        , null, null);
+        context.getContentResolver()
+                .delete(DatabaseContract.SubjectEntry.CONTENT_SUBJECT_URI
+                        , null, null);
+        context.getContentResolver()
+                .delete(DatabaseContract.MailEntry.CONTENT_MAIL_URI
+                        , null, null);
+
     }
 }

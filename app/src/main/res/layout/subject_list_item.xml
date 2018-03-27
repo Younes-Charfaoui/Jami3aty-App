@@ -6,7 +6,7 @@
     android:background="?attr/selectableItemBackground"
     android:orientation="horizontal"
     android:padding="8dp">
-    <!-- todo add the miising things to make a layout -->
+    
 
     <TextView
         android:id="@+id/subject_list_item_short_title"

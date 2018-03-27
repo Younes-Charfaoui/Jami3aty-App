@@ -191,6 +191,10 @@ public class SavedActivity extends AppCompatActivity
             case R.id.saved_refresh:
                 getSavedFromTheInternet();
                 break;
+            case android.R.id.home:
+                onBackPressed();
+                finish();
+                break;
         }
         return true;
     }
@@ -204,7 +208,7 @@ public class SavedActivity extends AppCompatActivity
             request.setEndPoint(EndPointsProvider.getSavedEndPoint());
             request.setMethod(POST);
             request.addParams(KEY_ANDROID, KEY_ANDROID);
-            request.addParams(JSON_STUDENT_ID, new PreferencesManager(this,STUDENT).getId());
+            request.addParams(JSON_STUDENT_ID, new PreferencesManager(this, STUDENT).getId());
             Intent serviceIntent = new Intent(this, LoadDataService.class);
             serviceIntent.putExtra(KEY_REQUEST, request);
             serviceIntent.putExtra(KEY_ACTION, SAVED_TYPE);

@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ibnkhaldoun.studentside.R;
@@ -33,8 +34,9 @@ public class SubjectProfessorDialogAdapter extends ArrayAdapter<String> {
         }
         TextView textView = convertView.findViewById(R.id.subject_professor_dialog_title);
         textView.setText(mSubjectList.get(position));
-        View circleView = convertView.findViewById(R.id.subject_professor_dialog_circle);
-        circleView.setBackgroundColor(Utilities.getCircleColor(mSubjectList.get(position).charAt(0), getContext()));
+        ImageView circleView = convertView.findViewById(R.id.subject_professor_dialog_circle);
+        circleView.setColorFilter(Utilities.getCircleColor(mSubjectList.get(position).charAt(0),
+                getContext()));
         return convertView;
     }
 

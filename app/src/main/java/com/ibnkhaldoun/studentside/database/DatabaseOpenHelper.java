@@ -16,6 +16,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
     private static final String SQL_QUERY_CREATE_NOTE = BASE_CREATE +
             DatabaseContract.NoteEntry.TABLE_NAME + " ( " +
             DatabaseContract.NoteEntry.COLUMN_NOTE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            DatabaseContract.NoteEntry.COLUMN_USER_ID + " INTEGER NOT NULL, " +
             DatabaseContract.NoteEntry.COLUMN_NOTE_TEXT + " TEXT NOT NULL, " +
             DatabaseContract.NoteEntry.COLUMN_NOTE_SUBJECT + " TEXT NOT NULL);";
 

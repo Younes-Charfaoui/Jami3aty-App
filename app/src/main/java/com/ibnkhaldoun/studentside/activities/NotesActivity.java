@@ -27,14 +27,20 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.ibnkhaldoun.studentside.R;
+import com.ibnkhaldoun.studentside.Utilities.PreferencesManager;
 import com.ibnkhaldoun.studentside.adapters.NotesAdapter;
 import com.ibnkhaldoun.studentside.database.DatabaseContract;
 import com.ibnkhaldoun.studentside.models.Note;
+
+import static android.view.View.GONE;
+import static android.view.View.INVISIBLE;
+import static android.view.View.VISIBLE;
 
 public class NotesActivity extends AppCompatActivity
         implements LoaderManager.LoaderCallbacks<Cursor> {
 
     private static final int ID_LOADER = 162;
+    private static int NUMBER_OF_NOTE;
     private RecyclerView mNoteRecyclerView;
     private NotesAdapter mAdapter;
     private LinearLayout mEmptyView;
@@ -43,6 +49,7 @@ public class NotesActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        NUMBER_OF_NOTE = 0;
         setContentView(R.layout.activity_notes);
         Toolbar toolbar = findViewById(R.id.note_toolbar);
         setSupportActionBar(toolbar);
@@ -75,6 +82,7 @@ public class NotesActivity extends AppCompatActivity
         mNoteRecyclerView.setHasFixedSize(true);
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(
                 new SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+
                     @Override
                     public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
                         return false;
@@ -82,29 +90,74 @@ public class NotesActivity extends AppCompatActivity
 
                     @Override
                     public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+
                         String id = viewHolder.itemView.getTag().toString();
                         int position = viewHolder.getAdapterPosition();
                         Note note = mAdapter.removeItem(viewHolder.getAdapterPosition());
-                        Uri uri = DatabaseContract.NoteEntry.CONTENT_NOTE_URI.buildUpon().appendPath(id).build();
-                        Snackbar snackbar = Snackbar.make(findViewById(R.id.note_coordinator), "1 note deleted", Snackbar.LENGTH_LONG);
-                        snackbar.setAction("Undo", v -> mAdapter.restoreItem(position, note));
+                        Uri uri = DatabaseContract.NoteEntry.CONTENT_NOTE_URI.buildUpon()
+                                .appendPath(id).build();
+                        Snackbar snackbar = Snackbar.make(findViewById(R.id.note_coordinator),
+                                R.string.one_note_deleted, Snackbar.LENGTH_LONG);
+                        snackbar.setAction(R.string.undo, v -> mAdapter.restoreItem(position, note));
 
                         snackbar.addCallback(new Snackbar.Callback() {
                             @Override
                             public void onShown(Snackbar sb) {
                                 super.onShown(sb);
+                                if (NUMBER_OF_NOTE == 1) {
+                                    mEmptyView.setVisibility(VISIBLE);
+                                    mNoteRecyclerView.setVisibility(GONE);
+                                } else if (NUMBER_OF_NOTE != 0) {
+                                    if (mEmptyView.getVisibility() == VISIBLE) {
+                                        mEmptyView.setVisibility(GONE);
+                                    }
+                                    if (mNoteRecyclerView.getVisibility() == GONE
+                                            || mNoteRecyclerView.getVisibility() == INVISIBLE)
+                                        mNoteRecyclerView.setVisibility(VISIBLE);
+
+                                } else {
+                                    mEmptyView.setVisibility(VISIBLE);
+                                    mNoteRecyclerView.setVisibility(GONE);
+                                }
                             }
 
                             @Override
                             public void onDismissed(Snackbar transientBottomBar, int event) {
                                 super.onDismissed(transientBottomBar, event);
-                                if (event == Snackbar.Callback.DISMISS_EVENT_TIMEOUT
-                                        ) {
-                                    getContentResolver().delete(uri, null, null);
+
+                                if (event == DISMISS_EVENT_CONSECUTIVE
+                                        || event == DISMISS_EVENT_SWIPE
+                                        || event == DISMISS_EVENT_TIMEOUT) {
+                                    NUMBER_OF_NOTE -= getContentResolver().delete(uri, null, null);
+                                    if (NUMBER_OF_NOTE == 1) {
+                                        mEmptyView.setVisibility(VISIBLE);
+                                        mNoteRecyclerView.setVisibility(GONE);
+                                    } else if (NUMBER_OF_NOTE != 0) {
+                                        if (mEmptyView.getVisibility() == VISIBLE) {
+                                            mEmptyView.setVisibility(GONE);
+                                        }
+                                        if (mNoteRecyclerView.getVisibility() == GONE
+                                                || mNoteRecyclerView.getVisibility() == INVISIBLE)
+                                            mNoteRecyclerView.setVisibility(VISIBLE);
+
+                                    } else {
+                                        mEmptyView.setVisibility(VISIBLE);
+                                        mNoteRecyclerView.setVisibility(GONE);
+                                    }
                                 }
-                                if (event == Snackbar.Callback.DISMISS_EVENT_CONSECUTIVE) {
-                                    getContentResolver().delete(uri, null, null);
-                                    getSupportLoaderManager().restartLoader(ID_LOADER, null, NotesActivity.this);
+                                if(event == DISMISS_EVENT_ACTION){
+                                     if (NUMBER_OF_NOTE != 0) {
+                                        if (mEmptyView.getVisibility() == VISIBLE) {
+                                            mEmptyView.setVisibility(GONE);
+                                        }
+                                        if (mNoteRecyclerView.getVisibility() == GONE
+                                                || mNoteRecyclerView.getVisibility() == INVISIBLE)
+                                            mNoteRecyclerView.setVisibility(VISIBLE);
+
+                                    } else {
+                                        mEmptyView.setVisibility(VISIBLE);
+                                        mNoteRecyclerView.setVisibility(GONE);
+                                    }
                                 }
                             }
                         });
@@ -160,13 +213,15 @@ public class NotesActivity extends AppCompatActivity
                 onBackPressed();
                 break;
             case R.id.note_menu_delete_all:
-                new AlertDialog.Builder(this)
-                        .setTitle("Are you sure to delete all notes ?")
-                        .setPositiveButton("Delete", (dialog, which) -> {
-                            getContentResolver().delete(DatabaseContract.NoteEntry.CONTENT_NOTE_URI, null, null);
-                            getSupportLoaderManager().restartLoader(ID_LOADER, null, NotesActivity.this);
-                        }).setNegativeButton("No", null)
-                        .show();
+                if (NUMBER_OF_NOTE != 0)
+                    new AlertDialog.Builder(this)
+                            .setTitle(R.string.delete_all_note_confirmation)
+                            .setPositiveButton(R.string.delete_string, (dialog, which) -> {
+                                getContentResolver().delete(DatabaseContract.NoteEntry.CONTENT_NOTE_URI, null, null);
+                                getSupportLoaderManager().restartLoader(ID_LOADER, null, NotesActivity.this);
+                            }).setNegativeButton(android.R.string.no, null)
+                            .show();
+
                 break;
             case R.id.note_menu_add_note:
                 Intent intent = new Intent(NotesActivity.this, NoteEditActivity.class);
@@ -191,8 +246,9 @@ public class NotesActivity extends AppCompatActivity
                 return new CursorLoader(this,
                         DatabaseContract.NoteEntry.CONTENT_NOTE_URI,
                         projection,
-                        null,
-                        null,
+                        DatabaseContract.NoteEntry.COLUMN_USER_ID + " = ?",
+                        new String[]{new PreferencesManager(this
+                                , PreferencesManager.STUDENT).getId()},
                         null);
             default:
                 throw new IllegalArgumentException();
@@ -202,11 +258,13 @@ public class NotesActivity extends AppCompatActivity
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         if (data.getCount() == 0) {
-            mNoteRecyclerView.setVisibility(View.INVISIBLE);
-            mEmptyView.setVisibility(View.VISIBLE);
+            mNoteRecyclerView.setVisibility(INVISIBLE);
+            mEmptyView.setVisibility(VISIBLE);
+            NUMBER_OF_NOTE = 0;
         } else {
-            mEmptyView.setVisibility(View.INVISIBLE);
-            mNoteRecyclerView.setVisibility(View.VISIBLE);
+            mEmptyView.setVisibility(INVISIBLE);
+            mNoteRecyclerView.setVisibility(VISIBLE);
+            NUMBER_OF_NOTE = data.getCount();
         }
         mAdapter.swapCursor(data);
     }

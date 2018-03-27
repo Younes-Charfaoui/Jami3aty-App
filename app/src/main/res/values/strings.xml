@@ -194,4 +194,7 @@
     <string name="sign_out">Sign out</string>
     <string name="logout_confirmation">Are you sure you wish to sign out.</string>
     <string name="yes">Yes</string>
+    <string name="delete_all_note_confirmation">Are you sure to delete all notes ?</string>
+    <string name="undo">Undo</string>
+    <string name="one_note_deleted">1 note deleted</string>
 </resources>

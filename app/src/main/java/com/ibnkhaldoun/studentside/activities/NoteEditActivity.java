@@ -53,6 +53,7 @@ public class NoteEditActivity extends AppCompatActivity implements SubjectDialog
 
         }
     };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,7 +71,7 @@ public class NoteEditActivity extends AppCompatActivity implements SubjectDialog
 
             RequestPackage request = new RequestPackage();
             request.setMethod(RequestPackage.POST);
-            request.setEndPoint(EndPointsProvider.getSubjectEndpoint());
+            request.setEndPoint(EndPointsProvider.getSubjectAllEndpoint());
             Intent intent = new Intent(this, LoadDataService.class);
             request.addParams(KEY_ANDROID, KEY_ANDROID);
             request.addParams(JSON_STUDENT_SECTION, manager.getSection());
@@ -97,7 +98,9 @@ public class NoteEditActivity extends AppCompatActivity implements SubjectDialog
                     .build();
 
             Cursor cursor = getContentResolver().query(pathToNote, new String[]{"*"},
-                    null, null, null);
+                    DatabaseContract.NoteEntry.COLUMN_USER_ID + " = ?",
+                    new String[]{new PreferencesManager(this, PreferencesManager.STUDENT)
+                            .getId()}, null);
             if (cursor != null) {
                 cursor.moveToFirst();
                 mSubjectEditText.setText(cursor.getString(cursor.getColumnIndex(DatabaseContract.NoteEntry.COLUMN_NOTE_SUBJECT)));
@@ -108,9 +111,13 @@ public class NoteEditActivity extends AppCompatActivity implements SubjectDialog
 
         mSubjectEditText.setOnClickListener(v -> {
             PreferencesManager manager = new PreferencesManager(this, PreferencesManager.SUBJECT);
-            SubjectListFragment dialog = SubjectListFragment.newInstance(manager.getSubjects());
-            dialog.setCancelable(true);
-            dialog.show(getSupportFragmentManager(), "TAG");
+            if (manager.isSubjectsExists()) {
+                SubjectListFragment dialog = SubjectListFragment.newInstance(manager.getSubjects());
+                dialog.setCancelable(true);
+                dialog.show(getSupportFragmentManager(), "TAG");
+            } else {
+
+            }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -174,15 +181,13 @@ public class NoteEditActivity extends AppCompatActivity implements SubjectDialog
     }
 
     public boolean validate() {
-
-        boolean valid = true;
         Snackbar snackbar;
         if (mNoteEditText.getText().toString().isEmpty()) {
             snackbar = Snackbar.make(findViewById(R.id.note_main_view), R.string.add_somthing
                     , Snackbar.LENGTH_SHORT);
             if (snackbar.isShownOrQueued()) snackbar.dismiss();
             snackbar.show();
-            valid = false;
+            return false;
         }
 
         if (mSubjectEditText.getText().toString().isEmpty()) {
@@ -191,9 +196,9 @@ public class NoteEditActivity extends AppCompatActivity implements SubjectDialog
                     , Snackbar.LENGTH_SHORT);
             if (snackbar.isShownOrQueued()) snackbar.dismiss();
             snackbar.show();
-            valid = false;
+            return false;
         }
-        return valid;
+        return true;
     }
 
     private void getDataAndInsert() {
@@ -202,6 +207,8 @@ public class NoteEditActivity extends AppCompatActivity implements SubjectDialog
         ContentValues values = new ContentValues();
         values.put(DatabaseContract.NoteEntry.COLUMN_NOTE_SUBJECT, subject);
         values.put(DatabaseContract.NoteEntry.COLUMN_NOTE_TEXT, note);
+        values.put(DatabaseContract.NoteEntry.COLUMN_USER_ID,
+                new PreferencesManager(this, PreferencesManager.STUDENT).getId());
         getContentResolver().insert(DatabaseContract.NoteEntry.CONTENT_NOTE_URI, values);
     }
 

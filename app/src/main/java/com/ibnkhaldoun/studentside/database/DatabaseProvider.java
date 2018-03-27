@@ -221,10 +221,8 @@ public class DatabaseProvider extends ContentProvider {
         String[] selectionArgs;
         selection = id + " = ?";
         selectionArgs = new String[]{String.valueOf(uri.getLastPathSegment())};
-        int rowDeleted = database.delete(table, selection, selectionArgs);
-        assert getContext() != null;
-        if (rowDeleted != 0) getContext().getContentResolver().notifyChange(uri, null);
-        return rowDeleted;
+
+        return database.delete(table, selection, selectionArgs);
     }
 
     @Override

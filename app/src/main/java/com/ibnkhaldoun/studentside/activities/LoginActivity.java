@@ -165,7 +165,7 @@ public class LoginActivity extends AppCompatActivity implements LoginTaskListene
                     startActivity(new Intent(this, StudentMainActivity.class));
                     RequestPackage request = new RequestPackage();
                     request.setMethod(RequestPackage.POST);
-                    request.setEndPoint(EndPointsProvider.getSubjectEndpoint());
+                    request.setEndPoint(EndPointsProvider.getSubjectAllEndpoint());
                     Intent intent = new Intent(this, LoadDataService.class);
                     request.addParams(KEY_ANDROID, KEY_ANDROID);
                     request.addParams(JSON_STUDENT_SECTION, manager.getSection());
@@ -175,11 +175,11 @@ public class LoginActivity extends AppCompatActivity implements LoginTaskListene
                     intent.putExtra(LoadDataService.KEY_ACTION, LoadDataService.SUBJECT_IN_TYPE);
                     startService(intent);
                     request.setMethod(RequestPackage.POST);
-                    request.setEndPoint(EndPointsProvider.getScheduleEndpoint());
+                    request.setEndPoint(EndPointsProvider.getScheduleAllEndpoint());
                     Intent intentSchedule = new Intent(this, LoadDataService.class);
                     intentSchedule.putExtra(LoadDataService.KEY_REQUEST, request);
                     intentSchedule.putExtra(LoadDataService.KEY_ACTION, LoadDataService.SCHEDULE_IN_TYPE);
-                    //startService(intentSchedule);
+                    startService(intentSchedule);
                     finish();
                 } else {
                     Toast.makeText(this, "Login for professor", Toast.LENGTH_SHORT).show();

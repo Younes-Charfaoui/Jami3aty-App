@@ -18,7 +18,7 @@ public class Display implements Parcelable {
             return new Display[size];
         }
     };
-    //todo : add code to use the display object
+
     private long id;
     private Professor professor;
     private String date, text;

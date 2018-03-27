@@ -149,7 +149,7 @@ public class SubjectsActivity extends AppCompatActivity implements
             Intent intent = new Intent(this, LoadDataService.class);
             RequestPackage request = new RequestPackage();
             request.setMethod(RequestPackage.POST);
-            request.setEndPoint(EndPointsProvider.getSubjectEndpoint() + "/all");
+            request.setEndPoint(EndPointsProvider.getSubjectAllEndpoint() + "/all");
             PreferencesManager manager = new PreferencesManager(this , PreferencesManager.STUDENT);
             request.addParams(KEY_ANDROID, KEY_ANDROID);
             request.addParams(JSON_STUDENT_SECTION, manager.getSection());

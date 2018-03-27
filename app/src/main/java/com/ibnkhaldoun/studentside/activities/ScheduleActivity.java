@@ -201,7 +201,7 @@ public class ScheduleActivity extends AppCompatActivity
             mLoadingProgressBar.setVisibility(VISIBLE);
             RequestPackage request = new RequestPackage();
             if (type == SCHEDULE_TYPE)
-                request.setEndPoint(EndPointsProvider.getScheduleEndpoint() + "/all");
+                request.setEndPoint(EndPointsProvider.getScheduleAllEndpoint());
             else request.setEndPoint(EndPointsProvider.getExamScheduleEndpoint());
             request.setMethod(RequestPackage.POST);
             PreferencesManager manager = new PreferencesManager(this, STUDENT);

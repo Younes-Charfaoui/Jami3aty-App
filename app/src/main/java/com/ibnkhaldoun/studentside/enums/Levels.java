@@ -7,16 +7,16 @@ package com.ibnkhaldoun.studentside.enums;
  */
 public final  class Levels {
 
-    public static final int LICENCE_ONE = 1;
-    public static final int LICENCE_TWO = 2;
-    public static final int LICENCE_THREE = 3;
+    private static final int LICENCE_ONE = 1;
+    private static final int LICENCE_TWO = 2;
+    private static final int LICENCE_THREE = 3;
 
-    public static final int MASTER_GL_ONE = 4;
-    public static final int MASTER_GL_TWO = 5;
-    public static final int MASTER_GI_ONE = 6;
-    public static final int MASTER_GI_TWO = 7;
-    public static final int MASTER_RT_ONE = 8;
-    public static final int MASTER_RT_TWO = 9;
+    private static final int MASTER_GL_ONE = 4;
+    private static final int MASTER_GL_TWO = 5;
+    private static final int MASTER_GI_ONE = 6;
+    private static final int MASTER_GI_TWO = 7;
+    private static final int MASTER_RT_ONE = 8;
+    private static final int MASTER_RT_TWO = 9;
 
 
     public static int getLevel(int level) {
@@ -55,7 +55,7 @@ public final  class Levels {
             case 18:
                 return MASTER_GI_TWO;
             default:
-                throw new IllegalStateException();
+                return LICENCE_ONE;
         }
     }
 
