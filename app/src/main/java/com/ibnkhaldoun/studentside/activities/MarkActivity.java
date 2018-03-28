@@ -45,6 +45,8 @@ public class MarkActivity extends AppCompatActivity implements LoaderManager.Loa
     private LinearLayout mEmptyLayout;
     private ProgressBar mLoadingProgressBar;
 
+    public static double AVERAGE ;
+
     private BroadcastReceiver mMarkReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {

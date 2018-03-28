@@ -197,4 +197,9 @@
     <string name="delete_all_note_confirmation">Are you sure to delete all notes ?</string>
     <string name="undo">Undo</string>
     <string name="one_note_deleted">1 note deleted</string>
+    <string name="exam_mark">Exam Mark</string>
+    <string name="td_mark">TD Mark</string>
+    <string name="tp_mark">TP Mark</string>
+    <string name="see_if">See if</string>
+    <string name="change_to_see">Change To see</string>
 </resources>

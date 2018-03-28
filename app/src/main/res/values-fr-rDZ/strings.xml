@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ami3aty</string>
+    <string name="password_string">Mot de passe</string>
+    <string name="sign_up">Créer un compte</string>
+    <string name="or">OU</string>
+    <string name="valid_email">Invalide email</string>
+    <string name="valid_card_number">invalide numéro du carte</string>
+    <string name="password_empty">Il faut un mot de passe</string>
+    <string name="card_number_empty">Il faut un numéro du carte</string>
+    <string name="email_empty">Il faut un email</string>
+    <string name="valid_password">Au moin 8 lettre</string>
+    <string name="bac_average_invalid">Invalide moyenne</string>
+    <string name="title_activity_sign_up">Inscrivez vous</string>
+    <string name="action_help">Aide</string>
+    <string name="card_number_string">Numero d carte</string>
+    <string name="title_activity_help">Aide</string>
+    <string name="welcome_in_help">Bienvenue dans l\'aide</string>
+    <string name="title_activity_forget_password">Oublier le mot de passe</string>
+    <string name="nav_log_out_string">Deconnexion</string>
+    <string name="title_activity_settings">Parametres</string>
+    <string name="action_settings">Parametres</string>
+    <string name="nav_marks_string">Notes</string>
+    <string name="nav_home_string">Acceuill</string>
+    <string name="nav_schedule_string">Emploi du temps</string>
+    <string name="nav_saved_string">Sauvgardé</string>
+    <string name="got_it">C\'est bon</string>
+</resources>

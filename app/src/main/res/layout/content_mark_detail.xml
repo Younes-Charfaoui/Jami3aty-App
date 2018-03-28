@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,4 +9,148 @@
     tools:context="com.ibnkhaldoun.studentside.activities.MarkDetailActivity"
     tools:showIn="@layout/activity_mark_detail">
 
-</android.support.constraint.ConstraintLayout>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha=".4"
+        android:contentDescription="@null"
+        android:scaleType="centerCrop"
+        android:src="@drawable/hami" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="24dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            tools:text="Programation Logic"
+            android:id="@+id/mark_subject"
+            android:singleLine="true"
+            android:textColor="@color/colorPrimary"
+            android:layout_marginBottom="32dp"
+            android:textSize="40sp"/>
+
+        <LinearLayout
+            android:id="@+id/first_linear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/mark_subject"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/exam_mark_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/exam_mark"
+                android:textColor="?colorPrimary"
+                android:textSize="22sp" />
+
+            <TextView
+                android:id="@+id/exam_mark"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                android:fontFamily="sans-serif-light"
+                android:textSize="24sp"
+                tools:text="20" />
+
+            <TextView
+                android:id="@+id/td_mark_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/td_mark"
+                android:textColor="?colorPrimary"
+                android:textSize="22sp" />
+
+            <TextView
+                android:id="@+id/td_mark"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                android:fontFamily="sans-serif-light"
+                android:textSize="24sp"
+                tools:text="19" />
+
+            <TextView
+                android:id="@+id/tp_mark_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="?colorPrimary"
+                android:textSize="22sp"
+                tools:text="@string/tp_mark" />
+
+            <TextView
+                android:id="@+id/tp_mark"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                android:fontFamily="sans-serif-light"
+                android:textSize="24sp"
+                tools:text="16.25" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/average_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/mark_subject"
+            android:layout_marginBottom="8dp"
+            android:textColor="?colorPrimary"
+            android:textSize="22sp"
+            tools:text="Average" />
+
+        <TextView
+            android:id="@+id/average"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@id/average_title"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/circle"
+            android:fontFamily="sans-serif-light"
+            android:gravity="center"
+            android:textColor="@android:color/white"
+            android:textSize="24sp"
+            tools:text="16.25" />
+
+
+        <TextView
+            android:id="@+id/total_average_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/total_average"
+            android:layout_alignParentStart="true"
+
+            android:textColor="?colorPrimary"
+            android:textSize="22sp"
+            tools:text="Semester Average" />
+
+        <TextView
+            android:id="@+id/total_average"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+
+            android:fontFamily="sans-serif-light"
+            android:gravity="center"
+
+            android:textSize="24sp"
+            tools:text="16.25" />
+
+        <Button
+            android:id="@+id/mark_detail_change_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:text="@string/see_if"
+            android:theme="@style/ButtonStylesTwo" />
+
+    </RelativeLayout>
+</FrameLayout>

@@ -137,6 +137,8 @@ public class SavedActivity extends AppCompatActivity
                 new IntentFilter(SAVED_ACTION));
         LocalBroadcastManager.getInstance(this).registerReceiver(mFailedReceiver,
                 new IntentFilter(ACTION_ERROR));
+
+        getSavedFromTheInternet();
     }
 
     private void setupRecyclerView() {

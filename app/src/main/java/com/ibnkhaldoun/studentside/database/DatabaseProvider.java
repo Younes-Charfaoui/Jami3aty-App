@@ -158,7 +158,7 @@ public class DatabaseProvider extends ContentProvider {
     }
 
     private int insertMultipleRows(@NonNull ContentValues[] values,
-                                   int insertedRow, SQLiteDatabase database , String table) {
+                                   int insertedRow, SQLiteDatabase database, String table) {
         for (ContentValues value :
                 values) {
             long row = database.insert(table, null, value);
@@ -221,7 +221,10 @@ public class DatabaseProvider extends ContentProvider {
         String[] selectionArgs;
         selection = id + " = ?";
         selectionArgs = new String[]{String.valueOf(uri.getLastPathSegment())};
-
+        if (!table.equals(DatabaseContract.NoteEntry.TABLE_NAME)) {
+            if (getContext() != null)
+                getContext().getContentResolver().notifyChange(uri, null);
+        }
         return database.delete(table, selection, selectionArgs);
     }
 

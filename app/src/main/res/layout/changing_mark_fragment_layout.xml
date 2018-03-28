@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:padding="24dp"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/exam_set_title"
+        android:layout_width="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:textSize="22sp"
+        android:layout_height="wrap_content"
+        android:text="@string/exam_string" />
+
+    <SeekBar
+        android:id="@+id/exam_seek"
+        android:layout_width="match_parent"
+        android:layout_marginBottom="8dp"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/td_set_title"
+        android:layout_marginBottom="8dp"
+        android:textSize="22sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/td_string" />
+
+    <SeekBar
+        android:id="@+id/td_seek"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp" />
+
+    <TextView
+        android:id="@+id/tp_set_title"
+        android:layout_marginBottom="8dp"
+        android:layout_width="wrap_content"
+        android:textSize="22sp"
+        android:layout_height="wrap_content"
+        android:text="@string/tp_string" />
+
+    <SeekBar
+        android:id="@+id/tp_seek"
+        android:layout_marginBottom="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:layout_width="match_parent"
+        android:gravity="center"
+        tools:text="Average"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="22sp"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:layout_width="match_parent"
+        android:gravity="center"
+        tools:text="16"
+        android:textSize="22sp"
+        android:id="@+id/average_set"
+        android:layout_height="wrap_content" />
+</LinearLayout>
