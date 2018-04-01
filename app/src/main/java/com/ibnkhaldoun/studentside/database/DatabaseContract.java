@@ -32,9 +32,12 @@ public class DatabaseContract implements BaseColumns {
         public static final Uri CONTENT_SAVED_URI = BASE_URI.buildUpon().appendPath(PATH_SAVED).build();
         public static final String COLUMN_NAME = "professor_name";
         public static final String COLUMN_DATE = "date";
+        public static final String COLUMN_FILE = "file";
+        public static final String COLUMN_SUBJECT = "subject";
         public static final String COLUMN_DISPLAY_TEXT = "display";
         public static final String COLUMN_ID = _ID;
         static final String TABLE_NAME = "saved";
+
     }
 
     public static final class NoteOfDisplaysEntry {

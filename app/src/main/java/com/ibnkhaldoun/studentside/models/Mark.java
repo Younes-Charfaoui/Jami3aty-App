@@ -6,14 +6,26 @@ import android.os.Parcelable;
 
 public class Mark implements Parcelable {
 
+    public static final Parcelable.Creator<Mark> CREATOR = new Parcelable.Creator<Mark>() {
+        @Override
+        public Mark createFromParcel(Parcel source) {
+            return new Mark(source);
+        }
+
+        @Override
+        public Mark[] newArray(int size) {
+            return new Mark[size];
+        }
+    };
     private String subjectName, shortSubjectName;
-    private float mExam, mTD, mTP;
+    private float mExam = -1, mTD = -1, mTP = -1;
     private String courseProfessor;
     private String tdProfessor;
     private String tpProfessor;
     private long subjectId;
 
-    public Mark(long subjectId ,String subjectName, String shortSubjectName, float mExam, float mTD, float mTP, String courseProfessor, String tdProfessor, String tpProfessor) {
+
+    public Mark(long subjectId, String subjectName, String shortSubjectName, float mExam, float mTD, float mTP, String courseProfessor, String tdProfessor, String tpProfessor) {
         this.subjectId = subjectId;
         this.subjectName = subjectName;
         this.shortSubjectName = shortSubjectName;
@@ -25,7 +37,17 @@ public class Mark implements Parcelable {
         this.tpProfessor = tpProfessor;
     }
 
-
+    protected Mark(Parcel in) {
+        this.subjectName = in.readString();
+        this.shortSubjectName = in.readString();
+        this.mExam = in.readFloat();
+        this.mTD = in.readFloat();
+        this.mTP = in.readFloat();
+        this.courseProfessor = in.readString();
+        this.tdProfessor = in.readString();
+        this.tpProfessor = in.readString();
+        this.subjectId = in.readLong();
+    }
 
     public String getCourseProfessor() {
         return courseProfessor;
@@ -116,28 +138,4 @@ public class Mark implements Parcelable {
         dest.writeString(this.tpProfessor);
         dest.writeLong(this.subjectId);
     }
-
-    protected Mark(Parcel in) {
-        this.subjectName = in.readString();
-        this.shortSubjectName = in.readString();
-        this.mExam = in.readFloat();
-        this.mTD = in.readFloat();
-        this.mTP = in.readFloat();
-        this.courseProfessor = in.readString();
-        this.tdProfessor = in.readString();
-        this.tpProfessor = in.readString();
-        this.subjectId = in.readLong();
-    }
-
-    public static final Parcelable.Creator<Mark> CREATOR = new Parcelable.Creator<Mark>() {
-        @Override
-        public Mark createFromParcel(Parcel source) {
-            return new Mark(source);
-        }
-
-        @Override
-        public Mark[] newArray(int size) {
-            return new Mark[size];
-        }
-    };
 }

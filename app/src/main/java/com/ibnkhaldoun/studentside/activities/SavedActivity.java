@@ -131,14 +131,18 @@ public class SavedActivity extends AppCompatActivity
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-        getSupportLoaderManager().initLoader(ID_SAVED_LOADER, null, this);
+
 
         LocalBroadcastManager.getInstance(this).registerReceiver(mSavedReceiver,
                 new IntentFilter(SAVED_ACTION));
         LocalBroadcastManager.getInstance(this).registerReceiver(mFailedReceiver,
                 new IntentFilter(ACTION_ERROR));
 
-        getSavedFromTheInternet();
+        if (NetworkUtilities.isConnected(this)) {
+            getSavedFromTheInternet();
+        } else {
+            getSupportLoaderManager().initLoader(ID_SAVED_LOADER, null, SavedActivity.this);
+        }
     }
 
     private void setupRecyclerView() {
@@ -216,7 +220,7 @@ public class SavedActivity extends AppCompatActivity
             serviceIntent.putExtra(KEY_ACTION, SAVED_TYPE);
             startService(serviceIntent);
         } else {
-            Snackbar networkSnackBar = Snackbar.make(findViewById(R.id.subject_main_view)
+            Snackbar networkSnackBar = Snackbar.make(findViewById(R.id.saved_main_view)
                     , R.string.no_internet_connection_string,
                     Snackbar.LENGTH_SHORT);
             networkSnackBar.setAction(R.string.retry_string, v -> {
@@ -235,5 +239,4 @@ public class SavedActivity extends AppCompatActivity
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mSavedReceiver);
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mFailedReceiver);
     }
-
 }

@@ -3,20 +3,26 @@ package com.ibnkhaldoun.studentside.adapters;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.drawable.GradientDrawable;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ibnkhaldoun.studentside.R;
 import com.ibnkhaldoun.studentside.Utilities.Utilities;
 import com.ibnkhaldoun.studentside.database.DatabaseContract;
 import com.ibnkhaldoun.studentside.models.Saved;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 
 public class SavedAdapter extends RecyclerView.Adapter<SavedAdapter.SavedViewHolder> {
@@ -30,7 +36,7 @@ public class SavedAdapter extends RecyclerView.Adapter<SavedAdapter.SavedViewHol
 
     @Override
     public SavedViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.display_list_item, parent, false);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.saved_list_item, parent, false);
         return new SavedViewHolder(view);
     }
 
@@ -39,9 +45,9 @@ public class SavedAdapter extends RecyclerView.Adapter<SavedAdapter.SavedViewHol
         Saved saved = mSavedList.get(position);
         holder.mProfessorShortNameTv.setText(Utilities.getShortName(saved.getProfessor()));
         GradientDrawable circleImage = (GradientDrawable) holder.mProfessorShortNameTv.getBackground();
-        circleImage.setColor(Utilities.getCircleColor(saved.getProfessor().charAt(0), mContext));
+        circleImage.setColor(Utilities.getCircleColor(mContext));
         holder.mProfessorNameTv.setText(saved.getProfessor());
-        holder.mDateTimeTv.setText(saved.getDate());
+        holder.mDateTimeTv.setText(getDateFormat(saved.getDate()));
         holder.mTextTv.setText(saved.getText());
     }
 
@@ -59,7 +65,12 @@ public class SavedAdapter extends RecyclerView.Adapter<SavedAdapter.SavedViewHol
                 String professor = cursor.getString(cursor.getColumnIndex(DatabaseContract.SavedEntry.COLUMN_NAME));
                 String text = cursor.getString(cursor.getColumnIndex(DatabaseContract.SavedEntry.COLUMN_DISPLAY_TEXT));
                 String date = cursor.getString(cursor.getColumnIndex(DatabaseContract.SavedEntry.COLUMN_DATE));
-                mSavedList.add(new Saved(id, professor, text, date));
+                String subject = cursor.getString(cursor.getColumnIndex(DatabaseContract.SavedEntry.COLUMN_SUBJECT));
+                String file = cursor.getString(cursor.getColumnIndex(DatabaseContract.SavedEntry.COLUMN_FILE));
+                Saved save = new Saved(id, professor, text, date);
+                save.setSubjectTitle(subject);
+                save.setFilePath(file);
+                mSavedList.add(save);
             }
         }
         notifyDataSetChanged();
@@ -70,29 +81,51 @@ public class SavedAdapter extends RecyclerView.Adapter<SavedAdapter.SavedViewHol
         notifyDataSetChanged();
     }
 
+    private String getDateFormat(String date) {
+
+        long time = Long.parseLong(date);
+        Date dateB = new Date(time);
+
+        SimpleDateFormat format = new SimpleDateFormat("dd MMM 'at' HH:mm", Locale.getDefault());
+
+        return format.format(dateB);
+    }
+
     class SavedViewHolder extends RecyclerView.ViewHolder {
 
         TextView mProfessorShortNameTv,
                 mProfessorNameTv, mDateTimeTv,
-                mTextTv, mNumberOfNoteTv;
+                mTextTv;
 
-        Button mUnSaveButton;
+        ImageView mPopUpMenu;
 
         SavedViewHolder(View itemView) {
             super(itemView);
-            mProfessorShortNameTv = itemView.findViewById(R.id.display_professor_short_name_text_view);
-            mProfessorNameTv = itemView.findViewById(R.id.display_professor_name_text_view);
-            mDateTimeTv = itemView.findViewById(R.id.display_date_and_time_text_view);
-            mTextTv = itemView.findViewById(R.id.display_text_text_view);
-            mUnSaveButton = itemView.findViewById(R.id.display_save_button);
-            mNumberOfNoteTv = itemView.findViewById(R.id.display_number_of_notes);
-            itemView.findViewById(R.id.display_note_button).setVisibility(View.GONE);
+            mProfessorShortNameTv = itemView.findViewById(R.id.saved_professor_short_name_text_view);
+            mProfessorNameTv = itemView.findViewById(R.id.saved_professor_name_text_view);
+            mDateTimeTv = itemView.findViewById(R.id.saved_date_and_time_text_view);
+            mTextTv = itemView.findViewById(R.id.saved_text_text_view);
+            mPopUpMenu = itemView.findViewById(R.id.saved_pop_up);
+
+            mPopUpMenu.setOnClickListener(v -> {
+                        PopupMenu popup = new PopupMenu(mContext, mPopUpMenu);
+                        MenuInflater inflater = popup.getMenuInflater();
+                        inflater.inflate(R.menu.menu_saved_item, popup.getMenu());
+                        popup.setOnMenuItemClickListener(item -> {
+                            long id = mSavedList.get(getAdapterPosition()).getId();
+                            //todo add the code to handle the unsave process
+                            Toast.makeText(mContext, "The item was with id " + id, Toast.LENGTH_LONG).show();
+                            return true;
+                        });
+                        popup.show();
+                    }
+            );
+
             itemView.setOnClickListener(v -> {
-                //Intent intent = new Intent(mContext, DisplayDetailActivity.class);
-                //mCursor.moveToPosition(getAdapterPosition());
-                //intent.putExtra(SENDER,mCursor.getInt(mCursor.getColumnIndex(DatabaseContract.SavedEntry.COLUMN_ID)));
-                //  mContext.startActivity(intent);
+                //todo add the click handler
             });
+
+
         }
 
 

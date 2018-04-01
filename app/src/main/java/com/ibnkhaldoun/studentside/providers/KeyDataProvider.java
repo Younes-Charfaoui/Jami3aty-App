@@ -48,4 +48,13 @@ public final class KeyDataProvider {
     public static final String JSON_TITLE_SCHEDULE = "title";
     public static final String JSON_HOUR_SCHEDULE = "hour_start_schedule";
     public static final String JSON_TYPE_SCHEDULE = "type";
+
+    public static final String JSON_POST_ID = "_id_post";
+    public static final String JSON_POST_DATE = "date_post";
+    public static final String JSON_POST_TEXT = "text_post";
+    public static final String JSON_POST_PROFESSOR = "fullName";
+    public static final String JSON_POST_SUBJECT = "title";
+    public static final String JSON_POST_FILE = "path_file";
+    public static final String JSON_POST_TYPE = "type";
+
 }

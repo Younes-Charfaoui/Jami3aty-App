@@ -91,6 +91,7 @@
     <string name="title_activity_mail">MailActivity</string>
     <string name="title_activity_message_detail">MessageDetailActivity</string>
     <string name="displays_save_string">Save</string>
+    <string name="displays_unsave_string">Unsave</string>
     <string name="display_note_string">Note</string>
     <string name="note_edit_string">Note</string>
     <string name="delete_message_string">Delete message</string>

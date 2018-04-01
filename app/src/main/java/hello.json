@@ -1,0 +1,37 @@
+{
+  "status": 200,
+  "data": [
+    {
+      "type": "2",
+      "text_post": "Animaliss sunt torquiss de altus tata. Persuadere hic ducunt ad alter historia.",
+      "path_file": null,
+      "fullName": "Dr. Bekki Khathir",
+      "title": "Cryptography",
+      "date_post": "1522587766"
+    },
+    {
+      "type": "4",
+      "text_post": "Bursas favere in alta muta! Planeta de rusticus genetrix, anhelare extum.",
+      "path_file": null,
+      "fullName": "Dr. Dahmani Youcef",
+      "title": "Scientific Redaction",
+      "date_post": "1522587766"
+    },
+    {
+      "type": "5",
+      "text_post": "Lumens sunt cursuss de placidus resistentia. Regius adelphis superbe talems triticum est.",
+      "path_file": null,
+      "fullName": "Dr. Aid Lahcen",
+      "title": "Developing Android Apps",
+      "date_post": "1522587766"
+    },
+    {
+      "type": "7",
+      "text_post": "Try covering the emeri's essence bok choys with clammy iced tea and gold tequila, roasted.",
+      "path_file": null,
+      "fullName": "Dr. Beghani Abdelmalk",
+      "title": "Networking",
+      "date_post": "1522587766"
+    }
+  ]
+}

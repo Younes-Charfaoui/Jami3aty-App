@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="8dp"
+    android:layout_marginEnd="8dp"
+    android:layout_marginStart="8dp"
+    android:layout_marginTop="8dp"
+    android:background="?attr/selectableItemBackground"
+    app:cardCornerRadius="2dp"
+    app:cardElevation="4dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?attr/selectableItemBackground"
+        android:orientation="vertical"
+        android:paddingEnd="8dp"
+        android:paddingStart="8dp">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="8dp"
+            android:paddingEnd="16dp"
+            android:paddingStart="16dp"
+            android:paddingTop="8dp">
+
+            <TextView
+                android:id="@+id/saved_professor_short_name_text_view"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/circle"
+                android:gravity="center"
+                android:textColor="@android:color/white"
+                android:textSize="16sp"
+                tools:text="OA" />
+
+
+            <RelativeLayout
+                android:id="@+id/saved_text_information_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="8dp"
+                android:layout_toEndOf="@+id/saved_professor_short_name_text_view">
+
+                <TextView
+                    android:id="@+id/saved_professor_name_text_view"
+                    style="@android:style/TextAppearance.Holo.Widget.ActionBar.Title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-light"
+                    tools:text="Phd Ouared Aek" />
+
+                <TextView
+                    android:id="@+id/saved_date_and_time_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignStart="@id/display_professor_name_text_view"
+                    android:layout_below="@id/saved_professor_name_text_view"
+                    android:fontFamily="sans-serif-light"
+                    tools:text="19:30 Feb 13" />
+            </RelativeLayout>
+
+            <ImageView
+                android:id="@+id/saved_pop_up"
+                android:contentDescription="@null"
+                android:layout_width="wrap_content"
+                android:layout_alignParentEnd="true"
+                app:srcCompat="@drawable/ic_more_vert_gray_24dp"
+                android:layout_centerVertical="true"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+
+
+        <TextView
+            android:id="@+id/saved_text_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-light"
+            android:paddingBottom="16dp"
+            android:paddingEnd="16dp"
+            android:paddingStart="16dp"
+            android:textAppearance="@android:style/TextAppearance.Holo.Widget.ActionBar.Subtitle"
+            android:textColor="@android:color/black"
+            tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse eu mi vitae ante sodales sollicitudin. Phasellus dignissim laoreet ipsum, facilisis lacinia purus hendrerit vitae. Vestibulum et interdum velit. Nam et nulla vitae mauris malesuada commodo. Quisque vulputate vitae dui eget pellentesque. Nam ac dolor porttitor, ullamcorper orci non, mollis turpis. Etiam imperdiet ante eu diam iaculis, ut tempor ligula varius. Maecenas laoreet eros id purus mollis congue. Vivamus interdum condimentum lorem quis porttitor. Mauris tortor mi, eleifend viverra porta a, dapibus ut felis." />
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>

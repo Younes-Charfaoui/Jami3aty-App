@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class DatabaseOpenHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "university.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     private static final String BASE_DROP = "DROP TABLE IF EXISTS ";
     private static final String BASE_CREATE = "CREATE TABLE ";
@@ -27,6 +27,8 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
             DatabaseContract.SavedEntry.COLUMN_ID + " INTEGER PRIMARY KEY , " +
             DatabaseContract.SavedEntry.COLUMN_NAME + " TEXT NOT NULL, " +
             DatabaseContract.SavedEntry.COLUMN_DATE + " TEXT NOT NULL, " +
+            DatabaseContract.SavedEntry.COLUMN_FILE + " TEXT , " +
+            DatabaseContract.SavedEntry.COLUMN_SUBJECT + " TEXT NOT NULL, " +
             DatabaseContract.SavedEntry.COLUMN_DISPLAY_TEXT + " TEXT NOT NULL);";
 
     private static final String SQL_QUERY_DROP_SAVED = BASE_DROP + DatabaseContract.SavedEntry.TABLE_NAME;
@@ -131,7 +133,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
         //database.execSQL(SQL_QUERY_DROP_DISPLAY);
         database.execSQL(SQL_QUERY_DROP_NOTE_DISPLAY);
         database.execSQL(SQL_QUERY_DROP_NOTE);
-       database.execSQL(SQL_QUERY_DROP_SCHEDULE);
+        database.execSQL(SQL_QUERY_DROP_SCHEDULE);
         database.execSQL(SQL_QUERY_DROP_SAVED);
         database.execSQL(SQL_QUERY_DROP_SUBJECT);
         database.execSQL(SQL_QUERY_DROP_MAIL);

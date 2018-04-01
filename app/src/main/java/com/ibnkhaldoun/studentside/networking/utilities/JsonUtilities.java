@@ -28,6 +28,13 @@ import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_DAY_SCH
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_HOUR_SCHEDULE;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_NAME_SCHEDULE;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_PLACE_SCHEDULE;
+import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_POST_DATE;
+import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_POST_FILE;
+import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_POST_ID;
+import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_POST_PROFESSOR;
+import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_POST_SUBJECT;
+import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_POST_TEXT;
+import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_POST_TYPE;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_PROFESSOR_DEGREE;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_PROFESSOR_EMAIL;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_PROFESSOR_FIRST_NAME;
@@ -196,7 +203,28 @@ public class JsonUtilities {
     }
 
     public static ArrayList<Saved> getSavedList(String response) throws JSONException {
-        return null;
+        JSONObject root = new JSONObject(response);
+        if (root.getInt(KEY_JSON_STATUS) != 200) throw new JSONException("Error in code");
+
+        ArrayList<Saved> saves = new ArrayList<>();
+        JSONArray data = root.getJSONArray(KEY_JSON_DATA);
+        for (int i = 0; i < data.length(); i++) {
+            JSONObject saved = data.getJSONObject(i);
+            long id = saved.getLong(JSON_POST_ID);
+            String date = saved.getString(JSON_POST_DATE);
+            String text = saved.getString(JSON_POST_TEXT);
+            String professor = saved.getString(JSON_POST_PROFESSOR);
+            String file = saved.getString(JSON_POST_FILE);
+            String subject = saved.getString(JSON_POST_SUBJECT);
+            Log.i(TAG, "getSavedList: " + subject);
+            int type = saved.getInt(JSON_POST_TYPE);
+            Saved save = new Saved(id, professor, text, date);
+            save.setFilePath(file);
+            save.setSubjectTitle(subject);
+            save.setType(type);
+            saves.add(save);
+        }
+        return saves;
     }
 
     public static SparseArray<Schedule> getSchedulesList(String response) throws JSONException {

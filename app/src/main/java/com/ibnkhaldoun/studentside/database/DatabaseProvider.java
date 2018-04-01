@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 
 public class DatabaseProvider extends ContentProvider {
@@ -152,6 +153,9 @@ public class DatabaseProvider extends ContentProvider {
             case SCHEDULE:
                 return insertMultipleRows(values, insertedRow, database,
                         DatabaseContract.ScheduleEntry.TABLE_NAME);
+            case SAVED:
+                return insertMultipleRows(values, insertedRow, database,
+                        DatabaseContract.SavedEntry.TABLE_NAME);
             default:
                 throw new IllegalStateException();
         }
@@ -159,9 +163,11 @@ public class DatabaseProvider extends ContentProvider {
 
     private int insertMultipleRows(@NonNull ContentValues[] values,
                                    int insertedRow, SQLiteDatabase database, String table) {
+        Log.i("DbPro", "insertMultipleRows: " + values.length);
         for (ContentValues value :
                 values) {
             long row = database.insert(table, null, value);
+            Log.i("DbPro", "insertMultipleRows: actual row " + row);
             if (row > 0) insertedRow++;
         }
         return insertedRow;
