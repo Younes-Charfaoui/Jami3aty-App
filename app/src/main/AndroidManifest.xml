@@ -220,6 +220,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.ibnkhaldoun.studentside.activities.MessagesActivity" />
         </activity>
+        <activity
+            android:name=".activities.SavedDetailActivity"
+            android:label="@string/title_activity_saved_detail"
+            android:parentActivityName=".activities.SavedActivity"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.ibnkhaldoun.studentside.activities.SavedActivity" />
+        </activity>
     </application>
 
 </manifest>

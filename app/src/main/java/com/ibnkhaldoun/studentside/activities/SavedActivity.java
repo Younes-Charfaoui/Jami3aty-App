@@ -1,16 +1,19 @@
 package com.ibnkhaldoun.studentside.activities;
 
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -19,13 +22,17 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.ibnkhaldoun.studentside.R;
 import com.ibnkhaldoun.studentside.Utilities.PreferencesManager;
 import com.ibnkhaldoun.studentside.adapters.SavedAdapter;
+import com.ibnkhaldoun.studentside.asyncTask.UnSaveAsyncTask;
 import com.ibnkhaldoun.studentside.database.DatabaseContract;
+import com.ibnkhaldoun.studentside.interfaces.UnsaveListener;
 import com.ibnkhaldoun.studentside.models.Saved;
 import com.ibnkhaldoun.studentside.networking.models.RequestPackage;
+import com.ibnkhaldoun.studentside.networking.models.Response;
 import com.ibnkhaldoun.studentside.networking.utilities.NetworkUtilities;
 import com.ibnkhaldoun.studentside.providers.EndPointsProvider;
 import com.ibnkhaldoun.studentside.services.LoadDataService;
@@ -38,7 +45,9 @@ import static com.ibnkhaldoun.studentside.Utilities.PreferencesManager.STUDENT;
 import static com.ibnkhaldoun.studentside.networking.models.RequestPackage.POST;
 import static com.ibnkhaldoun.studentside.networking.models.Response.IO_EXCEPTION;
 import static com.ibnkhaldoun.studentside.networking.models.Response.JSON_EXCEPTION;
+import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_POST_ID;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_STUDENT_ID;
+import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.KEY_AJAX;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.KEY_ANDROID;
 import static com.ibnkhaldoun.studentside.services.LoadDataService.ACTION_ERROR;
 import static com.ibnkhaldoun.studentside.services.LoadDataService.KEY_ACTION;
@@ -48,7 +57,8 @@ import static com.ibnkhaldoun.studentside.services.LoadDataService.SAVED_ACTION;
 import static com.ibnkhaldoun.studentside.services.LoadDataService.SAVED_TYPE;
 
 public class SavedActivity extends AppCompatActivity
-        implements LoaderManager.LoaderCallbacks<Cursor> {
+        implements LoaderManager.LoaderCallbacks<Cursor>
+        , UnsaveListener {
 
     public static final String KEY_SAVED = "keySaved";
     private static final int ID_SAVED_LOADER = 727;
@@ -56,7 +66,7 @@ public class SavedActivity extends AppCompatActivity
     private LinearLayout mEmptyView;
     private SavedAdapter mAdapter;
     private ProgressBar mLoadingProgressBar;
-
+    private ProgressDialog mProgressDialog;
 
     private BroadcastReceiver mSavedReceiver = new BroadcastReceiver() {
         @Override
@@ -89,7 +99,7 @@ public class SavedActivity extends AppCompatActivity
             getSupportLoaderManager().restartLoader(ID_SAVED_LOADER, null, SavedActivity.this).forceLoad();
             switch (type) {
                 case JSON_EXCEPTION:
-                    Snackbar JsonSnackBar = Snackbar.make(findViewById(R.id.subject_main_view)
+                    Snackbar JsonSnackBar = Snackbar.make(findViewById(R.id.saved_main_view)
                             , R.string.error_json,
                             Snackbar.LENGTH_SHORT);
                     JsonSnackBar.setAction(R.string.retry_string, v -> {
@@ -101,7 +111,7 @@ public class SavedActivity extends AppCompatActivity
                     JsonSnackBar.show();
                     break;
                 case IO_EXCEPTION:
-                    Snackbar IOSnackBar = Snackbar.make(findViewById(R.id.subject_main_view)
+                    Snackbar IOSnackBar = Snackbar.make(findViewById(R.id.saved_main_view)
                             , R.string.error_json,
                             Snackbar.LENGTH_SHORT);
                     IOSnackBar.setAction(R.string.retry_string, v -> {
@@ -146,7 +156,7 @@ public class SavedActivity extends AppCompatActivity
     }
 
     private void setupRecyclerView() {
-        mAdapter = new SavedAdapter(this);
+        mAdapter = new SavedAdapter(this, this);
         LinearLayoutManager manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(manager);
@@ -162,7 +172,7 @@ public class SavedActivity extends AppCompatActivity
                         DatabaseContract.SavedEntry.CONTENT_SAVED_URI,
                         projection, null, null, null);
             default:
-                throw new IllegalStateException();
+                return null;
         }
     }
 
@@ -213,7 +223,7 @@ public class SavedActivity extends AppCompatActivity
             RequestPackage request = new RequestPackage();
             request.setEndPoint(EndPointsProvider.getSavedEndPoint());
             request.setMethod(POST);
-            request.addParams(KEY_ANDROID, KEY_ANDROID);
+            request.addParams(KEY_AJAX, KEY_ANDROID);
             request.addParams(JSON_STUDENT_ID, new PreferencesManager(this, STUDENT).getId());
             Intent serviceIntent = new Intent(this, LoadDataService.class);
             serviceIntent.putExtra(KEY_REQUEST, request);
@@ -238,5 +248,59 @@ public class SavedActivity extends AppCompatActivity
         super.onDestroy();
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mSavedReceiver);
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mFailedReceiver);
+    }
+
+    @Override
+    public void OnUnsaveFinished(Response response, int position) {
+        mProgressDialog.dismiss();
+        Snackbar.make(findViewById(R.id.saved_main_view)
+                , R.string.unsaved_succ,
+                Snackbar.LENGTH_SHORT).show();
+        Uri pathToSave = DatabaseContract.SavedEntry.
+                CONTENT_SAVED_URI.buildUpon()
+                .appendEncodedPath(String.valueOf(mAdapter.getIdAt(position)))
+                .build();
+        getContentResolver().delete(pathToSave, null, null);
+        mAdapter.removeSaveAt(position);
+
+    }
+
+    @Override
+    public void OnUnsaveStarted(long id, int position) {
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.unsave_post_title)
+                .setMessage(R.string.unsave_post_confirmation)
+                .setPositiveButton(R.string.yes, (dialog, which) -> {
+                    if (NetworkUtilities.isConnected(this)) {
+                        RequestPackage request = new RequestPackage();
+                        request.setEndPoint(EndPointsProvider.getUnsaveEndpoint());
+                        request.setMethod(POST);
+                        request.addParams(KEY_ANDROID, KEY_ANDROID);
+                        request.addParams(JSON_STUDENT_ID,
+                                new PreferencesManager(this, PreferencesManager.STUDENT).getId());
+                        request.addParams(JSON_POST_ID, String.valueOf(id));
+                        UnSaveAsyncTask task = new UnSaveAsyncTask(this, position);
+                        task.execute(request);
+                        dialog.cancel();
+                        mProgressDialog = new ProgressDialog(this);
+                        mProgressDialog.setTitle(getString(R.string.wait_please));
+                        mProgressDialog.setMessage(getString(R.string.unsaving_current));
+                        mProgressDialog.setCancelable(false);
+                        mProgressDialog.show();
+                    } else {
+                        Toast.makeText(this,
+                                R.string.no_internet_connection_string,
+                                Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .setNegativeButton(android.R.string.no, null)
+                .show();
+    }
+
+    @Override
+    public void OnUnsavedEmpty() {
+        mRecyclerView.setVisibility(GONE);
+        mEmptyView.setVisibility(VISIBLE);
+        mLoadingProgressBar.setVisibility(GONE);
     }
 }

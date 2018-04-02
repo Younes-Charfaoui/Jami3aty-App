@@ -39,6 +39,7 @@ import static android.view.View.VISIBLE;
 public class NotesActivity extends AppCompatActivity
         implements LoaderManager.LoaderCallbacks<Cursor> {
 
+
     private static final int ID_LOADER = 162;
     private static int NUMBER_OF_NOTE;
     private RecyclerView mNoteRecyclerView;
@@ -51,6 +52,7 @@ public class NotesActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         NUMBER_OF_NOTE = 0;
         setContentView(R.layout.activity_notes);
+
         Toolbar toolbar = findViewById(R.id.note_toolbar);
         setSupportActionBar(toolbar);
         mEmptyView = findViewById(R.id.note_empty_view);

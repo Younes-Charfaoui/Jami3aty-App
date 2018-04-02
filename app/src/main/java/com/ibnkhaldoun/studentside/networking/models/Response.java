@@ -6,6 +6,7 @@ public class Response {
     public static final int RESPONSE_SUCCESS = 200;
     public static final int RESPONSE_EMAIL_ERROR = 401;
     public static final int RESPONSE_PASSWORD_ERROR = 403;
+    public static final int RESPONSE_EMAIL_NOT_EXIST = 406;
     public static final int RESPONSE_AVERAGE_ERROR = 407;
     public static final int RESPONSE_EMAIL_MAILER_ERROR = 411;
     public static final int RESPONSE_CARD_NOT_EXIST = 412;
@@ -17,7 +18,7 @@ public class Response {
 
     private int status;
 
-    Response(int status) {
+    public Response(int status) {
         this.status = status;
     }
 

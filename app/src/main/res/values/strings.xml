@@ -203,4 +203,11 @@
     <string name="tp_mark">TP Mark</string>
     <string name="see_if">See if</string>
     <string name="change_to_see">Change To see</string>
+    <string name="email_dont_exist">This email does not have an account</string>
+    <string name="unsaved_succ">The post was unsaved successfully</string>
+    <string name="unsave_post_title">Unsave post ?</string>
+    <string name="unsave_post_confirmation">You really want to unsave this post ?</string>
+    <string name="wait_please">Wait please.</string>
+    <string name="unsaving_current">Unsaving....</string>
+    <string name="title_activity_saved_detail">SavedDetailActivity</string>
 </resources>

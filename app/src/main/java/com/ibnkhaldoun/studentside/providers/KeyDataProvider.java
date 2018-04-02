@@ -4,7 +4,8 @@ package com.ibnkhaldoun.studentside.providers;
 public final class KeyDataProvider {
 
     public static final String KEY_JSON_STATUS = "status";
-    public static final String KEY_ANDROID = "ajax";
+    public static final String KEY_ANDROID = "true";
+    public static final String KEY_AJAX = "ajax";
     public static final String KEY_EMAIL = "email";
     public static final String KEY_PASSWORD = "password";
     public static final String KEY_BAC = "average";

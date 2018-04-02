@@ -16,7 +16,9 @@ import android.widget.Toast;
 import com.ibnkhaldoun.studentside.R;
 import com.ibnkhaldoun.studentside.Utilities.Utilities;
 import com.ibnkhaldoun.studentside.database.DatabaseContract;
+import com.ibnkhaldoun.studentside.interfaces.UnsaveListener;
 import com.ibnkhaldoun.studentside.models.Saved;
+import com.ibnkhaldoun.studentside.networking.utilities.NetworkUtilities;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -29,9 +31,11 @@ public class SavedAdapter extends RecyclerView.Adapter<SavedAdapter.SavedViewHol
 
     private Context mContext;
     private List<Saved> mSavedList;
+    private UnsaveListener mUnSaveListener;
 
-    public SavedAdapter(Context context) {
+    public SavedAdapter(Context context, UnsaveListener listener) {
         this.mContext = context;
+        this.mUnSaveListener = listener;
     }
 
     @Override
@@ -91,6 +95,10 @@ public class SavedAdapter extends RecyclerView.Adapter<SavedAdapter.SavedViewHol
         return format.format(dateB);
     }
 
+    public long getIdAt(int position) {
+        return mSavedList.get(position).getId();
+    }
+
     class SavedViewHolder extends RecyclerView.ViewHolder {
 
         TextView mProfessorShortNameTv,
@@ -112,9 +120,17 @@ public class SavedAdapter extends RecyclerView.Adapter<SavedAdapter.SavedViewHol
                         MenuInflater inflater = popup.getMenuInflater();
                         inflater.inflate(R.menu.menu_saved_item, popup.getMenu());
                         popup.setOnMenuItemClickListener(item -> {
-                            long id = mSavedList.get(getAdapterPosition()).getId();
-                            //todo add the code to handle the unsave process
-                            Toast.makeText(mContext, "The item was with id " + id, Toast.LENGTH_LONG).show();
+
+
+                            if (NetworkUtilities.isConnected(mContext)) {
+                                long id = mSavedList.get(getAdapterPosition()).getId();
+                                int position = getAdapterPosition();
+                                mUnSaveListener.OnUnsaveStarted(id, position);
+                            } else {
+                                Toast.makeText(mContext,
+                                        R.string.no_internet_connection_string,
+                                        Toast.LENGTH_SHORT).show();
+                            }
                             return true;
                         });
                         popup.show();
@@ -124,10 +140,12 @@ public class SavedAdapter extends RecyclerView.Adapter<SavedAdapter.SavedViewHol
             itemView.setOnClickListener(v -> {
                 //todo add the click handler
             });
-
-
         }
+    }
 
-
+    public void removeSaveAt(int position){
+        mSavedList.remove(position);
+        notifyItemRemoved(position);
+        if(mSavedList.size() == 0) mUnSaveListener.OnUnsavedEmpty();
     }
 }

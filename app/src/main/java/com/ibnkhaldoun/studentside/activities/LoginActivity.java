@@ -29,6 +29,7 @@ import com.ibnkhaldoun.studentside.services.LoadDataService;
 import static com.ibnkhaldoun.studentside.networking.models.Response.IO_EXCEPTION;
 import static com.ibnkhaldoun.studentside.networking.models.Response.JSON_EXCEPTION;
 import static com.ibnkhaldoun.studentside.networking.models.Response.RESPONSE_EMAIL_ERROR;
+import static com.ibnkhaldoun.studentside.networking.models.Response.RESPONSE_EMAIL_NOT_EXIST;
 import static com.ibnkhaldoun.studentside.networking.models.Response.RESPONSE_PASSWORD_ERROR;
 import static com.ibnkhaldoun.studentside.networking.models.Response.RESPONSE_SUCCESS;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_STUDENT_GROUP;
@@ -72,7 +73,7 @@ public class LoginActivity extends AppCompatActivity implements LoginTaskListene
                     String email = mEmailEditText.getText().toString();
                     String password = mPasswordEditText.getText().toString();
 
-                    request.addParams(KeyDataProvider.KEY_ANDROID, KeyDataProvider.KEY_ANDROID);
+                    request.addParams(KeyDataProvider.KEY_AJAX, KeyDataProvider.KEY_ANDROID);
                     request.addParams(KeyDataProvider.KEY_EMAIL, email);
                     request.addParams(KeyDataProvider.KEY_PASSWORD, password);
 
@@ -195,6 +196,14 @@ public class LoginActivity extends AppCompatActivity implements LoginTaskListene
                 break;
             case RESPONSE_PASSWORD_ERROR:
                 mPasswordWrapper.setError(getString(R.string.error_in_password_string));
+                mPasswordWrapper.setEnabled(true);
+                mEmailWrapper.setEnabled(true);
+                mPasswordEditText.setText(null);
+                mLoadingProgressBar.setVisibility(View.GONE);
+                mButtonsLinearLayout.setVisibility(View.VISIBLE);
+                break;
+            case RESPONSE_EMAIL_NOT_EXIST:
+                mEmailWrapper.setError(getString(R.string.email_dont_exist));
                 mPasswordWrapper.setEnabled(true);
                 mEmailWrapper.setEnabled(true);
                 mPasswordEditText.setText(null);

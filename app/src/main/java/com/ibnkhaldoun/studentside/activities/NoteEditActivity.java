@@ -162,6 +162,7 @@ public class NoteEditActivity extends AppCompatActivity implements SubjectDialog
                                     .build();
 
                             getContentResolver().delete(uri, null, null);
+                            getContentResolver().notifyChange(uri, null);
                             finish();
                         })
                         .setNegativeButton(android.R.string.no, null)

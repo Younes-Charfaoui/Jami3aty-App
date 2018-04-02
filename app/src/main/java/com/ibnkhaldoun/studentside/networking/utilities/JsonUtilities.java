@@ -203,6 +203,7 @@ public class JsonUtilities {
     }
 
     public static ArrayList<Saved> getSavedList(String response) throws JSONException {
+        Log.i(TAG, "getSavedList: " + response);
         JSONObject root = new JSONObject(response);
         if (root.getInt(KEY_JSON_STATUS) != 200) throw new JSONException("Error in code");
 
@@ -252,5 +253,14 @@ public class JsonUtilities {
             schedules.put(day, schedule);
         }
         return schedules;
+    }
+
+    public static Response getUnsaveResponse(String responseString) throws JSONException {
+        return new Response(JSON_EXCEPTION);
+    }
+
+
+    public static Response getSaveResponse(String responseString) {
+        return new Response(JSON_EXCEPTION);
     }
 }
