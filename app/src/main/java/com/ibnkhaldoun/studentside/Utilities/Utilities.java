@@ -5,6 +5,9 @@ import android.support.v4.content.ContextCompat;
 
 import com.ibnkhaldoun.studentside.R;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 import java.util.Random;
 
 
@@ -186,5 +189,16 @@ public final class Utilities {
         } else {
             return fullName;
         }
+    }
+
+
+    public static String getDateFormat(String date) {
+
+        long time = Long.parseLong(date);
+        Date dateB = new Date(time);
+
+        SimpleDateFormat format = new SimpleDateFormat("dd MMM  HH:mm", Locale.getDefault());
+
+        return format.format(dateB);
     }
 }

@@ -1,6 +1,7 @@
 package com.ibnkhaldoun.studentside.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.drawable.GradientDrawable;
 import android.support.v7.widget.PopupMenu;
@@ -15,16 +16,20 @@ import android.widget.Toast;
 
 import com.ibnkhaldoun.studentside.R;
 import com.ibnkhaldoun.studentside.Utilities.Utilities;
+import com.ibnkhaldoun.studentside.activities.SavedDetailActivity;
 import com.ibnkhaldoun.studentside.database.DatabaseContract;
 import com.ibnkhaldoun.studentside.interfaces.UnsaveListener;
 import com.ibnkhaldoun.studentside.models.Saved;
+import com.ibnkhaldoun.studentside.networking.models.RequestPackage;
 import com.ibnkhaldoun.studentside.networking.utilities.NetworkUtilities;
+import com.ibnkhaldoun.studentside.providers.EndPointsProvider;
+import com.ibnkhaldoun.studentside.services.LoadDataService;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
+
+import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_POST_ID;
+import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.KEY_ANDROID;
 
 
 public class SavedAdapter extends RecyclerView.Adapter<SavedAdapter.SavedViewHolder> {
@@ -51,7 +56,7 @@ public class SavedAdapter extends RecyclerView.Adapter<SavedAdapter.SavedViewHol
         GradientDrawable circleImage = (GradientDrawable) holder.mProfessorShortNameTv.getBackground();
         circleImage.setColor(Utilities.getCircleColor(mContext));
         holder.mProfessorNameTv.setText(saved.getProfessor());
-        holder.mDateTimeTv.setText(getDateFormat(saved.getDate()));
+        holder.mDateTimeTv.setText(Utilities.getDateFormat(saved.getDate()));
         holder.mTextTv.setText(saved.getText());
     }
 
@@ -85,18 +90,15 @@ public class SavedAdapter extends RecyclerView.Adapter<SavedAdapter.SavedViewHol
         notifyDataSetChanged();
     }
 
-    private String getDateFormat(String date) {
-
-        long time = Long.parseLong(date);
-        Date dateB = new Date(time);
-
-        SimpleDateFormat format = new SimpleDateFormat("dd MMM 'at' HH:mm", Locale.getDefault());
-
-        return format.format(dateB);
-    }
 
     public long getIdAt(int position) {
         return mSavedList.get(position).getId();
+    }
+
+    public void removeSaveAt(int position) {
+        mSavedList.remove(position);
+        notifyItemRemoved(position);
+        if (mSavedList.size() == 0) mUnSaveListener.OnUnsavedEmpty();
     }
 
     class SavedViewHolder extends RecyclerView.ViewHolder {
@@ -138,14 +140,30 @@ public class SavedAdapter extends RecyclerView.Adapter<SavedAdapter.SavedViewHol
             );
 
             itemView.setOnClickListener(v -> {
-                //todo add the click handler
+                if (NetworkUtilities.isConnected(mContext)) {
+                    RequestPackage requestPackage = new RequestPackage.Builder()
+                            .endPoint(EndPointsProvider.getCommentsEndpoint())
+                            .method(RequestPackage.POST)
+                            .addParams(KEY_ANDROID, KEY_ANDROID)
+                            .addParams(JSON_POST_ID, String.valueOf(mSavedList.get(
+                                    getAdapterPosition()).getId()))
+                            .create();
+
+                    Intent intentService = new Intent(mContext, LoadDataService.class);
+                    intentService.putExtra(LoadDataService.KEY_REQUEST, requestPackage);
+                    intentService.putExtra(LoadDataService.KEY_ACTION, LoadDataService.COMMENT_TYPE);
+                    mContext.startService(intentService);
+
+                    mContext.startActivity(new Intent(mContext,
+                            SavedDetailActivity.class)
+                            .putExtra(SavedDetailActivity.KEY_SAVED
+                                    , mSavedList.get(getAdapterPosition())));
+                } else {
+                    Toast.makeText(mContext,
+                            R.string.no_internet_connection_string,
+                            Toast.LENGTH_SHORT).show();
+                }
             });
         }
-    }
-
-    public void removeSaveAt(int position){
-        mSavedList.remove(position);
-        notifyItemRemoved(position);
-        if(mSavedList.size() == 0) mUnSaveListener.OnUnsavedEmpty();
     }
 }

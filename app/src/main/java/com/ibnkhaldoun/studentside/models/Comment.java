@@ -5,35 +5,35 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class Comment implements Parcelable {
-    private Person mCommenter;
+    private String mCommenter;
     private String mComment, mDate;
 
-    public String getmDate() {
+    public String getDate() {
         return mDate;
     }
 
-    public void setmDate(String mDate) {
+    public void setDate(String mDate) {
         this.mDate = mDate;
     }
 
-    public Person getmCommenter() {
+    public String getCommenter() {
 
         return mCommenter;
     }
 
-    public void setmCommenter(Person mCommenter) {
+    public void setCommenter(String mCommenter) {
         this.mCommenter = mCommenter;
     }
 
-    public String getmComment() {
+    public String getComment() {
         return mComment;
     }
 
-    public void setmComment(String mComment) {
+    public void setComment(String mComment) {
         this.mComment = mComment;
     }
 
-    public Comment(Person mCommenter, String mComment, String mDate) {
+    public Comment(String mCommenter, String mComment, String mDate) {
 
         this.mCommenter = mCommenter;
         this.mComment = mComment;
@@ -47,13 +47,13 @@ public class Comment implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeParcelable(this.mCommenter, flags);
+        dest.writeString(this.mCommenter);
         dest.writeString(this.mComment);
         dest.writeString(this.mDate);
     }
 
     protected Comment(Parcel in) {
-        this.mCommenter = in.readParcelable(Person.class.getClassLoader());
+        this.mCommenter = in.readString();
         this.mComment = in.readString();
         this.mDate = in.readString();
     }

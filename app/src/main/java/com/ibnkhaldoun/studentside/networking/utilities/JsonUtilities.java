@@ -3,6 +3,7 @@ package com.ibnkhaldoun.studentside.networking.utilities;
 import android.util.Log;
 import android.util.SparseArray;
 
+import com.ibnkhaldoun.studentside.models.Comment;
 import com.ibnkhaldoun.studentside.models.Mail;
 import com.ibnkhaldoun.studentside.models.Mark;
 import com.ibnkhaldoun.studentside.models.Professor;
@@ -262,5 +263,16 @@ public class JsonUtilities {
 
     public static Response getSaveResponse(String responseString) {
         return new Response(JSON_EXCEPTION);
+    }
+
+    public static ArrayList<Comment> getCommentsList(String response) {
+
+        try {
+            JSONObject root = new JSONObject(response);
+        } catch (JSONException e) {
+            e.printStackTrace();
+
+        }
+        return new ArrayList<>();
     }
 }

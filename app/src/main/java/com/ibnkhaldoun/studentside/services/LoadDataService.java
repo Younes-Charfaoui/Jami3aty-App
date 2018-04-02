@@ -12,6 +12,7 @@ import com.ibnkhaldoun.studentside.activities.SavedActivity;
 import com.ibnkhaldoun.studentside.activities.ScheduleActivity;
 import com.ibnkhaldoun.studentside.activities.StudentMainActivity;
 import com.ibnkhaldoun.studentside.activities.SubjectsActivity;
+import com.ibnkhaldoun.studentside.models.Comment;
 import com.ibnkhaldoun.studentside.models.Mail;
 import com.ibnkhaldoun.studentside.models.Mark;
 import com.ibnkhaldoun.studentside.models.Saved;
@@ -46,7 +47,8 @@ public class LoadDataService extends IntentService {
     public static final String SUBJECT_ACTION = "subjectAction";
     public static final String SUBJECT_INNER_ACTION = "subjectAction";
     public static final String NOTIFICATION_ACTION = "notificationAction";
-
+    public static final String COMMENTS_ACTION = "commentsAction";
+    
     public static final int DISPLAY_TYPE = 1;
     public static final int MAIL_TYPE = 2;
     public static final int SCHEDULE_TYPE = 3;
@@ -57,6 +59,7 @@ public class LoadDataService extends IntentService {
     public static final int SAVED_TYPE = 8;
     public static final int SUBJECT_IN_TYPE = 9;
     public static final int SCHEDULE_IN_TYPE = 10;
+    public static final int COMMENT_TYPE = 11;
 
     public static final String KEY_ACTION = "Action";
     public static final String KEY_DATA = "data";
@@ -96,6 +99,22 @@ public class LoadDataService extends IntentService {
                 break;
             case SCHEDULE_IN_TYPE:
                 scheduleInnerCall(request, this);
+                break;
+            case COMMENT_TYPE:
+                commentsCall(request , this);
+                break;
+        }
+    }
+
+    private void commentsCall(RequestPackage request, Context context) {
+        try {
+            String response = HttpUtilities.getData(request);
+            ArrayList<Comment> commentsList = JsonUtilities.getCommentsList(response);
+            Intent intent = new Intent(COMMENTS_ACTION);
+            intent.putExtra(KEY_DATA,commentsList);
+            LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ibnkhaldoun.studentside.R;
+import com.ibnkhaldoun.studentside.Utilities.ActivityUtilities;
 import com.ibnkhaldoun.studentside.Utilities.Utilities;
 import com.ibnkhaldoun.studentside.models.Comment;
 import com.ibnkhaldoun.studentside.models.Display;
@@ -64,11 +65,10 @@ public class DisplayDetailActivity extends AppCompatActivity {
             for (int i = 0; i < display.getCommentList().size(); i++) {
                 Comment comment = display.getCommentList().get(i);
                 notesLinearLayout.addView(
-                        createNoteView(comment.getmCommenter().getShortName(),
-                                comment.getmComment(),
-                                comment.getmCommenter().getFullName(),
-                                comment.getmDate()));
-
+                        ActivityUtilities.createNoteView(this, Utilities.getShortName(comment.getCommenter()),
+                                comment.getComment(),
+                                comment.getCommenter(),
+                                comment.getDate(), notesLinearLayout));
             }
         }
     }
@@ -81,26 +81,5 @@ public class DisplayDetailActivity extends AppCompatActivity {
                 break;
         }
         return true;
-    }
-
-    private View createNoteView(String shortName, String text, String name, String date) {
-        View noteView = LayoutInflater.from(this).inflate(R.layout.note_of_display_list_item, notesLinearLayout, false);
-
-        TextView noteShortNameTextView = noteView.findViewById(R.id.note_of_display_person_short_name_text_view);
-        noteShortNameTextView.setText(shortName);
-
-        GradientDrawable circleNoteShortName = (GradientDrawable) noteShortNameTextView.getBackground();
-        circleNoteShortName.setColor(Utilities.getCircleColor(shortName.charAt(0), this));
-
-        TextView noteNamePersonTextView = noteView.findViewById(R.id.note_of_display_person_name_text_view);
-        noteNamePersonTextView.setText(name);
-
-        TextView noteTextTextView = noteView.findViewById(R.id.note_of_display_note);
-        noteTextTextView.setText(text);
-
-        TextView noteDateTextView = noteView.findViewById(R.id.note_of_display_date);
-        noteDateTextView.setText(date);
-
-        return noteView;
     }
 }

@@ -19,6 +19,11 @@ public final class EndPointsProvider {
     private final static String SCHEDULE_ENDPOINT = BASE + "jami3aty/schedules/";
     private final static String SAVE_ENDPOINT = BASE + "jami3aty/schedules/";
     private final static String UNSAVE_ENDPOINT = BASE + "jami3aty/schedules/";
+    private final static String COMMENTS_ENDPOINT = BASE + "jami3aty/schedules/";
+
+    public static String getCommentsEndpoint() {
+        return COMMENTS_ENDPOINT;
+    }
 
     public static String getSaveEndpoint() {
         return SAVE_ENDPOINT;

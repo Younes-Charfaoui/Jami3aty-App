@@ -210,4 +210,5 @@
     <string name="wait_please">Wait please.</string>
     <string name="unsaving_current">Unsaving....</string>
     <string name="title_activity_saved_detail">SavedDetailActivity</string>
+    <string name="there_is_no_comments_for_this_post">There is no comments for this post</string>
 </resources>

@@ -31,7 +31,7 @@ public class RequestPackage implements Parcelable {
     public static final String NONE = "NONE";
     private String mEndPoint;
     private String mMethod;
-    private Map<String, String> mParams ;
+    private Map<String, String> mParams;
 
     public RequestPackage() {
         mParams = new HashMap<>();
@@ -47,6 +47,12 @@ public class RequestPackage implements Parcelable {
             String value = in.readString();
             this.mParams.put(key, value);
         }
+    }
+
+    private RequestPackage(String mEndPoint, String mMethod, Map<String, String> mParams) {
+        this.mEndPoint = mEndPoint;
+        this.mMethod = mMethod;
+        this.mParams = mParams;
     }
 
     public String getEndPoint() {
@@ -87,6 +93,34 @@ public class RequestPackage implements Parcelable {
         for (Map.Entry<String, String> entry : this.mParams.entrySet()) {
             dest.writeString(entry.getKey());
             dest.writeString(entry.getValue());
+        }
+    }
+
+    public static class Builder {
+        private String endPoint, method;
+        private Map<String, String> params;
+
+        public Builder() {
+            this.params = new HashMap<>();
+        }
+
+        public Builder endPoint(String endPoint) {
+            this.endPoint = endPoint;
+            return this;
+        }
+
+        public Builder method(String method) {
+            this.method = method;
+            return this;
+        }
+
+        public Builder addParams(String key, String value) {
+            params.put(key, value);
+            return this;
+        }
+
+        public RequestPackage create() {
+            return new RequestPackage(endPoint, method, params);
         }
     }
 }
