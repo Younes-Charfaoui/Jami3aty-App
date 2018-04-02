@@ -4,7 +4,6 @@ import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -24,6 +23,8 @@ public class DisplayDetailActivity extends AppCompatActivity {
 
     private LinearLayout notesLinearLayout;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,10 +32,11 @@ public class DisplayDetailActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        assert getSupportActionBar() != null;
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if (getSupportActionBar() != null)
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        Display display = getIntent().getParcelableExtra("Key");
+
+        Display display = getIntent().getParcelableExtra(DATA);
 
         TextView professorShortNameTextView = findViewById(R.id.display_detail_professor_short_name_text_view);
         professorShortNameTextView.setText(display.getProfessor().getShortName());
@@ -51,26 +53,11 @@ public class DisplayDetailActivity extends AppCompatActivity {
         TextView textTextView = findViewById(R.id.display_detail_text_text_view);
         textTextView.setText(display.getText());
 
-        TextView numberOfNoteTextView = findViewById(R.id.display_detail_number_of_notes);
-        if (display.getCommentList().size() != 0) {
-            numberOfNoteTextView.setText(display.getCommentList().size() + " note");
-        } else {
-            numberOfNoteTextView.setText("No note");
-        }
+
         View separatorView = findViewById(R.id.display_detail_notes_separator);
 
         notesLinearLayout = findViewById(R.id.display_detail_notes);
-        if (display.getCommentList().size() != 0) {
-            separatorView.setVisibility(View.VISIBLE);
-            for (int i = 0; i < display.getCommentList().size(); i++) {
-                Comment comment = display.getCommentList().get(i);
-                notesLinearLayout.addView(
-                        ActivityUtilities.createNoteView(this, Utilities.getShortName(comment.getCommenter()),
-                                comment.getComment(),
-                                comment.getCommenter(),
-                                comment.getDate(), notesLinearLayout));
-            }
-        }
+
     }
 
     @Override

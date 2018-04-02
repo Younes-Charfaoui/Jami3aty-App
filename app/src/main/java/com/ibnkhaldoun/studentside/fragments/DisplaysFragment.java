@@ -46,7 +46,7 @@ public class DisplaysFragment extends BaseMainFragment<Display> {
     public void onAttach(Context context) {
         super.onAttach(context);
         mInterface = (DataFragmentInterface) context;
-        mInterface.onAttach(this);
+
     }
 
     @Nullable
@@ -68,7 +68,7 @@ public class DisplaysFragment extends BaseMainFragment<Display> {
         mDisplaysRecyclerView.setLayoutManager(manager);
         mDisplaysRecyclerView.setAdapter(mAdapter);
         mDisplaysRecyclerView.setHasFixedSize(true);
-
+        mInterface.onAttach(this);
         return view;
     }
 

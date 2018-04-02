@@ -20,6 +20,8 @@ public final class EndPointsProvider {
     private final static String SAVE_ENDPOINT = BASE + "jami3aty/schedules/";
     private final static String UNSAVE_ENDPOINT = BASE + "jami3aty/schedules/";
     private final static String COMMENTS_ENDPOINT = BASE + "jami3aty/schedules/";
+    private static final String NOTIFICATION_ENDPOINT = BASE + "jami3aty/notification/all";
+    private static final String DISPLAY_ENDPOINT = BASE + "jami3aty/display/all";
 
     public static String getCommentsEndpoint() {
         return COMMENTS_ENDPOINT;
@@ -67,5 +69,13 @@ public final class EndPointsProvider {
 
     public static String getExamScheduleEndpoint() {
         return EXAM_ENDPOINT;
+    }
+
+    public static String getNotifications() {
+        return NOTIFICATION_ENDPOINT;
+    }
+
+    public static String getDisplays() {
+        return DISPLAY_ENDPOINT;
     }
 }

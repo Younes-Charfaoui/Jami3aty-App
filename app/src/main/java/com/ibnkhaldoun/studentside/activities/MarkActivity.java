@@ -40,13 +40,11 @@ public class MarkActivity extends AppCompatActivity implements LoaderManager.Loa
 
     public static final String KEY_MARKS = "keyMarks";
     private static final int ID_MARK_LOADER = 1182;
+    public static double AVERAGE;
     private RecyclerView mRecyclerView;
     private MarksAdapter mAdapter;
     private LinearLayout mEmptyLayout;
     private ProgressBar mLoadingProgressBar;
-
-    public static double AVERAGE ;
-
     private BroadcastReceiver mMarkReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -143,11 +141,13 @@ public class MarkActivity extends AppCompatActivity implements LoaderManager.Loa
             mLoadingProgressBar.setVisibility(View.VISIBLE);
             mRecyclerView.setVisibility(View.GONE);
             mEmptyLayout.setVisibility(View.GONE);
-            RequestPackage request = new RequestPackage();
-            request.setEndPoint(EndPointsProvider.getMarksEndPoint());
-            request.setMethod(RequestPackage.POST);
-            PreferencesManager manager = new PreferencesManager(this,STUDENT);
-            request.addParams(KeyDataProvider.JSON_STUDENT_ID, manager.getId());
+            PreferencesManager manager = new PreferencesManager(this, STUDENT);
+            RequestPackage request = new RequestPackage.Builder()
+                    .addEndPoint(EndPointsProvider.getMarksEndPoint())
+                    .addMethod(RequestPackage.POST)
+                    .addParams(KeyDataProvider.JSON_STUDENT_ID, manager.getId())
+                    .create();
+
             Intent intent = new Intent(this, LoadDataService.class);
             intent.putExtra(LoadDataService.KEY_ACTION, LoadDataService.MARK_TYPE);
             intent.putExtra(LoadDataService.KEY_REQUEST, request);

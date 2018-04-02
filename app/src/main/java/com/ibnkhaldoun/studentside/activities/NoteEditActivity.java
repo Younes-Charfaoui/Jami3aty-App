@@ -69,15 +69,17 @@ public class NoteEditActivity extends AppCompatActivity implements SubjectDialog
                 && NetworkUtilities.isConnected(this)) {
             PreferencesManager manager = new PreferencesManager(this, PreferencesManager.STUDENT);
 
-            RequestPackage request = new RequestPackage();
-            request.setMethod(RequestPackage.POST);
-            request.setEndPoint(EndPointsProvider.getSubjectAllEndpoint());
+            RequestPackage requestAllSchedule = new RequestPackage.Builder()
+                    .addMethod(RequestPackage.POST)
+                    .addParams(JSON_STUDENT_LEVEL, manager.getLevel())
+                    .addParams(JSON_STUDENT_SECTION, manager.getSection())
+                    .addParams(JSON_STUDENT_GROUP, manager.getGroup())
+                    .addEndPoint(EndPointsProvider.getScheduleAllEndpoint())
+                    .create();
+
             Intent intent = new Intent(this, LoadDataService.class);
-            request.addParams(KEY_ANDROID, KEY_ANDROID);
-            request.addParams(JSON_STUDENT_SECTION, manager.getSection());
-            request.addParams(JSON_STUDENT_LEVEL, manager.getLevel());
-            request.addParams(JSON_STUDENT_GROUP, manager.getGroup());
-            intent.putExtra(LoadDataService.KEY_REQUEST, request);
+
+            intent.putExtra(LoadDataService.KEY_REQUEST, requestAllSchedule);
             intent.putExtra(LoadDataService.KEY_ACTION, LoadDataService.SUBJECT_IN_TYPE);
             startService(intent);
             LocalBroadcastManager.getInstance(this).registerReceiver(mSubjectListReceiver,

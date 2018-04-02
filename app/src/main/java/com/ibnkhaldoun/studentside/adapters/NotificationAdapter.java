@@ -6,11 +6,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ibnkhaldoun.studentside.R;
 import com.ibnkhaldoun.studentside.Utilities.Utilities;
+import com.ibnkhaldoun.studentside.enums.PostTypes;
 import com.ibnkhaldoun.studentside.models.Notification;
 
 import java.util.List;
@@ -36,18 +36,9 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         holder.mShortTextView.setText(notification.getProfessor().getShortName());
         GradientDrawable circle = (GradientDrawable) holder.mShortTextView.getBackground();
         circle.setColor(Utilities.getCircleColor(notification.getProfessor().getShortName().charAt(0), mContext));
+        holder.mDateTextView.setText(Utilities.getDateFormat(notification.getDate()));
         holder.mTextTextView.setText(notification.getText());
-        switch (notification.getType()) {
-            case 1:
-                holder.mImageImageView.setImageResource(R.drawable.ic_mail_outline);
-                break;
-            case 2:
-                holder.mImageImageView.setImageResource(R.drawable.ic_lock_outline);
-                break;
-            case 3:
-                holder.mImageImageView.setImageResource(R.drawable.ic_calendar_new);
-                break;
-        }
+        holder.mTypeTextView.setText(PostTypes.getType(notification.getType()));
     }
 
     @Override
@@ -63,14 +54,16 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
     public class NotificationViewHolder extends RecyclerView.ViewHolder {
 
-        TextView mShortTextView, mTextTextView;
-        ImageView mImageImageView;
+        TextView mShortTextView, mTextTextView, mDateTextView, mTypeTextView;
+
 
         public NotificationViewHolder(View itemView) {
             super(itemView);
             mShortTextView = itemView.findViewById(R.id.notification_short_text);
             mTextTextView = itemView.findViewById(R.id.notification_text);
-            mImageImageView = itemView.findViewById(R.id.notification_image);
+            mTypeTextView = itemView.findViewById(R.id.notification_type);
+            mDateTextView = itemView.findViewById(R.id.notification_date);
+
         }
     }
 }

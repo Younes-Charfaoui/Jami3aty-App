@@ -138,7 +138,7 @@ public class SubjectsActivity extends AppCompatActivity implements
     }
 
     /**
-     * this helper method will try to get the subject from the internet
+     * this helper addMethod will try to get the subject from the internet
      * if ther is connection of course.
      */
     private void getSubjectFromService() {
@@ -147,14 +147,15 @@ public class SubjectsActivity extends AppCompatActivity implements
             mSubjectRecyclerView.setVisibility(View.GONE);
             mProgressBar.setVisibility(View.VISIBLE);
             Intent intent = new Intent(this, LoadDataService.class);
-            RequestPackage request = new RequestPackage();
-            request.setMethod(RequestPackage.POST);
-            request.setEndPoint(EndPointsProvider.getSubjectAllEndpoint() + "/all");
-            PreferencesManager manager = new PreferencesManager(this , PreferencesManager.STUDENT);
-            request.addParams(KEY_ANDROID, KEY_ANDROID);
-            request.addParams(JSON_STUDENT_SECTION, manager.getSection());
-            request.addParams(JSON_STUDENT_LEVEL, manager.getLevel());
-            request.addParams(JSON_STUDENT_GROUP, manager.getGroup());
+            PreferencesManager manager = new PreferencesManager(this, PreferencesManager.STUDENT);
+            RequestPackage request = new RequestPackage.Builder()
+                    .addMethod(RequestPackage.POST)
+                    .addEndPoint(EndPointsProvider.getSubjectAllEndpoint())
+                    .addParams(JSON_STUDENT_SECTION, manager.getSection())
+                    .addParams(JSON_STUDENT_LEVEL, manager.getLevel())
+                    .addParams(JSON_STUDENT_GROUP, manager.getGroup())
+                    .create();
+
             intent.putExtra(LoadDataService.KEY_REQUEST, request);
             intent.putExtra(LoadDataService.KEY_ACTION, LoadDataService.SUBJECT_TYPE);
             startService(intent);
@@ -173,7 +174,7 @@ public class SubjectsActivity extends AppCompatActivity implements
     }
 
     /**
-     * helper method to initialize the recycler view and it components.
+     * helper addMethod to initialize the recycler view and it components.
      */
     private void setupRecyclerView() {
         mSubjectRecyclerView = findViewById(R.id.subject_recycler_view);
@@ -185,11 +186,11 @@ public class SubjectsActivity extends AppCompatActivity implements
     }
 
     /**
-     * the famous method that will initialize the loader and create it.
+     * the famous addMethod that will initialize the loader and create it.
      *
      * @param id   this is the ID of the loader.
      * @param args this is the bundle that have been passed throw the
-     *             initialization method.
+     *             initialization addMethod.
      * @return
      */
     @Override

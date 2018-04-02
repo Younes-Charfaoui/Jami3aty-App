@@ -18,6 +18,8 @@ import com.ibnkhaldoun.studentside.models.Display;
 
 import java.util.List;
 
+import static com.ibnkhaldoun.studentside.activities.DisplayDetailActivity.DATA;
+
 public class DisplaysAdapter extends RecyclerView.Adapter<DisplaysAdapter.DisplayViewHolder> {
 
 
@@ -45,7 +47,6 @@ public class DisplaysAdapter extends RecyclerView.Adapter<DisplaysAdapter.Displa
         holder.mProfessorNameTv.setText(display.getProfessor().getFullName());
         holder.mDateTimeTv.setText(display.getDate());
         holder.mTextTv.setText(display.getText());
-        holder.mNumberOfNoteTextView.setText(String.valueOf(display.getCommentList().size() + " note"));
     }
 
     @Override
@@ -63,7 +64,7 @@ public class DisplaysAdapter extends RecyclerView.Adapter<DisplaysAdapter.Displa
 
         TextView mProfessorShortNameTv,
                 mProfessorNameTv, mDateTimeTv,
-                mTextTv, mNumberOfNoteTextView;
+                mTextTv;
         Button mSaveButton, mNoteButton;
 
         DisplayViewHolder(View itemView) {
@@ -74,7 +75,6 @@ public class DisplaysAdapter extends RecyclerView.Adapter<DisplaysAdapter.Displa
             mTextTv = itemView.findViewById(R.id.display_text_text_view);
             mSaveButton = itemView.findViewById(R.id.display_save_button);
             mNoteButton = itemView.findViewById(R.id.display_note_button);
-            mNumberOfNoteTextView = itemView.findViewById(R.id.display_number_of_notes);
             mSaveButton.setOnClickListener(v -> {
                 //todo , put the code we need to save the publication in the storage
                 Toast.makeText(mContext, "Save Button", Toast.LENGTH_SHORT).show();
@@ -87,7 +87,7 @@ public class DisplaysAdapter extends RecyclerView.Adapter<DisplaysAdapter.Displa
 
             itemView.setOnClickListener(v -> {
                 Intent intent = new Intent(mContext, DisplayDetailActivity.class);
-                intent.putExtra("Key", mDataList.get(getAdapterPosition()));
+                intent.putExtra(DATA, mDataList.get(getAdapterPosition()));
                 mContext.startActivity(intent);
             });
         }

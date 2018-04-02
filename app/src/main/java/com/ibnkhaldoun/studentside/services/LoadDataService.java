@@ -4,7 +4,6 @@ import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
 
 import com.ibnkhaldoun.studentside.Utilities.PreferencesManager;
 import com.ibnkhaldoun.studentside.activities.MarkActivity;
@@ -15,6 +14,7 @@ import com.ibnkhaldoun.studentside.activities.SubjectsActivity;
 import com.ibnkhaldoun.studentside.models.Comment;
 import com.ibnkhaldoun.studentside.models.Mail;
 import com.ibnkhaldoun.studentside.models.Mark;
+import com.ibnkhaldoun.studentside.models.Notification;
 import com.ibnkhaldoun.studentside.models.Saved;
 import com.ibnkhaldoun.studentside.models.Subject;
 import com.ibnkhaldoun.studentside.networking.models.RequestPackage;
@@ -48,7 +48,7 @@ public class LoadDataService extends IntentService {
     public static final String SUBJECT_INNER_ACTION = "subjectAction";
     public static final String NOTIFICATION_ACTION = "notificationAction";
     public static final String COMMENTS_ACTION = "commentsAction";
-    
+
     public static final int DISPLAY_TYPE = 1;
     public static final int MAIL_TYPE = 2;
     public static final int SCHEDULE_TYPE = 3;
@@ -94,6 +94,9 @@ public class LoadDataService extends IntentService {
             case SUBJECT_IN_TYPE:
                 subjectInnerCall(request, this);
                 break;
+            case NOTIFICATION_TYPE:
+                notificationCall(request, this);
+                break;
             case SAVED_TYPE:
                 savedCall(request, this);
                 break;
@@ -101,8 +104,20 @@ public class LoadDataService extends IntentService {
                 scheduleInnerCall(request, this);
                 break;
             case COMMENT_TYPE:
-                commentsCall(request , this);
+                commentsCall(request, this);
                 break;
+        }
+    }
+
+    private void notificationCall(RequestPackage request, Context context) {
+        try {
+            String response = HttpUtilities.getData(request);
+            ArrayList<Notification> notificationList = JsonUtilities.getNotificationList(response);
+            Intent intent = new Intent(NOTIFICATION_ACTION);
+            intent.putExtra(KEY_DATA, notificationList);
+            LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -111,7 +126,7 @@ public class LoadDataService extends IntentService {
             String response = HttpUtilities.getData(request);
             ArrayList<Comment> commentsList = JsonUtilities.getCommentsList(response);
             Intent intent = new Intent(COMMENTS_ACTION);
-            intent.putExtra(KEY_DATA,commentsList);
+            intent.putExtra(KEY_DATA, commentsList);
             LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
         } catch (IOException e) {
             e.printStackTrace();

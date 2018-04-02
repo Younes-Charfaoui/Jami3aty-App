@@ -5,22 +5,16 @@ import android.os.Parcelable;
 
 public class Notification implements Parcelable {
 
-    private Professor professor;
-    private String date, text;
-    private int type;
+    private String professor,date, subjectTitle;
+    private int type ;
+    private long id;
+    private boolean seen;
 
-    public Notification(Professor professor, String date, String text, int type) {
-        this.professor = professor;
-        this.date = date;
-        this.text = text;
-        this.type = type;
-    }
-
-    public Professor getProfessor() {
+    public String getProfessor() {
         return professor;
     }
 
-    public void setProfessor(Professor professor) {
+    public void setProfessor(String professor) {
         this.professor = professor;
     }
 
@@ -32,12 +26,12 @@ public class Notification implements Parcelable {
         this.date = date;
     }
 
-    public String getText() {
-        return text;
+    public String getSubjectTitle() {
+        return subjectTitle;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public void setSubjectTitle(String subjectTitle) {
+        this.subjectTitle = subjectTitle;
     }
 
     public int getType() {
@@ -48,6 +42,32 @@ public class Notification implements Parcelable {
         this.type = type;
     }
 
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public boolean isSeen() {
+        return seen;
+    }
+
+    public void setSeen(boolean seen) {
+        this.seen = seen;
+    }
+
+    public Notification(String professor, String date, String subjectTitle, int type, long id, boolean seen) {
+
+        this.professor = professor;
+        this.date = date;
+        this.subjectTitle = subjectTitle;
+        this.type = type;
+        this.id = id;
+        this.seen = seen;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -55,17 +75,21 @@ public class Notification implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeParcelable(this.professor, flags);
+        dest.writeString(this.professor);
         dest.writeString(this.date);
-        dest.writeString(this.text);
+        dest.writeString(this.subjectTitle);
         dest.writeInt(this.type);
+        dest.writeLong(this.id);
+        dest.writeByte(this.seen ? (byte) 1 : (byte) 0);
     }
 
     protected Notification(Parcel in) {
-        this.professor = in.readParcelable(Professor.class.getClassLoader());
+        this.professor = in.readString();
         this.date = in.readString();
-        this.text = in.readString();
+        this.subjectTitle = in.readString();
         this.type = in.readInt();
+        this.id = in.readLong();
+        this.seen = in.readByte() != 0;
     }
 
     public static final Parcelable.Creator<Notification> CREATOR = new Parcelable.Creator<Notification>() {

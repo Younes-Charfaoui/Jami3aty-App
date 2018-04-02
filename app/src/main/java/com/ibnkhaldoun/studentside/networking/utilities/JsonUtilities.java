@@ -6,6 +6,7 @@ import android.util.SparseArray;
 import com.ibnkhaldoun.studentside.models.Comment;
 import com.ibnkhaldoun.studentside.models.Mail;
 import com.ibnkhaldoun.studentside.models.Mark;
+import com.ibnkhaldoun.studentside.models.Notification;
 import com.ibnkhaldoun.studentside.models.Professor;
 import com.ibnkhaldoun.studentside.models.Saved;
 import com.ibnkhaldoun.studentside.models.Schedule;
@@ -28,6 +29,7 @@ import static com.ibnkhaldoun.studentside.networking.models.Response.RESPONSE_SU
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_DAY_SCHEDULE;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_HOUR_SCHEDULE;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_NAME_SCHEDULE;
+import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_NOTIFICATION_SEEN;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_PLACE_SCHEDULE;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_POST_DATE;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_POST_FILE;
@@ -274,5 +276,24 @@ public class JsonUtilities {
 
         }
         return new ArrayList<>();
+    }
+
+    public static ArrayList<Notification> getNotificationList(String response) throws JSONException {
+        ArrayList<Notification> notificationList = new ArrayList<>();
+
+        JSONObject root = new JSONObject(response);
+        if (root.getInt(KEY_JSON_STATUS) != 200) throw new JSONException("Error code");
+        JSONArray data = root.getJSONArray(KEY_JSON_DATA);
+        for (int i = 0; i < data.length(); i++) {
+            JSONObject object = data.getJSONObject(i);
+            int type = object.getInt(JSON_POST_TYPE);
+            long id = object.getInt(JSON_POST_ID);
+            boolean seen = object.getInt(JSON_NOTIFICATION_SEEN) == 1;
+            String professor = object.getString(JSON_POST_PROFESSOR);
+            String subjectTitle = object.getString(JSON_POST_SUBJECT);
+            String date = object.getString(JSON_POST_DATE);
+            notificationList.add(new Notification(professor, date, subjectTitle, type, id, seen));
+        }
+        return notificationList;
     }
 }

@@ -52,7 +52,7 @@ public class MailFragment extends BaseMainFragment<Mail> {
     public void onAttach(Context context) {
         super.onAttach(context);
         mailInterface = (DataFragmentInterface) context;
-        mailInterface.onAttach(this);
+
     }
 
     @Nullable
@@ -76,7 +76,7 @@ public class MailFragment extends BaseMainFragment<Mail> {
         mMailRecyclerView.setAdapter(mAdapter);
         mMailRecyclerView.setLayoutManager(manager);
         mMailRecyclerView.setHasFixedSize(true);
-
+        mailInterface.onAttach(this);
         return view;
     }
 

@@ -119,13 +119,6 @@
                 android:fontFamily="sans-serif-light"
                 android:text="@string/display_note_string" />
 
-            <TextView
-                android:id="@+id/display_number_of_notes"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="3"
-                android:gravity="end"
-                tools:text="1 notes" />
         </LinearLayout>
     </LinearLayout>
 

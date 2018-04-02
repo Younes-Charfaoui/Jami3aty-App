@@ -220,11 +220,13 @@ public class SavedActivity extends AppCompatActivity
             mLoadingProgressBar.setVisibility(VISIBLE);
             mEmptyView.setVisibility(GONE);
             mRecyclerView.setVisibility(GONE);
-            RequestPackage request = new RequestPackage();
-            request.setEndPoint(EndPointsProvider.getSavedEndPoint());
-            request.setMethod(POST);
-            request.addParams(KEY_AJAX, KEY_ANDROID);
-            request.addParams(JSON_STUDENT_ID, new PreferencesManager(this, STUDENT).getId());
+
+            RequestPackage request = new RequestPackage.Builder()
+                    .addEndPoint(EndPointsProvider.getSavedEndPoint())
+                    .addMethod(POST)
+                    .addParams(JSON_STUDENT_ID, new PreferencesManager(this, STUDENT).getId())
+                    .create();
+
             Intent serviceIntent = new Intent(this, LoadDataService.class);
             serviceIntent.putExtra(KEY_REQUEST, request);
             serviceIntent.putExtra(KEY_ACTION, SAVED_TYPE);
@@ -272,13 +274,13 @@ public class SavedActivity extends AppCompatActivity
                 .setMessage(R.string.unsave_post_confirmation)
                 .setPositiveButton(R.string.yes, (dialog, which) -> {
                     if (NetworkUtilities.isConnected(this)) {
-                        RequestPackage request = new RequestPackage();
-                        request.setEndPoint(EndPointsProvider.getUnsaveEndpoint());
-                        request.setMethod(POST);
-                        request.addParams(KEY_ANDROID, KEY_ANDROID);
-                        request.addParams(JSON_STUDENT_ID,
-                                new PreferencesManager(this, PreferencesManager.STUDENT).getId());
-                        request.addParams(JSON_POST_ID, String.valueOf(id));
+                        RequestPackage request = new RequestPackage.Builder().addEndPoint(EndPointsProvider.getUnsaveEndpoint())
+                                .addMethod(POST)
+                                .addParams(JSON_STUDENT_ID,
+                                        new PreferencesManager(this, PreferencesManager.STUDENT).getId())
+                                .addParams(JSON_POST_ID, String.valueOf(id))
+                                .create();
+
                         UnSaveAsyncTask task = new UnSaveAsyncTask(this, position);
                         task.execute(request);
                         dialog.cancel();

@@ -7,9 +7,12 @@ import android.os.Parcelable;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.KEY_AJAX;
+import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.KEY_ANDROID;
+
 /**
  * this class define how a request can be, it has of course the endpoint ,
- * the params and the method.
+ * the params and the addMethod.
  */
 
 public class RequestPackage implements Parcelable {
@@ -59,23 +62,15 @@ public class RequestPackage implements Parcelable {
         return mEndPoint;
     }
 
-    public void setEndPoint(String mEndPoint) {
-        this.mEndPoint = mEndPoint;
-    }
-
     public String getMethod() {
         return mMethod;
-    }
-
-    public void setMethod(String mMethod) {
-        this.mMethod = mMethod;
     }
 
     public Map<String, String> getParams() {
         return mParams;
     }
 
-    //this method only add key value pair to the map.
+    //this addMethod only add key value pair to the map.
     public void addParams(String key, String value) {
         mParams.put(key, value);
     }
@@ -102,14 +97,15 @@ public class RequestPackage implements Parcelable {
 
         public Builder() {
             this.params = new HashMap<>();
+            params.put(KEY_AJAX, KEY_ANDROID);
         }
 
-        public Builder endPoint(String endPoint) {
+        public Builder addEndPoint(String endPoint) {
             this.endPoint = endPoint;
             return this;
         }
 
-        public Builder method(String method) {
+        public Builder addMethod(String method) {
             this.method = method;
             return this;
         }

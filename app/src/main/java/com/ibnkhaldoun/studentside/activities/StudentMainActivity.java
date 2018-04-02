@@ -50,12 +50,17 @@ import java.util.Calendar;
 
 import static com.ibnkhaldoun.studentside.Utilities.PreferencesManager.STUDENT;
 import static com.ibnkhaldoun.studentside.fragments.BaseMainFragment.INTERNET_ERROR;
+import static com.ibnkhaldoun.studentside.networking.models.RequestPackage.POST;
+import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_STUDENT_ID;
+import static com.ibnkhaldoun.studentside.services.LoadDataService.KEY_DATA;
 
 public class StudentMainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         ProfessorDialogInterface, DataFragmentInterface, LoaderManager.LoaderCallbacks<Cursor> {
 
     public static final String KEY_MAILS = "keyMails";
+    public static final String KEY_NOTIFICATION = "keyNotification";
+    public static final String KEY_DISPLAY = "keyDisplay";
     //the types of the fragments
     public static final int MAIL_TYPE = 15;
     public static final int DISPLAY_TYPE = 11;
@@ -90,18 +95,20 @@ public class StudentMainActivity extends AppCompatActivity
             assert intent.getAction() != null;
             switch (intent.getAction()) {
                 case LoadDataService.DISPLAY_ACTION:
+                    mDisplayFragment.onNetworkLoadedSucceed(intent.getParcelableArrayListExtra(KEY_DISPLAY));
                     break;
                 case LoadDataService.MAIL_ACTION:
                     mMailFragment.onNetworkLoadedSucceed(intent.getParcelableArrayListExtra(KEY_MAILS));
                     break;
                 case LoadDataService.NOTIFICATION_ACTION:
+                    mNotificationFragment.onNetworkLoadedSucceed(intent.getParcelableArrayListExtra(KEY_DATA));
                     break;
             }
         }
     };
 
     /**
-     * the onCreate method which in we have done most of the
+     * the onCreate addMethod which in we have done most of the
      * initialisation work also with some thing else.
      *
      * @param savedInstanceState
@@ -164,7 +171,7 @@ public class StudentMainActivity extends AppCompatActivity
     }
 
     /**
-     * Class method for inflating the menu from
+     * Class addMethod for inflating the menu from
      * the resources.
      *
      * @param menu
@@ -177,7 +184,7 @@ public class StudentMainActivity extends AppCompatActivity
     }
 
     /**
-     * this method wil handle the user interaction with the
+     * this addMethod wil handle the user interaction with the
      * navigation drawer menu , it will make the corresponded
      * action for all the items.
      *
@@ -209,6 +216,7 @@ public class StudentMainActivity extends AppCompatActivity
                 startActivity(new Intent(this, SettingActivity.class));
                 break;
             case R.id.nav_help:
+                startActivity(new Intent(this,HelpActivity.class));
                 break;
 
         }
@@ -217,7 +225,7 @@ public class StudentMainActivity extends AppCompatActivity
     }
 
     /**
-     * as this method will be called this code will handle
+     * as this addMethod will be called this code will handle
      * the case if the the navigation drawer was open or not.
      */
     @Override
@@ -230,7 +238,7 @@ public class StudentMainActivity extends AppCompatActivity
     }
 
     /**
-     * this method is a helper method for initializing the
+     * this addMethod is a helper addMethod for initializing the
      * view pager and the tab layout.
      */
     private void setupViewPagerAndTabLayout() {
@@ -265,7 +273,7 @@ public class StudentMainActivity extends AppCompatActivity
     }
 
     /**
-     * this method is a helper method for initializing the
+     * this addMethod is a helper addMethod for initializing the
      * navigation drawer.
      */
     private void setupNavigationDrawer() {
@@ -293,7 +301,7 @@ public class StudentMainActivity extends AppCompatActivity
     }
 
     /**
-     * this method is a helper method for initializing the
+     * this addMethod is a helper addMethod for initializing the
      * tabs that in the tab layout.
      */
     private void setupTabIcons() {
@@ -306,7 +314,7 @@ public class StudentMainActivity extends AppCompatActivity
     }
 
     /**
-     * this method was implemented by the {@link ProfessorDialogInterface}
+     * this addMethod was implemented by the {@link ProfessorDialogInterface}
      * for the purpose of communicating with the fragment of which
      * the user can choose a professor to send mails to it.
      *
@@ -319,7 +327,7 @@ public class StudentMainActivity extends AppCompatActivity
     }
 
     /**
-     * this method was implemented by the {@link DataFragmentInterface}
+     * this addMethod was implemented by the {@link DataFragmentInterface}
      * for the purpose of communicating with the {@link DisplaysFragment} to download
      * data when it needed.
      *
@@ -329,14 +337,23 @@ public class StudentMainActivity extends AppCompatActivity
     public void onNeedData(DisplaysFragment which) {
         if (NetworkUtilities.isConnected(this)) {
             which.onNetworkStartLoading();
-
+            RequestPackage request = new RequestPackage.Builder()
+                    .addEndPoint(EndPointsProvider.getDisplays())
+                    .addMethod(POST)
+                    .addParams(JSON_STUDENT_ID,
+                            new PreferencesManager(this, PreferencesManager.STUDENT).getId())
+                    .create();
+            Intent intent = new Intent(this, LoadDataService.class);
+            intent.putExtra(LoadDataService.KEY_REQUEST, request);
+            intent.putExtra(LoadDataService.KEY_ACTION, LoadDataService.DISPLAY_TYPE);
+            startService(intent);
         } else {
             which.onNetworkLoadingFailed(INTERNET_ERROR);
         }
     }
 
     /**
-     * this method was implemented by the {@link DataFragmentInterface}
+     * this addMethod was implemented by the {@link DataFragmentInterface}
      * for the purpose of communicating with the {@link NotificationFragment} to download
      * data when it needed.
      *
@@ -347,14 +364,23 @@ public class StudentMainActivity extends AppCompatActivity
 
         if (NetworkUtilities.isConnected(this)) {
             which.onNetworkStartLoading();
-
+            RequestPackage request = new RequestPackage.Builder()
+                    .addEndPoint(EndPointsProvider.getNotifications())
+                    .addMethod(POST)
+                    .addParams(JSON_STUDENT_ID,
+                            new PreferencesManager(this, PreferencesManager.STUDENT).getId())
+                    .create();
+            Intent intent = new Intent(this, LoadDataService.class);
+            intent.putExtra(LoadDataService.KEY_REQUEST, request);
+            intent.putExtra(LoadDataService.KEY_ACTION, LoadDataService.NOTIFICATION_TYPE);
+            startService(intent);
         } else {
             which.onNetworkLoadingFailed(INTERNET_ERROR);
         }
     }
 
     /**
-     * this method was implemented by the {@link DataFragmentInterface}
+     * this addMethod was implemented by the {@link DataFragmentInterface}
      * for the purpose of communicating with the {@link MailFragment} to download
      * data when it needed.
      *
@@ -364,13 +390,15 @@ public class StudentMainActivity extends AppCompatActivity
     public void onNeedData(MailFragment which) {
 
         if (NetworkUtilities.isConnected(this)) {
-            which.onNetworkStartLoading();
-            RequestPackage request = new RequestPackage();
-            request.setMethod(RequestPackage.POST);
-            request.setEndPoint(EndPointsProvider.getMailEndPoint());
             PreferencesManager manager = new PreferencesManager(this, STUDENT);
-            request.addParams(KeyDataProvider.KEY_ANDROID, KeyDataProvider.KEY_ANDROID);
-            request.addParams(KeyDataProvider.JSON_STUDENT_ID, manager.getId());
+            which.onNetworkStartLoading();
+            RequestPackage request = new RequestPackage.Builder()
+                    .addMethod(POST)
+                    .addEndPoint(EndPointsProvider.getMailEndPoint())
+                    .addParams(KeyDataProvider.KEY_ANDROID, KeyDataProvider.KEY_ANDROID)
+                    .addParams(JSON_STUDENT_ID, manager.getId())
+                    .create();
+
             Intent intent = new Intent(this, LoadDataService.class);
             intent.putExtra(LoadDataService.KEY_REQUEST, request);
             intent.putExtra(LoadDataService.KEY_ACTION, LoadDataService.MAIL_TYPE);
@@ -381,7 +409,7 @@ public class StudentMainActivity extends AppCompatActivity
     }
 
     /**
-     * this method was implemented by the {@link DataFragmentInterface}
+     * this addMethod was implemented by the {@link DataFragmentInterface}
      * for the purpose of communicating with the {@link DisplaysFragment} to hold reference
      * to it for future communications.
      *
@@ -393,7 +421,7 @@ public class StudentMainActivity extends AppCompatActivity
     }
 
     /**
-     * this method was implemented by the {@link DataFragmentInterface}
+     * this addMethod was implemented by the {@link DataFragmentInterface}
      * for the purpose of communicating with the {@link MailFragment} to hold reference
      * to it for future communications.
      *
@@ -405,7 +433,7 @@ public class StudentMainActivity extends AppCompatActivity
     }
 
     /**
-     * this method was implemented by the {@link DataFragmentInterface}
+     * this addMethod was implemented by the {@link DataFragmentInterface}
      * for the purpose of communicating with the {@link NotificationFragment} to hold reference
      * to it for future communications.
      *
@@ -414,10 +442,11 @@ public class StudentMainActivity extends AppCompatActivity
     @Override
     public void onAttach(NotificationFragment notificationFragment) {
         mNotificationFragment = notificationFragment;
+
     }
 
     /**
-     * we had override this method for unregister receivers.
+     * we had override this addMethod for unregister receivers.
      */
     @Override
     protected void onDestroy() {

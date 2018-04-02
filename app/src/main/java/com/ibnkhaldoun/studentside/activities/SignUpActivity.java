@@ -103,14 +103,14 @@ public class SignUpActivity extends AppCompatActivity
 
                     getSupportActionBar().setHomeButtonEnabled(false);
 
-                    RequestPackage requestPackage = new RequestPackage();
-                    requestPackage.setEndPoint(EndPointsProvider.getSignUpEndpoint());
-                    requestPackage.setMethod(RequestPackage.POST);
-                    requestPackage.addParams(KEY_ANDROID, KEY_ANDROID);
-                    requestPackage.addParams(KEY_BAC, mBacAverageEditText.getText().toString());
-                    requestPackage.addParams(KEY_CARD_NUMBER, mCardNumberEditText.getText().toString());
-                    requestPackage.addParams(KEY_EMAIL, mEmailEditText.getText().toString());
-                    requestPackage.addParams(KEY_PASSWORD, mPasswordEditText.getText().toString());
+                    RequestPackage requestPackage = new RequestPackage.Builder()
+                            .addEndPoint(EndPointsProvider.getSignUpEndpoint())
+                            .addMethod(RequestPackage.POST)
+                            .addParams(KEY_BAC, mBacAverageEditText.getText().toString())
+                            .addParams(KEY_CARD_NUMBER, mCardNumberEditText.getText().toString())
+                            .addParams(KEY_EMAIL, mEmailEditText.getText().toString())
+                            .addParams(KEY_PASSWORD, mPasswordEditText.getText().toString())
+                            .create();
 
                     SignUpAsyncTask signUpAsyncTask = new SignUpAsyncTask(this);
                     signUpAsyncTask.execute(requestPackage);
@@ -234,7 +234,7 @@ public class SignUpActivity extends AppCompatActivity
     }
 
     /**
-     * this is a helper method will be used to hide keyboard after
+     * this is a helper addMethod will be used to hide keyboard after
      * click on the login button
      */
     private void hideKeyboard() {

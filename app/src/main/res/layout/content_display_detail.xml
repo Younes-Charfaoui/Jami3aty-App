@@ -34,7 +34,7 @@
                 android:background="@drawable/circle"
                 android:gravity="center"
                 android:textColor="@android:color/white"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 tools:text="OA" />
 
 
@@ -115,27 +115,21 @@
                 android:fontFamily="sans-serif-light"
                 android:text="@string/display_note_string" />
 
-            <TextView
-                android:id="@+id/display_detail_number_of_notes"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="3"
-                android:gravity="end"
-                tools:text="1 notes" />
+
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/display_detail_notes"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            >
-        <View
-            android:id="@+id/display_detail_notes_separator"
-            android:layout_width="match_parent"
-            android:visibility="gone"
-            android:background="@android:color/darker_gray"
-            android:layout_height="1dp"/>
+            android:orientation="vertical">
+
+            <View
+                android:id="@+id/display_detail_notes_separator"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray"
+                android:visibility="gone" />
         </LinearLayout>
     </LinearLayout>
 </ScrollView>

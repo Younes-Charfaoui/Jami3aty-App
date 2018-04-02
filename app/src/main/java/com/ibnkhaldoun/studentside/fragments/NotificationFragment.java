@@ -47,7 +47,6 @@ public class NotificationFragment extends BaseMainFragment<Notification> {
         super.onAttach(context);
         try {
             mInterface = (DataFragmentInterface) context;
-            mInterface.onAttach(this);
         } catch (ClassCastException e) {
             e.printStackTrace();
         }
@@ -75,6 +74,8 @@ public class NotificationFragment extends BaseMainFragment<Notification> {
         mNotificationRecyclerView.setLayoutManager(manager);
         mNotificationRecyclerView.setAdapter(mAdapter);
         mNotificationRecyclerView.setHasFixedSize(true);
+
+        mInterface.onAttach(this);
         return view;
     }
 

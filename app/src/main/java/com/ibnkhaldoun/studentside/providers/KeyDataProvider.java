@@ -58,4 +58,9 @@ public final class KeyDataProvider {
     public static final String JSON_POST_FILE = "path_file";
     public static final String JSON_POST_TYPE = "type";
 
+
+    public static final String JSON_NOTIFICATION_SEEN = "seen";
+
+
+
 }

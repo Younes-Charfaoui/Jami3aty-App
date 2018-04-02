@@ -61,7 +61,6 @@ import static com.ibnkhaldoun.studentside.database.DatabaseContract.ScheduleEntr
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_STUDENT_GROUP;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_STUDENT_LEVEL;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_STUDENT_SECTION;
-import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.KEY_ANDROID;
 
 /**
  * @definition Schedule Activity is the activity responsible for displaying
@@ -71,7 +70,7 @@ import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.KEY_ANDROID;
  * a friendly user way.
  * <p>
  * these fragments are managed by the view pager and the tab layout views to handle
- * user interactions and some callbacks and method are present in both sides to
+ * user interactions and some callbacks and addMethod are present in both sides to
  * communicate between this activity , fragments ,tab layout and the view pager.
  * <p>
  * this activity implements the loader manager call backs to load data from the database
@@ -146,7 +145,7 @@ public class ScheduleActivity extends AppCompatActivity
     };
 
     /**
-     * the famous method on create will be responsible for th initialization work
+     * the famous addMethod on create will be responsible for th initialization work
      * and
      *
      * @param savedInstanceState
@@ -199,18 +198,18 @@ public class ScheduleActivity extends AppCompatActivity
             mViewPager.setVisibility(GONE);
             mTabLayout.setVisibility(GONE);
             mLoadingProgressBar.setVisibility(VISIBLE);
-            RequestPackage request = new RequestPackage();
+            RequestPackage.Builder request = new RequestPackage.Builder();
             if (type == SCHEDULE_TYPE)
-                request.setEndPoint(EndPointsProvider.getScheduleAllEndpoint());
-            else request.setEndPoint(EndPointsProvider.getExamScheduleEndpoint());
-            request.setMethod(RequestPackage.POST);
+                request.addEndPoint(EndPointsProvider.getScheduleAllEndpoint());
+            else request.addEndPoint(EndPointsProvider.getExamScheduleEndpoint());
+            request.addMethod(RequestPackage.POST);
             PreferencesManager manager = new PreferencesManager(this, STUDENT);
-            request.addParams(KEY_ANDROID, KEY_ANDROID);
-            request.addParams(JSON_STUDENT_GROUP, manager.getGroup());
-            request.addParams(JSON_STUDENT_LEVEL, manager.getLevel());
-            request.addParams(JSON_STUDENT_SECTION, manager.getSection());
+
+            request.addParams(JSON_STUDENT_GROUP, manager.getGroup())
+                    .addParams(JSON_STUDENT_LEVEL, manager.getLevel())
+                    .addParams(JSON_STUDENT_SECTION, manager.getSection());
             Intent intentService = new Intent(this, LoadDataService.class);
-            intentService.putExtra(LoadDataService.KEY_REQUEST, request);
+            intentService.putExtra(LoadDataService.KEY_REQUEST, request.create());
             intentService.putExtra(LoadDataService.KEY_ACTION, LoadDataService.SCHEDULE_TYPE);
             startService(intentService);
         } else {
@@ -291,23 +290,23 @@ public class ScheduleActivity extends AppCompatActivity
         Log.i("Schedule", "setupViewPagerAndTabLayout: " + day);
         switch (day) {
             case Calendar.SUNDAY:
-                Log.i("Schedule", "setupViewPagerAndTabLayout: it was sunday " );
+                Log.i("Schedule", "setupViewPagerAndTabLayout: it was sunday ");
                 mViewPager.setCurrentItem(0);
                 break;
             case Calendar.MONDAY:
-                Log.i("Schedule", "setupViewPagerAndTabLayout: it was monday " );
+                Log.i("Schedule", "setupViewPagerAndTabLayout: it was monday ");
                 mViewPager.setCurrentItem(1);
                 break;
             case Calendar.TUESDAY:
-                Log.i("Schedule", "setupViewPagerAndTabLayout: it was tuesday " );
+                Log.i("Schedule", "setupViewPagerAndTabLayout: it was tuesday ");
                 mViewPager.setCurrentItem(2);
                 break;
             case Calendar.WEDNESDAY:
-                Log.i("Schedule", "setupViewPagerAndTabLayout: it was wednesday " );
+                Log.i("Schedule", "setupViewPagerAndTabLayout: it was wednesday ");
                 mViewPager.setCurrentItem(3);
                 break;
             case Calendar.THURSDAY:
-                Log.i("Schedule", "setupViewPagerAndTabLayout: it was thursday " );
+                Log.i("Schedule", "setupViewPagerAndTabLayout: it was thursday ");
                 mViewPager.setCurrentItem(4);
                 break;
         }
@@ -376,7 +375,7 @@ public class ScheduleActivity extends AppCompatActivity
                 int day = schedules.keyAt(i);
                 switchFragments(day, schedules);
             }
-        }else {
+        } else {
             Log.i("Schedule", "sendSchedulesToFragments: the count of cursor was 0");
         }
         mLoadingProgressBar.setVisibility(GONE);

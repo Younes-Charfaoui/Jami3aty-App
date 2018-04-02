@@ -17,7 +17,7 @@ import com.ibnkhaldoun.studentside.database.DatabaseContract;
 
 public final class ActivityUtilities {
 
-    //this method makes the bar transparent
+    //this addMethod makes the bar transparent
     public static void changeStatusBarColorToTransparent(Window windows) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             windows.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);

@@ -67,16 +67,17 @@ public class LoginActivity extends AppCompatActivity implements LoginTaskListene
                 if (NetworkUtilities.isConnected(this)) {
 
                     //setting the request parameters
-                    RequestPackage request = new RequestPackage();
-                    request.setMethod(RequestPackage.POST);
-                    request.setEndPoint(EndPointsProvider.getLoginEndpoint());
+
+
                     String email = mEmailEditText.getText().toString();
                     String password = mPasswordEditText.getText().toString();
 
-                    request.addParams(KeyDataProvider.KEY_AJAX, KeyDataProvider.KEY_ANDROID);
-                    request.addParams(KeyDataProvider.KEY_EMAIL, email);
-                    request.addParams(KeyDataProvider.KEY_PASSWORD, password);
-
+                    RequestPackage request = new RequestPackage.Builder()
+                            .addMethod(RequestPackage.POST)
+                            .addEndPoint(EndPointsProvider.getLoginEndpoint())
+                            .addParams(KeyDataProvider.KEY_EMAIL, email)
+                            .addParams(KeyDataProvider.KEY_PASSWORD, password)
+                            .create();
 
                     LoginAsyncTask loginTask = new LoginAsyncTask(this);
                     loginTask.execute(request);
@@ -96,7 +97,7 @@ public class LoginActivity extends AppCompatActivity implements LoginTaskListene
     }
 
     /**
-     * a method that return if the user enter correctly
+     * a addMethod that return if the user enter correctly
      * the information's
      *
      * @return if the user make mistake
@@ -130,7 +131,7 @@ public class LoginActivity extends AppCompatActivity implements LoginTaskListene
     }
 
     /**
-     * this is a helper method will be used to hide keyboard after
+     * this is a helper addMethod will be used to hide keyboard after
      * click on the login button
      */
     private void hideKeyboard() {
@@ -143,7 +144,7 @@ public class LoginActivity extends AppCompatActivity implements LoginTaskListene
     }
 
     /**
-     * this method has been implemented by the {@link LoginTaskListener}
+     * this addMethod has been implemented by the {@link LoginTaskListener}
      * which take care for delivering the result from the async task
      * back to this activity to take an action with this things.
      *
@@ -164,21 +165,27 @@ public class LoginActivity extends AppCompatActivity implements LoginTaskListene
                             , String.valueOf(response.getStudent().getSection())
                             , String.valueOf(response.getStudent().getLevel()));
                     startActivity(new Intent(this, StudentMainActivity.class));
-                    RequestPackage request = new RequestPackage();
-                    request.setMethod(RequestPackage.POST);
-                    request.setEndPoint(EndPointsProvider.getSubjectAllEndpoint());
+
+                    RequestPackage request = new RequestPackage.Builder()
+                            .addMethod(RequestPackage.POST)
+                            .addEndPoint(EndPointsProvider.getSubjectAllEndpoint())
+                            .addParams(JSON_STUDENT_SECTION, manager.getSection())
+                            .addParams(JSON_STUDENT_LEVEL, manager.getLevel())
+                            .addParams(JSON_STUDENT_GROUP, manager.getGroup())
+                            .create();
+
                     Intent intent = new Intent(this, LoadDataService.class);
-                    request.addParams(KEY_ANDROID, KEY_ANDROID);
-                    request.addParams(JSON_STUDENT_SECTION, manager.getSection());
-                    request.addParams(JSON_STUDENT_LEVEL, manager.getLevel());
-                    request.addParams(JSON_STUDENT_GROUP, manager.getGroup());
                     intent.putExtra(LoadDataService.KEY_REQUEST, request);
                     intent.putExtra(LoadDataService.KEY_ACTION, LoadDataService.SUBJECT_IN_TYPE);
                     startService(intent);
-                    request.setMethod(RequestPackage.POST);
-                    request.setEndPoint(EndPointsProvider.getScheduleAllEndpoint());
+
+                    RequestPackage requestAllSchedule = new RequestPackage.Builder()
+                            .addMethod(RequestPackage.POST)
+                            .addEndPoint(EndPointsProvider.getScheduleAllEndpoint())
+                            .create();
+
                     Intent intentSchedule = new Intent(this, LoadDataService.class);
-                    intentSchedule.putExtra(LoadDataService.KEY_REQUEST, request);
+                    intentSchedule.putExtra(LoadDataService.KEY_REQUEST, requestAllSchedule);
                     intentSchedule.putExtra(LoadDataService.KEY_ACTION, LoadDataService.SCHEDULE_IN_TYPE);
                     startService(intentSchedule);
                     finish();

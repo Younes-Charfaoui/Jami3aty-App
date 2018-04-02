@@ -28,7 +28,6 @@ import static com.ibnkhaldoun.studentside.networking.models.Response.JSON_EXCEPT
 import static com.ibnkhaldoun.studentside.networking.models.Response.RESPONSE_EMAIL_ERROR;
 import static com.ibnkhaldoun.studentside.networking.models.Response.RESPONSE_SUCCESS;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.KEY_ANDROID;
-import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.KEY_AJAX;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.KEY_EMAIL;
 
 public class ForgetPasswordActivity extends AppCompatActivity implements ForgetPasswordTaskListener {
@@ -60,11 +59,11 @@ public class ForgetPasswordActivity extends AppCompatActivity implements ForgetP
             if (validate()) {
                 if (NetworkUtilities.isConnected(ForgetPasswordActivity.this)) {
 
-                    RequestPackage requestPackage = new RequestPackage();
-                    requestPackage.setEndPoint(EndPointsProvider.getForgetPasswordEndpoint());
-                    requestPackage.setMethod(RequestPackage.POST);
-                    requestPackage.addParams(KEY_ANDROID, KEY_ANDROID);
-                    requestPackage.addParams(KEY_EMAIL, mEmailEditText.getText().toString());
+                    RequestPackage requestPackage = new RequestPackage.Builder()
+                            .addMethod(RequestPackage.POST)
+                            .addEndPoint(EndPointsProvider.getForgetPasswordEndpoint())
+                            .addParams(KEY_EMAIL, mEmailEditText.getText().toString())
+                            .create();
 
                     mProgressBar.setVisibility(VISIBLE);
                     mFindAccountButton.setVisibility(GONE);

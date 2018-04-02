@@ -20,13 +20,13 @@ import okhttp3.Response;
 /**
  * @definition this class have the methods of
  * accessing the end point and getting data from the
- * internet of course , it base on the method of call
+ * internet of course , it base on the addMethod of call
  * that are defined in the request package.
  */
 public class HttpUtilities {
 
     /**
-     * thi method will check if the package contain a post or a get method
+     * thi addMethod will check if the package contain a post or a get addMethod
      * and base on this choice it will make a call and return a string response
      *
      * @param requestPackage requestPackage
@@ -36,7 +36,7 @@ public class HttpUtilities {
     public static String getData(RequestPackage requestPackage)  throws IOException{
         String address = requestPackage.getEndPoint();
 
-        //if the method is get so we create a url with hte appropriate params.
+        //if the addMethod is get so we create a url with hte appropriate params.
         if (requestPackage.getMethod().equals(RequestPackage.GET)) {
             address = createGetUrl(requestPackage.getParams(),
                     requestPackage.getEndPoint());
@@ -52,7 +52,7 @@ public class HttpUtilities {
         Request.Builder requestBuilder = new Request.Builder().url(address);
 
 
-        //if the method is post we need to add the params in the multipart builder.
+        //if the addMethod is post we need to add the params in the multipart builder.
         if (requestPackage.getMethod().equals(RequestPackage.POST)) {
             MultipartBody.Builder builder = new MultipartBody.Builder()
                     .setType(MultipartBody.FORM);
@@ -83,7 +83,7 @@ public class HttpUtilities {
     }
 
     /**
-     * this method can create a url with the %s=%s pattern for the get request
+     * this addMethod can create a url with the %s=%s pattern for the get request
      *
      * @param params
      * @param endPoint

@@ -211,4 +211,8 @@
     <string name="unsaving_current">Unsaving....</string>
     <string name="title_activity_saved_detail">SavedDetailActivity</string>
     <string name="there_is_no_comments_for_this_post">There is no comments for this post</string>
+    <string name="consultation_string">Consultation</string>
+    <string name="mark_string">Mark</string>
+    <string name="avis_sring">Avis</string>
+
 </resources>

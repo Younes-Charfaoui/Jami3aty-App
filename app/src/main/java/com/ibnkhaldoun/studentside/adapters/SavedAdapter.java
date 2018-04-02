@@ -142,9 +142,8 @@ public class SavedAdapter extends RecyclerView.Adapter<SavedAdapter.SavedViewHol
             itemView.setOnClickListener(v -> {
                 if (NetworkUtilities.isConnected(mContext)) {
                     RequestPackage requestPackage = new RequestPackage.Builder()
-                            .endPoint(EndPointsProvider.getCommentsEndpoint())
-                            .method(RequestPackage.POST)
-                            .addParams(KEY_ANDROID, KEY_ANDROID)
+                            .addEndPoint(EndPointsProvider.getCommentsEndpoint())
+                            .addMethod(RequestPackage.POST)
                             .addParams(JSON_POST_ID, String.valueOf(mSavedList.get(
                                     getAdapterPosition()).getId()))
                             .create();
