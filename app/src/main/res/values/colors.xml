@@ -32,4 +32,6 @@
     </array>
 
     <color name="active_schedule">#EEEEEE</color>
+
+    <color name="seen_notification">#64ededed</color>
 </resources>

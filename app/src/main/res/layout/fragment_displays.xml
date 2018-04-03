@@ -6,6 +6,7 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/displays_recycler_view"
         android:layout_width="match_parent"
+        android:visibility="invisible"
         android:layout_height="match_parent" />
 
     <ProgressBar
@@ -13,7 +14,7 @@
         android:layout_width="72dp"
         android:layout_height="72dp"
         android:layout_centerInParent="true"
-        android:visibility="gone" />
+        android:visibility="visible" />
 
     <LinearLayout
         android:id="@+id/display_empty_view"

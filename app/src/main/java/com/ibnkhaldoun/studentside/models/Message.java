@@ -6,34 +6,15 @@ import android.os.Parcelable;
 
 public class Message implements Parcelable {
 
-
-    public static final Parcelable.Creator<Message> CREATOR = new Parcelable.Creator<Message>() {
-        @Override
-        public Message createFromParcel(Parcel source) {
-            return new Message(source);
-        }
-
-        @Override
-        public Message[] newArray(int size) {
-            return new Message[size];
-        }
-    };
     private boolean in;
-    private String subject, text, date;
+    private String subject, text, date, professor;
 
-
-    public Message(String subject, String text, String date, boolean in) {
-        this.subject = subject;
-        this.text = text;
-        this.date = date;
-        this.in = in;
+    public boolean isIn() {
+        return in;
     }
 
-    protected Message(Parcel in) {
-        this.in = in.readByte() != 0;
-        this.subject = in.readString();
-        this.text = in.readString();
-        this.date = in.readString();
+    public void setIn(boolean in) {
+        this.in = in;
     }
 
     public String getSubject() {
@@ -60,12 +41,21 @@ public class Message implements Parcelable {
         this.date = date;
     }
 
-    public boolean isIn() {
-        return in;
+    public String getProfessor() {
+        return professor;
     }
 
-    public void setIn(boolean in) {
+    public void setProfessor(String professor) {
+        this.professor = professor;
+    }
+
+    public Message(boolean in, String subject, String text, String date, String professor) {
+
         this.in = in;
+        this.subject = subject;
+        this.text = text;
+        this.date = date;
+        this.professor = professor;
     }
 
     @Override
@@ -79,6 +69,26 @@ public class Message implements Parcelable {
         dest.writeString(this.subject);
         dest.writeString(this.text);
         dest.writeString(this.date);
-
+        dest.writeString(this.professor);
     }
+
+    protected Message(Parcel in) {
+        this.in = in.readByte() != 0;
+        this.subject = in.readString();
+        this.text = in.readString();
+        this.date = in.readString();
+        this.professor = in.readString();
+    }
+
+    public static final Parcelable.Creator<Message> CREATOR = new Parcelable.Creator<Message>() {
+        @Override
+        public Message createFromParcel(Parcel source) {
+            return new Message(source);
+        }
+
+        @Override
+        public Message[] newArray(int size) {
+            return new Message[size];
+        }
+    };
 }

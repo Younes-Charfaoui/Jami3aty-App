@@ -11,17 +11,18 @@ import android.widget.TextView;
 
 import com.ibnkhaldoun.studentside.R;
 import com.ibnkhaldoun.studentside.Utilities.Utilities;
+import com.ibnkhaldoun.studentside.activities.MessageDetailActivity;
 import com.ibnkhaldoun.studentside.activities.MessagesActivity;
-import com.ibnkhaldoun.studentside.models.Mail;
+import com.ibnkhaldoun.studentside.models.Message;
 
 import java.util.List;
 
-public class MailAdapter extends RecyclerView.Adapter<MailAdapter.MailViewHolder> {
+public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MailViewHolder> {
 
     private Context mContext;
-    private List<Mail> mMailList;
+    private List<Message> mMailList;
 
-    public MailAdapter(Context mContext) {
+    public MessageAdapter(Context mContext) {
         this.mContext = mContext;
     }
 
@@ -35,14 +36,15 @@ public class MailAdapter extends RecyclerView.Adapter<MailAdapter.MailViewHolder
 
     @Override
     public void onBindViewHolder(MailViewHolder holder, int position) {
-        Mail mail = mMailList.get(position);
-        holder.mProfessorShortNameTextView.setText(mail.getProfessor().getShortName());
+        Message mail = mMailList.get(position);
+        holder.mProfessorShortNameTextView.setText(Utilities.getProfessorShortName(mail.getProfessor()));
         GradientDrawable shortNameCircle = (GradientDrawable) holder.mProfessorShortNameTextView.getBackground();
-        shortNameCircle.setColor(Utilities.getCircleColor(mail.getProfessor().getFirstName().charAt(0), mContext));
-        holder.mProfessorNameTextView.setText(mail.getProfessor().getFullName());
-        holder.mSubjectTextView.setText(mail.getMessages().get(mail.getMessages().size() - 1).getSubject());
-        holder.mDateTextView.setText(mail.getMessages().get(mail.getMessages().size() - 1).getDate());
-        holder.mStartView.setBackgroundColor(Utilities.getCircleColor(mail.getProfessor().getFirstName().charAt(0), mContext));
+        int color = Utilities.getCircleColor(mContext);
+        shortNameCircle.setColor(color);
+        holder.mProfessorNameTextView.setText(mail.getProfessor());
+        holder.mSubjectTextView.setText(mail.getSubject());
+        holder.mDateTextView.setText(mail.getDate());
+        holder.mStartView.setBackgroundColor(color);
     }
 
 
@@ -52,7 +54,7 @@ public class MailAdapter extends RecyclerView.Adapter<MailAdapter.MailViewHolder
         return 0;
     }
 
-    public void setMailList(List<Mail> list) {
+    public void setMailList(List<Message> list) {
         this.mMailList = list;
         notifyDataSetChanged();
     }
@@ -74,7 +76,7 @@ public class MailAdapter extends RecyclerView.Adapter<MailAdapter.MailViewHolder
             mStartView = itemView.findViewById(R.id.mail_start_view);
 
             itemView.setOnClickListener(v -> {
-                Intent intent = new Intent(mContext, MessagesActivity.class);
+                Intent intent = new Intent(mContext, MessageDetailActivity.class);
                 intent.putExtra(MessagesActivity.KEY_MESSAGES, mMailList.get(getAdapterPosition()));
                 mContext.startActivity(intent);
             });

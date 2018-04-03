@@ -4,6 +4,7 @@ import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 
 import com.ibnkhaldoun.studentside.Utilities.PreferencesManager;
 import com.ibnkhaldoun.studentside.activities.MarkActivity;
@@ -12,6 +13,7 @@ import com.ibnkhaldoun.studentside.activities.ScheduleActivity;
 import com.ibnkhaldoun.studentside.activities.StudentMainActivity;
 import com.ibnkhaldoun.studentside.activities.SubjectsActivity;
 import com.ibnkhaldoun.studentside.models.Comment;
+import com.ibnkhaldoun.studentside.models.Display;
 import com.ibnkhaldoun.studentside.models.Mail;
 import com.ibnkhaldoun.studentside.models.Mark;
 import com.ibnkhaldoun.studentside.models.Notification;
@@ -84,6 +86,7 @@ public class LoadDataService extends IntentService {
                 scheduleCall(request, this);
                 break;
             case DISPLAY_TYPE:
+                displayCall(request, this);
                 break;
             case MARK_TYPE:
                 markCall(request, this);
@@ -109,15 +112,32 @@ public class LoadDataService extends IntentService {
         }
     }
 
+    private void displayCall(RequestPackage request, Context context) {
+        try {
+            String response = HttpUtilities.getData(request);
+            ArrayList<Display> displayList = JsonUtilities.getDisplaysList(response);
+            Intent intent = new Intent(DISPLAY_ACTION);
+            intent.putExtra(KEY_DATA, displayList);
+            LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     private void notificationCall(RequestPackage request, Context context) {
         try {
             String response = HttpUtilities.getData(request);
+            Log.i("Notif", "notificationCall: " + response);
             ArrayList<Notification> notificationList = JsonUtilities.getNotificationList(response);
             Intent intent = new Intent(NOTIFICATION_ACTION);
             intent.putExtra(KEY_DATA, notificationList);
             LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
         } catch (IOException e) {
             e.printStackTrace();
+            Log.i("Tag", "notificationCall: IO");
+        } catch (JSONException e) {
+            e.printStackTrace();
+            Log.i("Tag", "notificationCall: JSON");
         }
     }
 

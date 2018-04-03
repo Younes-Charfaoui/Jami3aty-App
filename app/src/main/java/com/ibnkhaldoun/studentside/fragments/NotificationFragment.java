@@ -61,10 +61,7 @@ public class NotificationFragment extends BaseMainFragment<Notification> {
         mLoadingProgressBar = view.findViewById(R.id.notification_progress_bar);
         mEmptyLayout = view.findViewById(R.id.notification_empty_view);
         mAdapter = new NotificationAdapter(getContext());
-
-
-        assert getArguments() != null;
-        mAdapter.swapList(getArguments().getParcelableArrayList(KEY_INNER_DATA));
+        mInterface.onNeedData(this);
 
         mEmptyLayout.setOnClickListener(v -> {
             mInterface.onNeedData(this);

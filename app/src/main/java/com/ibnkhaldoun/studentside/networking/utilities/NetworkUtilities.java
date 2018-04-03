@@ -16,9 +16,11 @@ public final class NetworkUtilities {
                 context.getSystemService(Context.CONNECTIVITY_SERVICE);
 
         try {
-            assert manager != null;
-            NetworkInfo info = manager.getActiveNetworkInfo();
-            return info != null && info.isConnectedOrConnecting();
+            if (manager != null) {
+                NetworkInfo info = manager.getActiveNetworkInfo();
+                return info != null && info.isConnectedOrConnecting();
+            }
+            return false;
         } catch (Exception e) {
             e.printStackTrace();
             return false;

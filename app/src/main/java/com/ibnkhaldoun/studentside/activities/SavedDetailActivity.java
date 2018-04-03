@@ -42,7 +42,7 @@ public class SavedDetailActivity extends AppCompatActivity {
                 mCommentLinearLayout.setVisibility(VISIBLE);
                 for (Comment comment : comments) {
                     mCommentLinearLayout.addView(ActivityUtilities
-                            .createNoteView(context, Utilities.getShortName(comment.getCommenter()),
+                            .createNoteView(context, Utilities.getProfessorShortName(comment.getCommenter()),
                                     comment.getComment(),
                                     comment.getCommenter(),
                                     comment.getDate(), mCommentLinearLayout));
@@ -70,7 +70,7 @@ public class SavedDetailActivity extends AppCompatActivity {
         Saved savedPost = getIntent().getParcelableExtra(KEY_SAVED);
 
         TextView professorShortName = findViewById(R.id.saved_detail_professor_short_name_text_view);
-        professorShortName.setText(Utilities.getShortName(savedPost.getProfessor()));
+        professorShortName.setText(Utilities.getProfessorShortName(savedPost.getProfessor()));
 
         GradientDrawable circleImage = (GradientDrawable) professorShortName.getBackground();
         circleImage.setColor(Utilities.getCircleColor(this));

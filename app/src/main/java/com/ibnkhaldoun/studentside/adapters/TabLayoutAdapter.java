@@ -6,7 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.ibnkhaldoun.studentside.fragments.DisplaysFragment;
-import com.ibnkhaldoun.studentside.fragments.MailFragment;
+import com.ibnkhaldoun.studentside.fragments.MessageFragment;
 import com.ibnkhaldoun.studentside.fragments.NotificationFragment;
 import com.ibnkhaldoun.studentside.models.Display;
 import com.ibnkhaldoun.studentside.models.Mail;
@@ -42,11 +42,11 @@ public class TabLayoutAdapter extends FragmentPagerAdapter {
 
         switch (position) {
             case 0:
-                return DisplaysFragment.newInstance(mDisplayList);
+                return new DisplaysFragment();
             case 1:
-                return NotificationFragment.newInstance(mNotificationList);
+                return new NotificationFragment();
             case 2:
-                return MailFragment.newInstance(mMailList);
+                return MessageFragment.newInstance(mMailList);
             default:
                 return null;
         }

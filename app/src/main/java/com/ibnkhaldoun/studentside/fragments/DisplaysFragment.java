@@ -23,6 +23,8 @@ import com.ibnkhaldoun.studentside.models.Display;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
 import static com.ibnkhaldoun.studentside.activities.StudentMainActivity.DISPLAY_TYPE;
 
 
@@ -34,19 +36,11 @@ public class DisplaysFragment extends BaseMainFragment<Display> {
     private DisplaysAdapter mAdapter;
     private DataFragmentInterface mInterface;
 
-    public static DisplaysFragment newInstance(List<Display> list) {
-        Bundle args = new Bundle();
-        args.putParcelableArrayList("Key", (ArrayList<? extends Parcelable>) list);
-        DisplaysFragment fragment = new DisplaysFragment();
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         mInterface = (DataFragmentInterface) context;
-
     }
 
     @Nullable
@@ -57,14 +51,12 @@ public class DisplaysFragment extends BaseMainFragment<Display> {
         mDisplaysRecyclerView = view.findViewById(R.id.displays_recycler_view);
         mEmptyLayout = view.findViewById(R.id.display_empty_view);
 
-        assert getArguments() != null;
-        List<Display> displays = getArguments().getParcelableArrayList("Key");
+        mInterface.onNeedData(this);
 
         mEmptyLayout.setOnClickListener(v -> mInterface.onNeedData(this));
 
         LinearLayoutManager manager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         mAdapter = new DisplaysAdapter(getContext());
-        mAdapter.swapList(displays);
         mDisplaysRecyclerView.setLayoutManager(manager);
         mDisplaysRecyclerView.setAdapter(mAdapter);
         mDisplaysRecyclerView.setHasFixedSize(true);
@@ -74,28 +66,30 @@ public class DisplaysFragment extends BaseMainFragment<Display> {
 
     @Override
     public void onNetworkLoadedSucceed(List<Display> list) {
-        mLoadingProgressBar.setVisibility(View.GONE);
+        mLoadingProgressBar.setVisibility(GONE);
         if (list.size() != 0) {
             mAdapter.swapList(list);
-            mEmptyLayout.setVisibility(View.GONE);
-            mDisplaysRecyclerView.setVisibility(View.VISIBLE);
+            mDisplaysRecyclerView.setVisibility(VISIBLE);
         } else {
-            mEmptyLayout.setVisibility(View.VISIBLE);
-            mDisplaysRecyclerView.setVisibility(View.GONE);
+            mEmptyLayout.setVisibility(VISIBLE);
         }
     }
 
     @Override
     public void onNetworkStartLoading() {
-        mLoadingProgressBar.setVisibility(View.VISIBLE);
-        mDisplaysRecyclerView.setVisibility(View.GONE);
-        mEmptyLayout.setVisibility(View.GONE);
+        mLoadingProgressBar.setVisibility(VISIBLE);
+        mDisplaysRecyclerView.setVisibility(GONE);
+        mEmptyLayout.setVisibility(GONE);
     }
 
     @Override
     public void onNetworkLoadingFailed(int errorType) {
+
         switch (errorType) {
             case INTERNET_ERROR:
+                mEmptyLayout.setVisibility(VISIBLE);
+                mLoadingProgressBar.setVisibility(GONE);
+                mDisplaysRecyclerView.setVisibility(GONE);
                 Toast.makeText(getContext(),
                         R.string.no_internet_connection_string,
                         Toast.LENGTH_SHORT).show();
@@ -110,9 +104,9 @@ public class DisplaysFragment extends BaseMainFragment<Display> {
 
     @Override
     public void onDatabaseStartLoading() {
-        mLoadingProgressBar.setVisibility(View.VISIBLE);
-        mDisplaysRecyclerView.setVisibility(View.GONE);
-        mEmptyLayout.setVisibility(View.GONE);
+        mLoadingProgressBar.setVisibility(VISIBLE);
+        mDisplaysRecyclerView.setVisibility(GONE);
+        mEmptyLayout.setVisibility(GONE);
     }
 
     @Override

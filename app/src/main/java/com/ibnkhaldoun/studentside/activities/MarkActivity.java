@@ -72,8 +72,8 @@ public class MarkActivity extends AppCompatActivity implements LoaderManager.Loa
 
         setupRecyclerView();
 
-        assert getSupportActionBar() != null;
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if (getSupportActionBar() != null)
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportLoaderManager().
                 initLoader(ID_MARK_LOADER, null, this)
                 .forceLoad();

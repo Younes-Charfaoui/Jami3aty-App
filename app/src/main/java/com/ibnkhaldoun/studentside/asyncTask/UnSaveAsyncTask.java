@@ -1,6 +1,7 @@
 package com.ibnkhaldoun.studentside.asyncTask;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.ibnkhaldoun.studentside.interfaces.UnsaveListener;
 import com.ibnkhaldoun.studentside.networking.models.RequestPackage;
@@ -41,11 +42,10 @@ public class UnSaveAsyncTask extends AsyncTask<RequestPackage, Void, Response> {
     protected Response doInBackground(RequestPackage... requestPackages) {
         try {
             String responseString = HttpUtilities.getData(requestPackages[0]);
-            return JsonUtilities.getUnsaveResponse(responseString);
+            Log.i("Something", "doInBackground: " +  responseString);
+            return new Response(200);
         } catch (IOException e) {
             return new Response(IO_EXCEPTION);
-        } catch (JSONException e) {
-            return new Response(JSON_EXCEPTION);
         }
     }
 }

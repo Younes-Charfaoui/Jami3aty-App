@@ -31,16 +31,16 @@ public class MessagesActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         Intent intent = getIntent();
         Mail mail = intent.getParcelableExtra(KEY_MESSAGES);
-        assert getSupportActionBar() != null;
-        getSupportActionBar().setTitle(mail.getProfessor().getFullName());
+        if (getSupportActionBar() != null)
+            getSupportActionBar().setTitle(mail.getProfessor().getFullName());
         toolbar.setTitle(mail.getProfessor().getFullName());
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if (getSupportActionBar() != null)
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         List<Message> list = mail.getMessages();
 
         mAddMessageFab = findViewById(R.id.messages_fab);
         mRecyclerView = findViewById(R.id.messages_recycler_view);
-        mAdapter = new MessagesAdapter(this, list,mail.getProfessor());
+        mAdapter = new MessagesAdapter(this, list, mail.getProfessor());
         mRecyclerView.setAdapter(mAdapter);
         LinearLayoutManager manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(manager);

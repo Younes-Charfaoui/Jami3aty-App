@@ -61,6 +61,7 @@ public final class KeyDataProvider {
 
     public static final String JSON_NOTIFICATION_SEEN = "seen";
 
-
+    public static final String JSON_SAVE_ACTION = "action";
+    public static final String JSON_POST_ID2 = "id_post";
 
 }

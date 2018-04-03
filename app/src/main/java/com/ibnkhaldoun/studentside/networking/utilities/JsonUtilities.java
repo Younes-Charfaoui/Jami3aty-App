@@ -4,6 +4,7 @@ import android.util.Log;
 import android.util.SparseArray;
 
 import com.ibnkhaldoun.studentside.models.Comment;
+import com.ibnkhaldoun.studentside.models.Display;
 import com.ibnkhaldoun.studentside.models.Mail;
 import com.ibnkhaldoun.studentside.models.Mark;
 import com.ibnkhaldoun.studentside.models.Notification;
@@ -258,14 +259,6 @@ public class JsonUtilities {
         return schedules;
     }
 
-    public static Response getUnsaveResponse(String responseString) throws JSONException {
-        return new Response(JSON_EXCEPTION);
-    }
-
-
-    public static Response getSaveResponse(String responseString) {
-        return new Response(JSON_EXCEPTION);
-    }
 
     public static ArrayList<Comment> getCommentsList(String response) {
 
@@ -280,7 +273,7 @@ public class JsonUtilities {
 
     public static ArrayList<Notification> getNotificationList(String response) throws JSONException {
         ArrayList<Notification> notificationList = new ArrayList<>();
-
+        Log.i(TAG, "getNotificationList: " + response);
         JSONObject root = new JSONObject(response);
         if (root.getInt(KEY_JSON_STATUS) != 200) throw new JSONException("Error code");
         JSONArray data = root.getJSONArray(KEY_JSON_DATA);
@@ -295,5 +288,28 @@ public class JsonUtilities {
             notificationList.add(new Notification(professor, date, subjectTitle, type, id, seen));
         }
         return notificationList;
+    }
+
+    public static ArrayList<Display> getDisplaysList(String response) {
+        ArrayList<Display> displays = new ArrayList<>();
+        try {
+            JSONObject root = new JSONObject(response);
+            if (root.getInt(KEY_JSON_STATUS) != 200) throw new JSONException("");
+            JSONArray data = root.getJSONArray(KEY_JSON_DATA);
+            for (int i = 0; i < data.length(); i++) {
+                JSONObject object = data.getJSONObject(i);
+                long id = object.getLong(JSON_POST_ID);
+                int type = object.getInt(JSON_POST_TYPE);
+                String text = object.getString(JSON_POST_TEXT);
+                String file = object.getString(JSON_POST_FILE);
+                String date = object.getString(JSON_POST_DATE);
+                String professor = object.getString(JSON_POST_PROFESSOR);
+                String subject = object.getString(JSON_POST_SUBJECT);
+                displays.add(new Display(id, date, professor, text, file, subject, type));
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return displays;
     }
 }

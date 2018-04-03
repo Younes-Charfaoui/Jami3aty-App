@@ -33,13 +33,16 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     @Override
     public void onBindViewHolder(NotificationViewHolder holder, int position) {
         Notification notification = mNotificationList.get(position);
-        holder.mShortTextView.setText(notification.getProfessor().getShortName());
+        if(notification.isSeen()) holder.itemView.setBackgroundColor(mContext.getResources().getColor(R.color.seen_notification));
+        holder.mShortTextView.setText(Utilities.getProfessorShortName(notification.getProfessor()));
         GradientDrawable circle = (GradientDrawable) holder.mShortTextView.getBackground();
-        circle.setColor(Utilities.getCircleColor(notification.getProfessor().getShortName().charAt(0), mContext));
+        circle.setColor(Utilities.getCircleColor(mContext));
         holder.mDateTextView.setText(Utilities.getDateFormat(notification.getDate()));
-        holder.mTextTextView.setText(notification.getText());
+        holder.mTextTextView.setText(notification.createText(mContext));
         holder.mTypeTextView.setText(PostTypes.getType(notification.getType()));
     }
+
+
 
     @Override
     public int getItemCount() {

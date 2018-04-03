@@ -10,9 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ibnkhaldoun.studentside.R;
-import com.ibnkhaldoun.studentside.Utilities.ActivityUtilities;
 import com.ibnkhaldoun.studentside.Utilities.Utilities;
-import com.ibnkhaldoun.studentside.models.Comment;
 import com.ibnkhaldoun.studentside.models.Display;
 
 
@@ -22,7 +20,6 @@ public class DisplayDetailActivity extends AppCompatActivity {
     public static final String DATA = "data";
 
     private LinearLayout notesLinearLayout;
-
 
 
     @Override
@@ -39,13 +36,13 @@ public class DisplayDetailActivity extends AppCompatActivity {
         Display display = getIntent().getParcelableExtra(DATA);
 
         TextView professorShortNameTextView = findViewById(R.id.display_detail_professor_short_name_text_view);
-        professorShortNameTextView.setText(display.getProfessor().getShortName());
+        professorShortNameTextView.setText(Utilities.getProfessorShortName(display.getProfessor()));
 
         GradientDrawable circle = (GradientDrawable) professorShortNameTextView.getBackground();
-        circle.setColor(Utilities.getCircleColor(display.getProfessor().getShortName().charAt(0), this));
+        circle.setColor(Utilities.getCircleColor(this));
 
         TextView professorNameTextView = findViewById(R.id.display_detail_professor_name_text_view);
-        professorNameTextView.setText(display.getProfessor().getFullName());
+        professorNameTextView.setText(display.getProfessor());
 
         TextView dateTextView = findViewById(R.id.display_detail_date_and_time_text_view);
         dateTextView.setText(display.getDate());

@@ -29,7 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_POST_ID;
-import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.KEY_ANDROID;
+import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_POST_ID2;
 
 
 public class SavedAdapter extends RecyclerView.Adapter<SavedAdapter.SavedViewHolder> {
@@ -52,7 +52,7 @@ public class SavedAdapter extends RecyclerView.Adapter<SavedAdapter.SavedViewHol
     @Override
     public void onBindViewHolder(SavedViewHolder holder, int position) {
         Saved saved = mSavedList.get(position);
-        holder.mProfessorShortNameTv.setText(Utilities.getShortName(saved.getProfessor()));
+        holder.mProfessorShortNameTv.setText(Utilities.getProfessorShortName(saved.getProfessor()));
         GradientDrawable circleImage = (GradientDrawable) holder.mProfessorShortNameTv.getBackground();
         circleImage.setColor(Utilities.getCircleColor(mContext));
         holder.mProfessorNameTv.setText(saved.getProfessor());
@@ -144,7 +144,7 @@ public class SavedAdapter extends RecyclerView.Adapter<SavedAdapter.SavedViewHol
                     RequestPackage requestPackage = new RequestPackage.Builder()
                             .addEndPoint(EndPointsProvider.getCommentsEndpoint())
                             .addMethod(RequestPackage.POST)
-                            .addParams(JSON_POST_ID, String.valueOf(mSavedList.get(
+                            .addParams(JSON_POST_ID2, String.valueOf(mSavedList.get(
                                     getAdapterPosition()).getId()))
                             .create();
 

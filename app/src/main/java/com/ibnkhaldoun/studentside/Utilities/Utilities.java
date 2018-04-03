@@ -168,9 +168,14 @@ public final class Utilities {
         return ContextCompat.getColor(context, color);
     }
 
-    public static String getShortName(String name) {
+    public static String getProfessorShortName(String name) {
         String[] s = name.split(" ");
         return Character.toString(s[1].charAt(0)) + Character.toString(s[2].charAt(0));
+    }
+
+    public static String getStudentShortName(String name) {
+        String[] s = name.split(" ");
+        return Character.toString(s[0].charAt(0)) + Character.toString(s[1].charAt(0));
     }
 
     public static String getFirstName(String fullName) throws ArrayIndexOutOfBoundsException {

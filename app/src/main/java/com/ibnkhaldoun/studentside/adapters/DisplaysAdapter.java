@@ -41,10 +41,10 @@ public class DisplaysAdapter extends RecyclerView.Adapter<DisplaysAdapter.Displa
     @Override
     public void onBindViewHolder(DisplayViewHolder holder, int position) {
         Display display = mDataList.get(position);
-        holder.mProfessorShortNameTv.setText(display.getProfessor().getShortName());
+        holder.mProfessorShortNameTv.setText(Utilities.getProfessorShortName(display.getProfessor()));
         GradientDrawable circleImage = (GradientDrawable) holder.mProfessorShortNameTv.getBackground();
-        circleImage.setColor(Utilities.getCircleColor(display.getProfessor().getShortName().charAt(0), mContext));
-        holder.mProfessorNameTv.setText(display.getProfessor().getFullName());
+        circleImage.setColor(Utilities.getCircleColor(mContext));
+        holder.mProfessorNameTv.setText(display.getProfessor());
         holder.mDateTimeTv.setText(display.getDate());
         holder.mTextTv.setText(display.getText());
     }

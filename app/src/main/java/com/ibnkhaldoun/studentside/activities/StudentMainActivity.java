@@ -34,7 +34,7 @@ import com.ibnkhaldoun.studentside.Utilities.Utilities;
 import com.ibnkhaldoun.studentside.adapters.TabLayoutAdapter;
 import com.ibnkhaldoun.studentside.database.DatabaseContract;
 import com.ibnkhaldoun.studentside.fragments.DisplaysFragment;
-import com.ibnkhaldoun.studentside.fragments.MailFragment;
+import com.ibnkhaldoun.studentside.fragments.MessageFragment;
 import com.ibnkhaldoun.studentside.fragments.NotificationFragment;
 import com.ibnkhaldoun.studentside.fragments.ProfessorListFragment;
 import com.ibnkhaldoun.studentside.interfaces.DataFragmentInterface;
@@ -51,7 +51,9 @@ import java.util.Calendar;
 import static com.ibnkhaldoun.studentside.Utilities.PreferencesManager.STUDENT;
 import static com.ibnkhaldoun.studentside.fragments.BaseMainFragment.INTERNET_ERROR;
 import static com.ibnkhaldoun.studentside.networking.models.RequestPackage.POST;
+import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_STUDENT_GROUP;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_STUDENT_ID;
+import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_STUDENT_LEVEL;
 import static com.ibnkhaldoun.studentside.services.LoadDataService.KEY_DATA;
 
 public class StudentMainActivity extends AppCompatActivity
@@ -82,7 +84,7 @@ public class StudentMainActivity extends AppCompatActivity
 
     private DisplaysFragment mDisplayFragment;
     private NotificationFragment mNotificationFragment;
-    private MailFragment mMailFragment;
+    private MessageFragment mMessageFragment;
 
 
     /**
@@ -98,7 +100,7 @@ public class StudentMainActivity extends AppCompatActivity
                     mDisplayFragment.onNetworkLoadedSucceed(intent.getParcelableArrayListExtra(KEY_DISPLAY));
                     break;
                 case LoadDataService.MAIL_ACTION:
-                    mMailFragment.onNetworkLoadedSucceed(intent.getParcelableArrayListExtra(KEY_MAILS));
+                    mMessageFragment.onNetworkLoadedSucceed(intent.getParcelableArrayListExtra(KEY_MAILS));
                     break;
                 case LoadDataService.NOTIFICATION_ACTION:
                     mNotificationFragment.onNetworkLoadedSucceed(intent.getParcelableArrayListExtra(KEY_DATA));
@@ -337,11 +339,13 @@ public class StudentMainActivity extends AppCompatActivity
     public void onNeedData(DisplaysFragment which) {
         if (NetworkUtilities.isConnected(this)) {
             which.onNetworkStartLoading();
+            PreferencesManager manager = new PreferencesManager(this,STUDENT);
             RequestPackage request = new RequestPackage.Builder()
                     .addEndPoint(EndPointsProvider.getDisplays())
                     .addMethod(POST)
-                    .addParams(JSON_STUDENT_ID,
-                            new PreferencesManager(this, PreferencesManager.STUDENT).getId())
+                    .addParams(JSON_STUDENT_ID, manager.getId())
+                    .addParams(JSON_STUDENT_GROUP , manager.getGroup())
+                    .addParams(JSON_STUDENT_LEVEL , manager.getLevel())
                     .create();
             Intent intent = new Intent(this, LoadDataService.class);
             intent.putExtra(LoadDataService.KEY_REQUEST, request);
@@ -381,13 +385,13 @@ public class StudentMainActivity extends AppCompatActivity
 
     /**
      * this addMethod was implemented by the {@link DataFragmentInterface}
-     * for the purpose of communicating with the {@link MailFragment} to download
+     * for the purpose of communicating with the {@link MessageFragment} to download
      * data when it needed.
      *
      * @param which
      */
     @Override
-    public void onNeedData(MailFragment which) {
+    public void onNeedData(MessageFragment which) {
 
         if (NetworkUtilities.isConnected(this)) {
             PreferencesManager manager = new PreferencesManager(this, STUDENT);
@@ -422,14 +426,14 @@ public class StudentMainActivity extends AppCompatActivity
 
     /**
      * this addMethod was implemented by the {@link DataFragmentInterface}
-     * for the purpose of communicating with the {@link MailFragment} to hold reference
+     * for the purpose of communicating with the {@link MessageFragment} to hold reference
      * to it for future communications.
      *
-     * @param mailFragment
+     * @param messageFragment
      */
     @Override
-    public void onAttach(MailFragment mailFragment) {
-        mMailFragment = mailFragment;
+    public void onAttach(MessageFragment messageFragment) {
+        mMessageFragment = messageFragment;
     }
 
     /**
@@ -464,7 +468,7 @@ public class StudentMainActivity extends AppCompatActivity
                 // TODO: 16/03/2018 code to launch for notifications
                 return null;
             case MAIL_LOADER_ID:
-                mMailFragment.onDatabaseStartLoading();
+                mMessageFragment.onDatabaseStartLoading();
                 return new CursorLoader(this, DatabaseContract.MailEntry.CONTENT_MAIL_URI
                         , new String[]{"*"}, null, null, null);
             default:
@@ -482,7 +486,7 @@ public class StudentMainActivity extends AppCompatActivity
                 // TODO: 16/03/2018 code to deliver result for notification fragment
                 break;
             case MAIL_LOADER_ID:
-                mMailFragment.onDatabaseLoadingFinished(data);
+                mMessageFragment.onDatabaseLoadingFinished(data);
                 break;
         }
     }
@@ -497,7 +501,7 @@ public class StudentMainActivity extends AppCompatActivity
                 // TODO: 16/03/2018 code to deliver result for notification fragment
                 break;
             case MAIL_LOADER_ID:
-                mMailFragment.onDatabaseStartLoading();
+                mMessageFragment.onDatabaseStartLoading();
         }
     }
 }
