@@ -244,7 +244,7 @@ public class LoadDataService extends IntentService {
             String response = HttpUtilities.getData(requestPackage);
             ArrayList<Mail> mailList = JsonUtilities.getMailList(response);
             Intent intentToMails = new Intent(MAIL_ACTION);
-            intentToMails.putExtra(StudentMainActivity.KEY_MAILS, mailList);
+            intentToMails.putExtra(KEY_DATA, mailList);
             LocalBroadcastManager.getInstance(context).sendBroadcast(intentToMails);
             Intent intentToDatabase = new Intent(context, DatabaseService.class);
             intentToDatabase.putExtra(KEY_CONTENT_DATA, mailList);

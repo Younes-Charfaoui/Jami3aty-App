@@ -214,5 +214,7 @@
     <string name="consultation_string">Consultation</string>
     <string name="mark_string">Mark</string>
     <string name="avis_sring">Avis</string>
+    <string name="note">Note</string>
+    <string name="respect_the_rules_of_communicating">You Should respect the rules of communicating. See our terms and privacy.</string>
 
 </resources>

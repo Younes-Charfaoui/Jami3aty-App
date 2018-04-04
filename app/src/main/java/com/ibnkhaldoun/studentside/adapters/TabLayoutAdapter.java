@@ -18,20 +18,14 @@ public class TabLayoutAdapter extends FragmentPagerAdapter {
 
     private int mNumbersOfTabs;
     private int CurrentState;
-    private List<Mail> mMailList;
-    private List<Notification> mNotificationList;
-    private List<Display> mDisplayList;
+
 
     public TabLayoutAdapter(FragmentManager fm, int numbersOfTab) {
         super(fm);
         this.mNumbersOfTabs = numbersOfTab;
     }
 
-    public void setLists(List<Display> displays, List<Notification> notifications, List<Mail> mails) {
-        this.mMailList = mails;
-        this.mDisplayList = displays;
-        this.mNotificationList = notifications;
-    }
+
 
     public void setCurrentState(int currentState) {
         CurrentState = currentState;
@@ -46,7 +40,7 @@ public class TabLayoutAdapter extends FragmentPagerAdapter {
             case 1:
                 return new NotificationFragment();
             case 2:
-                return MessageFragment.newInstance(mMailList);
+                return new NotificationFragment();
             default:
                 return null;
         }

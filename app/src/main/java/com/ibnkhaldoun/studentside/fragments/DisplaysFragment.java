@@ -28,7 +28,7 @@ import static android.view.View.VISIBLE;
 import static com.ibnkhaldoun.studentside.activities.StudentMainActivity.DISPLAY_TYPE;
 
 
-public class DisplaysFragment extends BaseMainFragment<Display> {
+public class DisplaysFragment extends BaseMainFragment<Display> implements NoteOfDisplayDialog.INoteOfDisplay {
 
     private ProgressBar mLoadingProgressBar;
     private LinearLayout mEmptyLayout;
@@ -56,7 +56,7 @@ public class DisplaysFragment extends BaseMainFragment<Display> {
         mEmptyLayout.setOnClickListener(v -> mInterface.onNeedData(this));
 
         LinearLayoutManager manager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
-        mAdapter = new DisplaysAdapter(getContext());
+        mAdapter = new DisplaysAdapter(getContext() , this, getFragmentManager());
         mDisplaysRecyclerView.setLayoutManager(manager);
         mDisplaysRecyclerView.setAdapter(mAdapter);
         mDisplaysRecyclerView.setHasFixedSize(true);
@@ -112,5 +112,10 @@ public class DisplaysFragment extends BaseMainFragment<Display> {
     @Override
     public int getBaseType() {
         return DISPLAY_TYPE;
+    }
+
+    @Override
+    public void OnFinishNoting(String note, long id) {
+        Toast.makeText(getContext(), note + " " + id, Toast.LENGTH_SHORT).show();
     }
 }

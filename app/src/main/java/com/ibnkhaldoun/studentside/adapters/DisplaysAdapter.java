@@ -3,6 +3,7 @@ package com.ibnkhaldoun.studentside.adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.GradientDrawable;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +15,9 @@ import android.widget.Toast;
 import com.ibnkhaldoun.studentside.R;
 import com.ibnkhaldoun.studentside.Utilities.Utilities;
 import com.ibnkhaldoun.studentside.activities.DisplayDetailActivity;
+import com.ibnkhaldoun.studentside.fragments.NoteOfDisplayDialog;
 import com.ibnkhaldoun.studentside.models.Display;
+import com.ibnkhaldoun.studentside.networking.utilities.NetworkUtilities;
 
 import java.util.List;
 
@@ -25,9 +28,13 @@ public class DisplaysAdapter extends RecyclerView.Adapter<DisplaysAdapter.Displa
 
     private Context mContext;
     private List<Display> mDataList;
+    private NoteOfDisplayDialog.INoteOfDisplay noteInterface;
+    private FragmentManager manager;
 
-    public DisplaysAdapter(Context mContext) {
+    public DisplaysAdapter(Context mContext, NoteOfDisplayDialog.INoteOfDisplay inter, FragmentManager manager) {
         this.mContext = mContext;
+        this.noteInterface = inter;
+        this.manager = manager;
     }
 
     @Override
@@ -43,9 +50,11 @@ public class DisplaysAdapter extends RecyclerView.Adapter<DisplaysAdapter.Displa
         Display display = mDataList.get(position);
         holder.mProfessorShortNameTv.setText(Utilities.getProfessorShortName(display.getProfessor()));
         GradientDrawable circleImage = (GradientDrawable) holder.mProfessorShortNameTv.getBackground();
+
         circleImage.setColor(Utilities.getCircleColor(mContext));
         holder.mProfessorNameTv.setText(display.getProfessor());
-        holder.mDateTimeTv.setText(display.getDate());
+        String subjectAndDate = display.getDate() + ". \n" + display.getSubject();
+        holder.mDateTimeTv.setText(subjectAndDate);
         holder.mTextTv.setText(display.getText());
     }
 
@@ -77,12 +86,23 @@ public class DisplaysAdapter extends RecyclerView.Adapter<DisplaysAdapter.Displa
             mNoteButton = itemView.findViewById(R.id.display_note_button);
             mSaveButton.setOnClickListener(v -> {
                 //todo , put the code we need to save the publication in the storage
-                Toast.makeText(mContext, "Save Button", Toast.LENGTH_SHORT).show();
+                if (NetworkUtilities.isConnected(mContext)) {
+
+                } else {
+                    Toast.makeText(mContext, R.string.no_internet_connection_string,
+                            Toast.LENGTH_SHORT).show();
+                }
             });
 
             mNoteButton.setOnClickListener(v -> {
-                //todo , put the code we need to send a note to this publication
-                Toast.makeText(mContext, "Note Button", Toast.LENGTH_SHORT).show();
+                if (NetworkUtilities.isConnected(mContext)) {
+                    NoteOfDisplayDialog dialog =
+                            NoteOfDisplayDialog.newInstance(mDataList.get(getAdapterPosition()).getId());
+                    dialog.show(manager, "Tag");
+                } else {
+                    Toast.makeText(mContext, R.string.no_internet_connection_string,
+                            Toast.LENGTH_SHORT).show();
+                }
             });
 
             itemView.setOnClickListener(v -> {

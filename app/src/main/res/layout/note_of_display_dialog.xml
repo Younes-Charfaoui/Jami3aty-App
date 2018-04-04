@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright (c) 2018. This code was created by Younes Charfaoui in the process of Graduation Project for the year of  2018 , which is about creating a platform  for students and professors to help them in the communication and the get known of the university information and so on.
+  -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:padding="24dp">
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        app:counterEnabled="true"
+        app:counterMaxLength="100"
+        android:layout_height="wrap_content">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/note_dialog_edit_text"
+            android:layout_width="match_parent"
+            android:hint="@string/note"
+            android:maxLength="100"
+            tools:text="hello world this is how sbdvkjdbvkjb vjfdksbvb jvdbsvkjbs jdbjbdsvkj bb jksbdvj b jksdbv jkvbjkdsbvbjjjjbvbvvb"
+            android:layout_height="match_parent" />
+    </android.support.design.widget.TextInputLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="italic"
+        android:text="@string/respect_the_rules_of_communicating"/>
+</LinearLayout>

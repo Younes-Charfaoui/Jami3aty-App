@@ -27,6 +27,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ibnkhaldoun.studentside.R;
 import com.ibnkhaldoun.studentside.Utilities.PreferencesManager;
@@ -35,17 +36,21 @@ import com.ibnkhaldoun.studentside.adapters.TabLayoutAdapter;
 import com.ibnkhaldoun.studentside.database.DatabaseContract;
 import com.ibnkhaldoun.studentside.fragments.DisplaysFragment;
 import com.ibnkhaldoun.studentside.fragments.MessageFragment;
+import com.ibnkhaldoun.studentside.fragments.NoteOfDisplayDialog;
 import com.ibnkhaldoun.studentside.fragments.NotificationFragment;
 import com.ibnkhaldoun.studentside.fragments.ProfessorListFragment;
 import com.ibnkhaldoun.studentside.interfaces.DataFragmentInterface;
 import com.ibnkhaldoun.studentside.interfaces.ProfessorDialogInterface;
+import com.ibnkhaldoun.studentside.models.Display;
+import com.ibnkhaldoun.studentside.models.Message;
+import com.ibnkhaldoun.studentside.models.Notification;
 import com.ibnkhaldoun.studentside.networking.models.RequestPackage;
 import com.ibnkhaldoun.studentside.networking.utilities.NetworkUtilities;
-import com.ibnkhaldoun.studentside.providers.DataProviders;
 import com.ibnkhaldoun.studentside.providers.EndPointsProvider;
 import com.ibnkhaldoun.studentside.providers.KeyDataProvider;
 import com.ibnkhaldoun.studentside.services.LoadDataService;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 import static com.ibnkhaldoun.studentside.Utilities.PreferencesManager.STUDENT;
@@ -58,7 +63,8 @@ import static com.ibnkhaldoun.studentside.services.LoadDataService.KEY_DATA;
 
 public class StudentMainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
-        ProfessorDialogInterface, DataFragmentInterface, LoaderManager.LoaderCallbacks<Cursor> {
+        ProfessorDialogInterface, DataFragmentInterface,
+        LoaderManager.LoaderCallbacks<Cursor> {
 
     public static final String KEY_MAILS = "keyMails";
     public static final String KEY_NOTIFICATION = "keyNotification";
@@ -87,6 +93,10 @@ public class StudentMainActivity extends AppCompatActivity
     private MessageFragment mMessageFragment;
 
 
+    private ArrayList<Display> mDisplaysList;
+    private ArrayList<Notification> mNotificationsList;
+    private ArrayList<Message> mMessagesList;
+
     /**
      * the receiver which will listen when the data has been downloaded from the
      * internet and pass them to the fragments
@@ -97,13 +107,16 @@ public class StudentMainActivity extends AppCompatActivity
             assert intent.getAction() != null;
             switch (intent.getAction()) {
                 case LoadDataService.DISPLAY_ACTION:
-                    mDisplayFragment.onNetworkLoadedSucceed(intent.getParcelableArrayListExtra(KEY_DISPLAY));
+                    mDisplaysList = intent.getParcelableArrayListExtra(KEY_DATA);
+                    mDisplayFragment.onNetworkLoadedSucceed(mDisplaysList);
                     break;
                 case LoadDataService.MAIL_ACTION:
-                    mMessageFragment.onNetworkLoadedSucceed(intent.getParcelableArrayListExtra(KEY_MAILS));
+                    mMessagesList = intent.getParcelableArrayListExtra(KEY_DATA);
+                    mMessageFragment.onNetworkLoadedSucceed(mMessagesList);
                     break;
                 case LoadDataService.NOTIFICATION_ACTION:
-                    mNotificationFragment.onNetworkLoadedSucceed(intent.getParcelableArrayListExtra(KEY_DATA));
+                    mNotificationsList = intent.getParcelableArrayListExtra(KEY_DATA);
+                    mNotificationFragment.onNetworkLoadedSucceed(mNotificationsList);
                     break;
             }
         }
@@ -218,7 +231,7 @@ public class StudentMainActivity extends AppCompatActivity
                 startActivity(new Intent(this, SettingActivity.class));
                 break;
             case R.id.nav_help:
-                startActivity(new Intent(this,HelpActivity.class));
+                startActivity(new Intent(this, HelpActivity.class));
                 break;
 
         }
@@ -246,9 +259,6 @@ public class StudentMainActivity extends AppCompatActivity
     private void setupViewPagerAndTabLayout() {
         setupTabIcons();
         TabLayoutAdapter adapter = new TabLayoutAdapter(getSupportFragmentManager(), mTabLayout.getTabCount());
-        adapter.setLists(DataProviders.getDisplayList(),
-                DataProviders.getNotificationList(),
-                DataProviders.getMailList());
         mMainViewPager.setAdapter(adapter);
         mMainViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTabLayout));
         mTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -339,13 +349,13 @@ public class StudentMainActivity extends AppCompatActivity
     public void onNeedData(DisplaysFragment which) {
         if (NetworkUtilities.isConnected(this)) {
             which.onNetworkStartLoading();
-            PreferencesManager manager = new PreferencesManager(this,STUDENT);
+            PreferencesManager manager = new PreferencesManager(this, STUDENT);
             RequestPackage request = new RequestPackage.Builder()
                     .addEndPoint(EndPointsProvider.getDisplays())
                     .addMethod(POST)
                     .addParams(JSON_STUDENT_ID, manager.getId())
-                    .addParams(JSON_STUDENT_GROUP , manager.getGroup())
-                    .addParams(JSON_STUDENT_LEVEL , manager.getLevel())
+                    .addParams(JSON_STUDENT_GROUP, manager.getGroup())
+                    .addParams(JSON_STUDENT_LEVEL, manager.getLevel())
                     .create();
             Intent intent = new Intent(this, LoadDataService.class);
             intent.putExtra(LoadDataService.KEY_REQUEST, request);
@@ -394,6 +404,7 @@ public class StudentMainActivity extends AppCompatActivity
     public void onNeedData(MessageFragment which) {
 
         if (NetworkUtilities.isConnected(this)) {
+
             PreferencesManager manager = new PreferencesManager(this, STUDENT);
             which.onNetworkStartLoading();
             RequestPackage request = new RequestPackage.Builder()
@@ -486,7 +497,7 @@ public class StudentMainActivity extends AppCompatActivity
                 // TODO: 16/03/2018 code to deliver result for notification fragment
                 break;
             case MAIL_LOADER_ID:
-                mMessageFragment.onDatabaseLoadingFinished(data);
+                //mMessageFragment.onDatabaseLoadingFinished(data);
                 break;
         }
     }
@@ -501,7 +512,8 @@ public class StudentMainActivity extends AppCompatActivity
                 // TODO: 16/03/2018 code to deliver result for notification fragment
                 break;
             case MAIL_LOADER_ID:
-                mMessageFragment.onDatabaseStartLoading();
+                //mMessageFragment.onDatabaseStartLoading();
         }
     }
+
 }
