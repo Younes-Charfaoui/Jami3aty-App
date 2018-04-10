@@ -33,5 +33,5 @@
 
     <color name="active_schedule">#EEEEEE</color>
 
-    <color name="seen_notification">#64ededed</color>
+    <color name="seen_notification">#f0f0f0</color>
 </resources>

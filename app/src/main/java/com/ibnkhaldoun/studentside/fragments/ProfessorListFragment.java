@@ -10,7 +10,7 @@ import android.support.v7.app.AlertDialog;
 
 import com.ibnkhaldoun.studentside.R;
 import com.ibnkhaldoun.studentside.adapters.SubjectProfessorDialogAdapter;
-import com.ibnkhaldoun.studentside.interfaces.ProfessorDialogInterface;
+import com.ibnkhaldoun.studentside.interfaces.IProfessorDialog;
 import com.ibnkhaldoun.studentside.models.Professor;
 
 import java.util.ArrayList;
@@ -18,7 +18,7 @@ import java.util.List;
 
 
 public class ProfessorListFragment extends DialogFragment {
-    public ProfessorDialogInterface mInterface;
+    public IProfessorDialog mInterface;
 
     public static ProfessorListFragment newInstance(List<Professor> list) {
 
@@ -32,7 +32,7 @@ public class ProfessorListFragment extends DialogFragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mInterface = (ProfessorDialogInterface) context;
+        mInterface = (IProfessorDialog) context;
     }
 
     @NonNull

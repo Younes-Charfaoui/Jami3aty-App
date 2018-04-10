@@ -293,8 +293,9 @@ public class JsonUtilities {
     public static ArrayList<Display> getDisplaysList(String response) {
         ArrayList<Display> displays = new ArrayList<>();
         try {
+            Log.i(TAG, "getDisplaysList: " + response);
             JSONObject root = new JSONObject(response);
-            if (root.getInt(KEY_JSON_STATUS) != 200) throw new JSONException("");
+            if (root.getInt(KEY_JSON_STATUS) != 200) throw new JSONException("Code was not 200");
             JSONArray data = root.getJSONArray(KEY_JSON_DATA);
             for (int i = 0; i < data.length(); i++) {
                 JSONObject object = data.getJSONObject(i);

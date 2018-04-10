@@ -40,7 +40,7 @@ public class TabLayoutAdapter extends FragmentPagerAdapter {
             case 1:
                 return new NotificationFragment();
             case 2:
-                return new NotificationFragment();
+                return new MessageFragment();
             default:
                 return null;
         }

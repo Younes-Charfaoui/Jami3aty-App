@@ -3,6 +3,7 @@ package com.ibnkhaldoun.studentside.services;
 import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
@@ -119,14 +120,15 @@ public class LoadDataService extends IntentService {
             Intent intent = new Intent(DISPLAY_ACTION);
             intent.putExtra(KEY_DATA, displayList);
             LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
+
     }
 
     private void notificationCall(RequestPackage request, Context context) {
         try {
-            String response = HttpUtilities.getData(request);
+           String response = HttpUtilities.getData(request);
             Log.i("Notif", "notificationCall: " + response);
             ArrayList<Notification> notificationList = JsonUtilities.getNotificationList(response);
             Intent intent = new Intent(NOTIFICATION_ACTION);

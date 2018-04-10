@@ -1,76 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/notification_swipe"
     android:layout_height="match_parent">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/notification_recycler_view"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:visibility="visible"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent">
 
-    <ProgressBar
-        android:id="@+id/notification_progress_bar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:visibility="invisible" />
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/notification_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="visible" />
 
-    <LinearLayout
-        android:id="@+id/notification_empty_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:visibility="invisible"
-        android:orientation="vertical"
-        tools:ignore="UseCompoundDrawables">
-
-        <ImageView
+        <ProgressBar
+            android:id="@+id/notification_progress_bar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:contentDescription="@null"
-            android:paddingBottom="8dp"
-            android:src="@drawable/notification_empty" />
+            android:layout_centerInParent="true"
+            android:visibility="invisible" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-medium"
-            android:paddingBottom="5dp"
-            android:text="@string/notification_empty_string"
-            android:textAppearance="?android:textAppearanceMedium" />
+        <LinearLayout
+            android:id="@+id/notification_empty_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="invisible"
+            tools:ignore="UseCompoundDrawables">
 
-    </LinearLayout>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:contentDescription="@null"
+                android:paddingBottom="8dp"
+                android:src="@drawable/notification_empty" />
 
-    <LinearLayout
-        android:id="@+id/mail_connection_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:visibility="invisible"
-        tools:ignore="UseCompoundDrawables">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-medium"
+                android:paddingBottom="5dp"
+                android:text="@string/notification_empty_string"
+                android:textAppearance="?android:textAppearanceMedium" />
 
-        <ImageView
-            android:layout_width="300dp"
-            android:layout_height="300dp"
-            android:layout_marginBottom="8dp"
-            android:contentDescription="@null"
-            android:paddingBottom="8dp"
-            android:src="@drawable/internet_connectionn" />
+        </LinearLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-medium"
-            android:paddingBottom="5dp"
-            android:text="@string/no_internet_connection_string"
-            android:textAppearance="?android:textAppearanceMedium" />
+        <LinearLayout
+            android:id="@+id/mail_connection_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="invisible"
+            tools:ignore="UseCompoundDrawables">
+
+            <ImageView
+                android:layout_width="300dp"
+                android:layout_height="300dp"
+                android:layout_marginBottom="8dp"
+                android:contentDescription="@null"
+                android:paddingBottom="8dp"
+                android:src="@drawable/internet_connectionn" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-medium"
+                android:paddingBottom="5dp"
+                android:text="@string/no_internet_connection_string"
+                android:textAppearance="?android:textAppearanceMedium" />
 
 
-    </LinearLayout>
+        </LinearLayout>
 
-
-</RelativeLayout>
+    </RelativeLayout>
+</android.support.v4.widget.SwipeRefreshLayout>

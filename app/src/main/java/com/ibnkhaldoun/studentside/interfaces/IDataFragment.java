@@ -5,7 +5,7 @@ import com.ibnkhaldoun.studentside.fragments.DisplaysFragment;
 import com.ibnkhaldoun.studentside.fragments.MessageFragment;
 import com.ibnkhaldoun.studentside.fragments.NotificationFragment;
 
-public interface DataFragmentInterface {
+public interface IDataFragment {
 
     void onNeedData(DisplaysFragment displaysFragment);
 

@@ -11,6 +11,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
+import android.view.LayoutInflater;
 import android.view.View;
 
 import com.ibnkhaldoun.studentside.R;
@@ -38,10 +39,11 @@ public class NoteOfDisplayDialog extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         builder.setTitle(R.string.new_note);
-        View noteView = getLayoutInflater().inflate(R.layout.note_of_display_dialog, null);
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+        View noteView =inflater.inflate(R.layout.note_of_display_dialog, null,false);
         mNoteEditText = noteView.findViewById(R.id.note_dialog_edit_text);
         builder.setView(noteView);
 

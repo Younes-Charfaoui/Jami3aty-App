@@ -9,7 +9,7 @@ import android.support.v7.app.AlertDialog;
 
 import com.ibnkhaldoun.studentside.R;
 import com.ibnkhaldoun.studentside.adapters.SubjectProfessorDialogAdapter;
-import com.ibnkhaldoun.studentside.interfaces.SubjectDialogInterface;
+import com.ibnkhaldoun.studentside.interfaces.ISubjectDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +18,7 @@ import java.util.List;
 public class SubjectListFragment extends DialogFragment {
 
     private static final String KEY = "key";
-    public SubjectDialogInterface mInterface;
+    public ISubjectDialog mInterface;
 
     public static SubjectListFragment newInstance(List<String> list) {
         Bundle args = new Bundle();
@@ -32,7 +32,7 @@ public class SubjectListFragment extends DialogFragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mInterface = (SubjectDialogInterface) context;
+        mInterface = (ISubjectDialog) context;
     }
 
     @NonNull

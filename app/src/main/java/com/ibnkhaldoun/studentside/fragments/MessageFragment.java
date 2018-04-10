@@ -17,7 +17,7 @@ import android.widget.Toast;
 
 import com.ibnkhaldoun.studentside.R;
 import com.ibnkhaldoun.studentside.adapters.MessageAdapter;
-import com.ibnkhaldoun.studentside.interfaces.DataFragmentInterface;
+import com.ibnkhaldoun.studentside.interfaces.IDataFragment;
 import com.ibnkhaldoun.studentside.models.Mail;
 import com.ibnkhaldoun.studentside.models.Message;
 
@@ -36,7 +36,7 @@ public class MessageFragment extends BaseMainFragment<Message> {
     private MessageAdapter mAdapter;
     private ProgressBar mLoadingProgressBar;
 
-    private DataFragmentInterface mailInterface;
+    private IDataFragment mailInterface;
 
 
     public static MessageFragment newInstance(List<Mail> mails) {
@@ -50,7 +50,7 @@ public class MessageFragment extends BaseMainFragment<Message> {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mailInterface = (DataFragmentInterface) context;
+        mailInterface = (IDataFragment) context;
     }
 
     @Nullable

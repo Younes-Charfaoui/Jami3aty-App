@@ -23,6 +23,12 @@ public final class EndPointsProvider {
     private static final String DISPLAY_ENDPOINT_ALL = BASE + "jami3aty/posts/all";
     private static final String DISPLAY_ENDPOINT = BASE + "jami3aty/posts/get";
 
+    public static String getAddCommentsEndpoint() {
+        return ADD_COMMENTS_ENDPOINT;
+    }
+
+    private static final String ADD_COMMENTS_ENDPOINT = BASE + "jami3aty/posts/get";
+
     public static String getCommentsEndpoint() {
         return COMMENTS_ENDPOINT;
     }

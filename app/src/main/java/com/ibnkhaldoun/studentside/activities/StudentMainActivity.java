@@ -33,18 +33,20 @@ import com.ibnkhaldoun.studentside.R;
 import com.ibnkhaldoun.studentside.Utilities.PreferencesManager;
 import com.ibnkhaldoun.studentside.Utilities.Utilities;
 import com.ibnkhaldoun.studentside.adapters.TabLayoutAdapter;
+import com.ibnkhaldoun.studentside.asyncTask.ResponseAsyncTask;
 import com.ibnkhaldoun.studentside.database.DatabaseContract;
 import com.ibnkhaldoun.studentside.fragments.DisplaysFragment;
 import com.ibnkhaldoun.studentside.fragments.MessageFragment;
 import com.ibnkhaldoun.studentside.fragments.NoteOfDisplayDialog;
 import com.ibnkhaldoun.studentside.fragments.NotificationFragment;
 import com.ibnkhaldoun.studentside.fragments.ProfessorListFragment;
-import com.ibnkhaldoun.studentside.interfaces.DataFragmentInterface;
-import com.ibnkhaldoun.studentside.interfaces.ProfessorDialogInterface;
+import com.ibnkhaldoun.studentside.interfaces.IDataFragment;
+import com.ibnkhaldoun.studentside.interfaces.IProfessorDialog;
 import com.ibnkhaldoun.studentside.models.Display;
 import com.ibnkhaldoun.studentside.models.Message;
 import com.ibnkhaldoun.studentside.models.Notification;
 import com.ibnkhaldoun.studentside.networking.models.RequestPackage;
+import com.ibnkhaldoun.studentside.networking.models.Response;
 import com.ibnkhaldoun.studentside.networking.utilities.NetworkUtilities;
 import com.ibnkhaldoun.studentside.providers.EndPointsProvider;
 import com.ibnkhaldoun.studentside.providers.KeyDataProvider;
@@ -59,12 +61,13 @@ import static com.ibnkhaldoun.studentside.networking.models.RequestPackage.POST;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_STUDENT_GROUP;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_STUDENT_ID;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_STUDENT_LEVEL;
+import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_STUDENT_SECTION;
 import static com.ibnkhaldoun.studentside.services.LoadDataService.KEY_DATA;
 
 public class StudentMainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
-        ProfessorDialogInterface, DataFragmentInterface,
-        LoaderManager.LoaderCallbacks<Cursor> {
+        IProfessorDialog, IDataFragment, NoteOfDisplayDialog.INoteOfDisplay,
+        LoaderManager.LoaderCallbacks<Cursor>,ResponseAsyncTask.IResponseListener {
 
     public static final String KEY_MAILS = "keyMails";
     public static final String KEY_NOTIFICATION = "keyNotification";
@@ -326,7 +329,7 @@ public class StudentMainActivity extends AppCompatActivity
     }
 
     /**
-     * this addMethod was implemented by the {@link ProfessorDialogInterface}
+     * this addMethod was implemented by the {@link IProfessorDialog}
      * for the purpose of communicating with the fragment of which
      * the user can choose a professor to send mails to it.
      *
@@ -339,7 +342,7 @@ public class StudentMainActivity extends AppCompatActivity
     }
 
     /**
-     * this addMethod was implemented by the {@link DataFragmentInterface}
+     * this addMethod was implemented by the {@link IDataFragment}
      * for the purpose of communicating with the {@link DisplaysFragment} to download
      * data when it needed.
      *
@@ -353,9 +356,9 @@ public class StudentMainActivity extends AppCompatActivity
             RequestPackage request = new RequestPackage.Builder()
                     .addEndPoint(EndPointsProvider.getDisplays())
                     .addMethod(POST)
-                    .addParams(JSON_STUDENT_ID, manager.getId())
                     .addParams(JSON_STUDENT_GROUP, manager.getGroup())
                     .addParams(JSON_STUDENT_LEVEL, manager.getLevel())
+                    .addParams(JSON_STUDENT_SECTION, manager.getSection())
                     .create();
             Intent intent = new Intent(this, LoadDataService.class);
             intent.putExtra(LoadDataService.KEY_REQUEST, request);
@@ -367,7 +370,7 @@ public class StudentMainActivity extends AppCompatActivity
     }
 
     /**
-     * this addMethod was implemented by the {@link DataFragmentInterface}
+     * this addMethod was implemented by the {@link IDataFragment}
      * for the purpose of communicating with the {@link NotificationFragment} to download
      * data when it needed.
      *
@@ -376,7 +379,7 @@ public class StudentMainActivity extends AppCompatActivity
     @Override
     public void onNeedData(NotificationFragment which) {
 
-        if (NetworkUtilities.isConnected(this)) {
+         if (NetworkUtilities.isConnected(this)) {
             which.onNetworkStartLoading();
             RequestPackage request = new RequestPackage.Builder()
                     .addEndPoint(EndPointsProvider.getNotifications())
@@ -394,7 +397,7 @@ public class StudentMainActivity extends AppCompatActivity
     }
 
     /**
-     * this addMethod was implemented by the {@link DataFragmentInterface}
+     * this addMethod was implemented by the {@link IDataFragment}
      * for the purpose of communicating with the {@link MessageFragment} to download
      * data when it needed.
      *
@@ -424,7 +427,7 @@ public class StudentMainActivity extends AppCompatActivity
     }
 
     /**
-     * this addMethod was implemented by the {@link DataFragmentInterface}
+     * this addMethod was implemented by the {@link IDataFragment}
      * for the purpose of communicating with the {@link DisplaysFragment} to hold reference
      * to it for future communications.
      *
@@ -436,7 +439,7 @@ public class StudentMainActivity extends AppCompatActivity
     }
 
     /**
-     * this addMethod was implemented by the {@link DataFragmentInterface}
+     * this addMethod was implemented by the {@link IDataFragment}
      * for the purpose of communicating with the {@link MessageFragment} to hold reference
      * to it for future communications.
      *
@@ -448,7 +451,7 @@ public class StudentMainActivity extends AppCompatActivity
     }
 
     /**
-     * this addMethod was implemented by the {@link DataFragmentInterface}
+     * this addMethod was implemented by the {@link IDataFragment}
      * for the purpose of communicating with the {@link NotificationFragment} to hold reference
      * to it for future communications.
      *
@@ -516,4 +519,23 @@ public class StudentMainActivity extends AppCompatActivity
         }
     }
 
+    @Override
+    public void OnFinishNoting(String note, long id) {
+        RequestPackage request = new RequestPackage.Builder()
+                .addEndPoint(EndPointsProvider.getAddCommentsEndpoint())
+                .addMethod(POST)
+                .addParams(KeyDataProvider.KEY_NOTE , note)
+                .addParams(KeyDataProvider.JSON_POST_ID,String.valueOf(id))
+                .create();
+        ResponseAsyncTask task = new ResponseAsyncTask(this);
+        task.execute(request);
+
+    }
+
+    @Override
+    public void onGetResponse(Response response) {
+        if(response.getStatus() != Response.RESPONSE_SUCCESS)
+            Toast.makeText(this, "Try later, a connection Problem", Toast.LENGTH_SHORT)
+                    .show();
+    }
 }

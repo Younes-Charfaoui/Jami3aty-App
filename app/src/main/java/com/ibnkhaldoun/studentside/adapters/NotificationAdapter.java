@@ -1,8 +1,10 @@
 package com.ibnkhaldoun.studentside.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.GradientDrawable;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +12,7 @@ import android.widget.TextView;
 
 import com.ibnkhaldoun.studentside.R;
 import com.ibnkhaldoun.studentside.Utilities.Utilities;
+import com.ibnkhaldoun.studentside.activities.MarkDetailActivity;
 import com.ibnkhaldoun.studentside.enums.PostTypes;
 import com.ibnkhaldoun.studentside.models.Notification;
 
@@ -33,7 +36,9 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     @Override
     public void onBindViewHolder(NotificationViewHolder holder, int position) {
         Notification notification = mNotificationList.get(position);
-        if(notification.isSeen()) holder.itemView.setBackgroundColor(mContext.getResources().getColor(R.color.seen_notification));
+        Log.i("Notification", "onBindViewHolder: " + notification.isSeen());
+        if (!notification.isSeen())
+            holder.itemView.setBackgroundColor(mContext.getResources().getColor(R.color.seen_notification));
         holder.mShortTextView.setText(Utilities.getProfessorShortName(notification.getProfessor()));
         GradientDrawable circle = (GradientDrawable) holder.mShortTextView.getBackground();
         circle.setColor(Utilities.getCircleColor(mContext));
@@ -41,7 +46,6 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         holder.mTextTextView.setText(notification.createText(mContext));
         holder.mTypeTextView.setText(PostTypes.getType(notification.getType()));
     }
-
 
 
     @Override
@@ -67,6 +71,19 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             mTypeTextView = itemView.findViewById(R.id.notification_type);
             mDateTextView = itemView.findViewById(R.id.notification_date);
 
+            itemView.setOnClickListener(v -> {
+                switch (mNotificationList.get(getAdapterPosition()).getType()) {
+                    case PostTypes.AVIS_TYPE:
+                        //mContext.startActivity(new Intent(mContext,));
+                        break;
+                    case PostTypes.MARK_TYPE:
+                        //mContext.startActivity(new Intent(mContext, MarkDetailActivity.class));
+                        break;
+                    case PostTypes.CONSULTATION_TYPE:
+                        //mContext.startActivity(new Intent(mContext, MarkDetailActivity.class));
+                        break;
+                }
+            });
         }
     }
 }

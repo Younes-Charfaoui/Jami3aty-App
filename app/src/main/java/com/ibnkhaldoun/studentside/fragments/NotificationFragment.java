@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -17,7 +18,7 @@ import android.widget.Toast;
 
 import com.ibnkhaldoun.studentside.R;
 import com.ibnkhaldoun.studentside.adapters.NotificationAdapter;
-import com.ibnkhaldoun.studentside.interfaces.DataFragmentInterface;
+import com.ibnkhaldoun.studentside.interfaces.IDataFragment;
 import com.ibnkhaldoun.studentside.models.Notification;
 
 import java.util.ArrayList;
@@ -26,13 +27,14 @@ import java.util.List;
 import static com.ibnkhaldoun.studentside.activities.StudentMainActivity.NOTIFICATION_TYPE;
 
 
-public class NotificationFragment extends BaseMainFragment<Notification> {
+public class NotificationFragment extends BaseMainFragment<Notification> implements SwipeRefreshLayout.OnRefreshListener {
     public static final String KEY_INNER_DATA = "keyInnerData";
     private RecyclerView mNotificationRecyclerView;
     private NotificationAdapter mAdapter;
     private ProgressBar mLoadingProgressBar;
     private LinearLayout mEmptyLayout;
-    private DataFragmentInterface mInterface;
+    private IDataFragment mInterface;
+    private SwipeRefreshLayout mNotificationSwipe;
 
     public static NotificationFragment newInstance(List<Notification> notificationList) {
         Bundle args = new Bundle();
@@ -46,7 +48,7 @@ public class NotificationFragment extends BaseMainFragment<Notification> {
     public void onAttach(Context context) {
         super.onAttach(context);
         try {
-            mInterface = (DataFragmentInterface) context;
+            mInterface = (IDataFragment) context;
         } catch (ClassCastException e) {
             e.printStackTrace();
         }
@@ -60,7 +62,11 @@ public class NotificationFragment extends BaseMainFragment<Notification> {
         mNotificationRecyclerView = view.findViewById(R.id.notification_recycler_view);
         mLoadingProgressBar = view.findViewById(R.id.notification_progress_bar);
         mEmptyLayout = view.findViewById(R.id.notification_empty_view);
+        mNotificationSwipe = view.findViewById(R.id.notification_swipe);
+
+        mNotificationSwipe.setOnRefreshListener(this);
         mAdapter = new NotificationAdapter(getContext());
+
         mInterface.onNeedData(this);
 
         mEmptyLayout.setOnClickListener(v -> {
@@ -78,7 +84,8 @@ public class NotificationFragment extends BaseMainFragment<Notification> {
 
     @Override
     public void onNetworkLoadedSucceed(List<Notification> list) {
-
+        if (mNotificationSwipe.isRefreshing())
+            mNotificationSwipe.setRefreshing(false);
         mLoadingProgressBar.setVisibility(View.GONE);
         if (list.size() != 0) {
             mAdapter.swapList(list);
@@ -102,7 +109,8 @@ public class NotificationFragment extends BaseMainFragment<Notification> {
 
     @Override
     public void onNetworkLoadingFailed(int errorType) {
-
+        if (mNotificationSwipe.isRefreshing())
+            mNotificationSwipe.setRefreshing(false);
         switch (errorType) {
             case INTERNET_ERROR:
                 Toast.makeText(getContext(),
@@ -128,5 +136,10 @@ public class NotificationFragment extends BaseMainFragment<Notification> {
     @Override
     public int getBaseType() {
         return NOTIFICATION_TYPE;
+    }
+
+    @Override
+    public void onRefresh() {
+        mInterface.onNeedData(this);
     }
 }

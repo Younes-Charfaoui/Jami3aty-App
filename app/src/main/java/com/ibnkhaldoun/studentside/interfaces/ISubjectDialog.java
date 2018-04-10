@@ -1,6 +1,6 @@
 package com.ibnkhaldoun.studentside.interfaces;
 
 
-public interface SubjectDialogInterface {
+public interface ISubjectDialog {
     void onSubjectChosen(String s);
 }

@@ -13,15 +13,24 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ibnkhaldoun.studentside.R;
+import com.ibnkhaldoun.studentside.Utilities.PreferencesManager;
 import com.ibnkhaldoun.studentside.Utilities.Utilities;
 import com.ibnkhaldoun.studentside.activities.DisplayDetailActivity;
+import com.ibnkhaldoun.studentside.asyncTask.ResponseAsyncTask;
 import com.ibnkhaldoun.studentside.fragments.NoteOfDisplayDialog;
 import com.ibnkhaldoun.studentside.models.Display;
+import com.ibnkhaldoun.studentside.networking.models.RequestPackage;
+import com.ibnkhaldoun.studentside.networking.models.Response;
 import com.ibnkhaldoun.studentside.networking.utilities.NetworkUtilities;
+import com.ibnkhaldoun.studentside.providers.EndPointsProvider;
 
 import java.util.List;
 
 import static com.ibnkhaldoun.studentside.activities.DisplayDetailActivity.DATA;
+import static com.ibnkhaldoun.studentside.networking.models.RequestPackage.POST;
+import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_POST_ID2;
+import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_SAVE_ACTION;
+import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_STUDENT_ID;
 
 public class DisplaysAdapter extends RecyclerView.Adapter<DisplaysAdapter.DisplayViewHolder> {
 
@@ -85,9 +94,25 @@ public class DisplaysAdapter extends RecyclerView.Adapter<DisplaysAdapter.Displa
             mSaveButton = itemView.findViewById(R.id.display_save_button);
             mNoteButton = itemView.findViewById(R.id.display_note_button);
             mSaveButton.setOnClickListener(v -> {
-                //todo , put the code we need to save the publication in the storage
                 if (NetworkUtilities.isConnected(mContext)) {
-
+                    ResponseAsyncTask task = new ResponseAsyncTask(new ResponseAsyncTask.IResponseListener() {
+                        @Override
+                        public void onGetResponse(Response response) {
+                            if (response.getStatus() != Response.RESPONSE_SUCCESS) {
+                                Toast.makeText(mContext, "Try later , problem with connecting", Toast.LENGTH_SHORT).show();
+                            } else {
+                                mSaveButton.setEnabled(false);
+                            }
+                        }
+                    });
+                    RequestPackage request = new RequestPackage.Builder().addEndPoint(EndPointsProvider.getUnsaveEndpoint())
+                            .addMethod(POST)
+                            .addParams(JSON_STUDENT_ID,
+                                    new PreferencesManager(mContext, PreferencesManager.STUDENT).getId())
+                            .addParams(JSON_POST_ID2, String.valueOf(mDataList.get(getAdapterPosition()).getId()))
+                            .addParams(JSON_SAVE_ACTION, String.valueOf(1))
+                            .create();
+                    task.execute(request);
                 } else {
                     Toast.makeText(mContext, R.string.no_internet_connection_string,
                             Toast.LENGTH_SHORT).show();

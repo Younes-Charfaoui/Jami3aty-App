@@ -21,7 +21,7 @@ import com.ibnkhaldoun.studentside.R;
 import com.ibnkhaldoun.studentside.Utilities.PreferencesManager;
 import com.ibnkhaldoun.studentside.database.DatabaseContract;
 import com.ibnkhaldoun.studentside.fragments.SubjectListFragment;
-import com.ibnkhaldoun.studentside.interfaces.SubjectDialogInterface;
+import com.ibnkhaldoun.studentside.interfaces.ISubjectDialog;
 import com.ibnkhaldoun.studentside.networking.models.RequestPackage;
 import com.ibnkhaldoun.studentside.networking.utilities.NetworkUtilities;
 import com.ibnkhaldoun.studentside.providers.EndPointsProvider;
@@ -30,10 +30,9 @@ import com.ibnkhaldoun.studentside.services.LoadDataService;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_STUDENT_GROUP;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_STUDENT_LEVEL;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_STUDENT_SECTION;
-import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.KEY_ANDROID;
 import static com.ibnkhaldoun.studentside.services.LoadDataService.SUBJECT_INNER_ACTION;
 
-public class NoteEditActivity extends AppCompatActivity implements SubjectDialogInterface {
+public class NoteEditActivity extends AppCompatActivity implements ISubjectDialog {
 
     public static final String KEY_SENDER = "sender";
     public static final String KEY_NEW = "new";

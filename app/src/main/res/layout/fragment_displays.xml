@@ -1,54 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/display_swipe"
     android:layout_height="match_parent">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/displays_recycler_view"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:visibility="invisible"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent">
 
-    <ProgressBar
-        android:id="@+id/display_progress_bar"
-        android:layout_width="72dp"
-        android:layout_height="72dp"
-        android:layout_centerInParent="true"
-        android:visibility="visible" />
 
-    <LinearLayout
-        android:id="@+id/display_empty_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:background="?android:attr/selectableItemBackground"
-        android:gravity="center"
-        android:paddingBottom="30dp"
-        android:orientation="vertical"
-        android:visibility="visible">
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/displays_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="invisible" />
 
-        <ImageView
-            android:layout_width="230dp"
-            android:layout_height="230dp"
-            android:contentDescription="@null"
-            android:paddingBottom="8dp"
-            android:src="@drawable/display" />
+        <ProgressBar
+            android:id="@+id/display_progress_bar"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:layout_centerInParent="true"
+            android:visibility="visible" />
 
-        <TextView
+        <LinearLayout
+            android:id="@+id/display_empty_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-medium"
-            android:paddingBottom="5dp"
-            android:text="@string/there_are_no_displays"
-            android:textAppearance="?android:textAppearanceMedium" />
+            android:layout_centerInParent="true"
+            android:background="?android:attr/selectableItemBackground"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingBottom="30dp"
+            android:visibility="visible">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="sans-serif"
-            android:text="@string/tap_to_refresh_from_the_internet"
-            android:textAppearance="?android:textAppearanceSmall" />
-    </LinearLayout>
-</RelativeLayout>
+            <ImageView
+                android:layout_width="230dp"
+                android:layout_height="230dp"
+                android:contentDescription="@null"
+                android:paddingBottom="8dp"
+                android:src="@drawable/display" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-medium"
+                android:paddingBottom="5dp"
+                android:text="@string/there_are_no_displays"
+                android:textAppearance="?android:textAppearanceMedium" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif"
+                android:text="@string/tap_to_refresh_from_the_internet"
+                android:textAppearance="?android:textAppearanceSmall" />
+        </LinearLayout>
+    </RelativeLayout>
+</android.support.v4.widget.SwipeRefreshLayout>
