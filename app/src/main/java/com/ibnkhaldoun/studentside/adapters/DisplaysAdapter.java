@@ -23,6 +23,7 @@ import com.ibnkhaldoun.studentside.networking.models.RequestPackage;
 import com.ibnkhaldoun.studentside.networking.models.Response;
 import com.ibnkhaldoun.studentside.networking.utilities.NetworkUtilities;
 import com.ibnkhaldoun.studentside.providers.EndPointsProvider;
+import com.ibnkhaldoun.studentside.services.LoadDataService;
 
 import java.util.List;
 
@@ -37,12 +38,11 @@ public class DisplaysAdapter extends RecyclerView.Adapter<DisplaysAdapter.Displa
 
     private Context mContext;
     private List<Display> mDataList;
-    private NoteOfDisplayDialog.INoteOfDisplay noteInterface;
+
     private FragmentManager manager;
 
-    public DisplaysAdapter(Context mContext, NoteOfDisplayDialog.INoteOfDisplay inter, FragmentManager manager) {
+    public DisplaysAdapter(Context mContext, FragmentManager manager) {
         this.mContext = mContext;
-        this.noteInterface = inter;
         this.manager = manager;
     }
 
@@ -59,7 +59,8 @@ public class DisplaysAdapter extends RecyclerView.Adapter<DisplaysAdapter.Displa
         Display display = mDataList.get(position);
         holder.mProfessorShortNameTv.setText(Utilities.getProfessorShortName(display.getProfessor()));
         GradientDrawable circleImage = (GradientDrawable) holder.mProfessorShortNameTv.getBackground();
-
+        if (display.isSaved()) holder.mSaveButton.setEnabled(false);
+        else holder.mSaveButton.setEnabled(true);
         circleImage.setColor(Utilities.getCircleColor(mContext));
         holder.mProfessorNameTv.setText(display.getProfessor());
         String subjectAndDate = display.getDate() + ". \n" + display.getSubject();
@@ -95,14 +96,11 @@ public class DisplaysAdapter extends RecyclerView.Adapter<DisplaysAdapter.Displa
             mNoteButton = itemView.findViewById(R.id.display_note_button);
             mSaveButton.setOnClickListener(v -> {
                 if (NetworkUtilities.isConnected(mContext)) {
-                    ResponseAsyncTask task = new ResponseAsyncTask(new ResponseAsyncTask.IResponseListener() {
-                        @Override
-                        public void onGetResponse(Response response) {
-                            if (response.getStatus() != Response.RESPONSE_SUCCESS) {
-                                Toast.makeText(mContext, "Try later , problem with connecting", Toast.LENGTH_SHORT).show();
-                            } else {
-                                mSaveButton.setEnabled(false);
-                            }
+                    ResponseAsyncTask task = new ResponseAsyncTask(response -> {
+                        if (response.getStatus() != Response.RESPONSE_SUCCESS) {
+                            Toast.makeText(mContext, "Try later , problem with connecting", Toast.LENGTH_SHORT).show();
+                        } else {
+                            mSaveButton.setEnabled(false);
                         }
                     });
                     RequestPackage request = new RequestPackage.Builder().addEndPoint(EndPointsProvider.getUnsaveEndpoint())
@@ -134,6 +132,15 @@ public class DisplaysAdapter extends RecyclerView.Adapter<DisplaysAdapter.Displa
                 Intent intent = new Intent(mContext, DisplayDetailActivity.class);
                 intent.putExtra(DATA, mDataList.get(getAdapterPosition()));
                 mContext.startActivity(intent);
+                Intent intentService = new Intent(mContext, LoadDataService.class);
+                RequestPackage request = new RequestPackage.Builder()
+                        .addMethod(POST)
+                        .addEndPoint(EndPointsProvider.getAllCommentsEndpoint())
+                        .addParams(JSON_POST_ID2, String.valueOf(mDataList.get(getAdapterPosition()).getId()))
+                        .create();
+                intentService.putExtra(LoadDataService.KEY_REQUEST, request);
+                intentService.putExtra(LoadDataService.KEY_ACTION, LoadDataService.COMMENT_TYPE);
+                mContext.startService(intentService);
             });
         }
     }

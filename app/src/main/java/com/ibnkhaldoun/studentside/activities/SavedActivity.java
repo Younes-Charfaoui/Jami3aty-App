@@ -274,7 +274,8 @@ public class SavedActivity extends AppCompatActivity
                 .setMessage(R.string.unsave_post_confirmation)
                 .setPositiveButton(R.string.yes, (dialog, which) -> {
                     if (NetworkUtilities.isConnected(this)) {
-                        RequestPackage request = new RequestPackage.Builder().addEndPoint(EndPointsProvider.getUnsaveEndpoint())
+                        RequestPackage request = new RequestPackage.Builder()
+                                .addEndPoint(EndPointsProvider.getUnsaveEndpoint())
                                 .addMethod(POST)
                                 .addParams(JSON_STUDENT_ID,
                                         new PreferencesManager(this, PreferencesManager.STUDENT).getId())

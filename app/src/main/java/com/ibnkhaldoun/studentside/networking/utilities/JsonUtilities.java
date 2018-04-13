@@ -27,6 +27,12 @@ import java.util.ArrayList;
 
 import static com.ibnkhaldoun.studentside.networking.models.Response.JSON_EXCEPTION;
 import static com.ibnkhaldoun.studentside.networking.models.Response.RESPONSE_SUCCESS;
+import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_COMMENT_COMMENT;
+import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_COMMENT_DATE;
+import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_COMMENT_ID_COMMENT;
+import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_COMMENT_ID_PERSON;
+import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_COMMENT_ID_POST;
+import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_COMMENT_PERSON_NAME;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_DAY_SCHEDULE;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_HOUR_SCHEDULE;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_NAME_SCHEDULE;
@@ -36,6 +42,7 @@ import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_POST_DA
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_POST_FILE;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_POST_ID;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_POST_PROFESSOR;
+import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_POST_SAVED;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_POST_SUBJECT;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_POST_TEXT;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_POST_TYPE;
@@ -261,14 +268,26 @@ public class JsonUtilities {
 
 
     public static ArrayList<Comment> getCommentsList(String response) {
-
+        Log.i(TAG, "getCommentsList: " + response);
+        ArrayList<Comment> commentList = new ArrayList<>();
         try {
+
             JSONObject root = new JSONObject(response);
+            if (root.getInt(KEY_JSON_STATUS) != 200) throw new JSONException("Status was not 200");
+            JSONArray object = root.getJSONArray(KEY_JSON_DATA);
+            for (int i = 0; i < object.length(); i++) {
+                long idComment = object.getJSONObject(i).getLong(JSON_COMMENT_ID_COMMENT);
+                long idPerson = object.getJSONObject(i).getLong(JSON_COMMENT_ID_PERSON);
+                long idPost = object.getJSONObject(i).getLong(JSON_COMMENT_ID_POST);
+                String personName = object.getJSONObject(i).getString(JSON_COMMENT_PERSON_NAME);
+                String date = object.getJSONObject(i).getString(JSON_COMMENT_DATE);
+                String comment = object.getJSONObject(i).getString(JSON_COMMENT_COMMENT);
+                commentList.add(new Comment(personName, comment, date, idComment, idPost, idPerson));
+            }
         } catch (JSONException e) {
             e.printStackTrace();
-
         }
-        return new ArrayList<>();
+        return commentList;
     }
 
     public static ArrayList<Notification> getNotificationList(String response) throws JSONException {
@@ -306,7 +325,8 @@ public class JsonUtilities {
                 String date = object.getString(JSON_POST_DATE);
                 String professor = object.getString(JSON_POST_PROFESSOR);
                 String subject = object.getString(JSON_POST_SUBJECT);
-                displays.add(new Display(id, date, professor, text, file, subject, type));
+                boolean saved = object.getInt(JSON_POST_SAVED) == 1;
+                displays.add(new Display(id, date, professor, text, file, subject, type, saved));
             }
         } catch (JSONException e) {
             e.printStackTrace();

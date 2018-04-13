@@ -42,9 +42,9 @@ public class SavedDetailActivity extends AppCompatActivity {
                 mCommentLinearLayout.setVisibility(VISIBLE);
                 for (Comment comment : comments) {
                     mCommentLinearLayout.addView(ActivityUtilities
-                            .createNoteView(context, Utilities.getProfessorShortName(comment.getCommenter()),
+                            .createNoteView(context, Utilities.getProfessorShortName(comment.getName()),
                                     comment.getComment(),
-                                    comment.getCommenter(),
+                                    comment.getName(),
                                     comment.getDate(), mCommentLinearLayout));
                 }
             } else {

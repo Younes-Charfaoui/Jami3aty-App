@@ -5,6 +5,7 @@
 package com.ibnkhaldoun.studentside.asyncTask;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.ibnkhaldoun.studentside.networking.models.RequestPackage;
 import com.ibnkhaldoun.studentside.networking.models.Response;
@@ -32,7 +33,8 @@ public class ResponseAsyncTask extends AsyncTask<RequestPackage, Void, Response>
     @Override
     protected Response doInBackground(RequestPackage... requestPackages) {
         try {
-            HttpUtilities.getData(requestPackages[0]);
+            String response = HttpUtilities.getData(requestPackages[0]);
+            Log.i("Save", "doInBackground: " + response);
             return new Response(RESPONSE_SUCCESS);
         } catch (IOException e) {
             return new Response(IO_EXCEPTION);

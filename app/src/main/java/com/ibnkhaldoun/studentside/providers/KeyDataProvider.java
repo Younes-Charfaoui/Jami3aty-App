@@ -23,6 +23,8 @@ public final class KeyDataProvider {
     public static final String JSON_STUDENT_SECTION = "section";
     public static final String JSON_STUDENT_CONFIRMED = "isConfirmed";
 
+    public static final String JSON_USER_NAME = "user_name";
+
     public static final String JSON_PROFESSOR_ID = "_id_professor";
     public static final String JSON_PROFESSOR_FIRST_NAME = "first_name";
     public static final String JSON_PROFESSOR_LAST_NAME = "last_name";
@@ -57,12 +59,19 @@ public final class KeyDataProvider {
     public static final String JSON_POST_SUBJECT = "title";
     public static final String JSON_POST_FILE = "path_file";
     public static final String JSON_POST_TYPE = "type";
+    public static final String JSON_POST_SAVED = "saved";
 
 
     public static final String JSON_NOTIFICATION_SEEN = "seen";
     public static final String JSON_SAVE_ACTION = "action";
     public static final String JSON_POST_ID2 = "id_post";
 
-    public static final String KEY_NOTE = "note";
+    public static final String KEY_NOTE = "text_added";
 
+    public static final String JSON_COMMENT_ID_COMMENT = "_id_comments";
+    public static final String JSON_COMMENT_ID_POST = "_id_post";
+    public static final String JSON_COMMENT_ID_PERSON = "_id_person";
+    public static final String JSON_COMMENT_COMMENT = "text_comment";
+    public static final String JSON_COMMENT_DATE = "date_comment";
+    public static final String JSON_COMMENT_PERSON_NAME = "name_person";
 }

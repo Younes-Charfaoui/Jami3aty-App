@@ -1,26 +1,21 @@
-[
-  {
-    "_id_post": "1",
-    "_id_professor": "1",
-    "_id_subject": "44",
-    "type": "1",
-    "destination": "6.0.3",
-    "text_post": "The bung hole hails with faith, taste the lighthouse until it sings.",
-    "path_file": null,
-    "date_post": "1522587766",
-    "fullName": "Phd. Ouared Abdelkader",
-    "title": "Database Administration"
-  },
-  {
-    "_id_post": "2",
-    "_id_professor": "2",
-    "_id_subject": "43",
-    "type": "2",
-    "destination": "6.0.3",
-    "text_post": "Animaliss sunt torquiss de altus tata. Persuadere hic ducunt ad alter historia.",
-    "path_file": null,
-    "date_post": "1522587766",
-    "fullName": "Dr. Bekki Khathir",
-    "title": "Cryptography"
-  }
-]
+{
+  "status": 200,
+  "data": [
+    {
+      "_id_comments": "3",
+      "_id_post": "3",
+      "_id_person": "10101010",
+      "date_comment": "1523637907",
+      "text_comment": "Planets fly with mineral?",
+      "name_person": "Younes Charfaoui"
+    },
+    {
+      "_id_comments": "16",
+      "_id_post": "3",
+      "_id_person": "10101012",
+      "date_comment": "1523637908",
+      "text_comment": "Planets fly with mineral?",
+      "name_person": "Ismail Bourbie"
+    }
+  ]
+}

@@ -521,15 +521,18 @@ public class StudentMainActivity extends AppCompatActivity
 
     @Override
     public void OnFinishNoting(String note, long id) {
+        Toast.makeText(this, note +" " +  id , Toast.LENGTH_SHORT).show();
         RequestPackage request = new RequestPackage.Builder()
                 .addEndPoint(EndPointsProvider.getAddCommentsEndpoint())
                 .addMethod(POST)
                 .addParams(KeyDataProvider.KEY_NOTE , note)
-                .addParams(KeyDataProvider.JSON_POST_ID,String.valueOf(id))
+                .addParams(KeyDataProvider.JSON_POST_ID2,String.valueOf(id))
+                .addParams(KeyDataProvider.JSON_STUDENT_ID , new PreferencesManager(this,STUDENT).getId())
+                .addParams(KeyDataProvider.JSON_USER_NAME , new PreferencesManager(this,STUDENT).getFullName())
                 .create();
+
         ResponseAsyncTask task = new ResponseAsyncTask(this);
         task.execute(request);
-
     }
 
     @Override

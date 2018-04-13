@@ -7,7 +7,7 @@ package com.ibnkhaldoun.studentside.providers;
 
 public final class EndPointsProvider {
 
-    private static final String BASE = "http://192.168.1.4/";
+    private static final String BASE = "http://192.168.1.3/";
     private final static String LOGIN_ENDPOINT = BASE + "jami3aty/auth/login/";
     private static final String SIGN_UP_ENDPOINT = BASE + "jami3aty/auth/register/";
     private final static String FORGET_PASSWORD_ENDPOINT = BASE + "jami3aty/users/forgotpass/";
@@ -17,14 +17,26 @@ public final class EndPointsProvider {
     private final static String SAVED_ENDPOINT = BASE + "jami3aty/saved/";
     private final static String EXAM_ENDPOINT = BASE + "jami3aty/exams/";
     private final static String SCHEDULE_ENDPOINT = BASE + "jami3aty/schedules/";
-    private final static String UNSAVE_ENDPOINT = BASE + "jami3aty//saved/state/";
-    private final static String COMMENTS_ENDPOINT = BASE + "jami3aty/schedules/";
+    private final static String UNSAVE_ENDPOINT = BASE + "jami3aty/saved/state/";
+    private final static String COMMENTS_ENDPOINT = BASE + "jami3aty/comments/";
     private static final String NOTIFICATION_ENDPOINT = BASE + "jami3aty/notifications/all";
     private static final String DISPLAY_ENDPOINT_ALL = BASE + "jami3aty/posts/all";
     private static final String DISPLAY_ENDPOINT = BASE + "jami3aty/posts/get";
 
     public static String getAddCommentsEndpoint() {
-        return ADD_COMMENTS_ENDPOINT;
+        return COMMENTS_ENDPOINT + "add";
+    }
+
+    public static String getModifyCommentsEndpoint() {
+        return COMMENTS_ENDPOINT + "edit";
+    }
+
+    public static String getAllCommentsEndpoint() {
+        return COMMENTS_ENDPOINT + "all";
+    }
+
+    public static String getRemoveCommentsEndpoint() {
+        return COMMENTS_ENDPOINT + "remove";
     }
 
     private static final String ADD_COMMENTS_ENDPOINT = BASE + "jami3aty/posts/get";
