@@ -1,54 +1,57 @@
 package com.ibnkhaldoun.studentside.activities;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
-import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ibnkhaldoun.studentside.R;
 import com.ibnkhaldoun.studentside.Utilities.PreferencesManager;
 import com.ibnkhaldoun.studentside.Utilities.Utilities;
+import com.ibnkhaldoun.studentside.adapters.NotesOfDisplayAdapter;
+import com.ibnkhaldoun.studentside.asyncTask.CommentAsyncTask;
 import com.ibnkhaldoun.studentside.asyncTask.ResponseAsyncTask;
+import com.ibnkhaldoun.studentside.fragments.NoteBottomSheet;
 import com.ibnkhaldoun.studentside.fragments.NoteOfDisplayDialog;
+import com.ibnkhaldoun.studentside.models.Comment;
 import com.ibnkhaldoun.studentside.models.Display;
 import com.ibnkhaldoun.studentside.networking.models.RequestPackage;
 import com.ibnkhaldoun.studentside.networking.models.Response;
 import com.ibnkhaldoun.studentside.networking.utilities.NetworkUtilities;
+import com.ibnkhaldoun.studentside.networking.utilities.RequestPackageFactory;
 import com.ibnkhaldoun.studentside.providers.EndPointsProvider;
-import com.ibnkhaldoun.studentside.providers.KeyDataProvider;
 
-import static com.ibnkhaldoun.studentside.Utilities.PreferencesManager.STUDENT;
+import java.util.List;
+
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
 import static com.ibnkhaldoun.studentside.networking.models.RequestPackage.POST;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_POST_ID2;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_SAVE_ACTION;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_STUDENT_ID;
-import static com.ibnkhaldoun.studentside.services.LoadDataService.COMMENTS_ACTION;
 
 
-public class DisplayDetailActivity extends AppCompatActivity implements NoteOfDisplayDialog.INoteOfDisplay, ResponseAsyncTask.IResponseListener {
+public class DisplayDetailActivity extends AppCompatActivity implements NoteOfDisplayDialog.INoteOfDisplay,
+        ResponseAsyncTask.IResponseListener,
+        NotesOfDisplayAdapter.INoteOfDisplayMore,
+        CommentAsyncTask.ICommentListener,
+        NoteBottomSheet.INoteBottomSheet {
 
     public static final String SENDER = "sender";
     public static final String DATA = "data";
 
-    private LinearLayout notesLinearLayout;
 
-    private BroadcastReceiver mCommentsReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            Log.i("Detail", "onReceive: I had receive !");
-        }
-    };
+    private RecyclerView mNoteRecyclerView;
+    private NotesOfDisplayAdapter mAdapter;
+    private ProgressBar mLoadingProgress;
+    private TextView mNoCommentTv;
+    private RequestPackage mRequest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,11 +60,26 @@ public class DisplayDetailActivity extends AppCompatActivity implements NoteOfDi
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        if (getSupportActionBar() != null)
+        if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
+        setupRecyclerView();
+
+        mLoadingProgress = findViewById(R.id.display_detail_note_progress);
+        mNoCommentTv = findViewById(R.id.display_detail_no_comment);
 
         Display display = getIntent().getParcelableExtra(DATA);
+
+
+        mRequest = new RequestPackage.Builder()
+                .addMethod(POST)
+                .addEndPoint(EndPointsProvider.getAllCommentsEndpoint())
+                .addParams(JSON_POST_ID2, String.valueOf(display.getId()))
+                .create();
+
+        new CommentAsyncTask(this).execute(mRequest);
+
 
         TextView professorShortNameTextView = findViewById(R.id.display_detail_professor_short_name_text_view);
         professorShortNameTextView.setText(Utilities.getProfessorShortName(display.getProfessor()));
@@ -78,8 +96,6 @@ public class DisplayDetailActivity extends AppCompatActivity implements NoteOfDi
         TextView textTextView = findViewById(R.id.display_detail_text_text_view);
         textTextView.setText(display.getText());
 
-
-        View separatorView = findViewById(R.id.display_detail_notes_separator);
 
         if (display.isSaved())
             findViewById(R.id.display_detail_save_button).setEnabled(false);
@@ -116,11 +132,15 @@ public class DisplayDetailActivity extends AppCompatActivity implements NoteOfDi
                         Toast.LENGTH_SHORT).show();
             }
         });
+    }
 
-
-        notesLinearLayout = findViewById(R.id.display_detail_notes);
-
-        LocalBroadcastManager.getInstance(this).registerReceiver(mCommentsReceiver, new IntentFilter(COMMENTS_ACTION));
+    private void setupRecyclerView() {
+        mNoteRecyclerView = findViewById(R.id.display_detail_notes_recycler);
+        mAdapter = new NotesOfDisplayAdapter(this, this);
+        LinearLayoutManager manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        mNoteRecyclerView.setAdapter(mAdapter);
+        mNoteRecyclerView.setLayoutManager(manager);
+        mNoteRecyclerView.setHasFixedSize(true);
     }
 
     @Override
@@ -136,25 +156,49 @@ public class DisplayDetailActivity extends AppCompatActivity implements NoteOfDi
     @Override
     public void OnFinishNoting(String note, long id) {
         Toast.makeText(this, note + " " + id, Toast.LENGTH_SHORT).show();
-        RequestPackage request = new RequestPackage.Builder()
-                .addEndPoint(EndPointsProvider.getAddCommentsEndpoint())
-                .addMethod(POST)
-                .addParams(KeyDataProvider.KEY_NOTE, note)
-                .addParams(KeyDataProvider.JSON_POST_ID, String.valueOf(id))
-                .addParams(KeyDataProvider.JSON_STUDENT_ID, new PreferencesManager(this, STUDENT).getId())
-                .create();
+        RequestPackage request = RequestPackageFactory.createNoteAddingRequest(id, note, this);
         ResponseAsyncTask task = new ResponseAsyncTask(this);
         task.execute(request);
     }
 
     @Override
     public void onGetResponse(Response response) {
-
+        new CommentAsyncTask(this).execute(mRequest);
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(mCommentsReceiver);
+    public void OnLongClick(long idComment) {
+        NoteBottomSheet bottomSheet = NoteBottomSheet.newInstance(idComment);
+        bottomSheet.show(getSupportFragmentManager(), "Tag");
+    }
+
+    @Override
+    public void OnStartLoading() {
+        mLoadingProgress.setVisibility(VISIBLE);
+        mNoteRecyclerView.setVisibility(GONE);
+        mNoCommentTv.setVisibility(GONE);
+    }
+
+    @Override
+    public void OnFinishedLoading(List<Comment> comments) {
+        mLoadingProgress.setVisibility(GONE);
+        if (comments.size() == 0) {
+            mNoCommentTv.setVisibility(VISIBLE);
+            mNoteRecyclerView.setVisibility(GONE);
+        } else {
+            mNoCommentTv.setVisibility(GONE);
+            mNoteRecyclerView.setVisibility(VISIBLE);
+            mAdapter.swapList(comments);
+        }
+    }
+
+    @Override
+    public void OnEdit(long id) {
+        // TODO: 14/04/2018 add code to handle the edit of one comment
+    }
+
+    @Override
+    public void OnRemove(long id) {
+        // TODO: 14/04/2018 add code to handle the remove of a comment
     }
 }

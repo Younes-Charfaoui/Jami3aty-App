@@ -23,7 +23,7 @@ import com.ibnkhaldoun.studentside.networking.models.RequestPackage;
 import com.ibnkhaldoun.studentside.networking.models.Response;
 import com.ibnkhaldoun.studentside.networking.utilities.NetworkUtilities;
 import com.ibnkhaldoun.studentside.providers.EndPointsProvider;
-import com.ibnkhaldoun.studentside.services.LoadDataService;
+
 
 import java.util.List;
 
@@ -98,7 +98,7 @@ public class DisplaysAdapter extends RecyclerView.Adapter<DisplaysAdapter.Displa
                 if (NetworkUtilities.isConnected(mContext)) {
                     ResponseAsyncTask task = new ResponseAsyncTask(response -> {
                         if (response.getStatus() != Response.RESPONSE_SUCCESS) {
-                            Toast.makeText(mContext, "Try later , problem with connecting", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(mContext, R.string.try_later_problem_connecting, Toast.LENGTH_SHORT).show();
                         } else {
                             mSaveButton.setEnabled(false);
                         }
@@ -132,15 +132,6 @@ public class DisplaysAdapter extends RecyclerView.Adapter<DisplaysAdapter.Displa
                 Intent intent = new Intent(mContext, DisplayDetailActivity.class);
                 intent.putExtra(DATA, mDataList.get(getAdapterPosition()));
                 mContext.startActivity(intent);
-                Intent intentService = new Intent(mContext, LoadDataService.class);
-                RequestPackage request = new RequestPackage.Builder()
-                        .addMethod(POST)
-                        .addEndPoint(EndPointsProvider.getAllCommentsEndpoint())
-                        .addParams(JSON_POST_ID2, String.valueOf(mDataList.get(getAdapterPosition()).getId()))
-                        .create();
-                intentService.putExtra(LoadDataService.KEY_REQUEST, request);
-                intentService.putExtra(LoadDataService.KEY_ACTION, LoadDataService.COMMENT_TYPE);
-                mContext.startService(intentService);
             });
         }
     }

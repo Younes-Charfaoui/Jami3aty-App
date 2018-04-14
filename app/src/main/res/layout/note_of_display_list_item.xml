@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
     android:padding="8dp">
 
@@ -19,20 +20,28 @@
         tools:text="OA" />
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
+        android:layout_weight="1"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/note_of_display_person_name_text_view"
-            style="@android:style/TextAppearance.Holo.Widget.ActionBar.Title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="2dp"
-            android:fontFamily="sans-serif-light"
-            android:textSize="18sp"
-            tools:text="Phd Ouared Aek" />
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/note_of_display_person_name_text_view"
+                style="@android:style/TextAppearance.Holo.Widget.ActionBar.Title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="2dp"
+                android:fontFamily="sans-serif-light"
+                android:textSize="18sp"
+                tools:text="Phd Ouared Aek" />
+        </LinearLayout>
+
 
         <TextView
             android:id="@+id/note_of_display_note"
@@ -53,5 +62,6 @@
             android:fontFamily="sans-serif-thin"
             tools:text="4h" />
     </LinearLayout>
+
 
 </LinearLayout>

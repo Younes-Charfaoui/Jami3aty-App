@@ -209,12 +209,15 @@
     <string name="unsave_post_confirmation">You really want to unsave this post ?</string>
     <string name="wait_please">Wait please.</string>
     <string name="unsaving_current">Unsaving....</string>
-    <string name="title_activity_saved_detail">SavedDetailActivity</string>
+    <string name="title_activity_saved_detail">Saved Detail</string>
     <string name="there_is_no_comments_for_this_post">There is no comments for this post</string>
     <string name="consultation_string">Consultation</string>
     <string name="mark_string">Mark</string>
     <string name="avis_sring">Avis</string>
     <string name="note">Note</string>
     <string name="respect_the_rules_of_communicating">You Should respect the rules of communicating. See our terms and privacy.</string>
+    <string name="modify">Modify</string>
+    <string name="remove">Remove</string>
+    <string name="try_later_problem_connecting">Try later , problem with connecting</string>
 
 </resources>

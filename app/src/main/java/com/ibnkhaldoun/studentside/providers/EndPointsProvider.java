@@ -7,7 +7,7 @@ package com.ibnkhaldoun.studentside.providers;
 
 public final class EndPointsProvider {
 
-    private static final String BASE = "http://192.168.1.3/";
+    private static final String BASE = "http://192.168.33.2/";
     private final static String LOGIN_ENDPOINT = BASE + "jami3aty/auth/login/";
     private static final String SIGN_UP_ENDPOINT = BASE + "jami3aty/auth/register/";
     private final static String FORGET_PASSWORD_ENDPOINT = BASE + "jami3aty/users/forgotpass/";

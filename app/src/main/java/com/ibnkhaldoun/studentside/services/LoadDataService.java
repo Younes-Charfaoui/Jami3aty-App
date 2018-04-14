@@ -1,9 +1,7 @@
 package com.ibnkhaldoun.studentside.services;
 
 import android.app.IntentService;
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.BitmapFactory;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
@@ -11,7 +9,6 @@ import com.ibnkhaldoun.studentside.Utilities.PreferencesManager;
 import com.ibnkhaldoun.studentside.activities.MarkActivity;
 import com.ibnkhaldoun.studentside.activities.SavedActivity;
 import com.ibnkhaldoun.studentside.activities.ScheduleActivity;
-import com.ibnkhaldoun.studentside.activities.StudentMainActivity;
 import com.ibnkhaldoun.studentside.activities.SubjectsActivity;
 import com.ibnkhaldoun.studentside.models.Comment;
 import com.ibnkhaldoun.studentside.models.Display;
@@ -81,54 +78,55 @@ public class LoadDataService extends IntentService {
         RequestPackage request = intent.getParcelableExtra(KEY_REQUEST);
         switch (type) {
             case MAIL_TYPE:
-                mailCall(request, this);
+                mailCall(request);
                 break;
             case SCHEDULE_TYPE:
-                scheduleCall(request, this);
+                scheduleCall(request);
                 break;
             case DISPLAY_TYPE:
-                displayCall(request, this);
+                displayCall(request);
                 break;
             case MARK_TYPE:
-                markCall(request, this);
+                markCall(request);
                 break;
             case SUBJECT_TYPE:
-                subjectCall(request, this);
+                subjectCall(request);
                 break;
             case SUBJECT_IN_TYPE:
-                subjectInnerCall(request, this);
+                subjectInnerCall(request);
                 break;
             case NOTIFICATION_TYPE:
-                notificationCall(request, this);
+                notificationCall(request);
                 break;
             case SAVED_TYPE:
-                savedCall(request, this);
+                savedCall(request);
                 break;
             case SCHEDULE_IN_TYPE:
-                scheduleInnerCall(request, this);
+                scheduleInnerCall(request);
                 break;
             case COMMENT_TYPE:
-                commentsCall(request, this);
+                commentsCall(request);
                 break;
         }
     }
 
-    private void displayCall(RequestPackage request, Context context) {
+    private void displayCall(RequestPackage request) {
         try {
             String response = HttpUtilities.getData(request);
             ArrayList<Display> displayList = JsonUtilities.getDisplaysList(response);
             Intent intent = new Intent(DISPLAY_ACTION);
             intent.putExtra(KEY_DATA, displayList);
             LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
 
     }
 
-    private void notificationCall(RequestPackage request, Context context) {
+    private void notificationCall(RequestPackage request) {
         try {
-           String response = HttpUtilities.getData(request);
+            String response = HttpUtilities.getData(request);
             Log.i("Notif", "notificationCall: " + response);
             ArrayList<Notification> notificationList = JsonUtilities.getNotificationList(response);
             Intent intent = new Intent(NOTIFICATION_ACTION);
@@ -143,7 +141,7 @@ public class LoadDataService extends IntentService {
         }
     }
 
-    private void commentsCall(RequestPackage request, Context context) {
+    private void commentsCall(RequestPackage request) {
         try {
             String response = HttpUtilities.getData(request);
             ArrayList<Comment> commentsList = JsonUtilities.getCommentsList(response);
@@ -155,10 +153,10 @@ public class LoadDataService extends IntentService {
         }
     }
 
-    private void scheduleInnerCall(RequestPackage request, Context context) {
+    private void scheduleInnerCall(RequestPackage request) {
         try {
             String response = HttpUtilities.getData(request);
-            Intent intentDatabase = new Intent(context, DatabaseService.class);
+            Intent intentDatabase = new Intent(this, DatabaseService.class);
             intentDatabase.putExtra(DatabaseService.KEY_CONTENT_DATA, response);
             intentDatabase.putExtra(LoadDataService.KEY_ACTION, LoadDataService.SCHEDULE_TYPE);
             startService(intentDatabase);
@@ -167,7 +165,7 @@ public class LoadDataService extends IntentService {
         }
     }
 
-    private void subjectInnerCall(RequestPackage request, Context context) {
+    private void subjectInnerCall(RequestPackage request) {
         try {
             String response = HttpUtilities.getData(request);
 
@@ -177,9 +175,9 @@ public class LoadDataService extends IntentService {
                 subjectsStrings.add(subject.getTitle());
             }
             PreferencesManager manager = new
-                    PreferencesManager(context, PreferencesManager.SUBJECT);
+                    PreferencesManager(this, PreferencesManager.SUBJECT);
             manager.addSubjects(subjectsStrings);
-            Intent intentDatabase = new Intent(context, DatabaseService.class);
+            Intent intentDatabase = new Intent(this, DatabaseService.class);
             intentDatabase.putExtra(KEY_CONTENT_DATA, subjectList);
             intentDatabase.putExtra(KEY_ACTION, SUBJECT_TYPE);
             startService(intentDatabase);
@@ -188,34 +186,34 @@ public class LoadDataService extends IntentService {
         }
     }
 
-    private void scheduleCall(RequestPackage request, Context context) {
+    private void scheduleCall(RequestPackage request) {
         try {
             String response = HttpUtilities.getData(request);
 
             Intent intentSchedule = new Intent(SCHEDULE_ACTION);
             intentSchedule.putExtra(ScheduleActivity.KEY_SCHEDULE, response);
             LocalBroadcastManager.getInstance(this).sendBroadcast(intentSchedule);
-            Intent intentDatabase = new Intent(context, DatabaseService.class);
+            Intent intentDatabase = new Intent(this, DatabaseService.class);
             intentDatabase.putExtra(KEY_ACTION, SCHEDULE_TYPE);
             intentDatabase.putExtra(KEY_CONTENT_DATA, response);
-            context.startService(intentDatabase);
+            startService(intentDatabase);
         } catch (IOException ex) {
             ex.printStackTrace();
             LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(ACTION_ERROR).putExtra(KEY_ERROR, IO_EXCEPTION));
         }
     }
 
-    private void savedCall(RequestPackage request, Context context) {
+    private void savedCall(RequestPackage request) {
         try {
             String response = HttpUtilities.getData(request);
             ArrayList<Saved> savedList = JsonUtilities.getSavedList(response);
             Intent intentSaved = new Intent(SAVED_ACTION);
             intentSaved.putParcelableArrayListExtra(SavedActivity.KEY_SAVED, savedList);
             LocalBroadcastManager.getInstance(this).sendBroadcast(intentSaved);
-            Intent intentDatabase = new Intent(context, DatabaseService.class);
+            Intent intentDatabase = new Intent(this, DatabaseService.class);
             intentDatabase.putExtra(KEY_ACTION, SAVED_TYPE);
             intentDatabase.putParcelableArrayListExtra(KEY_CONTENT_DATA, savedList);
-            context.startService(intentDatabase);
+            startService(intentDatabase);
         } catch (IOException exception) {
             exception.printStackTrace();
             LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(ACTION_ERROR).putExtra(KEY_ERROR, IO_EXCEPTION));
@@ -225,14 +223,14 @@ public class LoadDataService extends IntentService {
         }
     }
 
-    private void subjectCall(RequestPackage request, Context context) {
+    private void subjectCall(RequestPackage request) {
         try {
             String response = HttpUtilities.getData(request);
             ArrayList<Subject> subjectList = JsonUtilities.getSubjectList(response);
             Intent intentSubject = new Intent(SUBJECT_ACTION);
             intentSubject.putExtra(SubjectsActivity.KEY_SUBJECTS, subjectList);
             LocalBroadcastManager.getInstance(this).sendBroadcast(intentSubject);
-            Intent intentDatabase = new Intent(context, DatabaseService.class);
+            Intent intentDatabase = new Intent(this, DatabaseService.class);
             intentDatabase.putExtra(KEY_CONTENT_DATA, subjectList);
             intentDatabase.putExtra(KEY_ACTION, SUBJECT_TYPE);
             startService(intentDatabase);
@@ -241,14 +239,14 @@ public class LoadDataService extends IntentService {
         }
     }
 
-    private void mailCall(RequestPackage requestPackage, Context context) {
+    private void mailCall(RequestPackage requestPackage) {
         try {
             String response = HttpUtilities.getData(requestPackage);
             ArrayList<Mail> mailList = JsonUtilities.getMailList(response);
             Intent intentToMails = new Intent(MAIL_ACTION);
             intentToMails.putExtra(KEY_DATA, mailList);
-            LocalBroadcastManager.getInstance(context).sendBroadcast(intentToMails);
-            Intent intentToDatabase = new Intent(context, DatabaseService.class);
+            LocalBroadcastManager.getInstance(this).sendBroadcast(intentToMails);
+            Intent intentToDatabase = new Intent(this, DatabaseService.class);
             intentToDatabase.putExtra(KEY_CONTENT_DATA, mailList);
             startService(intentToDatabase);
         } catch (IOException e) {
@@ -256,14 +254,14 @@ public class LoadDataService extends IntentService {
         }
     }
 
-    private void markCall(RequestPackage request, Context context) {
+    private void markCall(RequestPackage request) {
         try {
             String response = HttpUtilities.getData(request);
             ArrayList<Mark> markList = JsonUtilities.getMarkList(response);
             Intent intentMark = new Intent(MARK_ACTION);
             intentMark.putExtra(MarkActivity.KEY_MARKS, markList);
             LocalBroadcastManager.getInstance(this).sendBroadcast(intentMark);
-            Intent intentDatabase = new Intent(context, DatabaseService.class);
+            Intent intentDatabase = new Intent(this, DatabaseService.class);
             intentDatabase.putExtra(KEY_CONTENT_DATA, markList);
             intentDatabase.putExtra(KEY_ACTION, MARK_TYPE);
             startService(intentDatabase);
