@@ -185,7 +185,7 @@ public class NoteEditActivity extends AppCompatActivity implements ISubjectDialo
     public boolean validate() {
         Snackbar snackbar;
         if (mNoteEditText.getText().toString().isEmpty()) {
-            snackbar = Snackbar.make(findViewById(R.id.note_main_view), R.string.add_somthing
+            snackbar = Snackbar.make(findViewById(R.id.note_main_view), R.string.add_something
                     , Snackbar.LENGTH_SHORT);
             if (snackbar.isShownOrQueued()) snackbar.dismiss();
             snackbar.show();

@@ -16,13 +16,13 @@ public final class PostTypes {
     public static int getType(int type) {
         switch (type) {
             case AVIS_TYPE:
-                return R.string.avis_sring;
+                return R.string.avis_string;
             case CONSULTATION_TYPE:
                 return R.string.consultation_string;
             case MARK_TYPE:
                 return R.string.mark_string;
             default:
-                return R.string.avis_sring;
+                return R.string.avis_string;
         }
 
     }

@@ -19,10 +19,12 @@ public class NoteBottomSheet extends BottomSheetDialogFragment {
 
     private INoteBottomSheet mInterface;
     private  static final String KEY_ID = "keyId";
-    public static NoteBottomSheet newInstance(long id) {
+    private  static final String KEY_NOTE = "keyNote";
 
+    public static NoteBottomSheet newInstance(long id , String note) {
         Bundle args = new Bundle();
         args.putLong(KEY_ID, id);
+        args.putString(KEY_NOTE, note);
         NoteBottomSheet fragment = new NoteBottomSheet();
         fragment.setArguments(args);
         return fragment;
@@ -40,7 +42,7 @@ public class NoteBottomSheet extends BottomSheetDialogFragment {
         View view = inflater.inflate(R.layout.bottom_sheet_more_option_note_of_display, container, false);
         view.findViewById(R.id.bottom_sheet_note_modify).setOnClickListener(v -> {
             if (getArguments() != null) {
-                mInterface.OnEdit(getArguments().getLong(KEY_ID));
+                mInterface.OnEdit(getArguments().getLong(KEY_ID) , getArguments().getString(KEY_NOTE));
             }
             dismiss();
         });
@@ -55,7 +57,7 @@ public class NoteBottomSheet extends BottomSheetDialogFragment {
     }
 
     public interface INoteBottomSheet {
-        void OnEdit(long id);
+        void OnEdit(long id , String note);
 
         void OnRemove(long id);
     }

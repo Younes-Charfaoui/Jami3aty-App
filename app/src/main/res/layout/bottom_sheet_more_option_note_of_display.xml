@@ -7,15 +7,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    >
+    android:orientation="vertical">
 
     <LinearLayout
-        android:padding="16dp"
         android:id="@+id/bottom_sheet_note_modify"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="80dp"
         android:orientation="horizontal"
+        android:padding="16dp"
         tools:ignore="UseCompoundDrawables">
 
         <ImageView
@@ -24,24 +23,39 @@
             android:contentDescription="@null"
             app:srcCompat="@drawable/ic_edit_black_24dp" />
 
-        <TextView
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginStart="16dp"
-            android:text="@string/modify"
-            android:textSize="18sp" />
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="16dp"
+                android:text="@string/modify"
+                android:fontFamily="sans-serif-medium"
+                android:textSize="18sp" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="16dp"
+                android:singleLine="true"
+                android:text="@string/modify_this_note_to_something_else"
+                android:textSize="14sp" />
+        </LinearLayout>
     </LinearLayout>
 
 
-
     <LinearLayout
-        android:padding="16dp"
         android:id="@+id/bottom_sheet_note_remove"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="80dp"
         android:orientation="horizontal"
+        android:padding="16dp"
         tools:ignore="UseCompoundDrawables">
 
         <ImageView
@@ -51,13 +65,28 @@
             android:contentDescription="@null"
             app:srcCompat="@drawable/ic_delete_black_24dp" />
 
-        <TextView
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginStart="16dp"
-            android:text="@string/remove"
-            android:textSize="18sp" />
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="16dp"
+                android:fontFamily="sans-serif-medium"
+                android:text="@string/remove"
+                android:textSize="19sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="16dp"
+                android:text="@string/this_note_will_be_removed_for_ever"
+                android:textSize="14sp" />
+        </LinearLayout>
 
     </LinearLayout>
 </LinearLayout>

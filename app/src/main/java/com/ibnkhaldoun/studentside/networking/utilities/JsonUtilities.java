@@ -333,4 +333,10 @@ public class JsonUtilities {
         }
         return displays;
     }
+
+    public static int getStatusCode(String response) throws JSONException {
+        Log.i(TAG, "getStatusCode: " + response);
+        JSONObject object = new JSONObject(response);
+        return object.getInt(KEY_JSON_STATUS);
+    }
 }

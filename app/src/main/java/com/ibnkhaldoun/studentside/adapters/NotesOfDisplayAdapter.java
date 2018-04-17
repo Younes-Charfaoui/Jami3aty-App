@@ -45,7 +45,7 @@ public class NotesOfDisplayAdapter extends RecyclerView.Adapter<NotesOfDisplayAd
         Comment comment = mCommentList.get(position);
 
         if (comment.getIdCommenter() == idPerson) holder.itemView.setOnLongClickListener(v -> {
-            mInterface.OnLongClick(comment.getIdComment());
+            mInterface.OnLongClick(comment.getIdComment(), comment.getComment());
             return true;
         });
         else holder.itemView.setOnLongClickListener(null);
@@ -66,6 +66,26 @@ public class NotesOfDisplayAdapter extends RecyclerView.Adapter<NotesOfDisplayAd
         notifyDataSetChanged();
     }
 
+    public void removeElement(long id) {
+        for (int i = 0; i < mCommentList.size(); i++) {
+            if (mCommentList.get(i).getIdComment() == id) {
+                mCommentList.remove(i);
+                notifyItemRemoved(i);
+                i = mCommentList.size() + 1;
+            }
+        }
+    }
+
+    public void updateElement(String note, long id) {
+        for (int i = 0; i < mCommentList.size(); i++) {
+            if (mCommentList.get(i).getIdComment() == id) {
+                mCommentList.get(i).setComment(note);
+                notifyItemChanged(i);
+                break;
+            }
+        }
+    }
+
     @Override
     public int getItemCount() {
         if (mCommentList != null) return mCommentList.size();
@@ -73,13 +93,12 @@ public class NotesOfDisplayAdapter extends RecyclerView.Adapter<NotesOfDisplayAd
     }
 
     public interface INoteOfDisplayMore {
-        void OnLongClick(long idComment);
+        void OnLongClick(long idComment, String comment);
     }
 
     class NotesOfDisplayViewHolder extends RecyclerView.ViewHolder {
 
         private TextView mShortNameTv, mNameTv, mNoteTv, mDateTv;
-
 
         NotesOfDisplayViewHolder(View itemView) {
             super(itemView);

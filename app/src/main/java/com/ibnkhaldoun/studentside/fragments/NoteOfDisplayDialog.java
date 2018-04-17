@@ -18,9 +18,33 @@ import com.ibnkhaldoun.studentside.R;
 
 public class NoteOfDisplayDialog extends DialogFragment {
 
-    private TextInputEditText mNoteEditText;
+    public static final int EDIT = 1;
+    public static final int ADD = 0;
+    public static final String KEY_ID = "keyId";
+    public static final String KEY_TYPE = "keyType";
+    public static final String KEY_NOTE = "keyNote";
     private static INoteOfDisplay mNoteInterface;
+    private TextInputEditText mNoteEditText;
     private long mPostId;
+
+    public static NoteOfDisplayDialog newInstance(long id, int type) {
+        Bundle args = new Bundle();
+        args.putLong(KEY_ID, id);
+        args.putInt(KEY_TYPE, type);
+        NoteOfDisplayDialog fragment = new NoteOfDisplayDialog();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    public static NoteOfDisplayDialog newInstance(long id, int type, String note) {
+        Bundle args = new Bundle();
+        args.putLong(KEY_ID, id);
+        args.putInt(KEY_TYPE, type);
+        args.putString(KEY_NOTE, note);
+        NoteOfDisplayDialog fragment = new NoteOfDisplayDialog();
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Override
     public void onAttach(Context context) {
@@ -28,33 +52,39 @@ public class NoteOfDisplayDialog extends DialogFragment {
         mNoteInterface = (INoteOfDisplay) context;
     }
 
-    public static NoteOfDisplayDialog newInstance(long id) {
-        Bundle args = new Bundle();
-        args.putLong("Key",id);
-        NoteOfDisplayDialog fragment = new NoteOfDisplayDialog();
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
+
+
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         builder.setTitle(R.string.new_note);
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        View noteView =inflater.inflate(R.layout.note_of_display_dialog, null,false);
+        View noteView = inflater.inflate(R.layout.note_of_display_dialog, null, false);
         mNoteEditText = noteView.findViewById(R.id.note_dialog_edit_text);
+        String note = null;
+        if (getArguments() != null) {
+            note = getArguments().getString(KEY_NOTE);
+        }
+        mNoteEditText.setText(note);
         builder.setView(noteView);
 
         builder.setPositiveButton(android.R.string.yes, (dialog, which) ->
-                mNoteInterface.OnFinishNoting(mNoteEditText.getText().toString(),getArguments().getLong("Key")));
+        {
+            if (getArguments() != null) {
+                if (!mNoteEditText.getText().toString().equals(getArguments().getString(KEY_NOTE)))
+                    mNoteInterface.OnFinishNoting(mNoteEditText.getText().toString(), getArguments().getLong(KEY_ID), getArguments().getInt(KEY_TYPE));
+                else dismiss();
+            }
+        });
         builder.setNegativeButton(android.R.string.no, null);
 
         return builder.create();
+
     }
 
     public interface INoteOfDisplay {
-        void OnFinishNoting(String note , long id);
+        void OnFinishNoting(String note, long id, int type);
     }
 }

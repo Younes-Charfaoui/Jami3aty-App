@@ -48,6 +48,7 @@ import com.ibnkhaldoun.studentside.models.Notification;
 import com.ibnkhaldoun.studentside.networking.models.RequestPackage;
 import com.ibnkhaldoun.studentside.networking.models.Response;
 import com.ibnkhaldoun.studentside.networking.utilities.NetworkUtilities;
+import com.ibnkhaldoun.studentside.networking.utilities.RequestPackageFactory;
 import com.ibnkhaldoun.studentside.providers.EndPointsProvider;
 import com.ibnkhaldoun.studentside.providers.KeyDataProvider;
 import com.ibnkhaldoun.studentside.services.LoadDataService;
@@ -67,11 +68,12 @@ import static com.ibnkhaldoun.studentside.services.LoadDataService.KEY_DATA;
 public class StudentMainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         IProfessorDialog, IDataFragment, NoteOfDisplayDialog.INoteOfDisplay,
-        LoaderManager.LoaderCallbacks<Cursor>,ResponseAsyncTask.IResponseListener {
+        LoaderManager.LoaderCallbacks<Cursor>, ResponseAsyncTask.IResponseListener {
 
     public static final String KEY_MAILS = "keyMails";
     public static final String KEY_NOTIFICATION = "keyNotification";
     public static final String KEY_DISPLAY = "keyDisplay";
+
     //the types of the fragments
     public static final int MAIL_TYPE = 15;
     public static final int DISPLAY_TYPE = 11;
@@ -146,7 +148,6 @@ public class StudentMainActivity extends AppCompatActivity
         mMainViewPager = findViewById(R.id.main_screen_view_pager);
         mTabLayout = findViewById(R.id.main_screen_tab_layout);
 
-        Log.i("Hello", "The Time is : " + Calendar.getInstance().getTime());
         mAddMailFab = findViewById(R.id.mail_add_professor_fab);
         mAddMailFab.setBackgroundColor(getResources().getColor(R.color.deep_red));
         mAddMailFab.hide();
@@ -379,7 +380,7 @@ public class StudentMainActivity extends AppCompatActivity
     @Override
     public void onNeedData(NotificationFragment which) {
 
-         if (NetworkUtilities.isConnected(this)) {
+        if (NetworkUtilities.isConnected(this)) {
             which.onNetworkStartLoading();
             RequestPackage request = new RequestPackage.Builder()
                     .addEndPoint(EndPointsProvider.getNotifications())
@@ -520,25 +521,17 @@ public class StudentMainActivity extends AppCompatActivity
     }
 
     @Override
-    public void OnFinishNoting(String note, long id) {
-        Toast.makeText(this, note +" " +  id , Toast.LENGTH_SHORT).show();
-        RequestPackage request = new RequestPackage.Builder()
-                .addEndPoint(EndPointsProvider.getAddCommentsEndpoint())
-                .addMethod(POST)
-                .addParams(KeyDataProvider.KEY_NOTE , note)
-                .addParams(KeyDataProvider.JSON_POST_ID2,String.valueOf(id))
-                .addParams(KeyDataProvider.JSON_STUDENT_ID , new PreferencesManager(this,STUDENT).getId())
-                .addParams(KeyDataProvider.JSON_USER_NAME , new PreferencesManager(this,STUDENT).getFullName())
-                .create();
-
+    public void OnFinishNoting(String note, long id , int type) {
+        Toast.makeText(this, note + " " + id, Toast.LENGTH_SHORT).show();
+        RequestPackage request = RequestPackageFactory.createNoteAddingRequest(id, note, this);
         ResponseAsyncTask task = new ResponseAsyncTask(this);
         task.execute(request);
     }
 
     @Override
     public void onGetResponse(Response response) {
-        if(response.getStatus() != Response.RESPONSE_SUCCESS)
-            Toast.makeText(this, "Try later, a connection Problem", Toast.LENGTH_SHORT)
+        if (response.getStatus() != Response.RESPONSE_SUCCESS)
+            Toast.makeText(this, R.string.try_later_problem_connecting, Toast.LENGTH_SHORT)
                     .show();
     }
 }

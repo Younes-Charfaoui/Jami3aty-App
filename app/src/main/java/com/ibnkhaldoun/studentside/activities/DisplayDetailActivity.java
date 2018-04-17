@@ -2,10 +2,12 @@ package com.ibnkhaldoun.studentside.activities;
 
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -32,6 +34,7 @@ import java.util.List;
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 import static com.ibnkhaldoun.studentside.networking.models.RequestPackage.POST;
+import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_COMMENT_ID2;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_POST_ID2;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_SAVE_ACTION;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_STUDENT_ID;
@@ -125,7 +128,7 @@ public class DisplayDetailActivity extends AppCompatActivity implements NoteOfDi
         findViewById(R.id.display_detail_note_button).setOnClickListener(v -> {
             if (NetworkUtilities.isConnected(this)) {
                 NoteOfDisplayDialog dialog =
-                        NoteOfDisplayDialog.newInstance(display.getId());
+                        NoteOfDisplayDialog.newInstance(display.getId(), NoteOfDisplayDialog.ADD);
                 dialog.show(getSupportFragmentManager(), "Tag");
             } else {
                 Toast.makeText(this, R.string.no_internet_connection_string,
@@ -154,11 +157,28 @@ public class DisplayDetailActivity extends AppCompatActivity implements NoteOfDi
     }
 
     @Override
-    public void OnFinishNoting(String note, long id) {
-        Toast.makeText(this, note + " " + id, Toast.LENGTH_SHORT).show();
-        RequestPackage request = RequestPackageFactory.createNoteAddingRequest(id, note, this);
-        ResponseAsyncTask task = new ResponseAsyncTask(this);
-        task.execute(request);
+    public void OnFinishNoting(String note, long id, int type) {
+        if (type == NoteOfDisplayDialog.ADD) {
+            RequestPackage request = RequestPackageFactory.createNoteAddingRequest(id, note, this);
+            ResponseAsyncTask task = new ResponseAsyncTask(response -> {
+                if (response.getStatus() == 200) {
+                    new CommentAsyncTask(this).execute(mRequest);
+                } else {
+                    Toast.makeText(this, "Error when connectiong to server", Toast.LENGTH_SHORT).show();
+                }
+            });
+            task.execute(request);
+        } else if (type == NoteOfDisplayDialog.EDIT) {
+            RequestPackage request = RequestPackageFactory.createNoteEditingRequest(id, note);
+            ResponseAsyncTask task = new ResponseAsyncTask(response -> {
+                if (response.getStatus() == 200) {
+                    mAdapter.updateElement(note, id);
+                } else {
+                    Toast.makeText(this, "Error when connectiong to server", Toast.LENGTH_SHORT).show();
+                }
+            });
+            task.execute(request);
+        }
     }
 
     @Override
@@ -167,8 +187,9 @@ public class DisplayDetailActivity extends AppCompatActivity implements NoteOfDi
     }
 
     @Override
-    public void OnLongClick(long idComment) {
-        NoteBottomSheet bottomSheet = NoteBottomSheet.newInstance(idComment);
+    public void OnLongClick(long idComment, String comment) {
+        Log.i("Remove", "OnLongClick: " + idComment);
+        NoteBottomSheet bottomSheet = NoteBottomSheet.newInstance(idComment, comment);
         bottomSheet.show(getSupportFragmentManager(), "Tag");
     }
 
@@ -193,12 +214,38 @@ public class DisplayDetailActivity extends AppCompatActivity implements NoteOfDi
     }
 
     @Override
-    public void OnEdit(long id) {
-        // TODO: 14/04/2018 add code to handle the edit of one comment
+    public void OnEdit(long id, String note) {
+        NoteOfDisplayDialog dialog = NoteOfDisplayDialog.newInstance(id, NoteOfDisplayDialog.EDIT, note);
+        dialog.show(getSupportFragmentManager(), "Tag");
     }
 
     @Override
     public void OnRemove(long id) {
-        // TODO: 14/04/2018 add code to handle the remove of a comment
+        Log.i("Remove", "OnRemove: " + id);
+        if (NetworkUtilities.isConnected(this)) {
+            new AlertDialog.Builder(this)
+                    .setTitle("Deleting your note")
+                    .setMessage("Are you sure you want to delete this note ?")
+                    .setPositiveButton(R.string.delete_string, (dialog, which) -> {
+                        RequestPackage request = new RequestPackage.Builder()
+                                .addMethod(POST)
+                                .addEndPoint(EndPointsProvider.getRemoveCommentsEndpoint())
+                                .addParams(JSON_COMMENT_ID2, String.valueOf(id))
+                                .create();
+                        ResponseAsyncTask task = new ResponseAsyncTask(response -> {
+                            if (response.getStatus() == 200) {
+                                Toast.makeText(this, "Comment removed successfully !", Toast.LENGTH_SHORT).show();
+                                mAdapter.removeElement(id);
+                            } else {
+                                Toast.makeText(this, "Try later, problem when connecting", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                        task.execute(request);
+                    })
+                    .setNegativeButton(android.R.string.no, null)
+                    .show();
+        } else {
+            Toast.makeText(this, R.string.no_internet_connection_string, Toast.LENGTH_SHORT).show();
+        }
     }
 }

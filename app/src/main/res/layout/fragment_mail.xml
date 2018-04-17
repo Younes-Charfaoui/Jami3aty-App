@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-medium"
             android:paddingBottom="5dp"
-            android:text="@string/emty_mail_string"
+            android:text="@string/empty_mail_string"
             android:textAppearance="?android:textAppearanceMedium" />
 
         <TextView

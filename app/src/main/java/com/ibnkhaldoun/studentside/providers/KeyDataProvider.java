@@ -74,4 +74,7 @@ public final class KeyDataProvider {
     public static final String JSON_COMMENT_COMMENT = "text_comment";
     public static final String JSON_COMMENT_DATE = "date_comment";
     public static final String JSON_COMMENT_PERSON_NAME = "name_person";
+
+    public static final String JSON_COMMENT_ID2 = "id_comment";
+    public static final String JSON_COMMENT_EDITED = "text_edited";
 }

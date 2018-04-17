@@ -26,4 +26,13 @@ public class RequestPackageFactory {
                 .addParams(KeyDataProvider.JSON_USER_NAME, new PreferencesManager(context, STUDENT).getFullName())
                 .create();
     }
+
+    public static RequestPackage createNoteEditingRequest(long id, String note) {
+        return new RequestPackage.Builder()
+                .addMethod(POST)
+                .addEndPoint(EndPointsProvider.getModifyCommentsEndpoint())
+                .addParams(KeyDataProvider.JSON_COMMENT_EDITED, note)
+                .addParams(KeyDataProvider.JSON_COMMENT_ID2, String.valueOf(id))
+                .create();
+    }
 }

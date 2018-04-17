@@ -20,8 +20,8 @@
     <string name="card_number_string">Card Number</string>
     <string name="title_activity_help">Help</string>
     <string name="card_number_help">This number is the register number in the University, you can get it by viewing your student card under the registration number which compose of Two numbers xxxxxxx/xx , the first 8 numbers is your number</string>
-    <string name="password_help">Try to use a password more complex for your security , you are oblige to use a password compose from 8 characters, you can use the Capitales letters , symbol as much you like.</string>
-    <string name="email_help">you can use gmail , Yahoo , microsoft or any email you like , this email will be used for activating your account and for reinstal the passwor in the case you lost it.</string>
+    <string name="password_help">Try to use a password more complex for your security , you are oblige to use a password compose from 8 characters, you can use the Upper case letters , symbol as much you like.</string>
+    <string name="email_help">you can use gmail , Yahoo , microsoft or any email you like , this email will be used for activating your account and for reinstall the password in the case you lost it.</string>
     <string name="welcome_in_help">Welcome In Help</string>
     <string name="student_card_description">Student card in which we are demonstrating from where to get the card number</string>
     <string name="title_activity_forget_password">Forget Password</string>
@@ -110,7 +110,7 @@
     <string name="tuesday_string">Tue</string>
     <string name="wednesday_string">Wed</string>
     <string name="thursday_string">Thu</string>
-    <string name="emty_mail_string">There is no mails</string>
+    <string name="empty_mail_string">There is no mails</string>
     <string name="mail_empty_description_string">Get started by send new mails, or Tap to refresh</string>
     <string name="no_internet_connection_string">No Internet Connection</string>
     <string name="notification_empty_string">There is no notification</string>
@@ -181,7 +181,7 @@
     <string name="modify_note">Modify Note</string>
     <string name="delete_string">Delete</string>
     <string name="delete_note_confirmation">Are you sure to delete the note</string>
-    <string name="add_somthing">Please enter something</string>
+    <string name="add_something">Please enter something</string>
     <string name="choose_subject_please">Please Choose Subject</string>
     <string name="key_notification_display">displayNotification</string>
     <string name="key_notification_message">messageNotification</string>
@@ -213,11 +213,13 @@
     <string name="there_is_no_comments_for_this_post">There is no comments for this post</string>
     <string name="consultation_string">Consultation</string>
     <string name="mark_string">Mark</string>
-    <string name="avis_sring">Avis</string>
+    <string name="avis_string">Avis</string>
     <string name="note">Note</string>
     <string name="respect_the_rules_of_communicating">You Should respect the rules of communicating. See our terms and privacy.</string>
     <string name="modify">Modify</string>
     <string name="remove">Remove</string>
     <string name="try_later_problem_connecting">Try later , problem with connecting</string>
+    <string name="this_note_will_be_removed_for_ever">This note will be removed for ever.</string>
+    <string name="modify_this_note_to_something_else">Modify this note to something else.</string>
 
 </resources>

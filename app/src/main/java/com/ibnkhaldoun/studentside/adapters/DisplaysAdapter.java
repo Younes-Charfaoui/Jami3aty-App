@@ -17,13 +17,13 @@ import com.ibnkhaldoun.studentside.Utilities.PreferencesManager;
 import com.ibnkhaldoun.studentside.Utilities.Utilities;
 import com.ibnkhaldoun.studentside.activities.DisplayDetailActivity;
 import com.ibnkhaldoun.studentside.asyncTask.ResponseAsyncTask;
+import com.ibnkhaldoun.studentside.enums.PostTypes;
 import com.ibnkhaldoun.studentside.fragments.NoteOfDisplayDialog;
 import com.ibnkhaldoun.studentside.models.Display;
 import com.ibnkhaldoun.studentside.networking.models.RequestPackage;
 import com.ibnkhaldoun.studentside.networking.models.Response;
 import com.ibnkhaldoun.studentside.networking.utilities.NetworkUtilities;
 import com.ibnkhaldoun.studentside.providers.EndPointsProvider;
-
 
 import java.util.List;
 
@@ -120,7 +120,7 @@ public class DisplaysAdapter extends RecyclerView.Adapter<DisplaysAdapter.Displa
             mNoteButton.setOnClickListener(v -> {
                 if (NetworkUtilities.isConnected(mContext)) {
                     NoteOfDisplayDialog dialog =
-                            NoteOfDisplayDialog.newInstance(mDataList.get(getAdapterPosition()).getId());
+                            NoteOfDisplayDialog.newInstance(mDataList.get(getAdapterPosition()).getId(), NoteOfDisplayDialog.ADD);
                     dialog.show(manager, "Tag");
                 } else {
                     Toast.makeText(mContext, R.string.no_internet_connection_string,
@@ -129,9 +129,13 @@ public class DisplaysAdapter extends RecyclerView.Adapter<DisplaysAdapter.Displa
             });
 
             itemView.setOnClickListener(v -> {
-                Intent intent = new Intent(mContext, DisplayDetailActivity.class);
-                intent.putExtra(DATA, mDataList.get(getAdapterPosition()));
-                mContext.startActivity(intent);
+                if (mDataList.get(getAdapterPosition()).getType() == PostTypes.MARK_TYPE) {
+
+                } else {
+                    Intent intent = new Intent(mContext, DisplayDetailActivity.class);
+                    intent.putExtra(DATA, mDataList.get(getAdapterPosition()));
+                    mContext.startActivity(intent);
+                }
             });
         }
     }
