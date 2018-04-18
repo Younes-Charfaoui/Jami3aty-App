@@ -7,6 +7,7 @@ import com.ibnkhaldoun.studentside.models.Comment;
 import com.ibnkhaldoun.studentside.models.Display;
 import com.ibnkhaldoun.studentside.models.Mail;
 import com.ibnkhaldoun.studentside.models.Mark;
+import com.ibnkhaldoun.studentside.models.Message;
 import com.ibnkhaldoun.studentside.models.Notification;
 import com.ibnkhaldoun.studentside.models.Professor;
 import com.ibnkhaldoun.studentside.models.Saved;
@@ -178,7 +179,7 @@ public class JsonUtilities {
         return null;
     }
 
-    public static ArrayList<Mail> getMailList(String response) {
+    public static ArrayList<Message> getMailList(String response) {
         // TODO: 15/03/2018 add the code to parse the mail response
         return null;
     }

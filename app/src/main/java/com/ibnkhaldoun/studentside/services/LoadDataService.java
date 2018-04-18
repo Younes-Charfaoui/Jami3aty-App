@@ -14,6 +14,7 @@ import com.ibnkhaldoun.studentside.models.Comment;
 import com.ibnkhaldoun.studentside.models.Display;
 import com.ibnkhaldoun.studentside.models.Mail;
 import com.ibnkhaldoun.studentside.models.Mark;
+import com.ibnkhaldoun.studentside.models.Message;
 import com.ibnkhaldoun.studentside.models.Notification;
 import com.ibnkhaldoun.studentside.models.Saved;
 import com.ibnkhaldoun.studentside.models.Subject;
@@ -242,13 +243,13 @@ public class LoadDataService extends IntentService {
     private void mailCall(RequestPackage requestPackage) {
         try {
             String response = HttpUtilities.getData(requestPackage);
-            ArrayList<Mail> mailList = JsonUtilities.getMailList(response);
+            ArrayList<Message> mailList = JsonUtilities.getMailList(response);
             Intent intentToMails = new Intent(MAIL_ACTION);
             intentToMails.putExtra(KEY_DATA, mailList);
             LocalBroadcastManager.getInstance(this).sendBroadcast(intentToMails);
-            Intent intentToDatabase = new Intent(this, DatabaseService.class);
-            intentToDatabase.putExtra(KEY_CONTENT_DATA, mailList);
-            startService(intentToDatabase);
+//            Intent intentToDatabase = new Intent(this, DatabaseService.class);
+//            intentToDatabase.putExtra(KEY_CONTENT_DATA, mailList);
+//            startService(intentToDatabase);
         } catch (IOException e) {
             e.printStackTrace();
         }

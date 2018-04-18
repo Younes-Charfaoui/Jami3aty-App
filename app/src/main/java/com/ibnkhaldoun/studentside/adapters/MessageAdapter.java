@@ -2,11 +2,13 @@ package com.ibnkhaldoun.studentside.adapters;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.GradientDrawable;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ibnkhaldoun.studentside.R;
@@ -37,10 +39,19 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MailView
     @Override
     public void onBindViewHolder(MailViewHolder holder, int position) {
         Message mail = mMailList.get(position);
-        holder.mProfessorShortNameTextView.setText(Utilities.getProfessorShortName(mail.getProfessor()));
-        GradientDrawable shortNameCircle = (GradientDrawable) holder.mProfessorShortNameTextView.getBackground();
+
+        if (mail.isIn()) {
+            holder.mArrowIndicatorImage.setImageBitmap(BitmapFactory
+                    .decodeResource(mContext.getResources(),
+                    R.drawable.ic_arrow_downward_white_24dp));
+        } else {
+            holder.mArrowIndicatorImage.setImageBitmap(BitmapFactory
+                    .decodeResource(mContext.getResources(),
+                            R.drawable.ic_arrow_upward_white_24dp));
+        }
+
         int color = Utilities.getCircleColor(mContext);
-        shortNameCircle.setColor(color);
+        holder.mBackGroundImage.setBackgroundColor(color);
         holder.mProfessorNameTextView.setText(mail.getProfessor());
         holder.mSubjectTextView.setText(mail.getSubject());
         holder.mDateTextView.setText(mail.getDate());
@@ -61,15 +72,18 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MailView
 
     class MailViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView mProfessorShortNameTextView,
+        private TextView
                 mProfessorNameTextView, mSubjectTextView,
                 mDateTextView;
+        private View mBackGroundImage;
+        private ImageView mArrowIndicatorImage;
 
         private View mStartView;
 
         MailViewHolder(View itemView) {
             super(itemView);
-            mProfessorShortNameTextView = itemView.findViewById(R.id.mail_professor_name_short_text_view);
+            mBackGroundImage = itemView.findViewById(R.id.mail_background_circle);
+            mArrowIndicatorImage = itemView.findViewById(R.id.mail_arrow_image);
             mProfessorNameTextView = itemView.findViewById(R.id.mail_professor_name_text_view);
             mSubjectTextView = itemView.findViewById(R.id.mail_last_subject_text_view);
             mDateTextView = itemView.findViewById(R.id.mail_date_of_mail_text_view);

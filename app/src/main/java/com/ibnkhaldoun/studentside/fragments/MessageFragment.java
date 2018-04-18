@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,7 +59,6 @@ public class MessageFragment extends BaseMainFragment<Message> {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_mail, container, false);
 
-
         mMailRecyclerView = view.findViewById(R.id.mail_recycler_view);
         mLoadingProgressBar = view.findViewById(R.id.mail_progress_bar);
         mEmptyLayout = view.findViewById(R.id.mail_empty_view);
@@ -86,7 +86,6 @@ public class MessageFragment extends BaseMainFragment<Message> {
         } else {
             mEmptyLayout.setVisibility(VISIBLE);
             mMailRecyclerView.setVisibility(GONE);
-
         }
     }
 
@@ -110,7 +109,6 @@ public class MessageFragment extends BaseMainFragment<Message> {
                         Toast.LENGTH_SHORT).show();
                 break;
         }
-
     }
 
     @Override
@@ -123,9 +121,7 @@ public class MessageFragment extends BaseMainFragment<Message> {
         } else {
             mEmptyLayout.setVisibility(VISIBLE);
         }
-
     }
-
 
     @Override
     public void onDatabaseStartLoading() {

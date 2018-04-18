@@ -26,11 +26,12 @@ public class MessageDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message_detail);
-        assert getSupportActionBar() != null;
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if( getSupportActionBar() != null){
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
         Message message = getIntent().getParcelableExtra(KEY_MESSAGE);
         Professor professor = getIntent().getParcelableExtra(KEY_PROFESSOR);
@@ -69,7 +70,7 @@ public class MessageDetailActivity extends AppCompatActivity {
         dateTextView.setText(message.getDate());
 
         TextView timeTextView = findViewById(R.id.message_detail_time);
-        timeTextView.setText("17:15");
+        timeTextView.setText(Utilities.getDateFormat(message.getDate()));
 
         findViewById(R.id.message_detail_reply_button).setOnClickListener(v -> {
             //todo add code to handle replying messages

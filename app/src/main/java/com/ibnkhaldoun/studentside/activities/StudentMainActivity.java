@@ -153,6 +153,7 @@ public class StudentMainActivity extends AppCompatActivity
         mAddMailFab.hide();
 
         mAddMailFab.setOnClickListener(v -> {
+
             ProfessorListFragment professorListFragment =
                     ProfessorListFragment.newInstance(null);
             professorListFragment.show(getSupportFragmentManager(), "TAG");
