@@ -46,7 +46,6 @@
                 android:layout_centerInParent="true"
                 android:gravity="center"
                 tools:srcCompat="@drawable/ic_arrow_downward_white_24dp"
-                tools:text="OA"
                 android:contentDescription="@null" />
         </RelativeLayout>
 
@@ -70,7 +69,7 @@
                 android:singleLine="true"
                 android:textColor="@android:color/black"
                 android:textSize="18sp"
-                tools:text="Phd Ouared Aek" />
+                tools:text="Phd Ouared Aekdzaddz" />
 
             <TextView
                 android:id="@+id/mail_last_subject_text_view"
@@ -86,13 +85,15 @@
 
         <TextView
             android:id="@+id/mail_date_of_mail_text_view"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-thin"
             android:paddingEnd="16dp"
             android:paddingStart="16dp"
+            android:layout_weight="1.1"
+            android:singleLine="true"
             android:textAppearance="@android:style/TextAppearance.Holo"
-            tools:text="16 Feb" />
+            tools:text="16 Feb fza" />
 
     </LinearLayout>
 

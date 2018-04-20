@@ -2,6 +2,7 @@ package com.ibnkhaldoun.studentside.activities;
 
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -12,10 +13,15 @@ import android.widget.Toast;
 import com.ibnkhaldoun.studentside.R;
 import com.ibnkhaldoun.studentside.Utilities.PreferencesManager;
 import com.ibnkhaldoun.studentside.Utilities.Utilities;
+import com.ibnkhaldoun.studentside.asyncTask.ResponseAsyncTask;
 import com.ibnkhaldoun.studentside.models.Message;
-import com.ibnkhaldoun.studentside.models.Professor;
+import com.ibnkhaldoun.studentside.networking.models.RequestPackage;
+import com.ibnkhaldoun.studentside.networking.utilities.NetworkUtilities;
+import com.ibnkhaldoun.studentside.providers.EndPointsProvider;
 
 import static com.ibnkhaldoun.studentside.Utilities.PreferencesManager.STUDENT;
+import static com.ibnkhaldoun.studentside.networking.models.RequestPackage.POST;
+import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_MAIL_ID2;
 
 public class MessageDetailActivity extends AppCompatActivity {
 
@@ -29,18 +35,18 @@ public class MessageDetailActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        if( getSupportActionBar() != null){
+        if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
         Message message = getIntent().getParcelableExtra(KEY_MESSAGE);
-        Professor professor = getIntent().getParcelableExtra(KEY_PROFESSOR);
+
         getSupportActionBar().setTitle(message.getSubject());
         toolbar.setTitle(message.getSubject());
 
         TextView subjectTextView = findViewById(R.id.message_detail_subject);
         subjectTextView.setText(message.getSubject());
-        PreferencesManager manager = new PreferencesManager(this,STUDENT);
+        PreferencesManager manager = new PreferencesManager(this, STUDENT);
 
         TextView senderShortNameTextView = findViewById(R.id.message_detail_sender_short_name);
         GradientDrawable circle = (GradientDrawable) senderShortNameTextView.getBackground();
@@ -49,41 +55,32 @@ public class MessageDetailActivity extends AppCompatActivity {
         TextView receiverTextView = findViewById(R.id.message_detail_receiver);
 
         if (message.isIn()) {
-            senderShortNameTextView.setText(professor.getShortName());
-            circle.setColor(Utilities.getCircleColor(professor.getShortName().charAt(0), this));
-            senderNameTextView.setText(professor.getFullName());
-
+            senderShortNameTextView.setText(Utilities.getProfessorShortName(message.getProfessor()));
+            circle.setColor(Utilities.getCircleColor(this));
+            senderNameTextView.setText(message.getProfessor());
             receiverTextView.setText(String.format("to %s", manager.getFullName()));
         } else {
 
-            senderShortNameTextView.setText(manager.getFullName());
-            circle.setColor(Utilities.getCircleColor(manager.getFullName().charAt(0), this));
+            senderShortNameTextView.setText(Utilities.getStudentShortName(manager.getFullName()));
+            circle.setColor(Utilities.getCircleColor(this));
             senderNameTextView.setText(manager.getFullName());
-            receiverTextView.setText(String.format("to %s", professor.getFullName()));
+            receiverTextView.setText(String.format("to %s", message.getProfessor()));
         }
 
 
         TextView textTextView = findViewById(R.id.message_detail_text);
         textTextView.setText(message.getText());
 
-        TextView dateTextView = findViewById(R.id.message_detail_date);
-        dateTextView.setText(message.getDate());
-
-        TextView timeTextView = findViewById(R.id.message_detail_time);
+        TextView timeTextView = findViewById(R.id.message_detail_date);
         timeTextView.setText(Utilities.getDateFormat(message.getDate()));
 
-        findViewById(R.id.message_detail_reply_button).setOnClickListener(v -> {
-            //todo add code to handle replying messages
-            Toast.makeText(this, "Replay Button", Toast.LENGTH_SHORT).show();
-        });
-
     }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.message_detail_menu, menu);
-        return true;
-    }
+//
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.message_detail_menu, menu);
+//        return true;
+//    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -91,15 +88,41 @@ public class MessageDetailActivity extends AppCompatActivity {
             case android.R.id.home:
                 finish();
                 break;
+/*
             case R.id.message_detail_delete_menu:
-                //todo add code to handle deleting messages
-                Toast.makeText(this, "Delete Action", Toast.LENGTH_SHORT).show();
+                if (NetworkUtilities.isConnected(this)) {
+                    Message message = getIntent().getParcelableExtra(KEY_MESSAGE);
+                    new AlertDialog.Builder(this)
+                            .setTitle("Delete Mail")
+                            .setMessage("Are you sure that you want to delete this email ?")
+                            .setPositiveButton(R.string.delete_string, (dialog, which) -> {
+                                RequestPackage request = new RequestPackage.Builder()
+                                        .addMethod(POST)
+                                        .addEndPoint(EndPointsProvider.getRemoveMailEndPoint())
+                                        .addParams(JSON_MAIL_ID2, String.valueOf(message.getId()))
+                                        .create();
+                                ResponseAsyncTask task = new ResponseAsyncTask(response -> {
+                                    if (response.getStatus() == 200) {
+                                        Toast.makeText(this, "Mail was deleted", Toast.LENGTH_SHORT).show();
+                                        finish();
+                                    } else {
+                                        Toast.makeText(this, "An error ocurred", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                                task.execute(request);
+                            })
+                            .setNegativeButton(android.R.string.no, null)
+                            .show();
+                } else {
+                    Toast.makeText(this, R.string.no_internet_connection_string, Toast.LENGTH_SHORT).show();
+                }
                 break;
 
             case R.id.message_detail_reply_menu:
                 //todo add code to handle replying messages
                 Toast.makeText(this, "Reply Action", Toast.LENGTH_SHORT).show();
                 break;
+*/
         }
         return true;
     }

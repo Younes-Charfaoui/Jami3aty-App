@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.GradientDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,22 +40,23 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MailView
     @Override
     public void onBindViewHolder(MailViewHolder holder, int position) {
         Message mail = mMailList.get(position);
+        int color = Utilities.getCircleColor(mContext);
+        GradientDrawable background = (GradientDrawable) holder.mBackGroundImage.getBackground();
+        background.setColor(color);
 
         if (mail.isIn()) {
-            holder.mArrowIndicatorImage.setImageBitmap(BitmapFactory
-                    .decodeResource(mContext.getResources(),
-                    R.drawable.ic_arrow_downward_white_24dp));
+            holder.mArrowIndicatorImage.setImageDrawable(
+                    mContext.getResources().getDrawable(R.drawable.ic_arrow_downward_white_24dp));
+
         } else {
-            holder.mArrowIndicatorImage.setImageBitmap(BitmapFactory
-                    .decodeResource(mContext.getResources(),
-                            R.drawable.ic_arrow_upward_white_24dp));
+            holder.mArrowIndicatorImage.setImageDrawable(
+                    mContext.getResources().getDrawable(R.drawable.ic_arrow_upward_white_24dp));
         }
 
-        int color = Utilities.getCircleColor(mContext);
-        holder.mBackGroundImage.setBackgroundColor(color);
+
         holder.mProfessorNameTextView.setText(mail.getProfessor());
         holder.mSubjectTextView.setText(mail.getSubject());
-        holder.mDateTextView.setText(mail.getDate());
+        holder.mDateTextView.setText(Utilities.getDateFormat(mail.getDate()));
         holder.mStartView.setBackgroundColor(color);
     }
 
@@ -91,7 +93,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MailView
 
             itemView.setOnClickListener(v -> {
                 Intent intent = new Intent(mContext, MessageDetailActivity.class);
-                intent.putExtra(MessagesActivity.KEY_MESSAGES, mMailList.get(getAdapterPosition()));
+                intent.putExtra(MessageDetailActivity.KEY_MESSAGE, mMailList.get(getAdapterPosition()));
                 mContext.startActivity(intent);
             });
         }

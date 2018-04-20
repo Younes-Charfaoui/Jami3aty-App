@@ -6,8 +6,37 @@ import android.os.Parcelable;
 
 public class Message implements Parcelable {
 
+    public static final Parcelable.Creator<Message> CREATOR = new Parcelable.Creator<Message>() {
+        @Override
+        public Message createFromParcel(Parcel source) {
+            return new Message(source);
+        }
+
+        @Override
+        public Message[] newArray(int size) {
+            return new Message[size];
+        }
+    };
+    private long id;
     private boolean in;
     private String subject, text, date, professor;
+
+    public Message(long id, boolean in, String subject, String text, String date, String professor) {
+        this.id = id;
+        this.in = in;
+        this.subject = subject;
+        this.text = text;
+        this.date = date;
+        this.professor = professor;
+    }
+
+    protected Message(Parcel in) {
+        this.in = in.readByte() != 0;
+        this.subject = in.readString();
+        this.text = in.readString();
+        this.date = in.readString();
+        this.professor = in.readString();
+    }
 
     public boolean isIn() {
         return in;
@@ -49,15 +78,6 @@ public class Message implements Parcelable {
         this.professor = professor;
     }
 
-    public Message(boolean in, String subject, String text, String date, String professor) {
-
-        this.in = in;
-        this.subject = subject;
-        this.text = text;
-        this.date = date;
-        this.professor = professor;
-    }
-
     @Override
     public int describeContents() {
         return 0;
@@ -70,25 +90,14 @@ public class Message implements Parcelable {
         dest.writeString(this.text);
         dest.writeString(this.date);
         dest.writeString(this.professor);
+        dest.writeLong(this.id);
     }
 
-    protected Message(Parcel in) {
-        this.in = in.readByte() != 0;
-        this.subject = in.readString();
-        this.text = in.readString();
-        this.date = in.readString();
-        this.professor = in.readString();
+    public long getId() {
+        return id;
     }
 
-    public static final Parcelable.Creator<Message> CREATOR = new Parcelable.Creator<Message>() {
-        @Override
-        public Message createFromParcel(Parcel source) {
-            return new Message(source);
-        }
-
-        @Override
-        public Message[] newArray(int size) {
-            return new Message[size];
-        }
-    };
+    public void setId(long id) {
+        this.id = id;
+    }
 }

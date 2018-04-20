@@ -21,9 +21,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:fontFamily="sans-serif-thin"
-            android:textSize="30sp"
-            android:textStyle="bold"
+            android:fontFamily="sans-serif-medium"
+            android:textSize="24sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Meeting" />
@@ -37,35 +36,26 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/message_detail_subject">
 
-
-            <TextView
-                android:id="@+id/message_detail_time"
-                android:layout_width="wrap_content"
-                android:layout_height="17dp"
-                android:textSize="16sp"
-
-                tools:text="17:30" />
-
             <TextView
                 android:id="@+id/message_detail_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="18sp"
-                android:textStyle="bold"
+                android:fontFamily="sans-serif-light"
                 tools:text="Feb 13" />
         </LinearLayout>
 
 
         <TextView
             android:id="@+id/message_detail_sender_short_name"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:layout_marginEnd="7dp"
             android:layout_marginTop="24dp"
             android:background="@drawable/circle"
             android:gravity="center"
             android:textColor="@android:color/white"
-            android:textSize="24sp"
+            android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/message_detail_subject"
             tools:text="YC" />
@@ -75,8 +65,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:textSize="26sp"
-            android:textStyle="bold"
+            android:textSize="21sp"
+            android:fontFamily="sans-serif-medium"
             app:layout_constraintStart_toEndOf="@id/message_detail_sender_short_name"
             app:layout_constraintTop_toTopOf="@id/message_detail_sender_short_name"
             tools:text="Younes Charfaoui" />
@@ -100,19 +90,19 @@
             tools:text="dNam suscipit dui  lobortis porttitor. Donec semper, lectus ut congue vehicula, metus erat commodo justo, id iaculis ipsum mi ac elit. Maecenas consequat nisl sed leo ultrices, nec malesuada quam sollicitudin. Suspendisse ultricies augue eu massa hendrerit, at vulputate orci malesuada. Cras venenatis, tortor et semper hendrerit, quam justo tincidunt mi, at tempus ante purus non orci. Fusce ultricies blandit lectus, quis ornare enim blandit at. Pellentesque porta, nisl id ornare auctor, est risus maximus nunc, quis accumsan est lacus et erat. Suspendisse ex ipsum, pellentesque sit amet condimentum non, cursus sit amet nibh. Suspendisse potenti. In in enim enim. Maecenas et mollis lorem, semper imperdiet ligula. Praesent lobortis, dolor id cursus varius, dui sapien dignissim sem, a viverra enim odio vitae purus." />
 
 
-        <Button
-            android:id="@+id/message_detail_reply_button"
-            style="?attr/buttonBarStyle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:layout_weight="1"
-            android:background="@null"
-            android:drawablePadding="8dp"
-            android:drawableTop="@drawable/ic_reply_black"
-            android:text="@string/reply_string"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/message_detail_text" />
+        <!--<Button-->
+            <!--android:id="@+id/message_detail_reply_button"-->
+            <!--style="?attr/buttonBarStyle"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginTop="32dp"-->
+            <!--android:layout_weight="1"-->
+            <!--android:background="@null"-->
+            <!--android:drawablePadding="8dp"-->
+            <!--android:drawableTop="@drawable/ic_reply_black"-->
+            <!--android:text="@string/reply_string"-->
+            <!--app:layout_constraintEnd_toEndOf="parent"-->
+            <!--app:layout_constraintTop_toBottomOf="@id/message_detail_text" />-->
 
 
     </android.support.constraint.ConstraintLayout>

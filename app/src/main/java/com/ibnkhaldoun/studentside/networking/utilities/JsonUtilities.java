@@ -5,7 +5,6 @@ import android.util.SparseArray;
 
 import com.ibnkhaldoun.studentside.models.Comment;
 import com.ibnkhaldoun.studentside.models.Display;
-import com.ibnkhaldoun.studentside.models.Mail;
 import com.ibnkhaldoun.studentside.models.Mark;
 import com.ibnkhaldoun.studentside.models.Message;
 import com.ibnkhaldoun.studentside.models.Notification;
@@ -36,6 +35,12 @@ import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_COMMENT
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_COMMENT_PERSON_NAME;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_DAY_SCHEDULE;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_HOUR_SCHEDULE;
+import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_MAIL_DATE;
+import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_MAIL_ID;
+import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_MAIL_MESSAGE;
+import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_MAIL_PROFESSOR;
+import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_MAIL_SENDER;
+import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_MAIL_SUBJECT;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_NAME_SCHEDULE;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_NOTIFICATION_SEEN;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_PLACE_SCHEDULE;
@@ -180,8 +185,27 @@ public class JsonUtilities {
     }
 
     public static ArrayList<Message> getMailList(String response) {
-        // TODO: 15/03/2018 add the code to parse the mail response
-        return null;
+        ArrayList<Message> messages = new ArrayList<>();
+        Log.i(TAG, "getMailList: " + response);
+        try {
+            JSONObject root = new JSONObject(response);
+            if (root.getInt(KEY_JSON_STATUS) != 200) throw new JSONException("no Success messages");
+            JSONArray objects = root.getJSONArray(KEY_JSON_DATA);
+            for (int i = 0; i < objects.length(); i++) {
+                JSONObject object = objects.getJSONObject(i);
+                long id = object.getLong(JSON_MAIL_ID);
+                String message = object.getString(JSON_MAIL_MESSAGE);
+                String subject = object.getString(JSON_MAIL_SUBJECT);
+                String date = object.getString(JSON_MAIL_DATE);
+                String professor = object.getString(JSON_MAIL_PROFESSOR);
+                boolean sender = object.getInt(JSON_MAIL_SENDER) == 1;
+                messages.add(new Message(id, sender, subject, message, date, professor));
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+            Log.i(TAG, "getMailList: it was Json Excp");
+        }
+        return messages;
     }
 
 

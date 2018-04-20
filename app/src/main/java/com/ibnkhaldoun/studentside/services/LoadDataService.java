@@ -242,6 +242,7 @@ public class LoadDataService extends IntentService {
 
     private void mailCall(RequestPackage requestPackage) {
         try {
+            Log.i("MailCall", "mailCall: request start");
             String response = HttpUtilities.getData(requestPackage);
             ArrayList<Message> mailList = JsonUtilities.getMailList(response);
             Intent intentToMails = new Intent(MAIL_ACTION);
@@ -251,6 +252,7 @@ public class LoadDataService extends IntentService {
 //            intentToDatabase.putExtra(KEY_CONTENT_DATA, mailList);
 //            startService(intentToDatabase);
         } catch (IOException e) {
+            Log.i("MailCall", "mailCall: it was Io");
             e.printStackTrace();
         }
     }

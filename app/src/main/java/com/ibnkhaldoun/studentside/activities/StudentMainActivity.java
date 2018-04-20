@@ -54,7 +54,6 @@ import com.ibnkhaldoun.studentside.providers.KeyDataProvider;
 import com.ibnkhaldoun.studentside.services.LoadDataService;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 
 import static com.ibnkhaldoun.studentside.Utilities.PreferencesManager.STUDENT;
 import static com.ibnkhaldoun.studentside.fragments.BaseMainFragment.INTERNET_ERROR;
@@ -116,6 +115,7 @@ public class StudentMainActivity extends AppCompatActivity
                     mDisplayFragment.onNetworkLoadedSucceed(mDisplaysList);
                     break;
                 case LoadDataService.MAIL_ACTION:
+                    Log.i("MailCall", "onReceive: message was been reeived");
                     mMessagesList = intent.getParcelableArrayListExtra(KEY_DATA);
                     mMessageFragment.onNetworkLoadedSucceed(mMessagesList);
                     break;
@@ -407,14 +407,12 @@ public class StudentMainActivity extends AppCompatActivity
      */
     @Override
     public void onNeedData(MessageFragment which) {
-
         if (NetworkUtilities.isConnected(this)) {
-
             PreferencesManager manager = new PreferencesManager(this, STUDENT);
             which.onNetworkStartLoading();
             RequestPackage request = new RequestPackage.Builder()
                     .addMethod(POST)
-                    .addEndPoint(EndPointsProvider.getMailEndPoint())
+                    .addEndPoint(EndPointsProvider.getAllMailEndPoint())
                     .addParams(KeyDataProvider.KEY_ANDROID, KeyDataProvider.KEY_ANDROID)
                     .addParams(JSON_STUDENT_ID, manager.getId())
                     .create();

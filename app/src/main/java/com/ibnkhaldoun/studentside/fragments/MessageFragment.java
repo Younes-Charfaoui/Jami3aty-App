@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
@@ -30,23 +31,14 @@ import static android.view.View.VISIBLE;
 import static com.ibnkhaldoun.studentside.activities.StudentMainActivity.MAIL_TYPE;
 
 
-public class MessageFragment extends BaseMainFragment<Message> {
+public class MessageFragment extends BaseMainFragment<Message> implements SwipeRefreshLayout.OnRefreshListener {
 
     private LinearLayout mEmptyLayout;
     private RecyclerView mMailRecyclerView;
     private MessageAdapter mAdapter;
     private ProgressBar mLoadingProgressBar;
-
+    private SwipeRefreshLayout mMailSwipe;
     private IDataFragment mailInterface;
-
-
-    public static MessageFragment newInstance(List<Mail> mails) {
-        Bundle args = new Bundle();
-        args.putParcelableArrayList("Key", (ArrayList<? extends Parcelable>) mails);
-        MessageFragment fragment = new MessageFragment();
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public void onAttach(Context context) {
@@ -63,6 +55,8 @@ public class MessageFragment extends BaseMainFragment<Message> {
         mLoadingProgressBar = view.findViewById(R.id.mail_progress_bar);
         mEmptyLayout = view.findViewById(R.id.mail_empty_view);
 
+        mMailSwipe = view.findViewById(R.id.mail_swipe);
+        mMailSwipe.setOnRefreshListener(this);
         mEmptyLayout.setOnClickListener(v -> mailInterface.onNeedData(this));
 
         mAdapter = new MessageAdapter(getContext());
@@ -72,12 +66,15 @@ public class MessageFragment extends BaseMainFragment<Message> {
         mMailRecyclerView.setLayoutManager(manager);
         mMailRecyclerView.setHasFixedSize(true);
         mailInterface.onAttach(this);
+        mailInterface.onNeedData(this);
         return view;
     }
 
     @Override
     public void onNetworkLoadedSucceed(List<Message> list) {
-
+        if(mMailSwipe.isRefreshing()){
+            mMailSwipe.setRefreshing(false);
+        }
         mLoadingProgressBar.setVisibility(GONE);
         if (list.size() != 0) {
             mAdapter.setMailList(list);
@@ -98,7 +95,9 @@ public class MessageFragment extends BaseMainFragment<Message> {
 
     @Override
     public void onNetworkLoadingFailed(int errorType) {
-
+        if(mMailSwipe.isRefreshing()){
+            mMailSwipe.setRefreshing(false);
+        }
         switch (errorType) {
             case INTERNET_ERROR:
                 mLoadingProgressBar.setVisibility(GONE);
@@ -133,5 +132,10 @@ public class MessageFragment extends BaseMainFragment<Message> {
     @Override
     public int getBaseType() {
         return MAIL_TYPE;
+    }
+
+    @Override
+    public void onRefresh() {
+        mailInterface.onNeedData(this);
     }
 }

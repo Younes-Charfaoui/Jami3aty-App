@@ -77,4 +77,12 @@ public final class KeyDataProvider {
 
     public static final String JSON_COMMENT_ID2 = "id_comment";
     public static final String JSON_COMMENT_EDITED = "text_edited";
+
+    public static final String JSON_MAIL_ID = "_id_mail";
+    public static final String JSON_MAIL_ID2 = "id_mail";
+    public static final String JSON_MAIL_MESSAGE = "message";
+    public static final String JSON_MAIL_SUBJECT = "subject";
+    public static final String JSON_MAIL_DATE = "date";
+    public static final String JSON_MAIL_SENDER = "sender";
+    public static final String JSON_MAIL_PROFESSOR = "fullNameP";
 }

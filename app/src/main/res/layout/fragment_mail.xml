@@ -1,51 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:id="@+id/mail_swipe"
     android:layout_height="match_parent">
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/mail_recycler_view"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="invisible" />
+        android:layout_height="match_parent">
 
-    <ProgressBar
-        android:id="@+id/mail_progress_bar"
-        android:layout_width="72dp"
-        android:layout_height="72dp"
-        android:layout_centerInParent="true" />
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/mail_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="invisible" />
 
-    <LinearLayout
-        android:id="@+id/mail_empty_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:background="?android:attr/selectableItemBackground"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:visibility="invisible">
+        <ProgressBar
+            android:id="@+id/mail_progress_bar"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:layout_centerInParent="true" />
 
-        <ImageView
-            android:layout_width="230dp"
-            android:layout_height="230dp"
-            android:contentDescription="@null"
-            android:paddingBottom="8dp"
-            android:src="@drawable/mail_empty" />
-
-        <TextView
+        <LinearLayout
+            android:id="@+id/mail_empty_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-medium"
-            android:paddingBottom="5dp"
-            android:text="@string/empty_mail_string"
-            android:textAppearance="?android:textAppearanceMedium" />
+            android:layout_centerInParent="true"
+            android:background="?android:attr/selectableItemBackground"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="invisible">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="sans-serif"
-            android:text="@string/mail_empty_description_string"
-            android:textAppearance="?android:textAppearanceSmall" />
-    </LinearLayout>
+            <ImageView
+                android:layout_width="230dp"
+                android:layout_height="230dp"
+                android:contentDescription="@null"
+                android:paddingBottom="8dp"
+                android:src="@drawable/mail_empty" />
 
-</RelativeLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-medium"
+                android:paddingBottom="5dp"
+                android:text="@string/empty_mail_string"
+                android:textAppearance="?android:textAppearanceMedium" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif"
+                android:text="@string/mail_empty_description_string"
+                android:textAppearance="?android:textAppearanceSmall" />
+        </LinearLayout>
+
+    </RelativeLayout>
+</android.support.v4.widget.SwipeRefreshLayout>

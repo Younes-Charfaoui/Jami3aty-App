@@ -13,7 +13,7 @@ public final class EndPointsProvider {
     private final static String FORGET_PASSWORD_ENDPOINT = BASE + "jami3aty/users/forgotpass/";
     private final static String SUBJECT_ENDPOINT = BASE + "jami3aty/modules/";
     private final static String MARK_ENDPOINT = BASE + "jami3aty/users/marks/";
-    private final static String MAIL_ENDPOINT = BASE + "jami3aty/users/mails/";
+    private final static String MAIL_ENDPOINT = BASE + "jami3aty/mails/";
     private final static String SAVED_ENDPOINT = BASE + "jami3aty/saved/";
     private final static String EXAM_ENDPOINT = BASE + "jami3aty/exams/";
     private final static String SCHEDULE_ENDPOINT = BASE + "jami3aty/schedules/";
@@ -74,8 +74,20 @@ public final class EndPointsProvider {
         return MARK_ENDPOINT;
     }
 
-    public static String getMailEndPoint() {
-        return MAIL_ENDPOINT;
+    public static String getAllMailEndPoint() {
+        return MAIL_ENDPOINT + "/all";
+    }
+
+    public static String getAddMailEndPoint() {
+        return MAIL_ENDPOINT + "/insert";
+    }
+
+    public static String getOneMailEndPoint() {
+        return MAIL_ENDPOINT + "/id";
+    }
+
+    public static String getRemoveMailEndPoint() {
+        return MAIL_ENDPOINT + "/remove";
     }
 
     public static String getSavedEndPoint() {
