@@ -76,12 +76,12 @@
         <activity
             android:name=".activities.MessageDetailActivity"
             android:label="@string/title_activity_message_detail"
-            android:parentActivityName=".activities.MessagesActivity"
+            android:parentActivityName=".activities.StudentMainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.ibnkhaldoun.studentside.activities.MessagesActivity" />
+                android:value="com.ibnkhaldoun.studentside.activities.StudentMainActivity" />
         </activity>
 
         <provider
@@ -205,11 +205,11 @@
         <activity
             android:name=".activities.NewMessageActivity"
             android:label="@string/title_activity_new_message"
-            android:parentActivityName=".activities.MessagesActivity"
+            android:parentActivityName=".activities.StudentMainActivity"
             android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.ibnkhaldoun.studentside.activities.MessagesActivity" />
+                android:value="com.ibnkhaldoun.studentside.activities.StudentMainActivity" />
         </activity>
         <activity
             android:name=".activities.DraftActivity"

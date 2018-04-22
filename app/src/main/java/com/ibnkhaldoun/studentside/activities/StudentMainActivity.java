@@ -1,5 +1,7 @@
 package com.ibnkhaldoun.studentside.activities;
 
+import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -50,7 +52,6 @@ import com.ibnkhaldoun.studentside.networking.models.Response;
 import com.ibnkhaldoun.studentside.networking.utilities.NetworkUtilities;
 import com.ibnkhaldoun.studentside.networking.utilities.RequestPackageFactory;
 import com.ibnkhaldoun.studentside.providers.EndPointsProvider;
-import com.ibnkhaldoun.studentside.providers.KeyDataProvider;
 import com.ibnkhaldoun.studentside.services.LoadDataService;
 
 import java.util.ArrayList;
@@ -62,6 +63,8 @@ import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_STUDENT
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_STUDENT_ID;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_STUDENT_LEVEL;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_STUDENT_SECTION;
+import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.KEY_AJAX;
+import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.KEY_ANDROID;
 import static com.ibnkhaldoun.studentside.services.LoadDataService.KEY_DATA;
 
 public class StudentMainActivity extends AppCompatActivity
@@ -69,9 +72,6 @@ public class StudentMainActivity extends AppCompatActivity
         IProfessorDialog, IDataFragment, NoteOfDisplayDialog.INoteOfDisplay,
         LoaderManager.LoaderCallbacks<Cursor>, ResponseAsyncTask.IResponseListener {
 
-    public static final String KEY_MAILS = "keyMails";
-    public static final String KEY_NOTIFICATION = "keyNotification";
-    public static final String KEY_DISPLAY = "keyDisplay";
 
     //the types of the fragments
     public static final int MAIL_TYPE = 15;
@@ -82,6 +82,7 @@ public class StudentMainActivity extends AppCompatActivity
     private static final int MAIL_LOADER_ID = 191;
     private static final int NOTIFICATION_LOADER_ID = 192;
 
+    @SuppressLint("StaticFieldLeak")
     public static StudentMainActivity ACTIVITY;
     private FloatingActionButton mAddMailFab;
     private ViewPager mMainViewPager;
@@ -153,10 +154,39 @@ public class StudentMainActivity extends AppCompatActivity
         mAddMailFab.hide();
 
         mAddMailFab.setOnClickListener(v -> {
+            if (NetworkUtilities.isConnected(this)) {
 
-            ProfessorListFragment professorListFragment =
-                    ProfessorListFragment.newInstance(null);
-            professorListFragment.show(getSupportFragmentManager(), "TAG");
+                ProgressDialog progressDialog = new ProgressDialog(this);
+                progressDialog.setTitle("Loading Professors");
+                progressDialog.setMessage(getString(R.string.wait_please));
+                PreferencesManager manager = new PreferencesManager(this, STUDENT);
+
+                RequestPackage request = new RequestPackage.Builder()
+                        .addEndPoint(EndPointsProvider.getProfessorEndpoint())
+                        .addMethod(POST)
+                        .addParams(KEY_AJAX, KEY_ANDROID)
+                        .addParams(JSON_STUDENT_LEVEL, manager.getLevel())
+                        .addParams(JSON_STUDENT_GROUP, manager.getGroup())
+                        .addParams(JSON_STUDENT_SECTION, manager.getSection())
+                        .create();
+
+                ResponseAsyncTask task = new ResponseAsyncTask(response -> {
+                    progressDialog.dismiss();
+                    if (response.getStatus() == 200) {
+                        //todo add the code for parsing the professor and displaying ad
+                        ProfessorListFragment professorListFragment =
+                                ProfessorListFragment.newInstance(new ArrayList<>());
+                        professorListFragment.show(getSupportFragmentManager(), "TAG");
+                    } else {
+                        Toast.makeText(this, "Problem happend , try later", Toast.LENGTH_SHORT).show();
+                    }
+
+                });
+                task.execute(request);
+
+            } else {
+                Toast.makeText(this, R.string.no_internet_connection_string, Toast.LENGTH_SHORT).show();
+            }
         });
 
         setupNavigationDrawer();
@@ -340,7 +370,10 @@ public class StudentMainActivity extends AppCompatActivity
      */
     @Override
     public void onProfessorChosen(String professor, String id) {
-
+        Intent intent = new Intent(this, NewMessageActivity.class);
+        intent.putExtra(NewMessageActivity.KEY_PROFESSOR, professor);
+        intent.putExtra(NewMessageActivity.KEY_ID, id);
+        startActivity(intent);
     }
 
     /**
@@ -413,7 +446,7 @@ public class StudentMainActivity extends AppCompatActivity
             RequestPackage request = new RequestPackage.Builder()
                     .addMethod(POST)
                     .addEndPoint(EndPointsProvider.getAllMailEndPoint())
-                    .addParams(KeyDataProvider.KEY_ANDROID, KeyDataProvider.KEY_ANDROID)
+                    .addParams(KEY_ANDROID, KEY_ANDROID)
                     .addParams(JSON_STUDENT_ID, manager.getId())
                     .create();
 
@@ -520,7 +553,7 @@ public class StudentMainActivity extends AppCompatActivity
     }
 
     @Override
-    public void OnFinishNoting(String note, long id , int type) {
+    public void OnFinishNoting(String note, long id, int type) {
         Toast.makeText(this, note + " " + id, Toast.LENGTH_SHORT).show();
         RequestPackage request = RequestPackageFactory.createNoteAddingRequest(id, note, this);
         ResponseAsyncTask task = new ResponseAsyncTask(this);

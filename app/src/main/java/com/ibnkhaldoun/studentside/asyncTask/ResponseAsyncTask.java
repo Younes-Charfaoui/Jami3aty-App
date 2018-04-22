@@ -18,7 +18,6 @@ import java.io.IOException;
 
 import static com.ibnkhaldoun.studentside.networking.models.Response.IO_EXCEPTION;
 import static com.ibnkhaldoun.studentside.networking.models.Response.JSON_EXCEPTION;
-import static com.ibnkhaldoun.studentside.networking.models.Response.RESPONSE_SUCCESS;
 
 public class ResponseAsyncTask extends AsyncTask<RequestPackage, Void, Response> {
 
@@ -37,16 +36,18 @@ public class ResponseAsyncTask extends AsyncTask<RequestPackage, Void, Response>
     @Override
     protected Response doInBackground(RequestPackage... requestPackages) {
         try {
-            String response = HttpUtilities.getData(requestPackages[0]);
-            int codeResponse = JsonUtilities.getStatusCode(response);
+            String result = HttpUtilities.getData(requestPackages[0]);
+            int codeResponse = JsonUtilities.getStatusCode(result);
 
-            Log.i("Save", "doInBackground: " + response);
-            return new Response(codeResponse);
+            Log.i("Save", "doInBackground: " + result);
+            Response response = new Response(codeResponse);
+            response.setData(result);
+            return response;
         } catch (IOException e) {
             Log.i("Save", "doInBackground: " + e.getMessage());
             return new Response(IO_EXCEPTION);
         } catch (JSONException e) {
-            Log.i("Save", "doInBackground: " + e.getMessage() );
+            Log.i("Save", "doInBackground: " + e.getMessage());
             e.printStackTrace();
             return new Response(JSON_EXCEPTION);
         }

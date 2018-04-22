@@ -20,7 +20,7 @@ public class DraftActivity extends AppCompatActivity {
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(view -> {
             startActivity(new Intent(DraftActivity.this, NewMessageActivity.class)
-                    .putExtra(NewMessageActivity.KEY_LAUNCHER, NewMessageActivity.DRAFT));
+                    .putExtra(NewMessageActivity.KEY_LAUNCHER, 1));
         });
         assert getSupportActionBar() != null;
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

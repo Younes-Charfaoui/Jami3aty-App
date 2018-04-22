@@ -17,9 +17,14 @@ public class Response {
     public static final int JSON_EXCEPTION = 502;
 
     private int status;
+    private String data;
 
     public Response(int status) {
         this.status = status;
+    }
+
+    public void setData(String data){
+        this.data = data;
     }
 
     Response() {

@@ -50,7 +50,6 @@ public class MessagesActivity extends AppCompatActivity {
             Intent intentNewMessages = new Intent(MessagesActivity.this,
                     NewMessageActivity.class);
             intentNewMessages.putExtra(NewMessageActivity.KEY_PROFESSOR, mail.getProfessor());
-            intentNewMessages.putExtra(NewMessageActivity.KEY_LAUNCHER, NewMessageActivity.MESSAGE);
             startActivity(intentNewMessages);
         });
     }

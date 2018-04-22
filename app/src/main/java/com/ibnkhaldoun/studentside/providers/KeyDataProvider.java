@@ -85,4 +85,5 @@ public final class KeyDataProvider {
     public static final String JSON_MAIL_DATE = "date";
     public static final String JSON_MAIL_SENDER = "sender";
     public static final String JSON_MAIL_PROFESSOR = "fullNameP";
+    public static final String JSON_MAIL_ID_PROFESSOR= "id_professor";
 }

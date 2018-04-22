@@ -11,6 +11,7 @@ import android.support.v7.app.AlertDialog;
 import com.ibnkhaldoun.studentside.R;
 import com.ibnkhaldoun.studentside.adapters.SubjectProfessorDialogAdapter;
 import com.ibnkhaldoun.studentside.interfaces.IProfessorDialog;
+import com.ibnkhaldoun.studentside.models.MailProfessor;
 import com.ibnkhaldoun.studentside.models.Professor;
 
 import java.util.ArrayList;
@@ -18,12 +19,14 @@ import java.util.List;
 
 
 public class ProfessorListFragment extends DialogFragment {
+
+    public static final String KEY_PROFESSOR = "keyProfessor";
     public IProfessorDialog mInterface;
 
-    public static ProfessorListFragment newInstance(List<Professor> list) {
+    public static ProfessorListFragment newInstance( List<Professor> list) {
 
         Bundle args = new Bundle();
-        args.putParcelableArrayList("Key", (ArrayList<? extends Parcelable>) list);
+        args.putParcelableArrayList(KEY_PROFESSOR, (ArrayList<? extends Parcelable>) list);
         ProfessorListFragment fragment = new ProfessorListFragment();
         fragment.setArguments(args);
         return fragment;
@@ -41,17 +44,19 @@ public class ProfessorListFragment extends DialogFragment {
         assert getActivity() != null && getArguments() != null;
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
-        ArrayList<Professor> professorList = getArguments().getParcelableArrayList("Key");
-        builder.setTitle("Choose a Professor");
+        ArrayList<MailProfessor> professorList = getArguments().getParcelableArrayList(KEY_PROFESSOR);
+        builder.setTitle(R.string.choose_professor);
         ArrayList<String> list = new ArrayList<>();
-        for (Professor professor : professorList) {
-            list.add(professor.getFullName());
-        }
+
+            for (MailProfessor professor : professorList) {
+                list.add(professor.getName());
+            }
+
         assert getContext() != null;
         SubjectProfessorDialogAdapter adapter = new SubjectProfessorDialogAdapter(getContext(), R
                 .layout.subject_professor_dialog_list_item, list);
         builder.setAdapter(adapter, (dialog, which) ->
-                mInterface.onProfessorChosen(list.get(which),
+                mInterface.onProfessorChosen(professorList.get(which).getName(),
                         professorList.get(which).getId()));
         return builder.create();
     }

@@ -215,11 +215,14 @@
     <string name="mark_string">Mark</string>
     <string name="avis_string">Avis</string>
     <string name="note">Note</string>
-    <string name="respect_the_rules_of_communicating">You Should respect the rules of communicating. See our terms and privacy.</string>
+    <string name="respect_the_rules_of_communicating">You Should respect the rules of communicating, any thing does not respond to this terms it\'s user will be banned. See our terms and privacy.</string>
     <string name="modify">Modify</string>
     <string name="remove">Remove</string>
     <string name="try_later_problem_connecting">Try later , problem with connecting</string>
     <string name="this_note_will_be_removed_for_ever">This note will be removed for ever.</string>
     <string name="modify_this_note_to_something_else">Modify this note to something else.</string>
+    <string name="message">Message</string>
+    <string name="subject">Subject</string>
+    <string name="choose_professor">Choose a Professor</string>
 
 </resources>
