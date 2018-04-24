@@ -35,7 +35,6 @@ import static com.ibnkhaldoun.studentside.networking.models.Response.RESPONSE_SU
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_STUDENT_GROUP;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_STUDENT_LEVEL;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_STUDENT_SECTION;
-import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.KEY_ANDROID;
 
 public class LoginActivity extends AppCompatActivity implements LoginTaskListener {
 
@@ -153,12 +152,11 @@ public class LoginActivity extends AppCompatActivity implements LoginTaskListene
     @Override
     public void onLoginCompletionListener(LoginResponse response) {
 
-
         switch (response.getStatus()) {
             case RESPONSE_SUCCESS:
                 PreferencesManager manager = new PreferencesManager(this, PreferencesManager.STUDENT);
                 if (response.isStudent()) {
-                    manager.setLogin(response.getStudent().getId()
+                    manager.setLoginStudent(response.getStudent().getId()
                             , response.getStudent().getFullName()
                             , Levels.getLevelString(Levels.getLevel(response.getStudent().getLevel()))
                             , String.valueOf(response.getStudent().getGroup())
@@ -169,9 +167,9 @@ public class LoginActivity extends AppCompatActivity implements LoginTaskListene
                     RequestPackage request = new RequestPackage.Builder()
                             .addMethod(RequestPackage.POST)
                             .addEndPoint(EndPointsProvider.getSubjectAllEndpoint())
-                            .addParams(JSON_STUDENT_SECTION, manager.getSection())
-                            .addParams(JSON_STUDENT_LEVEL, manager.getLevel())
-                            .addParams(JSON_STUDENT_GROUP, manager.getGroup())
+                            .addParams(JSON_STUDENT_SECTION, manager.getSectionStudent())
+                            .addParams(JSON_STUDENT_LEVEL, manager.getLevelStudent())
+                            .addParams(JSON_STUDENT_GROUP, manager.getGroupStudent())
                             .create();
 
                     Intent intent = new Intent(this, LoadDataService.class);
@@ -190,7 +188,10 @@ public class LoginActivity extends AppCompatActivity implements LoginTaskListene
                     startService(intentSchedule);
                     finish();
                 } else {
+                    //todo add code for handling professor case login
                     Toast.makeText(this, "Login for professor", Toast.LENGTH_SHORT).show();
+
+                    //startActivity(new Intent(this,ProfessorMainActivity.class));
                 }
                 break;
             case RESPONSE_EMAIL_ERROR:

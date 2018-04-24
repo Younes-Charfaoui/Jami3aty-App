@@ -38,7 +38,6 @@ import java.util.ArrayList;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_STUDENT_GROUP;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_STUDENT_LEVEL;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_STUDENT_SECTION;
-import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.KEY_ANDROID;
 
 /**
  * @definition this activity will handle the user subject and it's
@@ -151,9 +150,9 @@ public class SubjectsActivity extends AppCompatActivity implements
             RequestPackage request = new RequestPackage.Builder()
                     .addMethod(RequestPackage.POST)
                     .addEndPoint(EndPointsProvider.getSubjectAllEndpoint())
-                    .addParams(JSON_STUDENT_SECTION, manager.getSection())
-                    .addParams(JSON_STUDENT_LEVEL, manager.getLevel())
-                    .addParams(JSON_STUDENT_GROUP, manager.getGroup())
+                    .addParams(JSON_STUDENT_SECTION, manager.getSectionStudent())
+                    .addParams(JSON_STUDENT_LEVEL, manager.getLevelStudent())
+                    .addParams(JSON_STUDENT_GROUP, manager.getGroupStudent())
                     .create();
 
             intent.putExtra(LoadDataService.KEY_REQUEST, request);

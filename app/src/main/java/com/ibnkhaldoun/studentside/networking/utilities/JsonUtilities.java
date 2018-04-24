@@ -5,7 +5,8 @@ import android.util.SparseArray;
 
 import com.ibnkhaldoun.studentside.models.Comment;
 import com.ibnkhaldoun.studentside.models.Display;
-import com.ibnkhaldoun.studentside.models.Mark;
+import com.ibnkhaldoun.studentside.models.MailProfessor;
+import com.ibnkhaldoun.studentside.models.MarkItem;
 import com.ibnkhaldoun.studentside.models.Message;
 import com.ibnkhaldoun.studentside.models.Notification;
 import com.ibnkhaldoun.studentside.models.Professor;
@@ -41,6 +42,9 @@ import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_MAIL_ME
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_MAIL_PROFESSOR;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_MAIL_SENDER;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_MAIL_SUBJECT;
+import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_MARK_COURSE;
+import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_MARK_TD;
+import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_MARK_TP;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_NAME_SCHEDULE;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_NOTIFICATION_SEEN;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_PLACE_SCHEDULE;
@@ -57,6 +61,7 @@ import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_PROFESS
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_PROFESSOR_FIRST_NAME;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_PROFESSOR_ID;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_PROFESSOR_LAST_NAME;
+import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_PROFESSOR_NAME;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_STUDENT_AVERAGE;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_STUDENT_CONFIRMED;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_STUDENT_EMAIL;
@@ -70,6 +75,7 @@ import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_SUBJECT
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_SUBJECT_CONTENT;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_SUBJECT_CREDIT;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_SUBJECT_DATA;
+import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_SUBJECT_ID;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_SUBJECT_LEVEL;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_SUBJECT_PROFESSOR_COURSE;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_SUBJECT_PROFESSOR_TD;
@@ -179,9 +185,37 @@ public class JsonUtilities {
 
     }
 
-    public static ArrayList<Mark> getMarkList(String response) {
-        // TODO: 14/03/2018 add the code to parse the mark response
-        return null;
+    public static ArrayList<MarkItem> getMarkList(String response) {
+        ArrayList<MarkItem> marks = new ArrayList<>();
+        Log.i(TAG, "getMarkList: " + response);
+        try {
+            JSONObject root = new JSONObject(response);
+            if (root.getInt(KEY_JSON_STATUS) != 200) throw new JSONException("was not 200");
+            JSONArray objects = root.getJSONArray(KEY_JSON_DATA);
+            for (int i = 0; i < objects.length(); i++) {
+                long idSubject = objects.getJSONObject(i).getLong(JSON_SUBJECT_ID);
+                String tdMark = objects.getJSONObject(i).getString(JSON_MARK_TD);
+                String course = objects.getJSONObject(i).getString(JSON_MARK_COURSE);
+                String tpMark = objects.getJSONObject(i).getString(JSON_MARK_TP);
+                String title = objects.getJSONObject(i).getString(JSON_SUBJECT_TITLE);
+                String shortTitle = objects.getJSONObject(i).getString(JSON_SUBJECT_SHORT_TITLE);
+
+                Log.i(TAG, "getMarkList: " + i);
+                Log.i(TAG, "getMarkList: course " + course);
+                Log.i(TAG, "getMarkList: td " + tdMark);
+                Log.i(TAG, "getMarkList: tp " + tpMark);
+                marks.add(new MarkItem(title,
+                        shortTitle,
+                        course == null ? -1f : Float.parseFloat(course),
+                        tdMark == null ? -1f : Float.parseFloat(tdMark),
+                        tpMark == null ? -1f : Float.parseFloat(tpMark),
+                        idSubject));
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return marks;
     }
 
     public static ArrayList<Message> getMailList(String response) {
@@ -363,5 +397,21 @@ public class JsonUtilities {
         Log.i(TAG, "getStatusCode: " + response);
         JSONObject object = new JSONObject(response);
         return object.getInt(KEY_JSON_STATUS);
+    }
+
+    public static ArrayList<MailProfessor> getProfessorList(String data) {
+        ArrayList<MailProfessor> professors = new ArrayList<>();
+        try {
+            JSONObject root = new JSONObject(data);
+            JSONArray objects = root.getJSONArray(KEY_JSON_DATA);
+            for (int i = 0; i < objects.length(); i++) {
+                String id = objects.getJSONObject(i).getString(JSON_PROFESSOR_ID);
+                String name = objects.getJSONObject(i).getString(JSON_PROFESSOR_NAME);
+                professors.add(new MailProfessor(id, name));
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return professors;
     }
 }

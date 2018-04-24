@@ -2,26 +2,17 @@ package com.ibnkhaldoun.studentside.activities;
 
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.ibnkhaldoun.studentside.R;
 import com.ibnkhaldoun.studentside.Utilities.PreferencesManager;
 import com.ibnkhaldoun.studentside.Utilities.Utilities;
-import com.ibnkhaldoun.studentside.asyncTask.ResponseAsyncTask;
 import com.ibnkhaldoun.studentside.models.Message;
-import com.ibnkhaldoun.studentside.networking.models.RequestPackage;
-import com.ibnkhaldoun.studentside.networking.utilities.NetworkUtilities;
-import com.ibnkhaldoun.studentside.providers.EndPointsProvider;
 
 import static com.ibnkhaldoun.studentside.Utilities.PreferencesManager.STUDENT;
-import static com.ibnkhaldoun.studentside.networking.models.RequestPackage.POST;
-import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_MAIL_ID2;
 
 public class MessageDetailActivity extends AppCompatActivity {
 
@@ -58,12 +49,12 @@ public class MessageDetailActivity extends AppCompatActivity {
             senderShortNameTextView.setText(Utilities.getProfessorShortName(message.getProfessor()));
             circle.setColor(Utilities.getCircleColor(this));
             senderNameTextView.setText(message.getProfessor());
-            receiverTextView.setText(String.format("to %s", manager.getFullName()));
+            receiverTextView.setText(String.format("to %s", manager.getFullNameStudent()));
         } else {
 
-            senderShortNameTextView.setText(Utilities.getStudentShortName(manager.getFullName()));
+            senderShortNameTextView.setText(Utilities.getStudentShortName(manager.getFullNameStudent()));
             circle.setColor(Utilities.getCircleColor(this));
-            senderNameTextView.setText(manager.getFullName());
+            senderNameTextView.setText(manager.getFullNameStudent());
             receiverTextView.setText(String.format("to %s", message.getProfessor()));
         }
 
@@ -99,7 +90,7 @@ public class MessageDetailActivity extends AppCompatActivity {
                                 RequestPackage request = new RequestPackage.Builder()
                                         .addMethod(POST)
                                         .addEndPoint(EndPointsProvider.getRemoveMailEndPoint())
-                                        .addParams(JSON_MAIL_ID2, String.valueOf(message.getId()))
+                                        .addParams(JSON_MAIL_ID2, String.valueOf(message.getIdStudent()))
                                         .create();
                                 ResponseAsyncTask task = new ResponseAsyncTask(response -> {
                                     if (response.getStatus() == 200) {

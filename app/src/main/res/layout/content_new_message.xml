@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,51 +9,64 @@
     tools:context="com.ibnkhaldoun.studentside.activities.NewMessageActivity"
     tools:showIn="@layout/activity_new_message">
 
-    <RelativeLayout
+    <ImageView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="16dp">
+        android:layout_height="match_parent"
+        android:alpha=".5"
+        android:contentDescription="@null"
+        android:scaleType="centerCrop"
+        android:src="@drawable/hami" />
 
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/new_message_text_input_subject"
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            app:counterEnabled="true"
-            app:counterMaxLength="50">
+            android:padding="16dp">
 
-            <android.support.design.widget.TextInputEditText
-                android:id="@+id/new_message_text_edit_subject"
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/new_message_text_input_subject"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:hint="@string/subject"
-                android:maxLength="50"
-                android:singleLine="true"
-                tools:text="fjksdhfjkhsdfkjhhfjsdhfkjshdfkjhsdkfjhskdjfhhfjsdkhfkjsdhfkjhsdfkjhsdkjf" />
-        </android.support.design.widget.TextInputLayout>
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                app:counterEnabled="true"
+                app:counterMaxLength="50">
 
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/new_message_text_input_message"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/new_message_text_input_subject"
-            app:counterEnabled="true"
-            app:counterMaxLength="500">
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/new_message_text_edit_subject"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="@string/subject"
+                    android:maxLength="50"
+                    android:singleLine="true"
+                    tools:text="fjksdhfjkhsdfkjhhfjsdhfkjshdfkjhsdkfjhskdjfhhfjsdkhfkjsdhfkjhsdfkjhsdkjf" />
+            </android.support.design.widget.TextInputLayout>
 
-            <android.support.design.widget.TextInputEditText
-                android:id="@+id/new_message_text_edit_message"
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/new_message_text_input_message"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:hint="@string/message"
-                android:maxLength="500"
-                tools:text="fjksdhfjkhcssdfkjhhfjsdhfkjshdfkjhsdkfjhskdjfhhfjsdkhfkjsdhfkjhsdfkjhsddjnzjdnazkjanzdkjanzdkjnadjakzdnkzadnjnzadkazdnkazdnkzdnkdnkzdnkjdnadnkadjkjffjksdhfjkhsdfkjhhfjsdhfkjshdfkjhsdkfjhskdjfhhfjsdkhfkjsdhfkjhsdfkjhsddjnzjdnazkjanzdkjanzdkjnadjakzdnkzadnjnzadkazdnkazdnkzdnkdnkzdnkjdnadnkadjkjffjksdhfjkhsdfkjhhfjsdhfkjshdfkjhsdkfjhskdjfhhfjsdkhfkjsdhfkjhsdfkjhsddjnzjdnazkjanzdkjanzdkjnadjakzdnkzadnjnzadkazdnkazdnkzdnkdnkzdnkjdnadnkadjkjffjksdhfjkhsdfkjhhfjsdhfkjshdfkjhsdkfjhskdjfhhfjsdkhfkjsdhfkjhs" />
-        </android.support.design.widget.TextInputLayout>
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/new_message_text_input_subject"
+                app:counterEnabled="true"
+                app:counterMaxLength="500">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/new_message_text_input_message"
-            android:text="@string/respect_the_rules_of_communicating"
-            android:textStyle="italic" />
-    </RelativeLayout>
-</ScrollView>
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/new_message_text_edit_message"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="@string/message"
+                    android:maxLength="500"
+                    tools:text="fjksdhfjkhcssdfkjhhfjsdhfkjshdfkjhsdkfjhskdjfhhfjsdkhfkjsdhfkjhsdfkjhsddjnzjdnazkjanzdkjanzdkjnadjakzdnkzadnjnzadkazdnkazdnkzdnkdnkzdnkjdnadnkadjkjffjksdhfjkhsdfkjhhfjsdhfkjshdfkjhsdkfjhskdjfhhfjsdkhfkjsdhfkjhsdfkjhsddjnzjdnazkjanzdkjanzdkjnadjakzdnkzadnjnzadkazdnkazdnkzdnkdnkzdnkjdnadnkadjkjffjksdhfjkhsdfkjhhfjsdhfkjshdfkjhsdkfjhskdjfhhfjsdkhfkjsdhfkjhsdfkjhsddjnzjdnazkjanzdkjanzdkjnadjakzdnkzadnjnzadkazdnkazdnkzdnkdnkzdnkjdnadnkadjkjffjksdhfjkhsdfkjhhfjsdhfkjshdfkjhsdkfjhskdjfhhfjsdkhfkjsdhfkjhs" />
+            </android.support.design.widget.TextInputLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/new_message_text_input_message"
+                android:text="@string/respect_the_rules_of_communicating"
+                android:textStyle="italic" />
+        </RelativeLayout>
+    </ScrollView>
+</FrameLayout>

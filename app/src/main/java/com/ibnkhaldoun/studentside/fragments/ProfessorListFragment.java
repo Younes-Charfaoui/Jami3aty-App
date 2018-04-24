@@ -23,7 +23,7 @@ public class ProfessorListFragment extends DialogFragment {
     public static final String KEY_PROFESSOR = "keyProfessor";
     public IProfessorDialog mInterface;
 
-    public static ProfessorListFragment newInstance( List<Professor> list) {
+    public static ProfessorListFragment newInstance( List<MailProfessor> list) {
 
         Bundle args = new Bundle();
         args.putParcelableArrayList(KEY_PROFESSOR, (ArrayList<? extends Parcelable>) list);

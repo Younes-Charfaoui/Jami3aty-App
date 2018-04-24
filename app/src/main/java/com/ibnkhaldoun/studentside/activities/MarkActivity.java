@@ -26,6 +26,7 @@ import com.ibnkhaldoun.studentside.Utilities.PreferencesManager;
 import com.ibnkhaldoun.studentside.adapters.MarksAdapter;
 import com.ibnkhaldoun.studentside.database.DatabaseContract;
 import com.ibnkhaldoun.studentside.models.Mark;
+import com.ibnkhaldoun.studentside.models.MarkItem;
 import com.ibnkhaldoun.studentside.networking.models.RequestPackage;
 import com.ibnkhaldoun.studentside.networking.utilities.NetworkUtilities;
 import com.ibnkhaldoun.studentside.providers.EndPointsProvider;
@@ -36,7 +37,7 @@ import java.util.ArrayList;
 
 import static com.ibnkhaldoun.studentside.Utilities.PreferencesManager.STUDENT;
 
-public class MarkActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
+public class MarkActivity extends AppCompatActivity {
 
     public static final String KEY_MARKS = "keyMarks";
     private static final int ID_MARK_LOADER = 1182;
@@ -48,7 +49,7 @@ public class MarkActivity extends AppCompatActivity implements LoaderManager.Loa
     private BroadcastReceiver mMarkReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            ArrayList<Mark> list = intent.getParcelableArrayListExtra(KEY_MARKS);
+            ArrayList<MarkItem> list = intent.getParcelableArrayListExtra(KEY_MARKS);
             mLoadingProgressBar.setVisibility(View.GONE);
             if (list.size() != 0) {
                 mAdapter.swapList(list);
@@ -74,15 +75,17 @@ public class MarkActivity extends AppCompatActivity implements LoaderManager.Loa
 
         if (getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportLoaderManager().
-                initLoader(ID_MARK_LOADER, null, this)
-                .forceLoad();
+//        getSupportLoaderManager().
+//                initLoader(ID_MARK_LOADER, null, this)
+//                .forceLoad();
 
         mEmptyLayout.setOnClickListener(v ->
                 getNewMarkIfThereIs()
         );
 
         LocalBroadcastManager.getInstance(this).registerReceiver(mMarkReceiver, new IntentFilter(LoadDataService.MARK_ACTION));
+
+        getNewMarkIfThereIs();
     }
 
     private void setupRecyclerView() {
@@ -112,29 +115,29 @@ public class MarkActivity extends AppCompatActivity implements LoaderManager.Loa
         return true;
     }
 
-    @Override
-    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        return new CursorLoader(
-                this, DatabaseContract.MarkEntry.CONTENT_MARK_URI,
-                new String[]{"*"}, null, null, null
-        );
-    }
+//    @Override
+//    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+//        return new CursorLoader(
+//                this, DatabaseContract.MarkEntry.CONTENT_MARK_URI,
+//                new String[]{"*"}, null, null, null
+//        );
+//    }
 
-    @Override
-    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        mLoadingProgressBar.setVisibility(View.GONE);
-        if (data.getCount() != 0) {
-            mAdapter.swapCursor(data);
-            mRecyclerView.setVisibility(View.VISIBLE);
-        } else {
-            mEmptyLayout.setVisibility(View.VISIBLE);
-        }
-    }
+//    @Override
+//    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+//        mLoadingProgressBar.setVisibility(View.GONE);
+//        if (data.getCount() != 0) {
+//            mAdapter.swapCursor(data);
+//            mRecyclerView.setVisibility(View.VISIBLE);
+//        } else {
+//            mEmptyLayout.setVisibility(View.VISIBLE);
+//        }
+//    }
 
-    @Override
-    public void onLoaderReset(Loader<Cursor> loader) {
-        mAdapter.swapCursor(null);
-    }
+//    @Override
+//    public void onLoaderReset(Loader<Cursor> loader) {
+//        mAdapter.swapCursor(null);
+//    }
 
     private void getNewMarkIfThereIs() {
         if (NetworkUtilities.isConnected(this)) {
@@ -145,7 +148,8 @@ public class MarkActivity extends AppCompatActivity implements LoaderManager.Loa
             RequestPackage request = new RequestPackage.Builder()
                     .addEndPoint(EndPointsProvider.getMarksEndPoint())
                     .addMethod(RequestPackage.POST)
-                    .addParams(KeyDataProvider.JSON_STUDENT_ID, manager.getId())
+                    .addParams(KeyDataProvider.JSON_STUDENT_ID, manager.getIdStudent())
+                    .addParams(KeyDataProvider.KEY_AJAX, KeyDataProvider.KEY_ANDROID)
                     .create();
 
             Intent intent = new Intent(this, LoadDataService.class);

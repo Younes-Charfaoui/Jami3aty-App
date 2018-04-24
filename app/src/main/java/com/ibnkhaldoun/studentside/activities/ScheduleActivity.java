@@ -205,9 +205,9 @@ public class ScheduleActivity extends AppCompatActivity
             request.addMethod(RequestPackage.POST);
             PreferencesManager manager = new PreferencesManager(this, STUDENT);
 
-            request.addParams(JSON_STUDENT_GROUP, manager.getGroup())
-                    .addParams(JSON_STUDENT_LEVEL, manager.getLevel())
-                    .addParams(JSON_STUDENT_SECTION, manager.getSection());
+            request.addParams(JSON_STUDENT_GROUP, manager.getGroupStudent())
+                    .addParams(JSON_STUDENT_LEVEL, manager.getLevelStudent())
+                    .addParams(JSON_STUDENT_SECTION, manager.getSectionStudent());
             Intent intentService = new Intent(this, LoadDataService.class);
             intentService.putExtra(LoadDataService.KEY_REQUEST, request.create());
             intentService.putExtra(LoadDataService.KEY_ACTION, LoadDataService.SCHEDULE_TYPE);
@@ -324,9 +324,9 @@ public class ScheduleActivity extends AppCompatActivity
                 PreferencesManager manager = new PreferencesManager(this, STUDENT);
                 //building the uri with content://<Authority>/schedules/level/section/group
                 Uri pathToSchedule = DatabaseContract.ScheduleEntry.CONTENT_SCHEDULE_URI.buildUpon()
-                        .appendEncodedPath(manager.getLevel())
-                        .appendEncodedPath(manager.getSection())
-                        .appendEncodedPath(manager.getGroup())
+                        .appendEncodedPath(manager.getLevelStudent())
+                        .appendEncodedPath(manager.getSectionStudent())
+                        .appendEncodedPath(manager.getGroupStudent())
                         .build();
                 Log.i("Schedule", "onCreateLoader: " + pathToSchedule.toString());
                 return new CursorLoader(this,

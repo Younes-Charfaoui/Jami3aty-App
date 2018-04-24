@@ -62,7 +62,7 @@ public class NewMessageActivity extends AppCompatActivity {
                             .addParams(KeyDataProvider.KEY_AJAX, KeyDataProvider.KEY_ANDROID)
                             .addParams(KeyDataProvider.JSON_MAIL_MESSAGE, mMessageEditText.getText().toString())
                             .addParams(KeyDataProvider.JSON_MAIL_SUBJECT, mSubjectEditText.getText().toString())
-                            .addParams(KeyDataProvider.JSON_STUDENT_ID, new PreferencesManager(this, PreferencesManager.STUDENT).getId())
+                            .addParams(KeyDataProvider.JSON_STUDENT_ID, new PreferencesManager(this, PreferencesManager.STUDENT).getIdStudent())
                             .addParams(KeyDataProvider.JSON_MAIL_ID_PROFESSOR, getIntent().getStringExtra(KEY_ID))
                             .create();
 

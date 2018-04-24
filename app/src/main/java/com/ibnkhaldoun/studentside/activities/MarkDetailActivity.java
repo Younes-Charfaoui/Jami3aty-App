@@ -3,17 +3,19 @@ package com.ibnkhaldoun.studentside.activities;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.ibnkhaldoun.studentside.R;
 import com.ibnkhaldoun.studentside.Utilities.AverageCalculus;
 import com.ibnkhaldoun.studentside.models.Mark;
+import com.ibnkhaldoun.studentside.models.MarkItem;
 
 public class MarkDetailActivity extends AppCompatActivity {
 
     public static final String KEY_MARK = "keyMark";
     private TextView mExamTextView, mTdTextView, mTpTextView,
-            mAverageTextView, mSemesterAverageTextView;
+            mAverageTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,16 +24,16 @@ public class MarkDetailActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        assert getSupportActionBar() != null;
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if (getSupportActionBar() != null)
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        Mark mark = getIntent().getParcelableExtra(KEY_MARK);
+        MarkItem mark = getIntent().getParcelableExtra(KEY_MARK);
 
         mExamTextView = findViewById(R.id.exam_mark);
         mTdTextView = findViewById(R.id.td_mark);
         mTpTextView = findViewById(R.id.tp_mark);
         mAverageTextView = findViewById(R.id.average);
-        mSemesterAverageTextView = findViewById(R.id.total_average);
+
 
         mExamTextView.setText(String.valueOf(mark.getExam()));
         mTdTextView.setText(String.valueOf(mark.getTD()));
@@ -40,7 +42,13 @@ public class MarkDetailActivity extends AppCompatActivity {
                 mark.getTD(),
                 mark.getTD(),
                 mark.getTD())));
-        mSemesterAverageTextView.setText(String.valueOf(MarkActivity.AVERAGE));
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+        }
+        return true;
+    }
 }

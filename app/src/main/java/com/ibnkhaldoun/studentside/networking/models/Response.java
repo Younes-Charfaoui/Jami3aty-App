@@ -37,4 +37,8 @@ public class Response {
     public void setStatus(int status) {
         this.status = status;
     }
+
+    public String getData() {
+        return data;
+    }
 }

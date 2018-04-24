@@ -45,7 +45,6 @@ import static com.ibnkhaldoun.studentside.Utilities.PreferencesManager.STUDENT;
 import static com.ibnkhaldoun.studentside.networking.models.RequestPackage.POST;
 import static com.ibnkhaldoun.studentside.networking.models.Response.IO_EXCEPTION;
 import static com.ibnkhaldoun.studentside.networking.models.Response.JSON_EXCEPTION;
-import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_POST_ID;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_POST_ID2;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_SAVE_ACTION;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_STUDENT_ID;
@@ -224,7 +223,7 @@ public class SavedActivity extends AppCompatActivity
             RequestPackage request = new RequestPackage.Builder()
                     .addEndPoint(EndPointsProvider.getSavedEndPoint())
                     .addMethod(POST)
-                    .addParams(JSON_STUDENT_ID, new PreferencesManager(this, STUDENT).getId())
+                    .addParams(JSON_STUDENT_ID, new PreferencesManager(this, STUDENT).getIdStudent())
                     .create();
 
             Intent serviceIntent = new Intent(this, LoadDataService.class);
@@ -278,7 +277,7 @@ public class SavedActivity extends AppCompatActivity
                                 .addEndPoint(EndPointsProvider.getUnsaveEndpoint())
                                 .addMethod(POST)
                                 .addParams(JSON_STUDENT_ID,
-                                        new PreferencesManager(this, PreferencesManager.STUDENT).getId())
+                                        new PreferencesManager(this, PreferencesManager.STUDENT).getIdStudent())
                                 .addParams(JSON_POST_ID2, String.valueOf(id))
                                 .addParams(JSON_SAVE_ACTION, String.valueOf(0))
                                 .create();

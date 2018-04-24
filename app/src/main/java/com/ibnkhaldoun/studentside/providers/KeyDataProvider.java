@@ -30,6 +30,7 @@ public final class KeyDataProvider {
     public static final String JSON_PROFESSOR_LAST_NAME = "last_name";
     public static final String JSON_PROFESSOR_DEGREE = "degree";
     public static final String JSON_PROFESSOR_EMAIL = "email";
+    public static final String JSON_PROFESSOR_NAME = "fullName";
 
     public final static String JSON_SUBJECT_ID = "_id_subject";
     public final static String JSON_SUBJECT_DATA = "data";
@@ -86,4 +87,9 @@ public final class KeyDataProvider {
     public static final String JSON_MAIL_SENDER = "sender";
     public static final String JSON_MAIL_PROFESSOR = "fullNameP";
     public static final String JSON_MAIL_ID_PROFESSOR= "id_professor";
+
+
+    public static final String JSON_MARK_TD= "td_mark";
+    public static final String JSON_MARK_TP= "tp_mark";
+    public static final String JSON_MARK_COURSE= "course_mark";
 }

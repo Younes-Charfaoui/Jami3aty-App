@@ -1,0 +1,55 @@
+{
+  "status": 200,
+  "data": [
+    {
+      "_id_subject": "40",
+      "_id_student": "10101010",
+      "td_mark": "18",
+      "tp_mark": "18",
+      "course_mark": "20",
+      "title": "Developing Android Apps",
+      "short_title": "DAA",
+      "level": "6"
+    },
+    {
+      "_id_subject": "41",
+      "_id_student": "10101010",
+      "td_mark": null,
+      "tp_mark": null,
+      "course_mark": "20",
+      "title": "Scientific Redaction",
+      "short_title": "SR",
+      "level": "6"
+    },
+    {
+      "_id_subject": "42",
+      "_id_student": "10101010",
+      "td_mark": "19",
+      "tp_mark": null,
+      "course_mark": "20",
+      "title": "Information Security",
+      "short_title": "IS",
+      "level": "6"
+    },
+    {
+      "_id_subject": "43",
+      "_id_student": "10101010",
+      "td_mark": "20",
+      "tp_mark": null,
+      "course_mark": "20",
+      "title": "Cryptography",
+      "short_title": "CPT",
+      "level": "6"
+    },
+    {
+      "_id_subject": "44",
+      "_id_student": "10101010",
+      "td_mark": "18",
+      "tp_mark": null,
+      "course_mark": "20",
+      "title": "Database Administration",
+      "short_title": "DBA",
+      "level": "6"
+    }
+  ]
+}

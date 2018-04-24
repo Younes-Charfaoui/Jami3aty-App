@@ -14,6 +14,7 @@ import com.ibnkhaldoun.studentside.models.Comment;
 import com.ibnkhaldoun.studentside.models.Display;
 import com.ibnkhaldoun.studentside.models.Mail;
 import com.ibnkhaldoun.studentside.models.Mark;
+import com.ibnkhaldoun.studentside.models.MarkItem;
 import com.ibnkhaldoun.studentside.models.Message;
 import com.ibnkhaldoun.studentside.models.Notification;
 import com.ibnkhaldoun.studentside.models.Saved;
@@ -260,14 +261,14 @@ public class LoadDataService extends IntentService {
     private void markCall(RequestPackage request) {
         try {
             String response = HttpUtilities.getData(request);
-            ArrayList<Mark> markList = JsonUtilities.getMarkList(response);
+            ArrayList<MarkItem> markList = JsonUtilities.getMarkList(response);
             Intent intentMark = new Intent(MARK_ACTION);
             intentMark.putExtra(MarkActivity.KEY_MARKS, markList);
             LocalBroadcastManager.getInstance(this).sendBroadcast(intentMark);
-            Intent intentDatabase = new Intent(this, DatabaseService.class);
-            intentDatabase.putExtra(KEY_CONTENT_DATA, markList);
-            intentDatabase.putExtra(KEY_ACTION, MARK_TYPE);
-            startService(intentDatabase);
+//            Intent intentDatabase = new Intent(this, DatabaseService.class);
+//            intentDatabase.putExtra(KEY_CONTENT_DATA, markList);
+//            intentDatabase.putExtra(KEY_ACTION, MARK_TYPE);
+//            startService(intentDatabase);
         } catch (IOException e) {
             e.printStackTrace();
         }

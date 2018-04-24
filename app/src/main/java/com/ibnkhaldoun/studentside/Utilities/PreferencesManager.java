@@ -4,7 +4,6 @@ package com.ibnkhaldoun.studentside.Utilities;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -12,10 +11,12 @@ import java.util.Set;
 
 
 public class PreferencesManager {
+
     public static final int CONFIG = 1;
     public static final int STUDENT = 2;
     public static final int SUBJECT = 3;
     public static final int UNIVERSITY = 4;
+    public static final int PROFESSOR = 5;
 
     private static final String TAG = "manager";
     private static final int PRIVATE_MODE = 0;
@@ -23,6 +24,8 @@ public class PreferencesManager {
     private static final String PREFERENCE_STUDENT_NAME = "student";
     private static final String PREFERENCE_SUBJECTS_NAME = "subjects";
     private static final String PREFERENCE_UNIVERSITY_NAME = "university";
+    private static final String PREFERENCE_PROFESSOR_NAME = "professor";
+
     private static final String FIRST_TIME = "isFirstTime";
     private static final String LOGIN = "login";
     private static final String FULL_NAME = "fullName";
@@ -52,6 +55,8 @@ public class PreferencesManager {
                 return PREFERENCE_SUBJECTS_NAME;
             case UNIVERSITY:
                 return PREFERENCE_UNIVERSITY_NAME;
+            case PROFESSOR:
+                return PREFERENCE_PROFESSOR_NAME;
             default:
                 return PREFERENCE_CONFIGURATION_NAME;
         }
@@ -70,8 +75,14 @@ public class PreferencesManager {
         return mPreferences.getBoolean(LOGIN, false);
     }
 
-    public void setLogin(String id, String fullName, String grade,
-                         String group, String section, String level) {
+    public void setLoginProfessor(String id) {
+        mEditor.putBoolean(LOGIN, true);
+        mEditor.putString(ID, id);
+        mEditor.apply();
+    }
+
+    public void setLoginStudent(String id, String fullName, String grade,
+                                String group, String section, String level) {
         mEditor.putBoolean(LOGIN, true);
         mEditor.putString(ID, id);
         mEditor.putString(FULL_NAME, fullName);
@@ -82,27 +93,27 @@ public class PreferencesManager {
         mEditor.commit();
     }
 
-    public String getId() {
+    public String getIdStudent() {
         return mPreferences.getString(ID, null);
     }
 
-    public String getGroup() {
+    public String getGroupStudent() {
         return mPreferences.getString(GROUP, null);
     }
 
-    public String getSection() {
+    public String getSectionStudent() {
         return mPreferences.getString(SECTION, null);
     }
 
-    public String getLevel() {
+    public String getLevelStudent() {
         return mPreferences.getString(LEVEL, null);
     }
 
-    public String getGrade() {
+    public String getGradeStudent() {
         return mPreferences.getString(GRADE, null);
     }
 
-    public String getFullName() {
+    public String getFullNameStudent() {
         return mPreferences.getString(FULL_NAME, null);
     }
 
@@ -122,7 +133,7 @@ public class PreferencesManager {
         return mPreferences.getStringSet(SUBJECTS, null) != null;
     }
 
-    void removePreference(){
+    void removePreference() {
         mEditor.clear().commit();
     }
 }

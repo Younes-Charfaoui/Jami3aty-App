@@ -15,6 +15,7 @@ import com.ibnkhaldoun.studentside.Utilities.Utilities;
 import com.ibnkhaldoun.studentside.activities.MarkDetailActivity;
 import com.ibnkhaldoun.studentside.database.DatabaseContract;
 import com.ibnkhaldoun.studentside.models.Mark;
+import com.ibnkhaldoun.studentside.models.MarkItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +23,7 @@ import java.util.List;
 
 public class MarksAdapter extends RecyclerView.Adapter<MarksAdapter.MarksViewHolder> {
 
-    private List<Mark> mMarkList = new ArrayList<>();
+    private List<MarkItem> mMarkList = new ArrayList<>();
     private Context mContext;
 
     public MarksAdapter(Context context) {
@@ -39,7 +40,7 @@ public class MarksAdapter extends RecyclerView.Adapter<MarksAdapter.MarksViewHol
 
     @Override
     public void onBindViewHolder(MarksViewHolder holder, int position) {
-        Mark mark = mMarkList.get(position);
+        MarkItem mark = mMarkList.get(position);
         holder.mShortSubjectTextView.setText(mark.getShortSubjectName());
         holder.mLinearSubject.setBackgroundColor(Utilities.getCircleColor(mark.getSubjectName().charAt(0), mContext));
         holder.mShortSubjectTextView.setBackgroundColor(Utilities.getCircleColor(mark.getShortSubjectName().charAt(0), mContext));
@@ -67,36 +68,8 @@ public class MarksAdapter extends RecyclerView.Adapter<MarksAdapter.MarksViewHol
         return mMarkList.size();
     }
 
-    public void swapCursor(Cursor data) {
-        if (data != null) {
-            mMarkList = new ArrayList<>();
-            while (data.moveToNext()) {
-                String subjectName =
-                        data.getString(data.getColumnIndex(DatabaseContract.MarkEntry.COLUMN_TITLE_SUBJECT));
-                String subjectShortName =
-                        data.getString(data.getColumnIndex(DatabaseContract.MarkEntry.COLUMN_SHORT_TITLE));
-                float tdMark =
-                        Float.parseFloat(data.getString(data.getColumnIndex(DatabaseContract.MarkEntry.COLUMN_TD_MARK)));
-                float tpMark =
-                        Float.parseFloat(data.getString(data.getColumnIndex(DatabaseContract.MarkEntry.COLUMN_TP_MARK)));
-                float examMark =
-                        Float.parseFloat(data.getString(data.getColumnIndex(DatabaseContract.MarkEntry.COLUMN_EXAM_MARK)));
-                String tdProfessor =
-                        data.getString(data.getColumnIndex(DatabaseContract.SubjectEntry.COLUMN_TD_PROFESSOR));
-                String tpProfessor =
-                        data.getString(data.getColumnIndex(DatabaseContract.SubjectEntry.COLUMN_TP_PROFESSOR));
-                String courseProfessor =
-                        data.getString(data.getColumnIndex(DatabaseContract.SubjectEntry.COLUMN_COURSE_PROFESSOR));
-                long id = data.getLong(data.getColumnIndex(DatabaseContract.MarkEntry.COLUMN_ID));
-                mMarkList.add(new Mark(id, subjectName, subjectShortName,
-                        examMark, tdMark, tpMark,
-                        courseProfessor, tdProfessor, tpProfessor));
-            }
-            notifyDataSetChanged();
-        }
-    }
 
-    public void swapList(List<Mark> markList) {
+    public void swapList(List<MarkItem> markList) {
         this.mMarkList = markList;
         notifyDataSetChanged();
     }

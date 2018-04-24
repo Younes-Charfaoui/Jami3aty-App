@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import com.ibnkhaldoun.studentside.R;
 
 public class ProfessorMainActivity extends AppCompatActivity {
+
     private FloatingActionButton mAddPostFab;
 
     @Override

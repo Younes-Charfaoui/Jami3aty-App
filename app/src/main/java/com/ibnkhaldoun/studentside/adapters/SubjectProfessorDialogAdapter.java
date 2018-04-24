@@ -35,8 +35,7 @@ public class SubjectProfessorDialogAdapter extends ArrayAdapter<String> {
         TextView textView = convertView.findViewById(R.id.subject_professor_dialog_title);
         textView.setText(mSubjectList.get(position));
         ImageView circleView = convertView.findViewById(R.id.subject_professor_dialog_circle);
-        circleView.setColorFilter(Utilities.getCircleColor(mSubjectList.get(position).charAt(0),
-                getContext()));
+        circleView.setColorFilter(Utilities.getCircleColor(getContext()));
         return convertView;
     }
 

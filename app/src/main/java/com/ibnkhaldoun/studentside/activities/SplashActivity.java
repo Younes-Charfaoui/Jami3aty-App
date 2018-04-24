@@ -21,9 +21,13 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(R.layout.activity_slpash);
         Class classes = WelcomeActivity.class;
         ActivityUtilities.changeStatusBarColorToTransparent(getWindow());
-        PreferencesManager manager = new PreferencesManager(this,STUDENT);
+        PreferencesManager manager = new PreferencesManager(this, STUDENT);
         if (manager.isLogin()) {
             classes = StudentMainActivity.class;
+        } else if (!new PreferencesManager(this, PreferencesManager.CONFIG).isFirstTimeLaunched()) {
+            classes = LoginActivity.class;
+        } else if (new PreferencesManager(this, PreferencesManager.PROFESSOR).isLogin()) {
+            classes = ProfessorMainActivity.class;
         }
 
         Class finalClasses = classes;

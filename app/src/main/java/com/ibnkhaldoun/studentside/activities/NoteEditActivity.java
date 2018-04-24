@@ -70,9 +70,9 @@ public class NoteEditActivity extends AppCompatActivity implements ISubjectDialo
 
             RequestPackage requestAllSchedule = new RequestPackage.Builder()
                     .addMethod(RequestPackage.POST)
-                    .addParams(JSON_STUDENT_LEVEL, manager.getLevel())
-                    .addParams(JSON_STUDENT_SECTION, manager.getSection())
-                    .addParams(JSON_STUDENT_GROUP, manager.getGroup())
+                    .addParams(JSON_STUDENT_LEVEL, manager.getLevelStudent())
+                    .addParams(JSON_STUDENT_SECTION, manager.getSectionStudent())
+                    .addParams(JSON_STUDENT_GROUP, manager.getGroupStudent())
                     .addEndPoint(EndPointsProvider.getScheduleAllEndpoint())
                     .create();
 
@@ -101,7 +101,7 @@ public class NoteEditActivity extends AppCompatActivity implements ISubjectDialo
             Cursor cursor = getContentResolver().query(pathToNote, new String[]{"*"},
                     DatabaseContract.NoteEntry.COLUMN_USER_ID + " = ?",
                     new String[]{new PreferencesManager(this, PreferencesManager.STUDENT)
-                            .getId()}, null);
+                            .getIdStudent()}, null);
             if (cursor != null) {
                 cursor.moveToFirst();
                 mSubjectEditText.setText(cursor.getString(cursor.getColumnIndex(DatabaseContract.NoteEntry.COLUMN_NOTE_SUBJECT)));
@@ -210,7 +210,7 @@ public class NoteEditActivity extends AppCompatActivity implements ISubjectDialo
         values.put(DatabaseContract.NoteEntry.COLUMN_NOTE_SUBJECT, subject);
         values.put(DatabaseContract.NoteEntry.COLUMN_NOTE_TEXT, note);
         values.put(DatabaseContract.NoteEntry.COLUMN_USER_ID,
-                new PreferencesManager(this, PreferencesManager.STUDENT).getId());
+                new PreferencesManager(this, PreferencesManager.STUDENT).getIdStudent());
         getContentResolver().insert(DatabaseContract.NoteEntry.CONTENT_NOTE_URI, values);
     }
 

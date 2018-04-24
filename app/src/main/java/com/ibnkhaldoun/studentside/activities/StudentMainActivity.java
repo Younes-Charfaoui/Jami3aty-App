@@ -45,16 +45,19 @@ import com.ibnkhaldoun.studentside.fragments.ProfessorListFragment;
 import com.ibnkhaldoun.studentside.interfaces.IDataFragment;
 import com.ibnkhaldoun.studentside.interfaces.IProfessorDialog;
 import com.ibnkhaldoun.studentside.models.Display;
+import com.ibnkhaldoun.studentside.models.MailProfessor;
 import com.ibnkhaldoun.studentside.models.Message;
 import com.ibnkhaldoun.studentside.models.Notification;
 import com.ibnkhaldoun.studentside.networking.models.RequestPackage;
 import com.ibnkhaldoun.studentside.networking.models.Response;
+import com.ibnkhaldoun.studentside.networking.utilities.JsonUtilities;
 import com.ibnkhaldoun.studentside.networking.utilities.NetworkUtilities;
 import com.ibnkhaldoun.studentside.networking.utilities.RequestPackageFactory;
 import com.ibnkhaldoun.studentside.providers.EndPointsProvider;
 import com.ibnkhaldoun.studentside.services.LoadDataService;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static com.ibnkhaldoun.studentside.Utilities.PreferencesManager.STUDENT;
 import static com.ibnkhaldoun.studentside.fragments.BaseMainFragment.INTERNET_ERROR;
@@ -165,20 +168,20 @@ public class StudentMainActivity extends AppCompatActivity
                         .addEndPoint(EndPointsProvider.getProfessorEndpoint())
                         .addMethod(POST)
                         .addParams(KEY_AJAX, KEY_ANDROID)
-                        .addParams(JSON_STUDENT_LEVEL, manager.getLevel())
-                        .addParams(JSON_STUDENT_GROUP, manager.getGroup())
-                        .addParams(JSON_STUDENT_SECTION, manager.getSection())
+                        .addParams(JSON_STUDENT_LEVEL, manager.getLevelStudent())
+                        .addParams(JSON_STUDENT_GROUP, manager.getGroupStudent())
+                        .addParams(JSON_STUDENT_SECTION, manager.getSectionStudent())
                         .create();
 
                 ResponseAsyncTask task = new ResponseAsyncTask(response -> {
                     progressDialog.dismiss();
                     if (response.getStatus() == 200) {
-                        //todo add the code for parsing the professor and displaying ad
+                        List<MailProfessor> professor = JsonUtilities.getProfessorList(response.getData());
                         ProfessorListFragment professorListFragment =
-                                ProfessorListFragment.newInstance(new ArrayList<>());
+                                ProfessorListFragment.newInstance(professor);
                         professorListFragment.show(getSupportFragmentManager(), "TAG");
                     } else {
-                        Toast.makeText(this, "Problem happend , try later", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "Problem happened, try later", Toast.LENGTH_SHORT).show();
                     }
 
                 });
@@ -198,13 +201,13 @@ public class StudentMainActivity extends AppCompatActivity
         GradientDrawable circle = (GradientDrawable) circleImage.getBackground();
 
         PreferencesManager manager = new PreferencesManager(this, STUDENT);
-        String text = Character.toString(Utilities.getFirstName(manager.getFullName()).charAt(0)) +
-                Character.toString(Utilities.getLastName(manager.getFullName()).charAt(0));
+        String text = Character.toString(Utilities.getFirstName(manager.getFullNameStudent()).charAt(0)) +
+                Character.toString(Utilities.getLastName(manager.getFullNameStudent()).charAt(0));
         circleImage.setText(text);
 
-        circle.setColor(Utilities.getCircleColor(manager.getFullName().charAt(0), this));
-        nameHeader.setText(manager.getFullName());
-        branchHeader.setText(manager.getGrade());
+        circle.setColor(Utilities.getCircleColor(manager.getFullNameStudent().charAt(0), this));
+        nameHeader.setText(manager.getFullNameStudent());
+        branchHeader.setText(manager.getGradeStudent());
 
         setupViewPagerAndTabLayout();
 
@@ -391,9 +394,9 @@ public class StudentMainActivity extends AppCompatActivity
             RequestPackage request = new RequestPackage.Builder()
                     .addEndPoint(EndPointsProvider.getDisplays())
                     .addMethod(POST)
-                    .addParams(JSON_STUDENT_GROUP, manager.getGroup())
-                    .addParams(JSON_STUDENT_LEVEL, manager.getLevel())
-                    .addParams(JSON_STUDENT_SECTION, manager.getSection())
+                    .addParams(JSON_STUDENT_GROUP, manager.getGroupStudent())
+                    .addParams(JSON_STUDENT_LEVEL, manager.getLevelStudent())
+                    .addParams(JSON_STUDENT_SECTION, manager.getSectionStudent())
                     .create();
             Intent intent = new Intent(this, LoadDataService.class);
             intent.putExtra(LoadDataService.KEY_REQUEST, request);
@@ -420,7 +423,7 @@ public class StudentMainActivity extends AppCompatActivity
                     .addEndPoint(EndPointsProvider.getNotifications())
                     .addMethod(POST)
                     .addParams(JSON_STUDENT_ID,
-                            new PreferencesManager(this, PreferencesManager.STUDENT).getId())
+                            new PreferencesManager(this, PreferencesManager.STUDENT).getIdStudent())
                     .create();
             Intent intent = new Intent(this, LoadDataService.class);
             intent.putExtra(LoadDataService.KEY_REQUEST, request);
@@ -447,7 +450,7 @@ public class StudentMainActivity extends AppCompatActivity
                     .addMethod(POST)
                     .addEndPoint(EndPointsProvider.getAllMailEndPoint())
                     .addParams(KEY_ANDROID, KEY_ANDROID)
-                    .addParams(JSON_STUDENT_ID, manager.getId())
+                    .addParams(JSON_STUDENT_ID, manager.getIdStudent())
                     .create();
 
             Intent intent = new Intent(this, LoadDataService.class);

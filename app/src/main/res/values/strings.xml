@@ -142,7 +142,7 @@
     <string name="retry_string">Retry</string>
     <string name="search">Search</string>
     <string name="title_activity_professor_main">ProfessorMainActivity</string>
-    <string name="title_activity_new_message">NewMessageActivity</string>
+    <string name="title_activity_new_message">New Message</string>
     <string name="send_string">send</string>
     <string name="save_draft_string">Save draft</string>
     <string name="title_activity_draft">DraftActivity</string>
