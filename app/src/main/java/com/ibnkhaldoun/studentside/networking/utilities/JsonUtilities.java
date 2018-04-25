@@ -200,16 +200,24 @@ public class JsonUtilities {
                 String title = objects.getJSONObject(i).getString(JSON_SUBJECT_TITLE);
                 String shortTitle = objects.getJSONObject(i).getString(JSON_SUBJECT_SHORT_TITLE);
 
-                Log.i(TAG, "getMarkList: " + i);
-                Log.i(TAG, "getMarkList: course " + course);
-                Log.i(TAG, "getMarkList: td " + tdMark);
-                Log.i(TAG, "getMarkList: tp " + tpMark);
-                marks.add(new MarkItem(title,
-                        shortTitle,
-                        course == null ? -1f : Float.parseFloat(course),
-                        tdMark == null ? -1f : Float.parseFloat(tdMark),
-                        tpMark == null ? -1f : Float.parseFloat(tpMark),
-                        idSubject));
+
+                float td, tp, exam;
+                try {
+                    td = Float.parseFloat(tdMark);
+                } catch (NumberFormatException e) {
+                    td = -1f;
+                }
+                try {
+                    tp = Float.parseFloat(tpMark);
+                } catch (NumberFormatException e) {
+                    tp = -1f;
+                }
+                try {
+                    exam = Float.parseFloat(course);
+                } catch (NumberFormatException e) {
+                    exam = -1f;
+                }
+                marks.add(new MarkItem(title, shortTitle, exam, td, tp, idSubject));
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -228,12 +236,14 @@ public class JsonUtilities {
             for (int i = 0; i < objects.length(); i++) {
                 JSONObject object = objects.getJSONObject(i);
                 long id = object.getLong(JSON_MAIL_ID);
+                long idStudent = object.getLong(JSON_STUDENT_ID);
+                long idProfessor = object.getLong(JSON_PROFESSOR_ID);
                 String message = object.getString(JSON_MAIL_MESSAGE);
                 String subject = object.getString(JSON_MAIL_SUBJECT);
                 String date = object.getString(JSON_MAIL_DATE);
                 String professor = object.getString(JSON_MAIL_PROFESSOR);
                 boolean sender = object.getInt(JSON_MAIL_SENDER) == 1;
-                messages.add(new Message(id, sender, subject, message, date, professor));
+                messages.add(new Message(id, idStudent, idProfessor, sender, subject, message, date, professor));
             }
         } catch (JSONException e) {
             e.printStackTrace();

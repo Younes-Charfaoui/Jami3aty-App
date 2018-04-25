@@ -59,6 +59,11 @@
         <item>Mail</item>
     </string-array>
 
+    <string-array name="pager_professor_titles_array_string">
+        <item>Home</item>
+        <item>Mail</item>
+    </string-array>
+
     <string-array name="levels_array_string">
         <item>1 LMD</item>
         <item>2 LMD</item>
@@ -99,7 +104,7 @@
     <string name="forward_string">Forward</string>
     <string name="reply_string">Reply</string>
     <string name="title_activity_display_detail">Post</string>
-    <string name="title_activity_mark_detail">MarkDetailActivity</string>
+    <string name="title_activity_mark_detail">Mark Detail</string>
     <string name="title_activity_mark">Mark</string>
     <string name="title_activity_schedule">Schedule</string>
     <string name="title_activity_notes">Notes</string>
@@ -224,5 +229,7 @@
     <string name="message">Message</string>
     <string name="subject">Subject</string>
     <string name="choose_professor">Choose a Professor</string>
+    <string name="average">Average</string>
+    <string name="title_activity_add_post">AddPostActivity</string>
 
 </resources>

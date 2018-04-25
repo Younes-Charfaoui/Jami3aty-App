@@ -5,8 +5,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class Message implements Parcelable {
-
-    public static final Parcelable.Creator<Message> CREATOR = new Parcelable.Creator<Message>() {
+    public static final Creator<Message> CREATOR = new Creator<Message>() {
         @Override
         public Message createFromParcel(Parcel source) {
             return new Message(source);
@@ -17,12 +16,15 @@ public class Message implements Parcelable {
             return new Message[size];
         }
     };
-    private long id;
+    private long id, idStudent, idProfessor;
     private boolean in;
     private String subject, text, date, professor;
 
-    public Message(long id, boolean in, String subject, String text, String date, String professor) {
+    public Message(long id, long idStudent, long idProfessor, boolean in, String subject, String text, String date, String professor) {
+
         this.id = id;
+        this.idStudent = idStudent;
+        this.idProfessor = idProfessor;
         this.in = in;
         this.subject = subject;
         this.text = text;
@@ -31,11 +33,38 @@ public class Message implements Parcelable {
     }
 
     protected Message(Parcel in) {
+        this.id = in.readLong();
+        this.idStudent = in.readLong();
+        this.idProfessor = in.readLong();
         this.in = in.readByte() != 0;
         this.subject = in.readString();
         this.text = in.readString();
         this.date = in.readString();
         this.professor = in.readString();
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public long getIdStudent() {
+        return idStudent;
+    }
+
+    public void setIdStudent(long idStudent) {
+        this.idStudent = idStudent;
+    }
+
+    public long getIdProfessor() {
+        return idProfessor;
+    }
+
+    public void setIdProfessor(long idProfessor) {
+        this.idProfessor = idProfessor;
     }
 
     public boolean isIn() {
@@ -85,19 +114,13 @@ public class Message implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(this.id);
+        dest.writeLong(this.idStudent);
+        dest.writeLong(this.idProfessor);
         dest.writeByte(this.in ? (byte) 1 : (byte) 0);
         dest.writeString(this.subject);
         dest.writeString(this.text);
         dest.writeString(this.date);
         dest.writeString(this.professor);
-        dest.writeLong(this.id);
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 }

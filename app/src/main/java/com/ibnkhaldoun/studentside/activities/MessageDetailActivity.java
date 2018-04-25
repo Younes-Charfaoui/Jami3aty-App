@@ -1,10 +1,14 @@
 package com.ibnkhaldoun.studentside.activities;
 
+import android.content.Intent;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.ibnkhaldoun.studentside.R;
@@ -19,6 +23,9 @@ public class MessageDetailActivity extends AppCompatActivity {
     public static final String KEY_MESSAGE = "keyMessage";
     public static final String KEY_PROFESSOR = "keyProfessor";
 
+
+    private Button mReplyButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,8 +36,17 @@ public class MessageDetailActivity extends AppCompatActivity {
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-
         Message message = getIntent().getParcelableExtra(KEY_MESSAGE);
+
+        mReplyButton = findViewById(R.id.message_detail_reply_button);
+
+        mReplyButton.setOnClickListener(v -> {
+            Intent intent = new Intent(this, NewMessageActivity.class);
+            intent.putExtra(NewMessageActivity.KEY_PROFESSOR, message.getProfessor());
+            Log.i("Tag", "onCreate: " + message.getIdProfessor());
+            intent.putExtra(NewMessageActivity.KEY_ID, String.valueOf(message.getIdProfessor()));
+            startActivity(intent);
+        });
 
         getSupportActionBar().setTitle(message.getSubject());
         toolbar.setTitle(message.getSubject());
@@ -66,12 +82,12 @@ public class MessageDetailActivity extends AppCompatActivity {
         timeTextView.setText(Utilities.getDateFormat(message.getDate()));
 
     }
-//
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.message_detail_menu, menu);
-//        return true;
-//    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.message_detail_menu, menu);
+        return true;
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -108,12 +124,14 @@ public class MessageDetailActivity extends AppCompatActivity {
                     Toast.makeText(this, R.string.no_internet_connection_string, Toast.LENGTH_SHORT).show();
                 }
                 break;
-
-            case R.id.message_detail_reply_menu:
-                //todo add code to handle replying messages
-                Toast.makeText(this, "Reply Action", Toast.LENGTH_SHORT).show();
-                break;
 */
+            case R.id.message_detail_reply_menu:
+                Message message = getIntent().getParcelableExtra(KEY_MESSAGE);
+                Intent intent = new Intent(this, NewMessageActivity.class);
+                intent.putExtra(NewMessageActivity.KEY_PROFESSOR, message.getProfessor());
+                intent.putExtra(NewMessageActivity.KEY_ID, message.getIdProfessor());
+                startActivity(intent);
+                break;
         }
         return true;
     }

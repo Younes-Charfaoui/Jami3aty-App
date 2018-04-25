@@ -229,6 +229,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.ibnkhaldoun.studentside.activities.SavedActivity" />
         </activity>
+        <activity
+            android:name=".activities.AddPostActivity"
+            android:label="@string/title_activity_add_post"
+            android:parentActivityName=".activities.ProfessorMainActivity"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.ibnkhaldoun.studentside.activities.ProfessorMainActivity" />
+        </activity>
     </application>
 
 </manifest>

@@ -57,6 +57,7 @@ import com.ibnkhaldoun.studentside.providers.EndPointsProvider;
 import com.ibnkhaldoun.studentside.services.LoadDataService;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import static com.ibnkhaldoun.studentside.Utilities.PreferencesManager.STUDENT;
@@ -271,7 +272,6 @@ public class StudentMainActivity extends AppCompatActivity
             case R.id.nav_help:
                 startActivity(new Intent(this, HelpActivity.class));
                 break;
-
         }
         mDrawer.closeDrawer(GravityCompat.START);
         return true;
@@ -333,7 +333,6 @@ public class StudentMainActivity extends AppCompatActivity
             @Override
             public void onDrawerClosed(View drawerView) {
                 super.onDrawerClosed(drawerView);
-
             }
 
             @Override

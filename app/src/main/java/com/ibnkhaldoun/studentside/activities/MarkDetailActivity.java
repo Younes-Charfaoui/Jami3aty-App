@@ -8,14 +8,11 @@ import android.widget.TextView;
 
 import com.ibnkhaldoun.studentside.R;
 import com.ibnkhaldoun.studentside.Utilities.AverageCalculus;
-import com.ibnkhaldoun.studentside.models.Mark;
 import com.ibnkhaldoun.studentside.models.MarkItem;
 
 public class MarkDetailActivity extends AppCompatActivity {
 
     public static final String KEY_MARK = "keyMark";
-    private TextView mExamTextView, mTdTextView, mTpTextView,
-            mAverageTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,19 +26,33 @@ public class MarkDetailActivity extends AppCompatActivity {
 
         MarkItem mark = getIntent().getParcelableExtra(KEY_MARK);
 
-        mExamTextView = findViewById(R.id.exam_mark);
-        mTdTextView = findViewById(R.id.td_mark);
-        mTpTextView = findViewById(R.id.tp_mark);
-        mAverageTextView = findViewById(R.id.average);
+        TextView examTextView = findViewById(R.id.exam_mark);
+        TextView tdTextView = findViewById(R.id.td_mark);
+        TextView tpTextView = findViewById(R.id.tp_mark);
+        TextView averageTextView = findViewById(R.id.average);
+        TextView subjectTextView = findViewById(R.id.mark_subject);
 
+        if (mark.getExam() != -1)
+            examTextView.setText(String.valueOf(mark.getExam()));
+        else
+            examTextView.setText("---");
 
-        mExamTextView.setText(String.valueOf(mark.getExam()));
-        mTdTextView.setText(String.valueOf(mark.getTD()));
-        mTpTextView.setText(String.valueOf(mark.getTP()));
-        mAverageTextView.setText(String.valueOf(AverageCalculus.getFullMarkAverage(
+        if (mark.getTD() != -1)
+            tdTextView.setText(String.valueOf(mark.getTD()));
+        else
+            tdTextView.setText("---");
+
+        if (mark.getTP() != -1)
+            tpTextView.setText(String.valueOf(mark.getTP()));
+        else
+            tpTextView.setText("---");
+
+        averageTextView.setText(String.valueOf(AverageCalculus.getFullMarkAverage(
                 mark.getTD(),
                 mark.getTD(),
                 mark.getTD())));
+
+        subjectTextView.setText(mark.getSubjectName());
     }
 
     @Override

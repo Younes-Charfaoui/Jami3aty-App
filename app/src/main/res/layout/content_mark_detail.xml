@@ -23,15 +23,15 @@
         android:padding="24dp">
 
         <TextView
+            android:id="@+id/mark_subject"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            tools:text="Programation Logic"
-            android:id="@+id/mark_subject"
+            android:layout_marginBottom="32dp"
             android:singleLine="true"
             android:textColor="@color/colorPrimary"
-            android:layout_marginBottom="32dp"
-            android:textSize="30sp"/>
+            android:textSize="30sp"
+            tools:text="Programation Logic" />
 
         <LinearLayout
             android:id="@+id/first_linear"
@@ -80,7 +80,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="?colorPrimary"
                 android:textSize="22sp"
-                tools:text="@string/tp_mark" />
+                android:text="@string/tp_mark" />
 
             <TextView
                 android:id="@+id/tp_mark"
@@ -102,7 +102,7 @@
             android:layout_marginBottom="8dp"
             android:textColor="?colorPrimary"
             android:textSize="22sp"
-            tools:text="Average" />
+            android:text="@string/average" />
 
         <TextView
             android:id="@+id/average"
@@ -116,41 +116,41 @@
             android:gravity="center"
             android:textColor="@android:color/white"
             android:textSize="24sp"
-            tools:text="16.25" />
+            tools:text="16.55" />
 
 
         <!--<TextView-->
-            <!--android:id="@+id/total_average_title"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_above="@id/total_average"-->
-            <!--android:layout_alignParentStart="true"-->
+        <!--android:id="@+id/total_average_title"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_above="@id/total_average"-->
+        <!--android:layout_alignParentStart="true"-->
 
-            <!--android:textColor="?colorPrimary"-->
-            <!--android:textSize="22sp"-->
-            <!--tools:text="Semester Average" />-->
+        <!--android:textColor="?colorPrimary"-->
+        <!--android:textSize="22sp"-->
+        <!--tools:text="Semester Average" />-->
 
         <!--<TextView-->
-            <!--android:id="@+id/total_average"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_alignParentBottom="true"-->
-            <!--android:layout_alignParentStart="true"-->
+        <!--android:id="@+id/total_average"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:layout_alignParentStart="true"-->
 
-            <!--android:fontFamily="sans-serif-light"-->
-            <!--android:gravity="center"-->
+        <!--android:fontFamily="sans-serif-light"-->
+        <!--android:gravity="center"-->
 
-            <!--android:textSize="24sp"-->
-            <!--tools:text="16.25" />-->
+        <!--android:textSize="24sp"-->
+        <!--tools:text="16.25" />-->
 
         <!--<Button-->
-            <!--android:id="@+id/mark_detail_change_button"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_alignParentBottom="true"-->
-            <!--android:layout_alignParentEnd="true"-->
-            <!--android:text="@string/see_if"-->
-            <!--android:theme="@style/ButtonStylesTwo" />-->
+        <!--android:id="@+id/mark_detail_change_button"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:layout_alignParentEnd="true"-->
+        <!--android:text="@string/see_if"-->
+        <!--android:theme="@style/ButtonStylesTwo" />-->
 
     </RelativeLayout>
 </FrameLayout>

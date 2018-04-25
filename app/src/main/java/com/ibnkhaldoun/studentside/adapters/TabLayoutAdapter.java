@@ -8,11 +8,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 import com.ibnkhaldoun.studentside.fragments.DisplaysFragment;
 import com.ibnkhaldoun.studentside.fragments.MessageFragment;
 import com.ibnkhaldoun.studentside.fragments.NotificationFragment;
-import com.ibnkhaldoun.studentside.models.Display;
-import com.ibnkhaldoun.studentside.models.Mail;
-import com.ibnkhaldoun.studentside.models.Notification;
-
-import java.util.List;
 
 public class TabLayoutAdapter extends FragmentPagerAdapter {
 
@@ -26,7 +21,6 @@ public class TabLayoutAdapter extends FragmentPagerAdapter {
     }
 
 
-
     public void setCurrentState(int currentState) {
         CurrentState = currentState;
     }
@@ -34,7 +28,7 @@ public class TabLayoutAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
 
-        switch (position) {
+        if (mNumbersOfTabs == 3) switch (position) {
             case 0:
                 return new DisplaysFragment();
             case 1:
@@ -43,6 +37,17 @@ public class TabLayoutAdapter extends FragmentPagerAdapter {
                 return new MessageFragment();
             default:
                 return null;
+        }
+        else if (mNumbersOfTabs == 2) switch (position) {
+            case 0:
+                return new DisplaysFragment();
+            case 1:
+                return new MessageFragment();
+            default:
+                return null;
+        }
+        else {
+            return null;
         }
     }
 
