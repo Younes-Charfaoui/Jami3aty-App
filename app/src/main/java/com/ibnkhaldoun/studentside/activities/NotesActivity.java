@@ -250,7 +250,7 @@ public class NotesActivity extends AppCompatActivity
                         projection,
                         DatabaseContract.NoteEntry.COLUMN_USER_ID + " = ?",
                         new String[]{new PreferencesManager(this
-                                , PreferencesManager.STUDENT).getIdStudent()},
+                                , PreferencesManager.STUDENT).getIdUser()},
                         null);
             default:
                 throw new IllegalArgumentException();

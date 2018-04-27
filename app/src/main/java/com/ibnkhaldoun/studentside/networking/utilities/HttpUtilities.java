@@ -68,16 +68,13 @@ public class HttpUtilities {
         //creating the request based on what has been passed.
         Request request = requestBuilder.build();
 
-        Log.i("Ismail","before the call");
         Response response = client.newCall(request).execute();
 
         if (response.isSuccessful()) {
             //this will get true only if the response code was 200 from the http.
-            Log.i("Fuck", "getData: Was succceful");
             return response.body().string();
         } else {
             //the response code was not 200.
-            Log.i("Fuck", "getData: Was not succceful");
             throw new IOException("Response code is: " + response.code());
         }
     }

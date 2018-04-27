@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ibnkhaldoun.studentside.R;
+import com.ibnkhaldoun.studentside.Utilities.ActivityUtilities;
 import com.ibnkhaldoun.studentside.Utilities.Utilities;
 import com.ibnkhaldoun.studentside.activities.MessageDetailActivity;
 import com.ibnkhaldoun.studentside.activities.MessagesActivity;
@@ -44,20 +45,37 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MailView
         GradientDrawable background = (GradientDrawable) holder.mBackGroundImage.getBackground();
         background.setColor(color);
 
-        if (mail.isIn()) {
-            holder.mArrowIndicatorImage.setImageDrawable(
-                    mContext.getResources().getDrawable(R.drawable.ic_arrow_downward_white_24dp));
+        if(ActivityUtilities.whoIsUsing(mContext) == MessageDetailActivity.PROFESSOR){
 
-        } else {
-            holder.mArrowIndicatorImage.setImageDrawable(
-                    mContext.getResources().getDrawable(R.drawable.ic_arrow_upward_white_24dp));
+            if (mail.isIn()) {
+                holder.mArrowIndicatorImage.setImageDrawable(
+                        mContext.getResources().getDrawable(R.drawable.ic_arrow_upward_white_24dp));
+            } else {
+                holder.mArrowIndicatorImage.setImageDrawable(
+                        mContext.getResources().getDrawable(R.drawable.ic_arrow_downward_white_24dp));
+            }
+            holder.mProfessorNameTextView.setText(mail.getStudent());
+            holder.mSubjectTextView.setText(mail.getSubject());
+            holder.mDateTextView.setText(Utilities.getDateFormat(mail.getDate()));
+            holder.mStartView.setBackgroundColor(color);
+        }else {
+
+            if (mail.isIn()) {
+                holder.mArrowIndicatorImage.setImageDrawable(
+                        mContext.getResources().getDrawable(R.drawable.ic_arrow_downward_white_24dp));
+
+            } else {
+                holder.mArrowIndicatorImage.setImageDrawable(
+                        mContext.getResources().getDrawable(R.drawable.ic_arrow_upward_white_24dp));
+            }
+            holder.mProfessorNameTextView.setText(mail.getProfessor());
+            holder.mSubjectTextView.setText(mail.getSubject());
+            holder.mDateTextView.setText(Utilities.getDateFormat(mail.getDate()));
+            holder.mStartView.setBackgroundColor(color);
         }
 
 
-        holder.mProfessorNameTextView.setText(mail.getProfessor());
-        holder.mSubjectTextView.setText(mail.getSubject());
-        holder.mDateTextView.setText(Utilities.getDateFormat(mail.getDate()));
-        holder.mStartView.setBackgroundColor(color);
+
     }
 
 

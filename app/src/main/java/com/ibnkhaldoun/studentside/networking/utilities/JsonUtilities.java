@@ -66,6 +66,7 @@ import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_STUDENT
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_STUDENT_CONFIRMED;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_STUDENT_EMAIL;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_STUDENT_FIRST_NAME;
+import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_STUDENT_FULL_NAME_S;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_STUDENT_GROUP;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_STUDENT_ID;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_STUDENT_LAST_NAME;
@@ -243,7 +244,8 @@ public class JsonUtilities {
                 String date = object.getString(JSON_MAIL_DATE);
                 String professor = object.getString(JSON_MAIL_PROFESSOR);
                 boolean sender = object.getInt(JSON_MAIL_SENDER) == 1;
-                messages.add(new Message(id, idStudent, idProfessor, sender, subject, message, date, professor));
+                String student = object.getString(JSON_STUDENT_FULL_NAME_S);
+                messages.add(new Message(id, idStudent, idProfessor, sender, subject, message, date, professor, student));
             }
         } catch (JSONException e) {
             e.printStackTrace();

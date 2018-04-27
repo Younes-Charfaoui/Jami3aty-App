@@ -22,8 +22,8 @@ public class RequestPackageFactory {
                 .addMethod(POST)
                 .addParams(KeyDataProvider.KEY_NOTE, note)
                 .addParams(KeyDataProvider.JSON_POST_ID2, String.valueOf(id))
-                .addParams(KeyDataProvider.JSON_STUDENT_ID, new PreferencesManager(context, STUDENT).getIdStudent())
-                .addParams(KeyDataProvider.JSON_USER_NAME, new PreferencesManager(context, STUDENT).getFullNameStudent())
+                .addParams(KeyDataProvider.JSON_STUDENT_ID, new PreferencesManager(context, STUDENT).getIdUser())
+                .addParams(KeyDataProvider.JSON_USER_NAME, new PreferencesManager(context, STUDENT).getFullNameUser())
                 .create();
     }
 

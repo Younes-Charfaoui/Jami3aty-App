@@ -117,7 +117,7 @@ public class DisplayDetailActivity extends AppCompatActivity implements NoteOfDi
                 RequestPackage request = new RequestPackage.Builder().addEndPoint(EndPointsProvider.getUnsaveEndpoint())
                         .addMethod(POST)
                         .addParams(JSON_STUDENT_ID,
-                                new PreferencesManager(this, PreferencesManager.STUDENT).getIdStudent())
+                                new PreferencesManager(this, PreferencesManager.STUDENT).getIdUser())
                         .addParams(JSON_POST_ID2, String.valueOf(display.getId()))
                         .addParams(JSON_SAVE_ACTION, String.valueOf(1))
                         .create();

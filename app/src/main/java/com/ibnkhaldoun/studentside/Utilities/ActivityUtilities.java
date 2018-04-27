@@ -14,6 +14,9 @@ import android.widget.TextView;
 import com.ibnkhaldoun.studentside.R;
 import com.ibnkhaldoun.studentside.database.DatabaseContract;
 
+import static com.ibnkhaldoun.studentside.activities.MessageDetailActivity.PROFESSOR;
+import static com.ibnkhaldoun.studentside.activities.MessageDetailActivity.STUDENT;
+
 
 public final class ActivityUtilities {
 
@@ -32,8 +35,18 @@ public final class ActivityUtilities {
         }
     }
 
+    public static int whoIsUsing(Context context){
+        if (new PreferencesManager(context, PreferencesManager.PROFESSOR).isLogin()) {
+            return PROFESSOR;
+        } else {
+            return STUDENT;
+        }
+    }
+
     public static void logOut(Context context) {
         new PreferencesManager(context, PreferencesManager.STUDENT)
+                .removePreference();
+        new PreferencesManager(context, PreferencesManager.PROFESSOR)
                 .removePreference();
         new PreferencesManager(context, PreferencesManager.SUBJECT)
                 .removePreference();

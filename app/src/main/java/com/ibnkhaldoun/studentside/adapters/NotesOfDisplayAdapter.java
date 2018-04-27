@@ -30,7 +30,7 @@ public class NotesOfDisplayAdapter extends RecyclerView.Adapter<NotesOfDisplayAd
     public NotesOfDisplayAdapter(Context mContext, INoteOfDisplayMore Interface) {
         this.mContext = mContext;
         this.mInterface = Interface;
-        idPerson = Long.parseLong(new PreferencesManager(mContext, PreferencesManager.STUDENT).getIdStudent());
+        idPerson = Long.parseLong(new PreferencesManager(mContext, PreferencesManager.STUDENT).getIdUser());
     }
 
 

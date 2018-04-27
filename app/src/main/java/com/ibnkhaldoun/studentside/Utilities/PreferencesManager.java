@@ -75,7 +75,9 @@ public class PreferencesManager {
         return mPreferences.getBoolean(LOGIN, false);
     }
 
-    public void setLoginProfessor(String id) {
+    public void setLoginProfessor(String id, String fullName, String degree) {
+        mEditor.putString(FULL_NAME , fullName);
+        mEditor.putString(GRADE , degree);
         mEditor.putBoolean(LOGIN, true);
         mEditor.putString(ID, id);
         mEditor.apply();
@@ -93,7 +95,7 @@ public class PreferencesManager {
         mEditor.commit();
     }
 
-    public String getIdStudent() {
+    public String getIdUser() {
         return mPreferences.getString(ID, null);
     }
 
@@ -109,11 +111,11 @@ public class PreferencesManager {
         return mPreferences.getString(LEVEL, null);
     }
 
-    public String getGradeStudent() {
+    public String getGradeUser() {
         return mPreferences.getString(GRADE, null);
     }
 
-    public String getFullNameStudent() {
+    public String getFullNameUser() {
         return mPreferences.getString(FULL_NAME, null);
     }
 

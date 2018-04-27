@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.ibnkhaldoun.studentside.R;
 import com.ibnkhaldoun.studentside.adapters.DisplaysAdapter;
 import com.ibnkhaldoun.studentside.interfaces.IDataFragment;
+import com.ibnkhaldoun.studentside.interfaces.IDataProfessorFragment;
 import com.ibnkhaldoun.studentside.models.Display;
 
 import java.util.List;
@@ -36,10 +37,13 @@ public class DisplaysFragment extends BaseMainFragment<Display> implements Swipe
     private IDataFragment mInterface;
     private SwipeRefreshLayout mDisplaySwipe;
 
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+
         mInterface = (IDataFragment) context;
+
     }
 
     @Nullable

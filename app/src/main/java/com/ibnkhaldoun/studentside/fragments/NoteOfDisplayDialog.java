@@ -11,8 +11,10 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Toast;
 
 import com.ibnkhaldoun.studentside.R;
 
@@ -73,8 +75,16 @@ public class NoteOfDisplayDialog extends DialogFragment {
         builder.setPositiveButton(android.R.string.yes, (dialog, which) ->
         {
             if (getArguments() != null) {
-                if (!mNoteEditText.getText().toString().equals(getArguments().getString(KEY_NOTE)))
-                    mNoteInterface.OnFinishNoting(mNoteEditText.getText().toString(), getArguments().getLong(KEY_ID), getArguments().getInt(KEY_TYPE));
+                if (!mNoteEditText.getText().toString().equals(getArguments().getString(KEY_NOTE))){
+
+                    String noteC = mNoteEditText.getText().toString().trim();
+                    if(!TextUtils.isEmpty(noteC)){
+
+                        mNoteInterface.OnFinishNoting(noteC, getArguments().getLong(KEY_ID), getArguments().getInt(KEY_TYPE));
+                    }else {
+                        Toast.makeText(getActivity(), "Please Add something", Toast.LENGTH_SHORT).show();
+                    }
+                }
                 else dismiss();
             }
         });

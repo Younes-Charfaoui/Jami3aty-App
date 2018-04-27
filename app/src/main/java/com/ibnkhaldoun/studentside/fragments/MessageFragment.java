@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.ibnkhaldoun.studentside.R;
 import com.ibnkhaldoun.studentside.adapters.MessageAdapter;
 import com.ibnkhaldoun.studentside.interfaces.IDataFragment;
+import com.ibnkhaldoun.studentside.interfaces.IDataProfessorFragment;
 import com.ibnkhaldoun.studentside.models.Mail;
 import com.ibnkhaldoun.studentside.models.Message;
 

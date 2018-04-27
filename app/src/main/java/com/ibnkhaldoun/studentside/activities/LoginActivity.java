@@ -53,7 +53,7 @@ public class LoginActivity extends AppCompatActivity implements LoginTaskListene
         }
         ActivityUtilities.changeStatusBarColorToTransparent(getWindow());
         mEmailEditText = findViewById(R.id.input_email);
-        mEmailEditText.setText("mxcsyounes@gmail.com");
+        mEmailEditText.setText("ouaredaek@gmail.com");
         mPasswordEditText = findViewById(R.id.input_password);
         mPasswordEditText.setText("hellohello");
         mPasswordWrapper = findViewById(R.id.password_wrapper);
@@ -154,8 +154,8 @@ public class LoginActivity extends AppCompatActivity implements LoginTaskListene
 
         switch (response.getStatus()) {
             case RESPONSE_SUCCESS:
-                PreferencesManager manager = new PreferencesManager(this, PreferencesManager.STUDENT);
                 if (response.isStudent()) {
+                    PreferencesManager manager = new PreferencesManager(this, PreferencesManager.STUDENT);
                     manager.setLoginStudent(response.getStudent().getId()
                             , response.getStudent().getFullName()
                             , Levels.getLevelString(Levels.getLevel(response.getStudent().getLevel()))
@@ -188,10 +188,12 @@ public class LoginActivity extends AppCompatActivity implements LoginTaskListene
                     startService(intentSchedule);
                     finish();
                 } else {
-                    //todo add code for handling professor case login
-                    Toast.makeText(this, "Login for professor", Toast.LENGTH_SHORT).show();
+                    PreferencesManager manager = new PreferencesManager(this, PreferencesManager.PROFESSOR);
+                    manager.setLoginProfessor(response.getProfessor().getId()
+                            ,response.getProfessor().getFullName()
+                            ,response.getProfessor().getDegree());
 
-                    //startActivity(new Intent(this,ProfessorMainActivity.class));
+                    startActivity(new Intent(this,ProfessorMainActivity.class));
                 }
                 break;
             case RESPONSE_EMAIL_ERROR:

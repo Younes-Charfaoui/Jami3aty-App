@@ -223,7 +223,7 @@ public class SavedActivity extends AppCompatActivity
             RequestPackage request = new RequestPackage.Builder()
                     .addEndPoint(EndPointsProvider.getSavedEndPoint())
                     .addMethod(POST)
-                    .addParams(JSON_STUDENT_ID, new PreferencesManager(this, STUDENT).getIdStudent())
+                    .addParams(JSON_STUDENT_ID, new PreferencesManager(this, STUDENT).getIdUser())
                     .create();
 
             Intent serviceIntent = new Intent(this, LoadDataService.class);
@@ -277,7 +277,7 @@ public class SavedActivity extends AppCompatActivity
                                 .addEndPoint(EndPointsProvider.getUnsaveEndpoint())
                                 .addMethod(POST)
                                 .addParams(JSON_STUDENT_ID,
-                                        new PreferencesManager(this, PreferencesManager.STUDENT).getIdStudent())
+                                        new PreferencesManager(this, PreferencesManager.STUDENT).getIdUser())
                                 .addParams(JSON_POST_ID2, String.valueOf(id))
                                 .addParams(JSON_SAVE_ACTION, String.valueOf(0))
                                 .create();

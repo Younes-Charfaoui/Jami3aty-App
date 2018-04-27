@@ -5,26 +5,20 @@ import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.ibnkhaldoun.studentside.R;
-import com.ibnkhaldoun.studentside.Utilities.PreferencesManager;
+import com.ibnkhaldoun.studentside.Utilities.ActivityUtilities;
 import com.ibnkhaldoun.studentside.Utilities.Utilities;
 import com.ibnkhaldoun.studentside.models.Message;
-
-import static com.ibnkhaldoun.studentside.Utilities.PreferencesManager.STUDENT;
 
 public class MessageDetailActivity extends AppCompatActivity {
 
     public static final String KEY_MESSAGE = "keyMessage";
-    public static final String KEY_PROFESSOR = "keyProfessor";
-
-
-    private Button mReplyButton;
+    public static final int PROFESSOR = 1;
+    public static final int STUDENT = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,22 +32,13 @@ public class MessageDetailActivity extends AppCompatActivity {
         }
         Message message = getIntent().getParcelableExtra(KEY_MESSAGE);
 
-        mReplyButton = findViewById(R.id.message_detail_reply_button);
-
-        mReplyButton.setOnClickListener(v -> {
-            Intent intent = new Intent(this, NewMessageActivity.class);
-            intent.putExtra(NewMessageActivity.KEY_PROFESSOR, message.getProfessor());
-            Log.i("Tag", "onCreate: " + message.getIdProfessor());
-            intent.putExtra(NewMessageActivity.KEY_ID, String.valueOf(message.getIdProfessor()));
-            startActivity(intent);
-        });
+        findViewById(R.id.message_detail_reply_button).setOnClickListener(v -> replyMessage(message));
 
         getSupportActionBar().setTitle(message.getSubject());
         toolbar.setTitle(message.getSubject());
 
         TextView subjectTextView = findViewById(R.id.message_detail_subject);
         subjectTextView.setText(message.getSubject());
-        PreferencesManager manager = new PreferencesManager(this, STUDENT);
 
         TextView senderShortNameTextView = findViewById(R.id.message_detail_sender_short_name);
         GradientDrawable circle = (GradientDrawable) senderShortNameTextView.getBackground();
@@ -61,19 +46,32 @@ public class MessageDetailActivity extends AppCompatActivity {
         TextView senderNameTextView = findViewById(R.id.message_detail_sender_name);
         TextView receiverTextView = findViewById(R.id.message_detail_receiver);
 
-        if (message.isIn()) {
-            senderShortNameTextView.setText(Utilities.getProfessorShortName(message.getProfessor()));
-            circle.setColor(Utilities.getCircleColor(this));
-            senderNameTextView.setText(message.getProfessor());
-            receiverTextView.setText(String.format("to %s", manager.getFullNameStudent()));
+        if (ActivityUtilities.whoIsUsing(this) == STUDENT) {
+            if (message.isIn()) {
+                senderShortNameTextView.setText(Utilities.getProfessorShortName(message.getProfessor()));
+                circle.setColor(Utilities.getCircleColor(this));
+                senderNameTextView.setText(message.getProfessor());
+                receiverTextView.setText(String.format("to %s", message.getStudent()));
+            } else {
+
+                senderShortNameTextView.setText(Utilities.getStudentShortName(message.getStudent()));
+                circle.setColor(Utilities.getCircleColor(this));
+                senderNameTextView.setText(message.getStudent());
+                receiverTextView.setText(String.format("to %s", message.getProfessor()));
+            }
         } else {
-
-            senderShortNameTextView.setText(Utilities.getStudentShortName(manager.getFullNameStudent()));
-            circle.setColor(Utilities.getCircleColor(this));
-            senderNameTextView.setText(manager.getFullNameStudent());
-            receiverTextView.setText(String.format("to %s", message.getProfessor()));
+            if (message.isIn()) {
+                senderShortNameTextView.setText(Utilities.getProfessorShortName(message.getProfessor()));
+                circle.setColor(Utilities.getCircleColor(this));
+                senderNameTextView.setText(message.getProfessor());
+                receiverTextView.setText(String.format("to %s", message.getStudent()));
+            } else {
+                senderShortNameTextView.setText(Utilities.getStudentShortName(message.getStudent()));
+                circle.setColor(Utilities.getCircleColor(this));
+                senderNameTextView.setText(message.getStudent());
+                receiverTextView.setText(String.format("to %s", message.getProfessor()));
+            }
         }
-
 
         TextView textTextView = findViewById(R.id.message_detail_text);
         textTextView.setText(message.getText());
@@ -81,6 +79,12 @@ public class MessageDetailActivity extends AppCompatActivity {
         TextView timeTextView = findViewById(R.id.message_detail_date);
         timeTextView.setText(Utilities.getDateFormat(message.getDate()));
 
+    }
+
+    private void replyMessage(Message message) {
+        Intent intent = new Intent(this, NewMessageActivity.class);
+        intent.putExtra(NewMessageActivity.MESSAGE, message);
+        startActivity(intent);
     }
 
     @Override
@@ -106,7 +110,7 @@ public class MessageDetailActivity extends AppCompatActivity {
                                 RequestPackage request = new RequestPackage.Builder()
                                         .addMethod(POST)
                                         .addEndPoint(EndPointsProvider.getRemoveMailEndPoint())
-                                        .addParams(JSON_MAIL_ID2, String.valueOf(message.getIdStudent()))
+                                        .addParams(JSON_MAIL_ID2, String.valueOf(message.getIdUser()))
                                         .create();
                                 ResponseAsyncTask task = new ResponseAsyncTask(response -> {
                                     if (response.getStatus() == 200) {
@@ -126,11 +130,7 @@ public class MessageDetailActivity extends AppCompatActivity {
                 break;
 */
             case R.id.message_detail_reply_menu:
-                Message message = getIntent().getParcelableExtra(KEY_MESSAGE);
-                Intent intent = new Intent(this, NewMessageActivity.class);
-                intent.putExtra(NewMessageActivity.KEY_PROFESSOR, message.getProfessor());
-                intent.putExtra(NewMessageActivity.KEY_ID, message.getIdProfessor());
-                startActivity(intent);
+                replyMessage(getIntent().getParcelableExtra(KEY_MESSAGE));
                 break;
         }
         return true;

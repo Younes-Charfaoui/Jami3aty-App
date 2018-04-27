@@ -32,6 +32,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ibnkhaldoun.studentside.R;
+import com.ibnkhaldoun.studentside.Utilities.ActivityUtilities;
 import com.ibnkhaldoun.studentside.Utilities.PreferencesManager;
 import com.ibnkhaldoun.studentside.Utilities.Utilities;
 import com.ibnkhaldoun.studentside.adapters.TabLayoutAdapter;
@@ -54,19 +55,21 @@ import com.ibnkhaldoun.studentside.networking.utilities.JsonUtilities;
 import com.ibnkhaldoun.studentside.networking.utilities.NetworkUtilities;
 import com.ibnkhaldoun.studentside.networking.utilities.RequestPackageFactory;
 import com.ibnkhaldoun.studentside.providers.EndPointsProvider;
+import com.ibnkhaldoun.studentside.services.FcmTokenService;
 import com.ibnkhaldoun.studentside.services.LoadDataService;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import static com.ibnkhaldoun.studentside.Utilities.PreferencesManager.STUDENT;
 import static com.ibnkhaldoun.studentside.fragments.BaseMainFragment.INTERNET_ERROR;
 import static com.ibnkhaldoun.studentside.networking.models.RequestPackage.POST;
+import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_ID;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_STUDENT_GROUP;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_STUDENT_ID;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_STUDENT_LEVEL;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_STUDENT_SECTION;
+import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_TYPE;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.KEY_AJAX;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.KEY_ANDROID;
 import static com.ibnkhaldoun.studentside.services.LoadDataService.KEY_DATA;
@@ -145,7 +148,7 @@ public class StudentMainActivity extends AppCompatActivity
         ACTIVITY = this;
         //getting the arrays
         mPagerTitles = getResources().getStringArray(R.array.pager_titles_array_string);
-
+        Log.i("Token", "onCreate: " + FcmTokenService.getCurrentToken());
         mToolBar = findViewById(R.id.toolbar);
         mToolBar.setTitle(mPagerTitles[0]);
         setSupportActionBar(mToolBar);
@@ -202,13 +205,13 @@ public class StudentMainActivity extends AppCompatActivity
         GradientDrawable circle = (GradientDrawable) circleImage.getBackground();
 
         PreferencesManager manager = new PreferencesManager(this, STUDENT);
-        String text = Character.toString(Utilities.getFirstName(manager.getFullNameStudent()).charAt(0)) +
-                Character.toString(Utilities.getLastName(manager.getFullNameStudent()).charAt(0));
+        String text = Character.toString(Utilities.getFirstName(manager.getFullNameUser()).charAt(0)) +
+                Character.toString(Utilities.getLastName(manager.getFullNameUser()).charAt(0));
         circleImage.setText(text);
 
-        circle.setColor(Utilities.getCircleColor(manager.getFullNameStudent().charAt(0), this));
-        nameHeader.setText(manager.getFullNameStudent());
-        branchHeader.setText(manager.getGradeStudent());
+        circle.setColor(Utilities.getCircleColor(manager.getFullNameUser().charAt(0), this));
+        nameHeader.setText(manager.getFullNameUser());
+        branchHeader.setText(manager.getGradeUser());
 
         setupViewPagerAndTabLayout();
 
@@ -422,7 +425,7 @@ public class StudentMainActivity extends AppCompatActivity
                     .addEndPoint(EndPointsProvider.getNotifications())
                     .addMethod(POST)
                     .addParams(JSON_STUDENT_ID,
-                            new PreferencesManager(this, PreferencesManager.STUDENT).getIdStudent())
+                            new PreferencesManager(this, PreferencesManager.STUDENT).getIdUser())
                     .create();
             Intent intent = new Intent(this, LoadDataService.class);
             intent.putExtra(LoadDataService.KEY_REQUEST, request);
@@ -449,7 +452,8 @@ public class StudentMainActivity extends AppCompatActivity
                     .addMethod(POST)
                     .addEndPoint(EndPointsProvider.getAllMailEndPoint())
                     .addParams(KEY_ANDROID, KEY_ANDROID)
-                    .addParams(JSON_STUDENT_ID, manager.getIdStudent())
+                    .addParams(JSON_ID, manager.getIdUser())
+                    .addParams(JSON_TYPE, "2")
                     .create();
 
             Intent intent = new Intent(this, LoadDataService.class);

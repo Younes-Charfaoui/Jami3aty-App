@@ -106,7 +106,7 @@ public class DisplaysAdapter extends RecyclerView.Adapter<DisplaysAdapter.Displa
                     RequestPackage request = new RequestPackage.Builder().addEndPoint(EndPointsProvider.getUnsaveEndpoint())
                             .addMethod(POST)
                             .addParams(JSON_STUDENT_ID,
-                                    new PreferencesManager(mContext, PreferencesManager.STUDENT).getIdStudent())
+                                    new PreferencesManager(mContext, PreferencesManager.STUDENT).getIdUser())
                             .addParams(JSON_POST_ID2, String.valueOf(mDataList.get(getAdapterPosition()).getId()))
                             .addParams(JSON_SAVE_ACTION, String.valueOf(1))
                             .create();

@@ -18,9 +18,9 @@ public class Message implements Parcelable {
     };
     private long id, idStudent, idProfessor;
     private boolean in;
-    private String subject, text, date, professor;
+    private String subject, text, date, professor , student;
 
-    public Message(long id, long idStudent, long idProfessor, boolean in, String subject, String text, String date, String professor) {
+    public Message(long id, long idStudent, long idProfessor, boolean in, String subject, String text, String date, String professor, String student) {
 
         this.id = id;
         this.idStudent = idStudent;
@@ -30,6 +30,7 @@ public class Message implements Parcelable {
         this.text = text;
         this.date = date;
         this.professor = professor;
+        this.student = student;
     }
 
     protected Message(Parcel in) {
@@ -41,6 +42,7 @@ public class Message implements Parcelable {
         this.text = in.readString();
         this.date = in.readString();
         this.professor = in.readString();
+        this.student = in.readString();
     }
 
     public long getId() {
@@ -122,5 +124,14 @@ public class Message implements Parcelable {
         dest.writeString(this.text);
         dest.writeString(this.date);
         dest.writeString(this.professor);
+        dest.writeString(this.student);
+    }
+
+    public String getStudent() {
+        return student;
+    }
+
+    public void setStudent(String student) {
+        this.student = student;
     }
 }

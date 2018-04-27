@@ -101,7 +101,7 @@ public class NoteEditActivity extends AppCompatActivity implements ISubjectDialo
             Cursor cursor = getContentResolver().query(pathToNote, new String[]{"*"},
                     DatabaseContract.NoteEntry.COLUMN_USER_ID + " = ?",
                     new String[]{new PreferencesManager(this, PreferencesManager.STUDENT)
-                            .getIdStudent()}, null);
+                            .getIdUser()}, null);
             if (cursor != null) {
                 cursor.moveToFirst();
                 mSubjectEditText.setText(cursor.getString(cursor.getColumnIndex(DatabaseContract.NoteEntry.COLUMN_NOTE_SUBJECT)));
@@ -210,7 +210,7 @@ public class NoteEditActivity extends AppCompatActivity implements ISubjectDialo
         values.put(DatabaseContract.NoteEntry.COLUMN_NOTE_SUBJECT, subject);
         values.put(DatabaseContract.NoteEntry.COLUMN_NOTE_TEXT, note);
         values.put(DatabaseContract.NoteEntry.COLUMN_USER_ID,
-                new PreferencesManager(this, PreferencesManager.STUDENT).getIdStudent());
+                new PreferencesManager(this, PreferencesManager.STUDENT).getIdUser());
         getContentResolver().insert(DatabaseContract.NoteEntry.CONTENT_NOTE_URI, values);
     }
 

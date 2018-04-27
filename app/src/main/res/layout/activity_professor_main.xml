@@ -10,7 +10,7 @@
 
 
     <include
-        layout="@layout/content_professor_main"
+        layout="@layout/content_professor_main_inner"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

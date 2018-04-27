@@ -54,7 +54,7 @@ public final class KeyDataProvider {
     public static final String JSON_TYPE_SCHEDULE = "type";
 
     public static final String JSON_POST_ID = "_id_post";
-    public static final String JSON_POST_DATE = "date_post";
+    public static final String JSON_POST_DATE = "date";
     public static final String JSON_POST_TEXT = "text_post";
     public static final String JSON_POST_PROFESSOR = "fullName";
     public static final String JSON_POST_SUBJECT = "title";
@@ -73,7 +73,7 @@ public final class KeyDataProvider {
     public static final String JSON_COMMENT_ID_POST = "_id_post";
     public static final String JSON_COMMENT_ID_PERSON = "_id_person";
     public static final String JSON_COMMENT_COMMENT = "text_comment";
-    public static final String JSON_COMMENT_DATE = "date_comment";
+    public static final String JSON_COMMENT_DATE = "date";
     public static final String JSON_COMMENT_PERSON_NAME = "name_person";
 
     public static final String JSON_COMMENT_ID2 = "id_comment";
@@ -86,10 +86,15 @@ public final class KeyDataProvider {
     public static final String JSON_MAIL_DATE = "date";
     public static final String JSON_MAIL_SENDER = "sender";
     public static final String JSON_MAIL_PROFESSOR = "fullNameP";
-    public static final String JSON_MAIL_ID_PROFESSOR= "id_professor";
+    public static final String JSON_MAIL_ID_PROFESSOR = "id_professor";
 
 
-    public static final String JSON_MARK_TD= "td_mark";
-    public static final String JSON_MARK_TP= "tp_mark";
-    public static final String JSON_MARK_COURSE= "course_mark";
+    public static final String JSON_MARK_TD = "td_mark";
+    public static final String JSON_MARK_TP = "tp_mark";
+    public static final String JSON_MARK_COURSE = "course_mark";
+
+    public static final String JSON_STUDENT_FULL_NAME_S = "fullNameS";
+
+    public static final String JSON_TYPE = "type";
+    public static final String JSON_ID = "id";
 }

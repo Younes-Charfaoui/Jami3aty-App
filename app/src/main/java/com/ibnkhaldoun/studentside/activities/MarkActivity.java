@@ -4,12 +4,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.CursorLoader;
-import android.support.v4.content.Loader;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -24,8 +20,6 @@ import android.widget.ProgressBar;
 import com.ibnkhaldoun.studentside.R;
 import com.ibnkhaldoun.studentside.Utilities.PreferencesManager;
 import com.ibnkhaldoun.studentside.adapters.MarksAdapter;
-import com.ibnkhaldoun.studentside.database.DatabaseContract;
-import com.ibnkhaldoun.studentside.models.Mark;
 import com.ibnkhaldoun.studentside.models.MarkItem;
 import com.ibnkhaldoun.studentside.networking.models.RequestPackage;
 import com.ibnkhaldoun.studentside.networking.utilities.NetworkUtilities;
@@ -148,7 +142,7 @@ public class MarkActivity extends AppCompatActivity {
             RequestPackage request = new RequestPackage.Builder()
                     .addEndPoint(EndPointsProvider.getMarksEndPoint())
                     .addMethod(RequestPackage.POST)
-                    .addParams(KeyDataProvider.JSON_STUDENT_ID, manager.getIdStudent())
+                    .addParams(KeyDataProvider.JSON_STUDENT_ID, manager.getIdUser())
                     .addParams(KeyDataProvider.KEY_AJAX, KeyDataProvider.KEY_ANDROID)
                     .create();
 
