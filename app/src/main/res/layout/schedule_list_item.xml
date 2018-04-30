@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="88dp"
-
+    android:baselineAligned="false"
     android:orientation="horizontal"
     android:padding="8dp">
 
@@ -23,6 +23,7 @@
             android:gravity="center"
             android:textSize="16sp"
             tools:text="TP" />
+
         <TextView
             android:id="@+id/schedule_time"
             android:layout_width="wrap_content"

@@ -26,7 +26,7 @@ public class SplashActivity extends AppCompatActivity {
             classes = StudentMainActivity.class;
         } else if (new PreferencesManager(this, PreferencesManager.PROFESSOR).isLogin()) {
             classes = ProfessorMainActivity.class;
-        } else if (!new PreferencesManager(this, PreferencesManager.CONFIG).isFirstTimeLaunched()) {
+        } else if (new PreferencesManager(this, PreferencesManager.CONFIG).isNotFirstTimeLaunched()) {
             classes = LoginActivity.class;
         }
 

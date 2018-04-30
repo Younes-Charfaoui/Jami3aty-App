@@ -7,14 +7,10 @@ import com.ibnkhaldoun.studentside.interfaces.UnsaveListener;
 import com.ibnkhaldoun.studentside.networking.models.RequestPackage;
 import com.ibnkhaldoun.studentside.networking.models.Response;
 import com.ibnkhaldoun.studentside.networking.utilities.HttpUtilities;
-import com.ibnkhaldoun.studentside.networking.utilities.JsonUtilities;
-
-import org.json.JSONException;
 
 import java.io.IOException;
 
 import static com.ibnkhaldoun.studentside.networking.models.Response.IO_EXCEPTION;
-import static com.ibnkhaldoun.studentside.networking.models.Response.JSON_EXCEPTION;
 
 
 public class UnSaveAsyncTask extends AsyncTask<RequestPackage, Void, Response> {

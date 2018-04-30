@@ -91,6 +91,7 @@
             android:paddingEnd="16dp"
             android:paddingStart="16dp">
 
+            <!--suppress AndroidDomInspection -->
             <Button
                 android:id="@+id/display_detail_save_button"
                 style="?attr/buttonBarStyle"
@@ -103,6 +104,7 @@
                 android:fontFamily="sans-serif-light"
                 android:text="@string/displays_save_string" />
 
+            <!--suppress AndroidDomInspection -->
             <Button
                 android:id="@+id/display_detail_note_button"
                 style="?attr/buttonBarStyle"

@@ -19,9 +19,6 @@ import java.util.List;
 public class MessagesActivity extends AppCompatActivity {
 
     public static final String KEY_MESSAGES = "keyMessages";
-    private FloatingActionButton mAddMessageFab;
-    private RecyclerView mRecyclerView;
-    private MessagesAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,9 +35,9 @@ public class MessagesActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         List<Message> list = mail.getMessages();
 
-        mAddMessageFab = findViewById(R.id.messages_fab);
-        mRecyclerView = findViewById(R.id.messages_recycler_view);
-        mAdapter = new MessagesAdapter(this, list, mail.getProfessor());
+        FloatingActionButton mAddMessageFab = findViewById(R.id.messages_fab);
+        RecyclerView mRecyclerView = findViewById(R.id.messages_recycler_view);
+        MessagesAdapter mAdapter = new MessagesAdapter(this, list, mail.getProfessor());
         mRecyclerView.setAdapter(mAdapter);
         LinearLayoutManager manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(manager);

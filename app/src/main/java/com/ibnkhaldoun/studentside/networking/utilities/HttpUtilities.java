@@ -2,14 +2,11 @@ package com.ibnkhaldoun.studentside.networking.utilities;
 
 
 import android.net.Uri;
-import android.util.Log;
 
 import com.ibnkhaldoun.studentside.networking.models.RequestPackage;
 
 import java.io.IOException;
-import java.util.Iterator;
 import java.util.Map;
-import java.util.Set;
 
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;

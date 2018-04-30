@@ -11,22 +11,20 @@
     tools:context=".activities.AddPostActivity"
     tools:showIn="@layout/activity_add_post">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
 
         <ProgressBar
             android:id="@+id/add_post_progress"
             android:layout_width="72dp"
             android:layout_height="72dp"
-            android:layout_centerInParent="true" />
+            android:layout_gravity="center"
+            />
 
         <ScrollView
             android:id="@+id/add_post_scroll"
             android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_centerInParent="true">
+            android:layout_gravity="center">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -130,5 +128,5 @@
                     android:background="@android:color/darker_gray" />
             </LinearLayout>
         </ScrollView>
-    </RelativeLayout>
+
 </FrameLayout>

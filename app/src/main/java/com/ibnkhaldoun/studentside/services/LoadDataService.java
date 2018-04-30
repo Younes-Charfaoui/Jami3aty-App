@@ -15,6 +15,7 @@ import com.ibnkhaldoun.studentside.models.Display;
 import com.ibnkhaldoun.studentside.models.MarkItem;
 import com.ibnkhaldoun.studentside.models.Message;
 import com.ibnkhaldoun.studentside.models.Notification;
+import com.ibnkhaldoun.studentside.models.ProfessorInfo;
 import com.ibnkhaldoun.studentside.models.Saved;
 import com.ibnkhaldoun.studentside.models.Subject;
 import com.ibnkhaldoun.studentside.networking.models.RequestPackage;
@@ -118,13 +119,15 @@ public class LoadDataService extends IntentService {
     private void professorInfoCall(RequestPackage request) {
         try {
             String response = HttpUtilities.getData(request);
-            //todo parse the response
-            Log.i("Tag", "professorInfoCall: " + response);
+            ArrayList<ProfessorInfo> professorInfo = JsonUtilities.getProfessorInfo(response);
             Intent intent = new Intent(PROFESSOR_INFO_ACTION);
-            intent.putExtra(KEY_DATA, response);
+            intent.putExtra(KEY_DATA, professorInfo);
             LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+            Log.i("Tag", "professorInfoCall: " + response + " and size of array is "
+                    + professorInfo.size());
         } catch (IOException e) {
-            Log.i("Service", "professorInfoCall: it was Io");
+            e.printStackTrace();
+            Log.i("Tag", "professorInfoCall: it was io" );
         }
     }
 

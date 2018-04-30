@@ -63,8 +63,8 @@ public class PreferencesManager {
         }
     }
 
-    public boolean isFirstTimeLaunched() {
-        return mPreferences.getBoolean(FIRST_TIME, true);
+    public boolean isNotFirstTimeLaunched() {
+        return !mPreferences.getBoolean(FIRST_TIME, true);
     }
 
     public void setFirstTimeLaunched() {

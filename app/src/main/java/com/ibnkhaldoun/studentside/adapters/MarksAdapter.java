@@ -2,7 +2,6 @@ package com.ibnkhaldoun.studentside.adapters;
 
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,8 +12,6 @@ import android.widget.TextView;
 import com.ibnkhaldoun.studentside.R;
 import com.ibnkhaldoun.studentside.Utilities.Utilities;
 import com.ibnkhaldoun.studentside.activities.MarkDetailActivity;
-import com.ibnkhaldoun.studentside.database.DatabaseContract;
-import com.ibnkhaldoun.studentside.models.Mark;
 import com.ibnkhaldoun.studentside.models.MarkItem;
 
 import java.util.ArrayList;

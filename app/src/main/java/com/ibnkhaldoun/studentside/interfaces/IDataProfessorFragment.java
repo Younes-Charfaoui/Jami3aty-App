@@ -7,7 +7,6 @@ package com.ibnkhaldoun.studentside.interfaces;
 
 import com.ibnkhaldoun.studentside.fragments.DisplaysFragment;
 import com.ibnkhaldoun.studentside.fragments.MessageFragment;
-import com.ibnkhaldoun.studentside.fragments.NotificationFragment;
 
 public interface IDataProfessorFragment {
 

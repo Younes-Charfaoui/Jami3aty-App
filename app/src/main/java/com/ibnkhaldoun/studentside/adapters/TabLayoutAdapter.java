@@ -12,7 +12,6 @@ import com.ibnkhaldoun.studentside.fragments.NotificationFragment;
 public class TabLayoutAdapter extends FragmentPagerAdapter {
 
     private int mNumbersOfTabs;
-    private int CurrentState;
 
 
     public TabLayoutAdapter(FragmentManager fm, int numbersOfTab) {
@@ -20,34 +19,32 @@ public class TabLayoutAdapter extends FragmentPagerAdapter {
         this.mNumbersOfTabs = numbersOfTab;
     }
 
-
-    public void setCurrentState(int currentState) {
-        CurrentState = currentState;
-    }
-
     @Override
     public Fragment getItem(int position) {
 
-        if (mNumbersOfTabs == 3) switch (position) {
-            case 0:
-                return new DisplaysFragment();
-            case 1:
-                return new NotificationFragment();
+        switch (mNumbersOfTabs) {
+            case 3:
+                switch (position) {
+                    case 0:
+                        return new DisplaysFragment();
+                    case 1:
+                        return new NotificationFragment();
+                    case 2:
+                        return new MessageFragment();
+                    default:
+                        return null;
+                }
             case 2:
-                return new MessageFragment();
+                switch (position) {
+                    case 0:
+                        return new DisplaysFragment();
+                    case 1:
+                        return new MessageFragment();
+                    default:
+                        return null;
+                }
             default:
                 return null;
-        }
-        else if (mNumbersOfTabs == 2) switch (position) {
-            case 0:
-                return new DisplaysFragment();
-            case 1:
-                return new MessageFragment();
-            default:
-                return null;
-        }
-        else {
-            return null;
         }
     }
 

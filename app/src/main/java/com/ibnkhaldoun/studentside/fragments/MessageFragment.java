@@ -3,13 +3,11 @@ package com.ibnkhaldoun.studentside.fragments;
 import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,11 +18,8 @@ import android.widget.Toast;
 import com.ibnkhaldoun.studentside.R;
 import com.ibnkhaldoun.studentside.adapters.MessageAdapter;
 import com.ibnkhaldoun.studentside.interfaces.IDataFragment;
-import com.ibnkhaldoun.studentside.interfaces.IDataProfessorFragment;
-import com.ibnkhaldoun.studentside.models.Mail;
 import com.ibnkhaldoun.studentside.models.Message;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static android.view.View.GONE;

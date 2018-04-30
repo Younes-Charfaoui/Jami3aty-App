@@ -35,7 +35,6 @@ import static com.ibnkhaldoun.studentside.networking.models.Response.RESPONSE_CA
 import static com.ibnkhaldoun.studentside.networking.models.Response.RESPONSE_CARD_NOT_EXIST;
 import static com.ibnkhaldoun.studentside.networking.models.Response.RESPONSE_EMAIL_ERROR;
 import static com.ibnkhaldoun.studentside.networking.models.Response.RESPONSE_SUCCESS;
-import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.KEY_ANDROID;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.KEY_BAC;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.KEY_CARD_NUMBER;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.KEY_EMAIL;
@@ -198,7 +197,7 @@ public class SignUpActivity extends AppCompatActivity
         if (bacAverage.isEmpty()) {
             mBacAverageWrapper.setError(getResources().getString(R.string.bac_average_empty));
             validate = false;
-        } else if (!validAverage(bacAverage)) {
+        } else if (invalidAverage(bacAverage)) {
             mBacAverageWrapper.setError(getResources().getString(R.string.bac_average_invalid));
             validate = false;
         } else {
@@ -228,9 +227,9 @@ public class SignUpActivity extends AppCompatActivity
      * @param average
      * @return boolean
      */
-    private boolean validAverage(String average) {
+    private boolean invalidAverage(String average) {
         double averageDouble = Double.parseDouble(average);
-        return !(averageDouble < 10 || averageDouble >= 20);
+        return (averageDouble < 10 || averageDouble >= 20);
     }
 
     /**
@@ -287,7 +286,7 @@ public class SignUpActivity extends AppCompatActivity
                     break;
                 case R.id.input_bac_average_sign_up:
                     if (!mBacAverageEditText.getText().toString().isEmpty()) {
-                        if (!validAverage(mBacAverageEditText.getText().toString())) {
+                        if (invalidAverage(mBacAverageEditText.getText().toString())) {
                             mBacAverageWrapper.setError(getResources().getString(R.string.bac_average_invalid));
                         } else {
                             mBacAverageWrapper.setError(null);

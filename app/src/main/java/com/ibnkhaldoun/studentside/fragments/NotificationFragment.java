@@ -69,9 +69,7 @@ public class NotificationFragment extends BaseMainFragment<Notification> impleme
 
         mInterface.onNeedData(this);
 
-        mEmptyLayout.setOnClickListener(v -> {
-            mInterface.onNeedData(this);
-        });
+        mEmptyLayout.setOnClickListener(v -> mInterface.onNeedData(this));
 
         LinearLayoutManager manager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         mNotificationRecyclerView.setLayoutManager(manager);

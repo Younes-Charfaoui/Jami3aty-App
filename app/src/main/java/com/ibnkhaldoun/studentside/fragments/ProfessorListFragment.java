@@ -12,7 +12,6 @@ import com.ibnkhaldoun.studentside.R;
 import com.ibnkhaldoun.studentside.adapters.SubjectProfessorDialogAdapter;
 import com.ibnkhaldoun.studentside.interfaces.IProfessorDialog;
 import com.ibnkhaldoun.studentside.models.MailProfessor;
-import com.ibnkhaldoun.studentside.models.Professor;
 
 import java.util.ArrayList;
 import java.util.List;

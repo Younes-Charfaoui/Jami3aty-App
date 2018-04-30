@@ -1,5 +1,6 @@
 package com.ibnkhaldoun.studentside.networking.utilities;
 
+import android.annotation.SuppressLint;
 import android.util.Log;
 import android.util.SparseArray;
 
@@ -10,6 +11,7 @@ import com.ibnkhaldoun.studentside.models.MarkItem;
 import com.ibnkhaldoun.studentside.models.Message;
 import com.ibnkhaldoun.studentside.models.Notification;
 import com.ibnkhaldoun.studentside.models.Professor;
+import com.ibnkhaldoun.studentside.models.ProfessorInfo;
 import com.ibnkhaldoun.studentside.models.Saved;
 import com.ibnkhaldoun.studentside.models.Schedule;
 import com.ibnkhaldoun.studentside.models.ScheduleItem;
@@ -25,6 +27,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import static com.ibnkhaldoun.studentside.networking.models.Response.JSON_EXCEPTION;
 import static com.ibnkhaldoun.studentside.networking.models.Response.RESPONSE_SUCCESS;
@@ -425,5 +428,37 @@ public class JsonUtilities {
             e.printStackTrace();
         }
         return professors;
+    }
+
+    public static ArrayList<ProfessorInfo> getProfessorInfo(String response) {
+        ArrayList<ProfessorInfo> professorInfo = new ArrayList<>();
+        try {
+            JSONObject root = new JSONObject(response);
+            if (root.getInt(KEY_JSON_STATUS) != 200) throw new JSONException("Code was not 200");
+            JSONArray data = root.getJSONArray(KEY_JSON_DATA);
+
+            for (int i = 0; i < data.length(); i++) {
+                JSONObject object = data.getJSONObject(i);
+                String idSubject = object.getString(JSON_SUBJECT_ID);
+                String title = object.getString(JSON_SUBJECT_TITLE);
+                int level = object.getInt(JSON_SUBJECT_LEVEL);
+
+                JSONArray sections = object.getJSONArray(JSON_STUDENT_SECTION);
+                @SuppressLint("UseSparseArrays") HashMap<Integer, ArrayList<Integer>> groupAndSection = new HashMap<>();
+                for (int m = 0; m < sections.length(); m++) {
+                    JSONArray section = sections.getJSONArray(m);
+                    ArrayList<Integer> groups = new ArrayList<>();
+                    for (int j = 0; j < section.length(); j++) {
+                        groups.add(section.getInt(j));
+                    }
+                    groupAndSection.put(m, groups);
+                }
+                professorInfo.add(new ProfessorInfo(idSubject, title, level, groupAndSection));
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+            Log.i("Tag", "professorInfoCall: it was json" );
+        }
+        return professorInfo;
     }
 }

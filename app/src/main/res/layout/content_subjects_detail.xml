@@ -26,6 +26,7 @@
                 android:layout_weight="3"
                 android:orientation="vertical">
 
+                <!--suppress AndroidDomInspection -->
                 <TextView
                     android:id="@+id/subject_title_title"
                     android:layout_width="wrap_content"
@@ -54,6 +55,7 @@
 
                 android:orientation="vertical">
 
+                <!--suppress AndroidDomInspection -->
                 <TextView
                     android:id="@+id/subject_coefficient_title"
                     android:layout_width="wrap_content"
@@ -80,6 +82,7 @@
         </LinearLayout>
 
 
+        <!--suppress AndroidDomInspection -->
         <TextView
             android:id="@+id/subject_utility_title"
             android:layout_width="wrap_content"
@@ -99,6 +102,7 @@
             android:textSize="18sp"
             tools:text="In this subject the student will learn how the operating system are built and how they can iteract with th end user , we will see how stuff are implemented and some basic conspect and layers in the operating system." />
 
+        <!--suppress AndroidDomInspection -->
         <TextView
             android:id="@+id/subject_course_professor_title"
             android:layout_width="wrap_content"
@@ -120,6 +124,7 @@
             android:visibility="gone"
             tools:text="Ouared Aek" />
 
+        <!--suppress AndroidDomInspection -->
         <TextView
             android:id="@+id/subject_td_professor_title"
             android:layout_width="wrap_content"
@@ -141,6 +146,7 @@
             android:visibility="gone"
             tools:text="Ouared Aek" />
 
+        <!--suppress AndroidDomInspection -->
         <TextView
             android:id="@+id/subject_tp_professor_title"
             android:layout_width="wrap_content"
@@ -162,6 +168,7 @@
             android:visibility="gone"
             tools:text="Hattab Nourdeen" />
 
+        <!--suppress AndroidDomInspection -->
         <TextView
             android:id="@+id/subject_overview_title"
             android:layout_width="wrap_content"
@@ -194,6 +201,7 @@
                 android:gravity="center_vertical"
                 android:orientation="vertical">
 
+                <!--suppress AndroidDomInspection -->
                 <TextView
                     android:id="@+id/subject_unity_type_title"
                     android:layout_width="wrap_content"
@@ -220,6 +228,7 @@
                 android:gravity="center"
                 android:orientation="vertical">
 
+                <!--suppress AndroidDomInspection -->
                 <TextView
                     android:id="@+id/subject_credit_title"
                     android:layout_width="wrap_content"

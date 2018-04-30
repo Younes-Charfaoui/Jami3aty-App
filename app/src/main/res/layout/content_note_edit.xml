@@ -21,7 +21,8 @@
         android:clickable="false"
         android:hint="@string/subject_string"
         android:textSize="22sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:inputType="text" />
 
 
     <EditText
@@ -30,6 +31,7 @@
         android:layout_height="fill_parent"
         android:background="@null"
         android:gravity="top"
-        android:hint="@string/note_edit_string" />
+        android:hint="@string/note_edit_string"
+        android:inputType="text" />
 
 </LinearLayout>

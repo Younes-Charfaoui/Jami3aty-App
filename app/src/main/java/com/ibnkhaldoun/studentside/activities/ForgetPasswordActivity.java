@@ -27,7 +27,6 @@ import static com.ibnkhaldoun.studentside.networking.models.Response.IO_EXCEPTIO
 import static com.ibnkhaldoun.studentside.networking.models.Response.JSON_EXCEPTION;
 import static com.ibnkhaldoun.studentside.networking.models.Response.RESPONSE_EMAIL_ERROR;
 import static com.ibnkhaldoun.studentside.networking.models.Response.RESPONSE_SUCCESS;
-import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.KEY_ANDROID;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.KEY_EMAIL;
 
 public class ForgetPasswordActivity extends AppCompatActivity implements ForgetPasswordTaskListener {

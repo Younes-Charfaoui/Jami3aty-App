@@ -1,7 +1,6 @@
 package com.ibnkhaldoun.studentside.asyncTask;
 
 import android.os.AsyncTask;
-import android.support.v4.util.ArrayMap;
 import android.util.Log;
 
 import com.ibnkhaldoun.studentside.interfaces.SignUpTaskListener;

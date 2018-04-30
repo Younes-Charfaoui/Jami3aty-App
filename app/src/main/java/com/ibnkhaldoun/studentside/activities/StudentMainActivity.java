@@ -315,9 +315,7 @@ public class StudentMainActivity extends AppCompatActivity
                                 .setBackgroundColour(getResources().getColor(R.color.colorPrimary))
                                 .setSecondaryText("Click here to send new mails to professor")
                                 .setAnimationInterpolator(new FastOutSlowInInterpolator())
-                                .setPromptStateChangeListener((prompt, status) -> {
-                                    new PreferencesManager(StudentMainActivity.this, CONFIG).setStudentMainMailFirstTime();
-                                })
+                                .setPromptStateChangeListener((prompt, status) -> new PreferencesManager(StudentMainActivity.this, CONFIG).setStudentMainMailFirstTime())
                                 .show();
                     }
                 } else mAddMailFab.hide();

@@ -11,7 +11,6 @@ import android.view.View;
 import android.widget.SeekBar;
 
 import com.ibnkhaldoun.studentside.R;
-import com.ibnkhaldoun.studentside.models.Display;
 
 
 public class SettingMarkDialogFragment extends DialogFragment implements SeekBar.OnSeekBarChangeListener {

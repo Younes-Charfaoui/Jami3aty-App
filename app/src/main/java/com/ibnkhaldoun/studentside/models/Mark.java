@@ -18,7 +18,7 @@ public class Mark implements Parcelable {
         }
     };
     private String subjectName, shortSubjectName;
-    private float mExam = -1, mTD = -1, mTP = -1;
+    private float mExam, mTD, mTP;
     private String courseProfessor;
     private String tdProfessor;
     private String tpProfessor;

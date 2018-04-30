@@ -4,17 +4,6 @@
 
 package com.ibnkhaldoun.studentside.networking.utilities;
 
-import android.content.Context;
-import android.content.Intent;
-import android.support.v4.content.LocalBroadcastManager;
-
-import com.ibnkhaldoun.studentside.models.Display;
-import com.ibnkhaldoun.studentside.networking.models.RequestPackage;
-import com.ibnkhaldoun.studentside.services.LoadDataService;
-
-import java.io.IOException;
-import java.util.ArrayList;
-
 public class Call<D> {
 
     /*

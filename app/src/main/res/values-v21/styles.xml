@@ -1,5 +1,6 @@
 <resources>
 
+    <!--suppress AndroidDomInspection -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
@@ -8,27 +9,34 @@
     </style>
 
 
+    <!--suppress AndroidDomInspection -->
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
+    <!--suppress AndroidDomInspection -->
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <!--suppress AndroidDomInspection -->
     <style name="ButtonStylesOne" parent="Theme.AppCompat.Light">
         <item name="android:colorButtonNormal">@color/colorAccent</item>
         <item name="android:textColor">@android:color/white</item>
     </style>
 
+    <!--suppress AndroidDomInspection -->
     <style name="ButtonStylesTwo" parent="Theme.AppCompat.Light">
         <item name="android:colorButtonNormal">@color/deep_red</item>
         <item name="android:textColor">@android:color/white</item>
     </style>
 
+    <!--suppress AndroidDomInspection -->
     <style name="FabStyle" parent="Theme.AppCompat.Light">
         <item name="android:background">@color/deep_red</item>
     </style>
+    <!--suppress AndroidDomInspection -->
     <style name="EditTextStyle" parent="Theme.AppCompat.Light">
         <item name="colorAccent">#4CAF50</item>
     </style>
 
+    <!--suppress AndroidDomInspection -->
     <style name="IntroSlidersText" parent="Theme.AppCompat.Light">
         <item name="android:layout_marginTop">20dp</item>
         <item name="android:paddingLeft">@dimen/desc_padding</item>

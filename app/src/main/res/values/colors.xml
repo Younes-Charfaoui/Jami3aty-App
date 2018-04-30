@@ -27,9 +27,6 @@
     <color name="circle_18">#9E9E9E</color>
     <color name="circle_19">#607D8B</color>
 
-    <array name="d">
-        <item>@color/circle_16</item>
-    </array>
 
     <color name="active_schedule">#EEEEEE</color>
 

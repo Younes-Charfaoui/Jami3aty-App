@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--suppress AndroidDomInspection -->
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -12,6 +13,7 @@
     app:cardCornerRadius="2dp"
     app:cardElevation="4dp">
 
+    <!--suppress AndroidDomInspection -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -98,6 +100,7 @@
             android:paddingEnd="16dp"
             android:paddingStart="16dp">
 
+            <!--suppress AndroidDomInspection -->
             <Button
                 android:id="@+id/display_save_button"
                 style="?attr/buttonBarStyle"
@@ -109,6 +112,7 @@
                 android:fontFamily="sans-serif-light"
                 android:text="@string/displays_save_string" />
 
+            <!--suppress AndroidDomInspection -->
             <Button
                 android:id="@+id/display_note_button"
                 style="?attr/buttonBarStyle"

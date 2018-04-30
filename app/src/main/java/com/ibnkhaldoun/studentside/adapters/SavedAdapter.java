@@ -28,7 +28,6 @@ import com.ibnkhaldoun.studentside.services.LoadDataService;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_POST_ID;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_POST_ID2;
 
 

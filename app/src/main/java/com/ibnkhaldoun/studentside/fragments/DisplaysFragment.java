@@ -18,7 +18,6 @@ import android.widget.Toast;
 import com.ibnkhaldoun.studentside.R;
 import com.ibnkhaldoun.studentside.adapters.DisplaysAdapter;
 import com.ibnkhaldoun.studentside.interfaces.IDataFragment;
-import com.ibnkhaldoun.studentside.interfaces.IDataProfessorFragment;
 import com.ibnkhaldoun.studentside.models.Display;
 
 import java.util.List;

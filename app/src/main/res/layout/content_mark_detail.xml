@@ -40,6 +40,7 @@
             android:layout_below="@id/mark_subject"
             android:orientation="vertical">
 
+            <!--suppress AndroidDomInspection -->
             <TextView
                 android:id="@+id/exam_mark_title"
                 android:layout_width="wrap_content"
@@ -57,6 +58,7 @@
                 android:textSize="24sp"
                 tools:text="20" />
 
+            <!--suppress AndroidDomInspection -->
             <TextView
                 android:id="@+id/td_mark_title"
                 android:layout_width="wrap_content"
@@ -74,6 +76,7 @@
                 android:textSize="24sp"
                 tools:text="19" />
 
+            <!--suppress AndroidDomInspection -->
             <TextView
                 android:id="@+id/tp_mark_title"
                 android:layout_width="wrap_content"
@@ -93,6 +96,7 @@
 
         </LinearLayout>
 
+        <!--suppress AndroidDomInspection -->
         <TextView
             android:id="@+id/average_title"
             android:layout_width="wrap_content"

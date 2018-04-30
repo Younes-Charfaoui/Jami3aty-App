@@ -1,7 +1,6 @@
 package com.ibnkhaldoun.studentside.adapters;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.drawable.GradientDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -12,7 +11,6 @@ import android.widget.TextView;
 
 import com.ibnkhaldoun.studentside.R;
 import com.ibnkhaldoun.studentside.Utilities.Utilities;
-import com.ibnkhaldoun.studentside.activities.MarkDetailActivity;
 import com.ibnkhaldoun.studentside.enums.PostTypes;
 import com.ibnkhaldoun.studentside.models.Notification;
 

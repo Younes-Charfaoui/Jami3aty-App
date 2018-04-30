@@ -10,7 +10,7 @@ import android.os.Parcelable;
 public class MarkItem implements Parcelable {
 
     private String subjectName, shortSubjectName;
-    private float mExam = -1, mTD = -1, mTP = -1;
+    private float mExam, mTD, mTP;
 
     public String getSubjectName() {
         return subjectName;

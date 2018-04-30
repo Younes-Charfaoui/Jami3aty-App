@@ -18,12 +18,10 @@ public class DraftActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(view -> {
-            startActivity(new Intent(DraftActivity.this, NewMessageActivity.class)
-                    .putExtra(NewMessageActivity.KEY_LAUNCHER, 1));
-        });
-        assert getSupportActionBar() != null;
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        fab.setOnClickListener(view -> startActivity(new Intent(DraftActivity.this, NewMessageActivity.class)
+                .putExtra(NewMessageActivity.KEY_LAUNCHER, 1)));
+        if (getSupportActionBar() != null)
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
 }

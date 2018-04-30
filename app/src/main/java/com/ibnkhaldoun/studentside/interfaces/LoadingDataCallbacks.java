@@ -1,7 +1,6 @@
 package com.ibnkhaldoun.studentside.interfaces;
 
 import android.database.Cursor;
-import android.os.Parcelable;
 
 import java.util.List;
 

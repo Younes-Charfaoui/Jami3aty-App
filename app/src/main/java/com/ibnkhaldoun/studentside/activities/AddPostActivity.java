@@ -17,17 +17,38 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
 import com.ibnkhaldoun.studentside.R;
+import com.ibnkhaldoun.studentside.models.ProfessorInfo;
 import com.ibnkhaldoun.studentside.services.LoadDataService;
 
+import java.util.ArrayList;
+
 public class AddPostActivity extends AppCompatActivity {
+
+    private ArrayList<ProfessorInfo> mProfessorInformation;
+    private ScrollView mScroll;
+    private ProgressBar mLoadingBar;
 
     private BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            Log.i("Tag", "onReceive: i had receiver " + intent.getStringExtra(LoadDataService.KEY_DATA));
+            Log.i("Tag", "onReceive: i have a signal");
+            mProfessorInformation = intent.getParcelableArrayListExtra(LoadDataService.KEY_DATA);
+            mLoadingBar.setVisibility(View.GONE);
+            if (mProfessorInformation.size() != 0){
+                mScroll.setVisibility(View.VISIBLE);
+                Log.i("Tag", "onReceive: the list is not empty");
+            }
+            else {
+                Log.i("Tag", "onReceive: the list is empty");
+                Toast.makeText(context, "You can't post anything for the moment, try later.", Toast.LENGTH_SHORT).show();
+                finish();
+            }
         }
     };
 
@@ -37,6 +58,9 @@ public class AddPostActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_post);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        mScroll = findViewById(R.id.add_post_scroll);
+        mLoadingBar = findViewById(R.id.add_post_progress);
 
         if (getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);

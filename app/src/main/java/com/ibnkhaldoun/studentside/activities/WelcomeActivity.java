@@ -25,7 +25,7 @@ public class WelcomeActivity extends AppCompatActivity implements ViewPager.OnPa
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mPreferencesManager = new PreferencesManager(this,PreferencesManager.CONFIG);
-        if (!mPreferencesManager.isFirstTimeLaunched()) {
+        if (mPreferencesManager.isNotFirstTimeLaunched()) {
             launchMainScreen();
         }
 

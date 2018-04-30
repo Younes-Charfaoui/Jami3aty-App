@@ -2,8 +2,6 @@ package com.ibnkhaldoun.studentside.adapters;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.GradientDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,7 +14,6 @@ import com.ibnkhaldoun.studentside.R;
 import com.ibnkhaldoun.studentside.Utilities.ActivityUtilities;
 import com.ibnkhaldoun.studentside.Utilities.Utilities;
 import com.ibnkhaldoun.studentside.activities.MessageDetailActivity;
-import com.ibnkhaldoun.studentside.activities.MessagesActivity;
 import com.ibnkhaldoun.studentside.models.Message;
 
 import java.util.List;
