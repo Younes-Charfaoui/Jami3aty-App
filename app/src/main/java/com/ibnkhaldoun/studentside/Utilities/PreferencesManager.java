@@ -17,8 +17,9 @@ public class PreferencesManager {
     public static final int SUBJECT = 3;
     public static final int UNIVERSITY = 4;
     public static final int PROFESSOR = 5;
-    public static final String KEY_MENU_NOTE = "keyMenuNote";
-    public static final String KEY_HAMBURGER_STUDENT_MAIN = "keyHamburgerStudentMain";
+    public static final String KEY_MAIL_STUDENT_MAIL = "keyMailStudentMain";
+    private static final String KEY_MENU_NOTE = "keyMenuNote";
+    private static final String KEY_HAMBURGER_STUDENT_MAIN = "keyHamburgerStudentMain";
     private static final String TAG = "manager";
     private static final int PRIVATE_MODE = 0;
     private static final String PREFERENCE_CONFIGURATION_NAME = "configuration";
@@ -160,6 +161,15 @@ public class PreferencesManager {
 
     public boolean isStudentMainFirstTime() {
         return mPreferences.getBoolean(KEY_HAMBURGER_STUDENT_MAIN, true);
+    }
+
+    public void setStudentMainMailFirstTime() {
+        mEditor.putBoolean(KEY_MAIL_STUDENT_MAIL, false);
+        mEditor.apply();
+    }
+
+    public boolean isStudentMainMailFirstTime() {
+        return mPreferences.getBoolean(KEY_MAIL_STUDENT_MAIL, true);
     }
 
     void removePreference() {

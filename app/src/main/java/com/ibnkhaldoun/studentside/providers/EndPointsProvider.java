@@ -7,7 +7,7 @@ package com.ibnkhaldoun.studentside.providers;
 
 public final class EndPointsProvider {
 
-    private static final String BASE = "http://192.168.33.2/";
+    private static final String BASE = "http://192.168.1.3/";
     private final static String LOGIN_ENDPOINT = BASE + "jami3aty/auth/login/";
     private static final String SIGN_UP_ENDPOINT = BASE + "jami3aty/auth/register/";
     private final static String FORGET_PASSWORD_ENDPOINT = BASE + "jami3aty/users/forgotpass/";
@@ -21,6 +21,8 @@ public final class EndPointsProvider {
     private final static String COMMENTS_ENDPOINT = BASE + "jami3aty/comments/";
     private static final String NOTIFICATION_ENDPOINT = BASE + "jami3aty/notifications/all";
     private static final String DISPLAY_ENDPOINT_ALL = BASE + "jami3aty/posts/all";
+    private static final String DISPLAY_ENDPOINT_PROFESSOR = BASE + "jami3aty/posts/myposts";
+    private static final String DISPLAY_ENDPOINT_PROFESSOR_INFO = BASE + "jami3aty/posts/profinfo";
 
     public static String getProfessorEndpoint() {
         return MAIL_ENDPOINT + "/profs";
@@ -105,5 +107,12 @@ public final class EndPointsProvider {
 
     public static String getDisplays() {
         return DISPLAY_ENDPOINT_ALL;
+    }
+    public static String getDisplaysProfessor() {
+        return DISPLAY_ENDPOINT_PROFESSOR;
+    }
+
+    public static String getDisplaysProfessorInfo() {
+        return DISPLAY_ENDPOINT_PROFESSOR_INFO;
     }
 }

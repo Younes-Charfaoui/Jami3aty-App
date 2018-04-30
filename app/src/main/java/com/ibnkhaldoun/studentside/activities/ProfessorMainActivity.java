@@ -43,6 +43,7 @@ import static com.ibnkhaldoun.studentside.fragments.BaseMainFragment.INTERNET_ER
 import static com.ibnkhaldoun.studentside.networking.models.RequestPackage.POST;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_ID;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_TYPE;
+import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.KEY_AJAX;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.KEY_ANDROID;
 import static com.ibnkhaldoun.studentside.services.LoadDataService.KEY_DATA;
 
@@ -112,9 +113,18 @@ public class ProfessorMainActivity extends AppCompatActivity
 
         setupViewPagerAndTabLayout();
         mAddPostFab.setOnClickListener(v -> {
-            Intent intent = new Intent(this,AddPostActivity.class);
+            Intent intent = new Intent(this, AddPostActivity.class);
             startActivity(intent);
-            //todo send request package to service to download data.
+            RequestPackage request = new RequestPackage.Builder()
+                    .addMethod(POST)
+                    .addEndPoint(EndPointsProvider.getDisplaysProfessorInfo())
+                    .addParams("id_professor", new PreferencesManager(this, PROFESSOR).getIdUser())
+                    .create();
+
+            Intent intentService = new Intent(this, LoadDataService.class);
+            intentService.putExtra(LoadDataService.KEY_REQUEST, request);
+            intentService.putExtra(LoadDataService.KEY_ACTION,LoadDataService.PROFESSOR_INFO_TYPE);
+            startService(intentService);
         });
 
         TextView nameHeader = navigationView.getHeaderView(0).findViewById(R.id.name_header_textView);
@@ -208,17 +218,16 @@ public class ProfessorMainActivity extends AppCompatActivity
     public void onNeedData(DisplaysFragment displaysFragment) {
         if (NetworkUtilities.isConnected(this)) {
             displaysFragment.onNetworkStartLoading();
-            PreferencesManager manager = new PreferencesManager(this, PROFESSOR);
             RequestPackage request = new RequestPackage.Builder()
-                    .addEndPoint(EndPointsProvider.getDisplays())
+                    .addEndPoint(EndPointsProvider.getDisplaysProfessor())
                     .addMethod(POST)
-
-                    // the professor ids
+                    .addParams("id_professor", new PreferencesManager(this, PROFESSOR).getIdUser())
+                    .addParams(KEY_AJAX, KEY_ANDROID)
                     .create();
             Intent intent = new Intent(this, LoadDataService.class);
             intent.putExtra(LoadDataService.KEY_REQUEST, request);
             intent.putExtra(LoadDataService.KEY_ACTION, LoadDataService.DISPLAY_TYPE);
-            //startService(intent);
+            startService(intent);
         } else {
             displaysFragment.onNetworkLoadingFailed(INTERNET_ERROR);
         }

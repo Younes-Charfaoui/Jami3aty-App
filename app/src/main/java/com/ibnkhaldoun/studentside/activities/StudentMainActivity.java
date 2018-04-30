@@ -306,8 +306,21 @@ public class StudentMainActivity extends AppCompatActivity
             public void onTabSelected(TabLayout.Tab tab) {
                 mMainViewPager.setCurrentItem(tab.getPosition());
                 mToolBar.setTitle(mPagerTitles[tab.getPosition()]);
-                if (tab.getPosition() == 2) mAddMailFab.show();
-                else mAddMailFab.hide();
+                if (tab.getPosition() == 2) {
+                    mAddMailFab.show();
+                    if (new PreferencesManager(StudentMainActivity.this, CONFIG).isStudentMainMailFirstTime()) {
+                        new MaterialTapTargetPrompt.Builder(StudentMainActivity.this)
+                                .setTarget(findViewById(R.id.mail_add_professor_fab))
+                                .setPrimaryText("Send mail.")
+                                .setBackgroundColour(getResources().getColor(R.color.colorPrimary))
+                                .setSecondaryText("Click here to send new mails to professor")
+                                .setAnimationInterpolator(new FastOutSlowInInterpolator())
+                                .setPromptStateChangeListener((prompt, status) -> {
+                                    new PreferencesManager(StudentMainActivity.this, CONFIG).setStudentMainMailFirstTime();
+                                })
+                                .show();
+                    }
+                } else mAddMailFab.hide();
                 AppBarLayout appBarLayout = findViewById(R.id.appbar);
                 appBarLayout.setExpanded(true);
             }

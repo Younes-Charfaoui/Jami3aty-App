@@ -12,8 +12,6 @@ import com.ibnkhaldoun.studentside.activities.ScheduleActivity;
 import com.ibnkhaldoun.studentside.activities.SubjectsActivity;
 import com.ibnkhaldoun.studentside.models.Comment;
 import com.ibnkhaldoun.studentside.models.Display;
-import com.ibnkhaldoun.studentside.models.Mail;
-import com.ibnkhaldoun.studentside.models.Mark;
 import com.ibnkhaldoun.studentside.models.MarkItem;
 import com.ibnkhaldoun.studentside.models.Message;
 import com.ibnkhaldoun.studentside.models.Notification;
@@ -50,6 +48,7 @@ public class LoadDataService extends IntentService {
     public static final String SUBJECT_INNER_ACTION = "subjectAction";
     public static final String NOTIFICATION_ACTION = "notificationAction";
     public static final String COMMENTS_ACTION = "commentsAction";
+    public static final String PROFESSOR_INFO_ACTION = "professorInfoAction";
 
     public static final int DISPLAY_TYPE = 1;
     public static final int MAIL_TYPE = 2;
@@ -62,6 +61,7 @@ public class LoadDataService extends IntentService {
     public static final int SUBJECT_IN_TYPE = 9;
     public static final int SCHEDULE_IN_TYPE = 10;
     public static final int COMMENT_TYPE = 11;
+    public static final int PROFESSOR_INFO_TYPE = 12;
 
     public static final String KEY_ACTION = "Action";
     public static final String KEY_DATA = "data";
@@ -109,6 +109,22 @@ public class LoadDataService extends IntentService {
             case COMMENT_TYPE:
                 commentsCall(request);
                 break;
+            case PROFESSOR_INFO_TYPE:
+                professorInfoCall(request);
+                break;
+        }
+    }
+
+    private void professorInfoCall(RequestPackage request) {
+        try {
+            String response = HttpUtilities.getData(request);
+            //todo parse the response
+            Log.i("Tag", "professorInfoCall: " + response);
+            Intent intent = new Intent(PROFESSOR_INFO_ACTION);
+            intent.putExtra(KEY_DATA, response);
+            LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+        } catch (IOException e) {
+            Log.i("Service", "professorInfoCall: it was Io");
         }
     }
 
