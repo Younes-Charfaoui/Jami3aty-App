@@ -17,7 +17,8 @@ public class PreferencesManager {
     public static final int SUBJECT = 3;
     public static final int UNIVERSITY = 4;
     public static final int PROFESSOR = 5;
-
+    public static final String KEY_MENU_NOTE = "keyMenuNote";
+    public static final String KEY_HAMBURGER_STUDENT_MAIN = "keyHamburgerStudentMain";
     private static final String TAG = "manager";
     private static final int PRIVATE_MODE = 0;
     private static final String PREFERENCE_CONFIGURATION_NAME = "configuration";
@@ -25,7 +26,6 @@ public class PreferencesManager {
     private static final String PREFERENCE_SUBJECTS_NAME = "subjects";
     private static final String PREFERENCE_UNIVERSITY_NAME = "university";
     private static final String PREFERENCE_PROFESSOR_NAME = "professor";
-
     private static final String FIRST_TIME = "isFirstTime";
     private static final String LOGIN = "login";
     private static final String FULL_NAME = "fullName";
@@ -35,7 +35,7 @@ public class PreferencesManager {
     private static final String GROUP = "group";
     private static final String SECTION = "section";
     private static final String SUBJECTS = "subjects";
-
+    private static final String KEY_ADD_NOTE = "keyNote";
     private SharedPreferences mPreferences;
     private SharedPreferences.Editor mEditor;
 
@@ -76,8 +76,8 @@ public class PreferencesManager {
     }
 
     public void setLoginProfessor(String id, String fullName, String degree) {
-        mEditor.putString(FULL_NAME , fullName);
-        mEditor.putString(GRADE , degree);
+        mEditor.putString(FULL_NAME, fullName);
+        mEditor.putString(GRADE, degree);
         mEditor.putBoolean(LOGIN, true);
         mEditor.putString(ID, id);
         mEditor.apply();
@@ -133,6 +133,33 @@ public class PreferencesManager {
 
     public boolean isSubjectsExists() {
         return mPreferences.getStringSet(SUBJECTS, null) != null;
+    }
+
+    public void setAddNoteFirstTime() {
+        mEditor.putBoolean(KEY_ADD_NOTE, false);
+        mEditor.apply();
+    }
+
+    public boolean isAddNoteFirstTime() {
+        return mPreferences.getBoolean(KEY_ADD_NOTE, true);
+    }
+
+    public void setMenuNoteFirstTime() {
+        mEditor.putBoolean(KEY_MENU_NOTE, false);
+        mEditor.apply();
+    }
+
+    public boolean isMenuNoteFirstTime() {
+        return mPreferences.getBoolean(KEY_MENU_NOTE, true);
+    }
+
+    public void setStudentMainFirstTime() {
+        mEditor.putBoolean(KEY_HAMBURGER_STUDENT_MAIN, false);
+        mEditor.apply();
+    }
+
+    public boolean isStudentMainFirstTime() {
+        return mPreferences.getBoolean(KEY_HAMBURGER_STUDENT_MAIN, true);
     }
 
     void removePreference() {

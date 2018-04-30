@@ -21,13 +21,10 @@ public final class EndPointsProvider {
     private final static String COMMENTS_ENDPOINT = BASE + "jami3aty/comments/";
     private static final String NOTIFICATION_ENDPOINT = BASE + "jami3aty/notifications/all";
     private static final String DISPLAY_ENDPOINT_ALL = BASE + "jami3aty/posts/all";
-    private static final String DISPLAY_ENDPOINT = BASE + "jami3aty/posts/get";
 
     public static String getProfessorEndpoint() {
         return MAIL_ENDPOINT + "/profs";
     }
-
-    private static final String PROFESSOR_ENDPOINT = BASE + "jami3aty/professors";
 
     public static String getAddCommentsEndpoint() {
         return COMMENTS_ENDPOINT + "add";
@@ -44,8 +41,6 @@ public final class EndPointsProvider {
     public static String getRemoveCommentsEndpoint() {
         return COMMENTS_ENDPOINT + "remove";
     }
-
-    private static final String ADD_COMMENTS_ENDPOINT = BASE + "jami3aty/posts/get";
 
     public static String getCommentsEndpoint() {
         return COMMENTS_ENDPOINT;

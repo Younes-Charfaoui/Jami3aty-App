@@ -215,7 +215,7 @@
     <string name="wait_please">Wait please.</string>
     <string name="unsaving_current">Unsaving....</string>
     <string name="title_activity_saved_detail">Saved Detail</string>
-    <string name="there_is_no_comments_for_this_post">There is no comments for this post</string>
+    <string name="there_is_no_comments_for_this_post">There is no notes for this post</string>
     <string name="consultation_string">Consultation</string>
     <string name="mark_string">Mark</string>
     <string name="avis_string">Avis</string>
@@ -231,5 +231,7 @@
     <string name="choose_professor">Choose a Professor</string>
     <string name="average">Average</string>
     <string name="title_activity_add_post">AddPostActivity</string>
+    <string name="add_post">Add post</string>
+    <string name="post_text">Post Text</string>
 
 </resources>

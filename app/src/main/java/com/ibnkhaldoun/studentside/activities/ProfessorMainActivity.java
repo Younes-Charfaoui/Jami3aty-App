@@ -112,7 +112,9 @@ public class ProfessorMainActivity extends AppCompatActivity
 
         setupViewPagerAndTabLayout();
         mAddPostFab.setOnClickListener(v -> {
-
+            Intent intent = new Intent(this,AddPostActivity.class);
+            startActivity(intent);
+            //todo send request package to service to download data.
         });
 
         TextView nameHeader = navigationView.getHeaderView(0).findViewById(R.id.name_header_textView);

@@ -14,6 +14,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.support.v4.view.animation.FastOutSlowInInterpolator;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -31,6 +32,8 @@ import com.ibnkhaldoun.studentside.Utilities.PreferencesManager;
 import com.ibnkhaldoun.studentside.adapters.NotesAdapter;
 import com.ibnkhaldoun.studentside.database.DatabaseContract;
 import com.ibnkhaldoun.studentside.models.Note;
+
+import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetPrompt;
 
 import static android.view.View.GONE;
 import static android.view.View.INVISIBLE;
@@ -147,8 +150,8 @@ public class NotesActivity extends AppCompatActivity
                                         mNoteRecyclerView.setVisibility(GONE);
                                     }
                                 }
-                                if(event == DISMISS_EVENT_ACTION){
-                                     if (NUMBER_OF_NOTE != 0) {
+                                if (event == DISMISS_EVENT_ACTION) {
+                                    if (NUMBER_OF_NOTE != 0) {
                                         if (mEmptyView.getVisibility() == VISIBLE) {
                                             mEmptyView.setVisibility(GONE);
                                         }
@@ -274,5 +277,44 @@ public class NotesActivity extends AppCompatActivity
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
         mAdapter.swapCursor(null);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (new PreferencesManager(this, PreferencesManager.CONFIG).isAddNoteFirstTime()) {
+            new MaterialTapTargetPrompt.Builder(this)
+                    .setPrimaryText("Add New note")
+                    .setSecondaryText("Click here to and new note.")
+                    .setTarget(findViewById(R.id.note_add_fav))
+                    .setBackgroundColour(getResources().getColor(R.color.colorPrimary))
+                    .setAnimationInterpolator(new FastOutSlowInInterpolator())
+                    .setPromptStateChangeListener((prompt, state) -> {
+
+                        switch (state) {
+                            case MaterialTapTargetPrompt.STATE_FOCAL_PRESSED:
+                                new PreferencesManager(this, PreferencesManager.CONFIG).setAddNoteFirstTime();
+                                break;
+                        }
+                    })
+                    .show();
+        } else if (new PreferencesManager(this, PreferencesManager.CONFIG).isMenuNoteFirstTime()) {
+
+            new MaterialTapTargetPrompt.Builder(this)
+                    .setPrimaryText("More Options")
+                    .setSecondaryText("Click here to see more options.")
+                    .setIcon(R.drawable.ic_more_vert_white)
+                    .setBackgroundColour(getResources().getColor(R.color.colorPrimary))
+                    .setTarget(((Toolbar) findViewById(R.id.note_toolbar)).getChildAt(2))
+                    .setAnimationInterpolator(new FastOutSlowInInterpolator())
+                    .setPromptStateChangeListener((prompt, state) -> {
+                        switch (state) {
+                            case MaterialTapTargetPrompt.STATE_FOCAL_PRESSED:
+                                new PreferencesManager(this, PreferencesManager.CONFIG).setMenuNoteFirstTime();
+                                break;
+                        }
+                    })
+                    .show();
+        }
     }
 }

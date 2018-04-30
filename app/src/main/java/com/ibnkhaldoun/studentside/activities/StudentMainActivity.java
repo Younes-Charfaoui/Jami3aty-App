@@ -6,7 +6,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.database.Cursor;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -14,12 +13,10 @@ import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.CursorLoader;
-import android.support.v4.content.Loader;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v4.view.animation.FastOutSlowInInterpolator;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -32,12 +29,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ibnkhaldoun.studentside.R;
-import com.ibnkhaldoun.studentside.Utilities.ActivityUtilities;
 import com.ibnkhaldoun.studentside.Utilities.PreferencesManager;
 import com.ibnkhaldoun.studentside.Utilities.Utilities;
 import com.ibnkhaldoun.studentside.adapters.TabLayoutAdapter;
 import com.ibnkhaldoun.studentside.asyncTask.ResponseAsyncTask;
-import com.ibnkhaldoun.studentside.database.DatabaseContract;
 import com.ibnkhaldoun.studentside.fragments.DisplaysFragment;
 import com.ibnkhaldoun.studentside.fragments.MessageFragment;
 import com.ibnkhaldoun.studentside.fragments.NoteOfDisplayDialog;
@@ -61,6 +56,9 @@ import com.ibnkhaldoun.studentside.services.LoadDataService;
 import java.util.ArrayList;
 import java.util.List;
 
+import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetPrompt;
+
+import static com.ibnkhaldoun.studentside.Utilities.PreferencesManager.CONFIG;
 import static com.ibnkhaldoun.studentside.Utilities.PreferencesManager.STUDENT;
 import static com.ibnkhaldoun.studentside.fragments.BaseMainFragment.INTERNET_ERROR;
 import static com.ibnkhaldoun.studentside.networking.models.RequestPackage.POST;
@@ -77,7 +75,7 @@ import static com.ibnkhaldoun.studentside.services.LoadDataService.KEY_DATA;
 public class StudentMainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         IProfessorDialog, IDataFragment, NoteOfDisplayDialog.INoteOfDisplay,
-        LoaderManager.LoaderCallbacks<Cursor>, ResponseAsyncTask.IResponseListener {
+        /*LoaderManager.LoaderCallbacks<Cursor>,*/ ResponseAsyncTask.IResponseListener {
 
 
     //the types of the fragments
@@ -85,9 +83,9 @@ public class StudentMainActivity extends AppCompatActivity
     public static final int DISPLAY_TYPE = 11;
     public static final int NOTIFICATION_TYPE = 10;
     //the Loader ID's for the database work
-    private static final int DISPLAY_LOADER_ID = 190;
-    private static final int MAIL_LOADER_ID = 191;
-    private static final int NOTIFICATION_LOADER_ID = 192;
+    //private static final int DISPLAY_LOADER_ID = 190;
+    //private static final int MAIL_LOADER_ID = 191;
+    //private static final int NOTIFICATION_LOADER_ID = 192;
 
     @SuppressLint("StaticFieldLeak")
     public static StudentMainActivity ACTIVITY;
@@ -152,6 +150,7 @@ public class StudentMainActivity extends AppCompatActivity
         mToolBar = findViewById(R.id.toolbar);
         mToolBar.setTitle(mPagerTitles[0]);
         setSupportActionBar(mToolBar);
+
 
         mMainViewPager = findViewById(R.id.main_screen_view_pager);
         mTabLayout = findViewById(R.id.main_screen_tab_layout);
@@ -511,14 +510,14 @@ public class StudentMainActivity extends AppCompatActivity
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mReceiver);
     }
 
-    @Override
+    /*@Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         switch (id) {
             case DISPLAY_LOADER_ID:
-                // TODO: 16/03/2018 code to launch for displays
+                // oODO: 16/03/2018 code to launch for displays
                 return null;
             case NOTIFICATION_LOADER_ID:
-                // TODO: 16/03/2018 code to launch for notifications
+                // oODO: 16/03/2018 code to launch for notifications
                 return null;
             case MAIL_LOADER_ID:
                 mMessageFragment.onDatabaseStartLoading();
@@ -527,36 +526,36 @@ public class StudentMainActivity extends AppCompatActivity
             default:
                 throw new IllegalStateException();
         }
-    }
+    }*/
 
-    @Override
+    /*@Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         switch (loader.getId()) {
             case DISPLAY_LOADER_ID:
-                // TODO: 16/03/2018 code to deliver result for displays fragment
+                // oODO: 16/03/2018 code to deliver result for displays fragment
                 break;
             case NOTIFICATION_LOADER_ID:
-                // TODO: 16/03/2018 code to deliver result for notification fragment
+                // oODO: 16/03/2018 code to deliver result for notification fragment
                 break;
             case MAIL_LOADER_ID:
                 //mMessageFragment.onDatabaseLoadingFinished(data);
                 break;
         }
-    }
+    }*/
 
-    @Override
+    /*@Override
     public void onLoaderReset(Loader<Cursor> loader) {
         switch (loader.getId()) {
             case DISPLAY_LOADER_ID:
-                // TODO: 16/03/2018 code to deliver result for displays fragment
+                // oODO: 16/03/2018 code to deliver result for displays fragment
                 break;
             case NOTIFICATION_LOADER_ID:
-                // TODO: 16/03/2018 code to deliver result for notification fragment
+                // oODO: 16/03/2018 code to deliver result for notification fragment
                 break;
             case MAIL_LOADER_ID:
                 //mMessageFragment.onDatabaseStartLoading();
         }
-    }
+    }*/
 
     @Override
     public void OnFinishNoting(String note, long id, int type) {
@@ -570,6 +569,28 @@ public class StudentMainActivity extends AppCompatActivity
     public void onGetResponse(Response response) {
         if (response.getStatus() != Response.RESPONSE_SUCCESS)
             Toast.makeText(this, R.string.try_later_problem_connecting, Toast.LENGTH_SHORT)
+                    .show();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (new PreferencesManager(this, CONFIG).isStudentMainFirstTime())
+            new MaterialTapTargetPrompt.Builder(this)
+                    .setPrimaryText("More Features.")
+                    .setSecondaryText("Click here to see more features.")
+                    .setTarget(((Toolbar) findViewById(R.id.toolbar)).getChildAt(1))
+                    .setIcon(R.drawable.ic_menu_black_24dp)
+                    .setBackgroundColour(getResources().getColor(R.color.colorPrimary))
+                    .setAnimationInterpolator(new FastOutSlowInInterpolator())
+                    .setPromptStateChangeListener((prompt, state) -> {
+
+                        switch (state) {
+                            case MaterialTapTargetPrompt.STATE_FOCAL_PRESSED:
+                                new PreferencesManager(this, CONFIG).setStudentMainFirstTime();
+                                break;
+                        }
+                    })
                     .show();
     }
 }

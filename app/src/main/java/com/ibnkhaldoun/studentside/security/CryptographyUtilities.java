@@ -1,5 +1,8 @@
 package com.ibnkhaldoun.studentside.security;
 
+import android.os.Build;
+import android.support.annotation.RequiresApi;
+
 import com.google.common.hash.Hashing;
 
 import java.nio.charset.StandardCharsets;
@@ -27,6 +30,7 @@ public class CryptographyUtilities {
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public static String hashingPassword(String password, String salt) {
 
         return Hashing.sha256()
