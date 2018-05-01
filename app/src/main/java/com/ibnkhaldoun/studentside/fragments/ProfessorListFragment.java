@@ -9,6 +9,7 @@ import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 
 import com.ibnkhaldoun.studentside.R;
+import com.ibnkhaldoun.studentside.Utilities.ActivityUtilities;
 import com.ibnkhaldoun.studentside.adapters.SubjectProfessorDialogAdapter;
 import com.ibnkhaldoun.studentside.interfaces.IProfessorDialog;
 import com.ibnkhaldoun.studentside.models.MailProfessor;
@@ -50,6 +51,7 @@ public class ProfessorListFragment extends DialogFragment {
             for (MailProfessor professor : professorList) {
                 list.add(professor.getName());
             }
+
 
         assert getContext() != null;
         SubjectProfessorDialogAdapter adapter = new SubjectProfessorDialogAdapter(getContext(), R

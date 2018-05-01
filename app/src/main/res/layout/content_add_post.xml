@@ -12,121 +12,112 @@
     tools:showIn="@layout/activity_add_post">
 
 
-        <ProgressBar
-            android:id="@+id/add_post_progress"
-            android:layout_width="72dp"
-            android:layout_height="72dp"
-            android:layout_gravity="center"
-            />
+    <ProgressBar
+        android:id="@+id/add_post_progress"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:layout_gravity="center"
+        android:visibility="gone" />
 
-        <ScrollView
-            android:id="@+id/add_post_scroll"
-            android:visibility="gone"
+    <ScrollView
+        android:id="@+id/add_post_scroll"
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center">
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <Spinner
+                android:id="@+id/add_post_subject_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:spinnerMode="dropdown" />
+
+            <!-- <EditText
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:background="@null"
+                 android:clickable="false"
+                 android:focusable="false"
+                 android:hint="Subject"
+                 android:inputType="text"
+                 android:padding="16dp"
+                 android:textSize="20sp" />
+ -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <!--<Spinner
-                    android:layout_width="match_parent"
-                    android:padding="16dp"
-                    android:entries="@array/fragment_title_array_string"
-                    android:layout_height="wrap_content">
+                android:orientation="horizontal">
 
-                </Spinner>-->
-                <EditText
-                    android:layout_width="match_parent"
+
+                <Spinner
+                    android:id="@+id/add_post_section_spinner"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:background="@null"
-                    android:hint="Level"
+                    android:layout_weight="1"
                     android:padding="16dp"
-                    android:textSize="20sp" />
+                    android:spinnerMode="dropdown" />
 
                 <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
                     android:background="@android:color/darker_gray" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <Spinner
+                    android:id="@+id/add_post_group_spinner"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <EditText
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:background="@null"
-                        android:hint="Section"
-                        android:padding="16dp"
-                        android:textSize="20sp" />
-
-                    <View
-                        android:layout_width="1dp"
-                        android:layout_height="match_parent"
-                        android:background="@android:color/darker_gray" />
-
-                    <EditText
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:background="@null"
-                        android:hint="Group"
-                        android:padding="16dp"
-                        android:textSize="20sp" />
-
-                </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@android:color/darker_gray" />
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@null"
-                    android:hint="@string/post_text"
-                    android:inputType="text"
+                    android:layout_weight="1"
                     android:padding="16dp"
-                    android:textSize="20sp" />
+                    android:spinnerMode="dropdown" />
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@android:color/darker_gray" />
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@null"
-                    android:hint="Subject"
-
-                    android:padding="16dp"
-                    android:textSize="20sp" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@android:color/darker_gray" />
-
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@null"
-                    android:hint="File"
-                    android:padding="16dp"
-                    android:textSize="20sp" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@android:color/darker_gray" />
             </LinearLayout>
-        </ScrollView>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:hint="@string/post_text"
+                android:inputType="textMultiLine"
+                android:padding="16dp"
+                tools:text="hello world how are you this morning we have greate"
+                android:textSize="20sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray" />
+
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:hint="@string/file"
+                android:inputType="text"
+                android:padding="16dp"
+                android:textSize="20sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray" />
+        </LinearLayout>
+    </ScrollView>
 
 </FrameLayout>

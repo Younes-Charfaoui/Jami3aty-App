@@ -115,16 +115,10 @@ public class ProfessorMainActivity extends AppCompatActivity
         mAddPostFab.setOnClickListener(v -> {
             Intent intent = new Intent(this, AddPostActivity.class);
             startActivity(intent);
-            RequestPackage request = new RequestPackage.Builder()
-                    .addMethod(POST)
-                    .addEndPoint(EndPointsProvider.getDisplaysProfessorInfo())
-                    .addParams("id_professor", new PreferencesManager(this, PROFESSOR).getIdUser())
-                    .create();
-
-            Intent intentService = new Intent(this, LoadDataService.class);
-            intentService.putExtra(LoadDataService.KEY_REQUEST, request);
-            intentService.putExtra(LoadDataService.KEY_ACTION,LoadDataService.PROFESSOR_INFO_TYPE);
-            startService(intentService);
+//            Intent intentService = new Intent(this, LoadDataService.class);
+//            intentService.putExtra(LoadDataService.KEY_REQUEST, request);
+//            intentService.putExtra(LoadDataService.KEY_ACTION,LoadDataService.PROFESSOR_INFO_TYPE);
+            //startService(intentService);
         });
 
         TextView nameHeader = navigationView.getHeaderView(0).findViewById(R.id.name_header_textView);

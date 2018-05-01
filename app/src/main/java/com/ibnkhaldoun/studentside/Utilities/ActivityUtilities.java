@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
+import android.support.annotation.IntDef;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,7 @@ import static com.ibnkhaldoun.studentside.activities.MessageDetailActivity.STUDE
 
 public final class ActivityUtilities {
 
+
     //this addMethod makes the bar transparent
     public static void changeStatusBarColorToTransparent(Window windows) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -35,7 +37,7 @@ public final class ActivityUtilities {
         }
     }
 
-    public static int whoIsUsing(Context context){
+    public static int whoIsUsing(Context context) {
         if (new PreferencesManager(context, PreferencesManager.PROFESSOR).isLogin()) {
             return PROFESSOR;
         } else {
@@ -82,4 +84,5 @@ public final class ActivityUtilities {
 
         return noteView;
     }
+
 }

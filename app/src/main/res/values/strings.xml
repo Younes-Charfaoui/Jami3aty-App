@@ -233,5 +233,6 @@
     <string name="title_activity_add_post">AddPostActivity</string>
     <string name="add_post">Add post</string>
     <string name="post_text">Post Text</string>
+    <string name="file">File</string>
 
 </resources>

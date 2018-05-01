@@ -111,25 +111,25 @@ public class LoadDataService extends IntentService {
                 commentsCall(request);
                 break;
             case PROFESSOR_INFO_TYPE:
-                professorInfoCall(request);
+//                professorInfoCall(request);
                 break;
         }
     }
 
-    private void professorInfoCall(RequestPackage request) {
-        try {
-            String response = HttpUtilities.getData(request);
-            ArrayList<ProfessorInfo> professorInfo = JsonUtilities.getProfessorInfo(response);
-            Intent intent = new Intent(PROFESSOR_INFO_ACTION);
-            intent.putExtra(KEY_DATA, professorInfo);
-            LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
-            Log.i("Tag", "professorInfoCall: " + response + " and size of array is "
-                    + professorInfo.size());
-        } catch (IOException e) {
-            e.printStackTrace();
-            Log.i("Tag", "professorInfoCall: it was io" );
-        }
-    }
+//    private void professorInfoCall(RequestPackage request) {
+//        try {
+//            String response = HttpUtilities.getData(request);
+//            ArrayList<ProfessorInfo> professorInfo = JsonUtilities.getProfessorInfo(response);
+//            Intent intent = new Intent(PROFESSOR_INFO_ACTION);
+//            intent.putExtra(KEY_DATA, professorInfo);
+//            LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+//            Log.i("Tag", "professorInfoCall: " + response + " and size of array is "
+//                    + professorInfo.size());
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//            Log.i("Tag", "professorInfoCall: it was io" );
+//        }
+//    }
 
     private void displayCall(RequestPackage request) {
         try {

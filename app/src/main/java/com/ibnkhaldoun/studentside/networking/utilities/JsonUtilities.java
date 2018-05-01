@@ -1,6 +1,5 @@
 package com.ibnkhaldoun.studentside.networking.utilities;
 
-import android.annotation.SuppressLint;
 import android.util.Log;
 import android.util.SparseArray;
 
@@ -432,32 +431,35 @@ public class JsonUtilities {
 
     public static ArrayList<ProfessorInfo> getProfessorInfo(String response) {
         ArrayList<ProfessorInfo> professorInfo = new ArrayList<>();
+        SparseArray<ProfessorInfo> mMap = new SparseArray<>();
         try {
             JSONObject root = new JSONObject(response);
             if (root.getInt(KEY_JSON_STATUS) != 200) throw new JSONException("Code was not 200");
             JSONArray data = root.getJSONArray(KEY_JSON_DATA);
 
             for (int i = 0; i < data.length(); i++) {
+                ProfessorInfo info;
                 JSONObject object = data.getJSONObject(i);
-                String idSubject = object.getString(JSON_SUBJECT_ID);
+                int idSubject = object.getInt(JSON_SUBJECT_ID);
                 String title = object.getString(JSON_SUBJECT_TITLE);
                 int level = object.getInt(JSON_SUBJECT_LEVEL);
-
-                JSONArray sections = object.getJSONArray(JSON_STUDENT_SECTION);
-                @SuppressLint("UseSparseArrays") HashMap<Integer, ArrayList<Integer>> groupAndSection = new HashMap<>();
-                for (int m = 0; m < sections.length(); m++) {
-                    JSONArray section = sections.getJSONArray(m);
-                    ArrayList<Integer> groups = new ArrayList<>();
-                    for (int j = 0; j < section.length(); j++) {
-                        groups.add(section.getInt(j));
-                    }
-                    groupAndSection.put(m, groups);
+                info = mMap.get(idSubject, null) == null ? new ProfessorInfo(String.valueOf(idSubject), title, level, new HashMap<>()) : mMap.get(idSubject);
+                int section = object.getInt(JSON_STUDENT_SECTION);
+                int group = object.getInt(JSON_STUDENT_GROUP);
+                if (info.getSectionAndGroups().containsKey(section)) {
+                    info.getSectionAndGroups().get(section).add(group);
+                } else {
+                    ArrayList<Integer> groupList = new ArrayList<>();
+                    groupList.add(group);
+                    info.getSectionAndGroups().put(section, groupList);
                 }
-                professorInfo.add(new ProfessorInfo(idSubject, title, level, groupAndSection));
+                mMap.put(idSubject, info);
+            }
+            for (int i = 0; i < mMap.size(); i++) {
+                professorInfo.add(mMap.get(mMap.keyAt(i)));
             }
         } catch (JSONException e) {
             e.printStackTrace();
-            Log.i("Tag", "professorInfoCall: it was json" );
         }
         return professorInfo;
     }

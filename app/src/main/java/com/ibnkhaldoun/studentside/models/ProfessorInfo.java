@@ -34,6 +34,15 @@ public class ProfessorInfo implements Parcelable {
         this.sectionAndGroups = sectionAndGroups;
     }
 
+    public ProfessorInfo() {
+    }
+
+    public ProfessorInfo(String subjectId, String subjectTitle, int level) {
+        this.subjectId = subjectId;
+        this.subjectTitle = subjectTitle;
+        this.level = level;
+    }
+
     protected ProfessorInfo(Parcel in) {
         this.subjectId = in.readString();
         this.subjectTitle = in.readString();

@@ -3,30 +3,60 @@
   "status": 200,
   "data": [
     {
+      "group": "4",
+      "section": "0",
       "_id_subject": "17",
       "title": "Algorithm and data structure",
-      "level": "3",
-      "section": [
-        [
-          "4",
-          "5"
-        ]
-      ]
+      "level": "3"
     },
     {
+      "group": "5",
+      "section": "0",
+      "_id_subject": "17",
+      "title": "Algorithm and data structure",
+      "level": "3"
+    },
+    {
+      "group": "0",
+      "section": "0",
       "_id_subject": "26",
       "title": "Operating System I",
-      "level": "4",
-      "section": [
-        [
-          "0",
-          "1",
-          "2",
-          "3",
-          "4",
-          "5"
-        ]
-      ]
+      "level": "4"
+    },
+    {
+      "group": "1",
+      "section": "0",
+      "_id_subject": "26",
+      "title": "Operating System I",
+      "level": "4"
+    },
+    {
+      "group": "2",
+      "section": "0",
+      "_id_subject": "26",
+      "title": "Operating System I",
+      "level": "4"
+    },
+    {
+      "group": "3",
+      "section": "0",
+      "_id_subject": "26",
+      "title": "Operating System I",
+      "level": "4"
+    },
+    {
+      "group": "4",
+      "section": "0",
+      "_id_subject": "26",
+      "title": "Operating System I",
+      "level": "4"
+    },
+    {
+      "group": "5",
+      "section": "0",
+      "_id_subject": "26",
+      "title": "Operating System I",
+      "level": "4"
     }
   ]
 }

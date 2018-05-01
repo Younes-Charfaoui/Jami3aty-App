@@ -1,6 +1,8 @@
 package com.ibnkhaldoun.studentside.activities;
 
 import android.os.Bundle;
+import android.support.annotation.IntDef;
+import android.support.annotation.StringRes;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
