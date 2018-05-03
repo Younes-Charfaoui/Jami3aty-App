@@ -33,6 +33,7 @@ public final class KeyDataProvider {
     public static final String JSON_PROFESSOR_NAME = "fullName";
 
     public final static String JSON_SUBJECT_ID = "_id_subject";
+    public final static String JSON_SUBJECT_ID2 = "id_subject";
     public final static String JSON_SUBJECT_DATA = "data";
     public final static String JSON_SUBJECT_TITLE = "title";
     public final static String JSON_SUBJECT_SHORT_TITLE = "short_title";

@@ -407,6 +407,29 @@ public class JsonUtilities {
         return displays;
     }
 
+    public static ArrayList<Display> getDisplaysListProfessor(String response) {
+        ArrayList<Display> displays = new ArrayList<>();
+        try {
+            Log.i(TAG, "getDisplaysList: " + response);
+            JSONObject root = new JSONObject(response);
+            if (root.getInt(KEY_JSON_STATUS) != 200) throw new JSONException("Code was not 200");
+            JSONArray data = root.getJSONArray(KEY_JSON_DATA);
+            for (int i = 0; i < data.length(); i++) {
+                JSONObject object = data.getJSONObject(i);
+                long id = object.getLong(JSON_POST_ID);
+                int type = object.getInt(JSON_POST_TYPE);
+                String text = object.getString(JSON_POST_TEXT);
+                String file = object.getString(JSON_POST_FILE);
+                String date = object.getString(JSON_POST_DATE);
+                String subject = object.getString(JSON_POST_SUBJECT);
+                displays.add(new Display(id, date, null, text, file, subject, type, false));
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return displays;
+    }
+
     public static int getStatusCode(String response) throws JSONException {
         Log.i(TAG, "getStatusCode: " + response);
         JSONObject object = new JSONObject(response);

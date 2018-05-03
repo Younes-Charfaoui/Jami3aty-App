@@ -1,4 +1,4 @@
-package com.ibnkhaldoun.studentside.activities;
+ package com.ibnkhaldoun.studentside.activities;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -108,17 +108,13 @@ public class ProfessorMainActivity extends AppCompatActivity
         mDrawer.addDrawerListener(toggle);
         toggle.syncState();
 
-
+        navigationView.setCheckedItem(R.id.nav_home);
         navigationView.setNavigationItemSelectedListener(this);
 
         setupViewPagerAndTabLayout();
         mAddPostFab.setOnClickListener(v -> {
             Intent intent = new Intent(this, AddPostActivity.class);
             startActivity(intent);
-//            Intent intentService = new Intent(this, LoadDataService.class);
-//            intentService.putExtra(LoadDataService.KEY_REQUEST, request);
-//            intentService.putExtra(LoadDataService.KEY_ACTION,LoadDataService.PROFESSOR_INFO_TYPE);
-            //startService(intentService);
         });
 
         TextView nameHeader = navigationView.getHeaderView(0).findViewById(R.id.name_header_textView);
@@ -191,6 +187,9 @@ public class ProfessorMainActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.nav_notes:
+                startActivity(new Intent(this, NotesActivity.class));
+                break;
             case R.id.nav_sign_out:
                 new AlertDialog.Builder(this)
                         .setTitle(R.string.sign_out)
@@ -220,7 +219,7 @@ public class ProfessorMainActivity extends AppCompatActivity
                     .create();
             Intent intent = new Intent(this, LoadDataService.class);
             intent.putExtra(LoadDataService.KEY_REQUEST, request);
-            intent.putExtra(LoadDataService.KEY_ACTION, LoadDataService.DISPLAY_TYPE);
+            intent.putExtra(LoadDataService.KEY_ACTION, LoadDataService.DISPLAY_TYPE_PROFESSOR);
             startService(intent);
         } else {
             displaysFragment.onNetworkLoadingFailed(INTERNET_ERROR);

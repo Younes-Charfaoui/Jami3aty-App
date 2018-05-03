@@ -89,6 +89,7 @@
                 android:background="@android:color/darker_gray" />
 
             <EditText
+                android:id="@+id/add_post_text_post"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@null"
@@ -105,6 +106,7 @@
 
 
             <EditText
+                android:id="@+id/add_post_file_edit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@null"
@@ -113,6 +115,16 @@
                 android:padding="16dp"
                 android:textSize="20sp" />
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray" />
+            <Spinner
+                android:id="@+id/add_post_type_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                 />
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"

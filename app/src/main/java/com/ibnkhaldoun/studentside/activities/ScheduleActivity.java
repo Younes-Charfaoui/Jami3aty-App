@@ -287,31 +287,23 @@ public class ScheduleActivity extends AppCompatActivity
 
         Calendar calendar = Calendar.getInstance();
         int day = calendar.get(Calendar.DAY_OF_WEEK);
-        Log.i("Schedule", "setupViewPagerAndTabLayout: " + day);
         switch (day) {
             case Calendar.SUNDAY:
-                Log.i("Schedule", "setupViewPagerAndTabLayout: it was sunday ");
                 mViewPager.setCurrentItem(0);
                 break;
             case Calendar.MONDAY:
-                Log.i("Schedule", "setupViewPagerAndTabLayout: it was monday ");
                 mViewPager.setCurrentItem(1);
                 break;
             case Calendar.TUESDAY:
-                Log.i("Schedule", "setupViewPagerAndTabLayout: it was tuesday ");
                 mViewPager.setCurrentItem(2);
                 break;
             case Calendar.WEDNESDAY:
-                Log.i("Schedule", "setupViewPagerAndTabLayout: it was wednesday ");
                 mViewPager.setCurrentItem(3);
                 break;
             case Calendar.THURSDAY:
-                Log.i("Schedule", "setupViewPagerAndTabLayout: it was thursday ");
                 mViewPager.setCurrentItem(4);
                 break;
         }
-
-
     }
 
     @Override
@@ -322,6 +314,7 @@ public class ScheduleActivity extends AppCompatActivity
                 mViewPager.setVisibility(GONE);
                 mTabLayout.setVisibility(GONE);
                 PreferencesManager manager = new PreferencesManager(this, STUDENT);
+
                 //building the uri with content://<Authority>/schedules/level/section/group
                 Uri pathToSchedule = DatabaseContract.ScheduleEntry.CONTENT_SCHEDULE_URI.buildUpon()
                         .appendEncodedPath(manager.getLevelStudent())
@@ -351,8 +344,6 @@ public class ScheduleActivity extends AppCompatActivity
     private void sendSchedulesToFragments(Cursor data) {
         if (data.getCount() != 0) {
             SparseArray<Schedule> schedules = new SparseArray<>();
-            Log.i("Schedule", "sendSchedulesToFragments: the count of cursor was "
-                    + data.getCount());
             while (data.moveToNext()) {
                 int day = data.getInt(data.getColumnIndex(COLUMN_DAY));
                 int level = data.getInt(data.getColumnIndex(COLUMN_LEVEL));

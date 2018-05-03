@@ -1,15 +1,10 @@
 package com.ibnkhaldoun.studentside.activities;
 
-import android.content.BroadcastReceiver;
 import android.content.ContentValues;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
-import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -18,6 +13,7 @@ import android.view.MenuItem;
 import android.widget.EditText;
 
 import com.ibnkhaldoun.studentside.R;
+import com.ibnkhaldoun.studentside.Utilities.ActivityUtilities;
 import com.ibnkhaldoun.studentside.Utilities.PreferencesManager;
 import com.ibnkhaldoun.studentside.database.DatabaseContract;
 import com.ibnkhaldoun.studentside.fragments.SubjectListFragment;
@@ -25,12 +21,10 @@ import com.ibnkhaldoun.studentside.interfaces.ISubjectDialog;
 import com.ibnkhaldoun.studentside.networking.models.RequestPackage;
 import com.ibnkhaldoun.studentside.networking.utilities.NetworkUtilities;
 import com.ibnkhaldoun.studentside.providers.EndPointsProvider;
-import com.ibnkhaldoun.studentside.services.LoadDataService;
 
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_STUDENT_GROUP;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_STUDENT_LEVEL;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_STUDENT_SECTION;
-import static com.ibnkhaldoun.studentside.services.LoadDataService.SUBJECT_INNER_ACTION;
 
 public class NoteEditActivity extends AppCompatActivity implements ISubjectDialog {
 
@@ -46,12 +40,6 @@ public class NoteEditActivity extends AppCompatActivity implements ISubjectDialo
     private String idCurrent;
     private Uri pathToNote;
 
-    private BroadcastReceiver mSubjectListReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-
-        }
-    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,13 +64,6 @@ public class NoteEditActivity extends AppCompatActivity implements ISubjectDialo
                     .addEndPoint(EndPointsProvider.getScheduleAllEndpoint())
                     .create();
 
-            Intent intent = new Intent(this, LoadDataService.class);
-
-            intent.putExtra(LoadDataService.KEY_REQUEST, requestAllSchedule);
-            intent.putExtra(LoadDataService.KEY_ACTION, LoadDataService.SUBJECT_IN_TYPE);
-            startService(intent);
-            LocalBroadcastManager.getInstance(this).registerReceiver(mSubjectListReceiver,
-                    new IntentFilter(SUBJECT_INNER_ACTION));
         }
         toolbar.setTitle(R.string.new_note);
         if (getSupportActionBar() != null)
@@ -98,10 +79,19 @@ public class NoteEditActivity extends AppCompatActivity implements ISubjectDialo
                     .appendPath(idCurrent)
                     .build();
 
-            Cursor cursor = getContentResolver().query(pathToNote, new String[]{"*"},
-                    DatabaseContract.NoteEntry.COLUMN_USER_ID + " = ?",
-                    new String[]{new PreferencesManager(this, PreferencesManager.STUDENT)
-                            .getIdUser()}, null);
+
+            Cursor cursor;
+            int who = ActivityUtilities.whoIsUsing(this);
+            if (who == MessageDetailActivity.PROFESSOR)
+                cursor = getContentResolver().query(pathToNote, new String[]{"*"},
+                        DatabaseContract.NoteEntry.COLUMN_USER_ID + " = ?",
+                        new String[]{new PreferencesManager(this, PreferencesManager.PROFESSOR)
+                                .getIdUser()}, null);
+            else
+                cursor = getContentResolver().query(pathToNote, new String[]{"*"},
+                        DatabaseContract.NoteEntry.COLUMN_USER_ID + " = ?",
+                        new String[]{new PreferencesManager(this, PreferencesManager.STUDENT)
+                                .getIdUser()}, null);
             if (cursor != null) {
                 cursor.moveToFirst();
                 mSubjectEditText.setText(cursor.getString(cursor.getColumnIndex(DatabaseContract.NoteEntry.COLUMN_NOTE_SUBJECT)));
@@ -109,17 +99,28 @@ public class NoteEditActivity extends AppCompatActivity implements ISubjectDialo
                 cursor.close();
             }
         }
+        mNoteEditText.requestFocus();
+        if (ActivityUtilities.whoIsUsing(this) == MessageDetailActivity.PROFESSOR) {
+            //mSubjectEditText.setFocusable(true);
+            //mSubjectEditText.setClickable(true);
+            //mSubjectEditText.requestFocus();
+        } else {
+            mSubjectEditText.setClickable(false);
+            mSubjectEditText.setFocusable(false);
+            mSubjectEditText.setOnClickListener(v -> {
+                if (ActivityUtilities.whoIsUsing(this) != MessageDetailActivity.PROFESSOR) {
 
-        mSubjectEditText.setOnClickListener(v -> {
-            PreferencesManager manager = new PreferencesManager(this, PreferencesManager.SUBJECT);
-            if (manager.isSubjectsExists()) {
-                SubjectListFragment dialog = SubjectListFragment.newInstance(manager.getSubjects());
-                dialog.setCancelable(true);
-                dialog.show(getSupportFragmentManager(), "TAG");
-            } else {
+                    PreferencesManager manager = new PreferencesManager(this, PreferencesManager.SUBJECT);
+                    if (manager.isSubjectsExists()) {
+                        SubjectListFragment dialog = SubjectListFragment.newInstance(manager.getSubjects());
+                        dialog.setCancelable(true);
+                        dialog.show(getSupportFragmentManager(), "TAG");
+                    } else {
 
-            }
-        });
+                    }
+                }
+            });
+        }
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
     }
@@ -209,7 +210,10 @@ public class NoteEditActivity extends AppCompatActivity implements ISubjectDialo
         ContentValues values = new ContentValues();
         values.put(DatabaseContract.NoteEntry.COLUMN_NOTE_SUBJECT, subject);
         values.put(DatabaseContract.NoteEntry.COLUMN_NOTE_TEXT, note);
-        values.put(DatabaseContract.NoteEntry.COLUMN_USER_ID,
+        if (ActivityUtilities.whoIsUsing(this) == MessageDetailActivity.PROFESSOR)
+            values.put(DatabaseContract.NoteEntry.COLUMN_USER_ID,
+                    new PreferencesManager(this, PreferencesManager.PROFESSOR).getIdUser());
+        else values.put(DatabaseContract.NoteEntry.COLUMN_USER_ID,
                 new PreferencesManager(this, PreferencesManager.STUDENT).getIdUser());
         getContentResolver().insert(DatabaseContract.NoteEntry.CONTENT_NOTE_URI, values);
     }
@@ -219,9 +223,5 @@ public class NoteEditActivity extends AppCompatActivity implements ISubjectDialo
         mSubjectEditText.setText(subject);
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(mSubjectListReceiver);
-    }
+
 }

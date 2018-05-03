@@ -63,6 +63,8 @@ public class LoadDataService extends IntentService {
     public static final int SCHEDULE_IN_TYPE = 10;
     public static final int COMMENT_TYPE = 11;
     public static final int PROFESSOR_INFO_TYPE = 12;
+    public static final int DISPLAY_TYPE_PROFESSOR= 13;
+
 
     public static final String KEY_ACTION = "Action";
     public static final String KEY_DATA = "data";
@@ -110,6 +112,9 @@ public class LoadDataService extends IntentService {
             case COMMENT_TYPE:
                 commentsCall(request);
                 break;
+            case DISPLAY_TYPE_PROFESSOR:
+                displayCallProfessor(request);
+                break;
             case PROFESSOR_INFO_TYPE:
 //                professorInfoCall(request);
                 break;
@@ -131,6 +136,19 @@ public class LoadDataService extends IntentService {
 //        }
 //    }
 
+    private void displayCallProfessor(RequestPackage request) {
+        try {
+            String response = HttpUtilities.getData(request);
+            ArrayList<Display> displayList = JsonUtilities.getDisplaysListProfessor(response);
+            Intent intent = new Intent(DISPLAY_ACTION);
+            intent.putExtra(KEY_DATA, displayList);
+            LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
     private void displayCall(RequestPackage request) {
         try {
             String response = HttpUtilities.getData(request);

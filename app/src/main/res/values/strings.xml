@@ -188,11 +188,11 @@
     <string name="delete_note_confirmation">Are you sure to delete the note</string>
     <string name="add_something">Please enter something</string>
     <string name="choose_subject_please">Please Choose Subject</string>
-    <string name="key_notification_display">displayNotification</string>
-    <string name="key_notification_message">messageNotification</string>
-    <string name="key_reminder_class">classReminders</string>
-    <string name="key_reminder_exam">examReminders</string>
-    <string name="key_reminder_consultation">consultationReminders</string>
+    <string name="key_notification_display" translatable="false">displayNotification</string>
+    <string name="key_notification_message" translatable="false">messageNotification</string>
+    <string name="key_reminder_class" translatable="false">classReminders</string>
+    <string name="key_reminder_exam" translatable="false">examReminders</string>
+    <string name="key_reminder_consultation" translatable="false">consultationReminders</string>
     <string name="key_feedback">feedback</string>
     <string name="key_privacy">privacy</string>
     <string name="key_term_of_use">termOfUse</string>
@@ -230,9 +230,13 @@
     <string name="subject">Subject</string>
     <string name="choose_professor">Choose a Professor</string>
     <string name="average">Average</string>
-    <string name="title_activity_add_post">AddPostActivity</string>
+    <string name="title_activity_add_post">New Post</string>
     <string name="add_post">Add post</string>
     <string name="post_text">Post Text</string>
     <string name="file">File</string>
+    <string name="posting">Posting....</string>
+    <string name="sucess_post">Post was added successfully</string>
+    <string name="you_cant_post_at_moment">You can\'t post anything for the moment, try later.</string>
+    <string name="please_add_text">Please add text to the post</string>
 
 </resources>

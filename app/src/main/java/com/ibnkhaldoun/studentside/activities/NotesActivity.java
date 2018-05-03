@@ -28,6 +28,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.ibnkhaldoun.studentside.R;
+import com.ibnkhaldoun.studentside.Utilities.ActivityUtilities;
 import com.ibnkhaldoun.studentside.Utilities.PreferencesManager;
 import com.ibnkhaldoun.studentside.adapters.NotesAdapter;
 import com.ibnkhaldoun.studentside.database.DatabaseContract;
@@ -62,8 +63,8 @@ public class NotesActivity extends AppCompatActivity
         mNoteRecyclerView = findViewById(R.id.note_recycler_view);
 
         setupRecyclerView();
-        assert getSupportActionBar() != null;
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if (getSupportActionBar() != null)
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         setupFloatingActionButton();
 
@@ -248,13 +249,23 @@ public class NotesActivity extends AppCompatActivity
         String[] projection = {"*"};
         switch (id) {
             case ID_LOADER:
-                return new CursorLoader(this,
-                        DatabaseContract.NoteEntry.CONTENT_NOTE_URI,
-                        projection,
-                        DatabaseContract.NoteEntry.COLUMN_USER_ID + " = ?",
-                        new String[]{new PreferencesManager(this
-                                , PreferencesManager.STUDENT).getIdUser()},
-                        null);
+                int who = ActivityUtilities.whoIsUsing(this);
+                if (who == MessageDetailActivity.PROFESSOR)
+                    return new CursorLoader(this,
+                            DatabaseContract.NoteEntry.CONTENT_NOTE_URI,
+                            projection,
+                            DatabaseContract.NoteEntry.COLUMN_USER_ID + " = ?",
+                            new String[]{new PreferencesManager(this
+                                    , PreferencesManager.PROFESSOR).getIdUser()},
+                            null);
+                else
+                    return new CursorLoader(this,
+                            DatabaseContract.NoteEntry.CONTENT_NOTE_URI,
+                            projection,
+                            DatabaseContract.NoteEntry.COLUMN_USER_ID + " = ?",
+                            new String[]{new PreferencesManager(this
+                                    , PreferencesManager.STUDENT).getIdUser()},
+                            null);
             default:
                 throw new IllegalArgumentException();
         }

@@ -27,6 +27,7 @@ import com.ibnkhaldoun.studentside.providers.EndPointsProvider;
 
 import java.util.List;
 
+import static android.view.View.GONE;
 import static com.ibnkhaldoun.studentside.activities.DisplayDetailActivity.DATA;
 import static com.ibnkhaldoun.studentside.networking.models.RequestPackage.POST;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_POST_ID2;
@@ -36,6 +37,7 @@ import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_STUDENT
 public class DisplaysAdapter extends RecyclerView.Adapter<DisplaysAdapter.DisplayViewHolder> {
 
 
+    private int type;
     private Context mContext;
     private List<Display> mDataList;
 
@@ -46,9 +48,14 @@ public class DisplaysAdapter extends RecyclerView.Adapter<DisplaysAdapter.Displa
         this.manager = manager;
     }
 
+    public DisplaysAdapter(Context mContext, FragmentManager manager, int type) {
+        this.mContext = mContext;
+        this.manager = manager;
+        this.type = type;
+    }
+
     @Override
     public DisplayViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
         View view = LayoutInflater.from(mContext)
                 .inflate(R.layout.display_list_item, parent, false);
         return new DisplayViewHolder(view);
@@ -56,16 +63,28 @@ public class DisplaysAdapter extends RecyclerView.Adapter<DisplaysAdapter.Displa
 
     @Override
     public void onBindViewHolder(DisplayViewHolder holder, int position) {
+
         Display display = mDataList.get(position);
-        holder.mProfessorShortNameTv.setText(Utilities.getProfessorShortName(display.getProfessor()));
-        GradientDrawable circleImage = (GradientDrawable) holder.mProfessorShortNameTv.getBackground();
-        if (display.isSaved()) holder.mSaveButton.setEnabled(false);
-        else holder.mSaveButton.setEnabled(true);
-        circleImage.setColor(Utilities.getCircleColor(mContext));
-        holder.mProfessorNameTv.setText(display.getProfessor());
-        String subjectAndDate = display.getDate() + ". \n" + display.getSubject();
-        holder.mDateTimeTv.setText(subjectAndDate);
-        holder.mTextTv.setText(display.getText());
+        if (type != 1) {
+            holder.mProfessorShortNameTv.setText(Utilities.getProfessorShortName(display.getProfessor()));
+            GradientDrawable circleImage = (GradientDrawable) holder.mProfessorShortNameTv.getBackground();
+            if (display.isSaved()) holder.mSaveButton.setEnabled(false);
+            else holder.mSaveButton.setEnabled(true);
+            circleImage.setColor(Utilities.getCircleColor(mContext));
+            holder.mProfessorNameTv.setText(display.getProfessor());
+            String subjectAndDate = display.getDate() + ". \n" + display.getSubject();
+            holder.mDateTimeTv.setText(subjectAndDate);
+            holder.mTextTv.setText(display.getText());
+        } else {
+            holder.mProfessorShortNameTv.setText(String.valueOf(display.getSubject().charAt(0)));
+            GradientDrawable circleImage = (GradientDrawable) holder.mProfessorShortNameTv.getBackground();
+            if (display.isSaved()) holder.mSaveButton.setEnabled(false);
+            else holder.mSaveButton.setEnabled(true);
+            circleImage.setColor(Utilities.getCircleColor(mContext));
+            holder.mProfessorNameTv.setText(display.getSubject());
+            holder.mDateTimeTv.setText(display.getDate());
+            holder.mTextTv.setText(display.getText());
+        }
     }
 
     @Override
@@ -94,6 +113,8 @@ public class DisplaysAdapter extends RecyclerView.Adapter<DisplaysAdapter.Displa
             mTextTv = itemView.findViewById(R.id.display_text_text_view);
             mSaveButton = itemView.findViewById(R.id.display_save_button);
             mNoteButton = itemView.findViewById(R.id.display_note_button);
+            if (type == 1)
+                itemView.findViewById(R.id.display_bottom_control_layout).setVisibility(GONE);
             mSaveButton.setOnClickListener(v -> {
                 if (NetworkUtilities.isConnected(mContext)) {
                     ResponseAsyncTask task = new ResponseAsyncTask(response -> {
@@ -128,15 +149,17 @@ public class DisplaysAdapter extends RecyclerView.Adapter<DisplaysAdapter.Displa
                 }
             });
 
-            itemView.setOnClickListener(v -> {
-                if (mDataList.get(getAdapterPosition()).getType() == PostTypes.MARK_TYPE) {
+            if (type != 1) {
+                itemView.setOnClickListener(v -> {
+                    if (mDataList.get(getAdapterPosition()).getType() == PostTypes.MARK_TYPE) {
 
-                } else {
-                    Intent intent = new Intent(mContext, DisplayDetailActivity.class);
-                    intent.putExtra(DATA, mDataList.get(getAdapterPosition()));
-                    mContext.startActivity(intent);
-                }
-            });
+                    } else {
+                        Intent intent = new Intent(mContext, DisplayDetailActivity.class);
+                        intent.putExtra(DATA, mDataList.get(getAdapterPosition()));
+                        mContext.startActivity(intent);
+                    }
+                });
+            }
         }
     }
 }

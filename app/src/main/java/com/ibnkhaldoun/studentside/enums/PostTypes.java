@@ -12,6 +12,19 @@ public final class PostTypes {
     public static final int AVIS_TYPE = 1;
     public static final int CONSULTATION_TYPE = 2;
     public static final int MARK_TYPE = 3;
+    private  int type;
+
+    public PostTypes(int type) {
+        this.type = type;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
 
     public static int getType(int type) {
         switch (type) {

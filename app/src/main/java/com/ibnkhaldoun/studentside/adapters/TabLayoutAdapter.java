@@ -37,7 +37,7 @@ public class TabLayoutAdapter extends FragmentPagerAdapter {
             case 2:
                 switch (position) {
                     case 0:
-                        return new DisplaysFragment();
+                        return DisplaysFragment.professorInstance();
                     case 1:
                         return new MessageFragment();
                     default:

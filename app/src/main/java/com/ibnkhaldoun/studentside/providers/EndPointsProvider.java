@@ -22,7 +22,12 @@ public final class EndPointsProvider {
     private static final String NOTIFICATION_ENDPOINT = BASE + "jami3aty/notifications/all";
     private static final String DISPLAY_ENDPOINT_ALL = BASE + "jami3aty/posts/all";
     private static final String DISPLAY_ENDPOINT_PROFESSOR = BASE + "jami3aty/posts/myposts";
+    private static final String DISPLAY_ENDPOINT_PROFESSOR_ADD = BASE + "jami3aty/posts/addPost";
     private static final String DISPLAY_ENDPOINT_PROFESSOR_INFO = BASE + "jami3aty/posts/profinfo";
+
+    public static String getDisplayEndpointProfessorAdd() {
+        return DISPLAY_ENDPOINT_PROFESSOR_ADD;
+    }
 
     public static String getProfessorEndpoint() {
         return MAIL_ENDPOINT + "/profs";

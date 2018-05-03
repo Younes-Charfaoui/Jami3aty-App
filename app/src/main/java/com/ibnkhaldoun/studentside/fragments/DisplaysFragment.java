@@ -29,6 +29,8 @@ import static com.ibnkhaldoun.studentside.activities.StudentMainActivity.DISPLAY
 
 public class DisplaysFragment extends BaseMainFragment<Display> implements SwipeRefreshLayout.OnRefreshListener {
 
+    public static final int PROFESSOR = 1;
+    public static final String KEY = "key";
     private ProgressBar mLoadingProgressBar;
     private LinearLayout mEmptyLayout;
     private RecyclerView mDisplaysRecyclerView;
@@ -36,13 +38,19 @@ public class DisplaysFragment extends BaseMainFragment<Display> implements Swipe
     private IDataFragment mInterface;
     private SwipeRefreshLayout mDisplaySwipe;
 
+    public static DisplaysFragment professorInstance() {
+
+        Bundle args = new Bundle();
+        args.putInt(KEY, PROFESSOR);
+        DisplaysFragment fragment = new DisplaysFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-
         mInterface = (IDataFragment) context;
-
     }
 
     @Nullable
@@ -60,7 +68,13 @@ public class DisplaysFragment extends BaseMainFragment<Display> implements Swipe
         mEmptyLayout.setOnClickListener(v -> mInterface.onNeedData(this));
 
         LinearLayoutManager manager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
-        mAdapter = new DisplaysAdapter(getContext(), getFragmentManager());
+        if (getArguments() != null) {
+            if (getArguments().getInt(KEY, -1) == PROFESSOR)
+                mAdapter = new DisplaysAdapter(getContext(), getFragmentManager(), PROFESSOR);
+            else mAdapter = new DisplaysAdapter(getContext(), getFragmentManager());
+        } else {
+            mAdapter = new DisplaysAdapter(getContext(), getFragmentManager());
+        }
         mDisplaysRecyclerView.setLayoutManager(manager);
         mDisplaysRecyclerView.setAdapter(mAdapter);
         mDisplaysRecyclerView.setHasFixedSize(true);

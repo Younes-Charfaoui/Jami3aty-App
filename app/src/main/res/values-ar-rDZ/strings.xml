@@ -1,4 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">جامعتي</string>
+    <string name="password_string">كلمة السر</string>
+    <string name="or">أو</string>
+    <string name="valid_email">بريد غير صحيح</string>
+    <string name="valid_card_number">رقم البطاقة غير صحيح</string>
+    <string name="displays_save_string">حفظ</string>
+    <string name="title_activity_saved">المحفوظات</string>
+    <string name="title_activity_setting">الاعدادات</string>
 </resources>
