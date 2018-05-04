@@ -1,3 +1,7 @@
+/*------------------------------------------------------------------------------
+ - Copyright (c) 2018. This code was created by Younes Charfaoui in the process of Graduation Project for the year of  2018 , which is about creating a platform  for students and professors to help them in the communication and the get known of the university information and so on.
+ -----------------------------------------------------------------------------*/
+
 package com.ibnkhaldoun.studentside.activities;
 
 import android.content.Intent;
@@ -36,8 +40,13 @@ import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_STUDENT
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_STUDENT_LEVEL;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_STUDENT_SECTION;
 
+/**
+ * @definition: this class will handle the UI and the Logic control flow
+ * of the login process of the student and the professor.
+ */
 public class LoginActivity extends AppCompatActivity implements LoginTaskListener {
 
+    //the UI elements.
     private EditText mEmailEditText, mPasswordEditText;
     private TextInputLayout mEmailWrapper, mPasswordWrapper;
     private ProgressBar mLoadingProgressBar;
@@ -48,10 +57,14 @@ public class LoginActivity extends AppCompatActivity implements LoginTaskListene
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        //check if the version of the Android is > then LollyPop to make the app extends to the screen.
         if (Build.VERSION.SDK_INT >= 21) {
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
         }
+        //changing the color of the stataus bar to transparent.
         ActivityUtilities.changeStatusBarColorToTransparent(getWindow());
+
+        //getting reference to the UI elements.
         mEmailEditText = findViewById(R.id.input_email);
         mEmailEditText.setText("ouaredaek@gmail.com");
         mPasswordEditText = findViewById(R.id.input_password);
@@ -60,17 +73,18 @@ public class LoginActivity extends AppCompatActivity implements LoginTaskListene
         mEmailWrapper = findViewById(R.id.email_wrapper);
         mLoadingProgressBar = findViewById(R.id.progress_bar);
         mButtonsLinearLayout = findViewById(R.id.buttons_linearLayout);
+
+        //set the action for the Login click buttons.
         findViewById(R.id.login_button).setOnClickListener(v -> {
             if (validate()) {
                 hideKeyboard();
                 if (NetworkUtilities.isConnected(this)) {
 
                     //setting the request parameters
-
-
                     String email = mEmailEditText.getText().toString();
                     String password = mPasswordEditText.getText().toString();
 
+                    //creating the request for the server.
                     RequestPackage request = new RequestPackage.Builder()
                             .addMethod(RequestPackage.POST)
                             .addEndPoint(EndPointsProvider.getLoginEndpoint())
@@ -78,6 +92,7 @@ public class LoginActivity extends AppCompatActivity implements LoginTaskListene
                             .addParams(KeyDataProvider.KEY_PASSWORD, password)
                             .create();
 
+                    //creating the task and then launching.
                     LoginAsyncTask loginTask = new LoginAsyncTask(this);
                     loginTask.execute(request);
                     mPasswordWrapper.setEnabled(false);
@@ -85,6 +100,7 @@ public class LoginActivity extends AppCompatActivity implements LoginTaskListene
                     mLoadingProgressBar.setVisibility(View.VISIBLE);
                     mButtonsLinearLayout.setVisibility(View.GONE);
                 } else {
+                    //in the case of the no internet connection we will display a message.
                     Toast.makeText(this, R.string.no_internet_connection_string, Toast.LENGTH_SHORT).show();
                 }
             }

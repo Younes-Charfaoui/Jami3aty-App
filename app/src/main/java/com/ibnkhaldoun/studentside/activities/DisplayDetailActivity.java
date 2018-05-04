@@ -1,3 +1,7 @@
+/*------------------------------------------------------------------------------
+ - Copyright (c) 2018. This code was created by Younes Charfaoui in the process of Graduation Project for the year of  2018 , which is about creating a platform  for students and professors to help them in the communication and the get known of the university information and so on.
+ -----------------------------------------------------------------------------*/
+
 package com.ibnkhaldoun.studentside.activities;
 
 import android.graphics.drawable.GradientDrawable;
@@ -39,7 +43,11 @@ import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_POST_ID
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_SAVE_ACTION;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.JSON_STUDENT_ID;
 
-
+/**
+ * @definition: this activity is the responsible for displaying the post on a detailed
+ * manner and load the corresponding notes and also interacting with
+ * post like noting and saving the post, also modify or delete the actual note
+ */
 public class DisplayDetailActivity extends AppCompatActivity implements NoteOfDisplayDialog.INoteOfDisplay,
         ResponseAsyncTask.IResponseListener,
         NotesOfDisplayAdapter.INoteOfDisplayMore,
@@ -50,6 +58,7 @@ public class DisplayDetailActivity extends AppCompatActivity implements NoteOfDi
     public static final String DATA = "data";
 
 
+    //simple UI elements.
     private RecyclerView mNoteRecyclerView;
     private NotesOfDisplayAdapter mAdapter;
     private ProgressBar mLoadingProgress;
@@ -63,27 +72,29 @@ public class DisplayDetailActivity extends AppCompatActivity implements NoteOfDi
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        if (getSupportActionBar() != null) {
+        if (getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
 
         setupRecyclerView();
 
+        //getting reference to the views
         mLoadingProgress = findViewById(R.id.display_detail_note_progress);
         mNoCommentTv = findViewById(R.id.display_detail_no_comment);
 
+        //get the display that we will expose to the student.
         Display display = getIntent().getParcelableExtra(DATA);
 
-
+        //creating the request to get the notes
         mRequest = new RequestPackage.Builder()
                 .addMethod(POST)
                 .addEndPoint(EndPointsProvider.getAllCommentsEndpoint())
                 .addParams(JSON_POST_ID2, String.valueOf(display.getId()))
                 .create();
 
+        //launching the task
         new CommentAsyncTask(this).execute(mRequest);
 
-
+        //initialize the views and populate them.
         TextView professorShortNameTextView = findViewById(R.id.display_detail_professor_short_name_text_view);
         professorShortNameTextView.setText(Utilities.getProfessorShortName(display.getProfessor()));
 
@@ -105,6 +116,7 @@ public class DisplayDetailActivity extends AppCompatActivity implements NoteOfDi
         else
             findViewById(R.id.display_detail_save_button).setEnabled(true);
 
+        //make action when the save button is clicked.
         findViewById(R.id.display_detail_save_button).setOnClickListener(v -> {
             if (NetworkUtilities.isConnected(this)) {
                 ResponseAsyncTask task = new ResponseAsyncTask(response -> {
@@ -125,6 +137,7 @@ public class DisplayDetailActivity extends AppCompatActivity implements NoteOfDi
             }
         });
 
+        //make the action when the note is clicked.
         findViewById(R.id.display_detail_note_button).setOnClickListener(v -> {
             if (NetworkUtilities.isConnected(this)) {
                 NoteOfDisplayDialog dialog =
@@ -137,6 +150,9 @@ public class DisplayDetailActivity extends AppCompatActivity implements NoteOfDi
         });
     }
 
+    /**
+     * this helper method will just initialise the recyelcer view.
+     */
     private void setupRecyclerView() {
         mNoteRecyclerView = findViewById(R.id.display_detail_notes_recycler);
         mAdapter = new NotesOfDisplayAdapter(this, this);
@@ -156,6 +172,7 @@ public class DisplayDetailActivity extends AppCompatActivity implements NoteOfDi
         return true;
     }
 
+    //this call back is implemented by the INoteOfDisplay when finishing noting
     @Override
     public void OnFinishNoting(String note, long id, int type) {
         if (type == NoteOfDisplayDialog.ADD) {
@@ -181,17 +198,20 @@ public class DisplayDetailActivity extends AppCompatActivity implements NoteOfDi
         }
     }
 
+    //this method will be called when we get data from the server
     @Override
     public void onGetResponse(Response response) {
         new CommentAsyncTask(this).execute(mRequest);
     }
 
+    //this method is overridden for the purpose of launching a bottom sheet for the user to choose modify or delete.
     @Override
     public void OnLongClick(long idComment, String comment) {
         Log.i("Remove", "OnLongClick: " + idComment);
         NoteBottomSheet bottomSheet = NoteBottomSheet.newInstance(idComment, comment);
         bottomSheet.show(getSupportFragmentManager(), "Tag");
     }
+
 
     @Override
     public void OnStartLoading() {
@@ -213,19 +233,20 @@ public class DisplayDetailActivity extends AppCompatActivity implements NoteOfDi
         }
     }
 
+    //this method was overridden from the INoteBottomSheet when an edit is launched.
     @Override
     public void OnEdit(long id, String note) {
         NoteOfDisplayDialog dialog = NoteOfDisplayDialog.newInstance(id, NoteOfDisplayDialog.EDIT, note);
         dialog.show(getSupportFragmentManager(), "Tag");
     }
 
+    //this method was overridden from the INoteBottomSheet when the remove occur
     @Override
     public void OnRemove(long id) {
-        Log.i("Remove", "OnRemove: " + id);
         if (NetworkUtilities.isConnected(this)) {
             new AlertDialog.Builder(this)
-                    .setTitle("Deleting your note")
-                    .setMessage("Are you sure you want to delete this note ?")
+                    .setTitle(R.string.delete_note_asking)
+                    .setMessage(R.string.delete_note_confirmation_bottom_sheet)
                     .setPositiveButton(R.string.delete_string, (dialog, which) -> {
                         RequestPackage request = new RequestPackage.Builder()
                                 .addMethod(POST)
@@ -234,10 +255,10 @@ public class DisplayDetailActivity extends AppCompatActivity implements NoteOfDi
                                 .create();
                         ResponseAsyncTask task = new ResponseAsyncTask(response -> {
                             if (response.getStatus() == 200) {
-                                Toast.makeText(this, "Comment removed successfully !", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(this, R.string.comment_removed_succ, Toast.LENGTH_SHORT).show();
                                 mAdapter.removeElement(id);
                             } else {
-                                Toast.makeText(this, "Try later, problem when connecting", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(this, R.string.try_later_problem_connecting, Toast.LENGTH_SHORT).show();
                             }
                         });
                         task.execute(request);

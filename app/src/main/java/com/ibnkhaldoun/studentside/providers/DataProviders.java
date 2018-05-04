@@ -1,9 +1,13 @@
+/*------------------------------------------------------------------------------
+ - Copyright (c) 2018. This code was created by Younes Charfaoui in the process of Graduation Project for the year of  2018 , which is about creating a platform  for students and professors to help them in the communication and the get known of the university information and so on.
+ -----------------------------------------------------------------------------*/
+
 package com.ibnkhaldoun.studentside.providers;
 
 
 import com.ibnkhaldoun.studentside.models.Comment;
 import com.ibnkhaldoun.studentside.models.Display;
-import com.ibnkhaldoun.studentside.models.Mail;
+
 import com.ibnkhaldoun.studentside.models.Mark;
 import com.ibnkhaldoun.studentside.models.Message;
 import com.ibnkhaldoun.studentside.models.Notification;
@@ -14,8 +18,12 @@ import com.ibnkhaldoun.studentside.models.Student;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @definition : this class help to get fake data to test with.
+ */
+
 public final class DataProviders {
-    private static final List<Mail> mailList = new ArrayList<>();
+
     private static final List<Message> messageList = new ArrayList<>();
     private static final List<Professor> professorList = new ArrayList<>();
     private static final List<Mark> markList = new ArrayList<>();
@@ -71,15 +79,6 @@ public final class DataProviders {
         commentList.add(new Comment(studentList.get(1).getFullName(), "Hello world", "13 apr"));
         commentList.add(new Comment(professorList.get(8).getFullName(), "try to do something else", "19 apr"));
 
-        mailList.add(new Mail(professorList.get(0), messageList));
-        mailList.add(new Mail(professorList.get(1), messageList));
-        mailList.add(new Mail(professorList.get(2), messageList));
-        mailList.add(new Mail(professorList.get(3), messageList));
-        mailList.add(new Mail(professorList.get(4), messageList));
-        mailList.add(new Mail(professorList.get(5), messageList));
-        mailList.add(new Mail(professorList.get(6), messageList));
-        mailList.add(new Mail(professorList.get(7), messageList));
-        mailList.add(new Mail(professorList.get(8), messageList));
 
         displayList.add(new Display(1, "19 Jan 16:31", professorList.get(0).getFullName(), "Lorem ipsum dolor sit amet, ", "1", "Crypto", 1));
         displayList.add(new Display(1, "17 Feb 15:30", professorList.get(1).getFullName(), "Lorem ipsum dolor sit amet,  eleifend viverra porta a, dapibus ut felis.", "1", "Crypto", 1));
@@ -138,9 +137,7 @@ public final class DataProviders {
         return displayList;
     }
 
-    public static List<Mail> getMailList() {
-        return mailList;
-    }
+
 
     public static List<Message> getMessageList() {
         return messageList;

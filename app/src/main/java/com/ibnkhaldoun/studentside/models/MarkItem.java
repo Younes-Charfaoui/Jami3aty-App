@@ -1,11 +1,12 @@
-/*
- * Copyright (c) 2018. This code was created by Younes Charfaoui in the process of Graduation Project for the year of  2018 , which is about creating a platform  for students and professors to help them in the communication and the get known of the university information and so on.
- */
+/*------------------------------------------------------------------------------
+ - Copyright (c) 2018. This code was created by Younes Charfaoui in the process of Graduation Project for the year of  2018 , which is about creating a platform  for students and professors to help them in the communication and the get known of the university information and so on.
+ -----------------------------------------------------------------------------*/
 
 package com.ibnkhaldoun.studentside.models;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+//like it's name implies this model is for the mark of the student.
 
 public class MarkItem implements Parcelable {
 

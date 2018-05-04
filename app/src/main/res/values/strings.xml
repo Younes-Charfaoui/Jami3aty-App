@@ -1,5 +1,9 @@
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ~ Copyright (c) 2018. This code was created by Younes Charfaoui in the process of Graduation Project for the year of  2018 , which is about creating a platform  for students and professors to help them in the communication and the get known of the university information and so on.
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+
 <resources>
-    <string name="app_name">Student Side</string>
+    <string name="app_name">Jami3aty</string>
     <string name="password_string">Password</string>
     <string name="email_string">Email</string>
     <string name="login_string">Login</string>
@@ -238,5 +242,8 @@
     <string name="sucess_post">Post was added successfully</string>
     <string name="you_cant_post_at_moment">You can\'t post anything for the moment, try later.</string>
     <string name="please_add_text">Please add text to the post</string>
+    <string name="delete_note_asking">Deleting your note</string>
+    <string name="delete_note_confirmation_bottom_sheet">Are you sure you want to delete this note ?</string>
+    <string name="comment_removed_succ">Comment removed successfully !</string>
 
 </resources>

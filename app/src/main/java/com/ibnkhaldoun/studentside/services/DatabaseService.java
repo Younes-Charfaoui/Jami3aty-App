@@ -54,7 +54,7 @@ public class DatabaseService extends IntentService {
                 insertSubject(intent.getParcelableArrayListExtra(KEY_CONTENT_DATA));
                 break;
             case MARK_TYPE:
-                int data = insertMarks(intent.getParcelableArrayListExtra(KEY_CONTENT_DATA));
+                insertMarks(intent.getParcelableArrayListExtra(KEY_CONTENT_DATA));
                 break;
             case SAVED_TYPE:
                 insertSaved(intent.getParcelableArrayListExtra(KEY_CONTENT_DATA));
@@ -78,13 +78,12 @@ public class DatabaseService extends IntentService {
                     .appendPath(String.valueOf(section))
                     .appendPath(String.valueOf(group))
                     .build();
-            Log.i(TAG, "insertSchedules: " + pathToSchedule.toString());
-            int data = getContentResolver().delete(pathToSchedule,
+
+            getContentResolver().delete(pathToSchedule,
                     null, null);
-            Log.i(TAG, "insertSchedules: the removed data was " + data);
-            int dataIn = getContentResolver().bulkInsert(DatabaseContract.ScheduleEntry.CONTENT_SCHEDULE_URI,
+
+            getContentResolver().bulkInsert(DatabaseContract.ScheduleEntry.CONTENT_SCHEDULE_URI,
                     getScheduleValues(schedules));
-            Log.i(TAG, "insertSchedules: the inserted data was " + dataIn);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -125,13 +124,10 @@ public class DatabaseService extends IntentService {
     }
 
     private void insertSaved(ArrayList<Saved> savedList) {
-        Log.i(TAG, "insertSaved: the list was " + savedList.size());
         getContentResolver().delete(DatabaseContract.SavedEntry.CONTENT_SAVED_URI,
                 null, null);
         int data = getContentResolver().bulkInsert(DatabaseContract.SavedEntry.CONTENT_SAVED_URI,
                 getSavedContentValue(savedList));
-
-        Log.i(TAG, "insertSaved: the data was " + data);
     }
 
     private ContentValues[] getSavedContentValue(ArrayList<Saved> savedList) {
@@ -143,7 +139,7 @@ public class DatabaseService extends IntentService {
             values[i].put(DatabaseContract.SavedEntry.COLUMN_NAME, savedList.get(i).getProfessor());
             values[i].put(DatabaseContract.SavedEntry.COLUMN_FILE, savedList.get(i).getFilePath());
             values[i].put(DatabaseContract.SavedEntry.COLUMN_SUBJECT, savedList.get(i).getSubjectTitle());
-            Log.i(TAG, "getSavedContentValue: " + savedList.get(i).getSubjectTitle());
+
             values[i].put(DatabaseContract.SavedEntry.COLUMN_DISPLAY_TEXT, savedList.get(i).getText());
         }
         return values;
@@ -219,7 +215,6 @@ public class DatabaseService extends IntentService {
                     list.get(i).getContent());
             values[i].put(DatabaseContract.SubjectEntry.COLUMN_UNITY_TYPE,
                     list.get(i).getUnityTypes());
-            Log.i(TAG, "getSubjectContentValues: " + list.get(i).getUnityTypes());
         }
         return values;
     }

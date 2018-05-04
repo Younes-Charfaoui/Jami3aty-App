@@ -24,8 +24,10 @@ public class MarkDetailActivity extends AppCompatActivity {
         if (getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        //get the mark passed by the intent.
         MarkItem mark = getIntent().getParcelableExtra(KEY_MARK);
 
+        //initializing the views and populate them with the marks.
         TextView examTextView = findViewById(R.id.exam_mark);
         TextView tdTextView = findViewById(R.id.td_mark);
         TextView tpTextView = findViewById(R.id.tp_mark);

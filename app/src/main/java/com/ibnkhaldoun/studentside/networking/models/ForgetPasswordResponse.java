@@ -13,7 +13,4 @@ public class ForgetPasswordResponse {
         return status;
     }
 
-    public void setStatus(int status) {
-        this.status = status;
-    }
 }

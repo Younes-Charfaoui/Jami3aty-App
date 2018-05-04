@@ -1,9 +1,12 @@
+/*------------------------------------------------------------------------------
+ - Copyright (c) 2018. This code was created by Younes Charfaoui in the process of Graduation Project for the year of  2018 , which is about creating a platform  for students and professors to help them in the communication and the get known of the university information and so on.
+ -----------------------------------------------------------------------------*/
+
 package com.ibnkhaldoun.studentside.services;
 
 import android.app.IntentService;
 import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
 
 import com.ibnkhaldoun.studentside.Utilities.PreferencesManager;
 import com.ibnkhaldoun.studentside.activities.MarkActivity;
@@ -15,7 +18,6 @@ import com.ibnkhaldoun.studentside.models.Display;
 import com.ibnkhaldoun.studentside.models.MarkItem;
 import com.ibnkhaldoun.studentside.models.Message;
 import com.ibnkhaldoun.studentside.models.Notification;
-import com.ibnkhaldoun.studentside.models.ProfessorInfo;
 import com.ibnkhaldoun.studentside.models.Saved;
 import com.ibnkhaldoun.studentside.models.Subject;
 import com.ibnkhaldoun.studentside.networking.models.RequestPackage;
@@ -46,24 +48,20 @@ public class LoadDataService extends IntentService {
     public static final String SCHEDULE_ACTION = "scheduleAction";
     public static final String MARK_ACTION = "markAction";
     public static final String SUBJECT_ACTION = "subjectAction";
-    public static final String SUBJECT_INNER_ACTION = "subjectAction";
     public static final String NOTIFICATION_ACTION = "notificationAction";
     public static final String COMMENTS_ACTION = "commentsAction";
-    public static final String PROFESSOR_INFO_ACTION = "professorInfoAction";
 
     public static final int DISPLAY_TYPE = 1;
     public static final int MAIL_TYPE = 2;
     public static final int SCHEDULE_TYPE = 3;
     public static final int MARK_TYPE = 4;
     public static final int SUBJECT_TYPE = 5;
-    public static final int ALL_TYPE = 6;
     public static final int NOTIFICATION_TYPE = 7;
     public static final int SAVED_TYPE = 8;
     public static final int SUBJECT_IN_TYPE = 9;
     public static final int SCHEDULE_IN_TYPE = 10;
     public static final int COMMENT_TYPE = 11;
-    public static final int PROFESSOR_INFO_TYPE = 12;
-    public static final int DISPLAY_TYPE_PROFESSOR= 13;
+    public static final int DISPLAY_TYPE_PROFESSOR = 13;
 
 
     public static final String KEY_ACTION = "Action";
@@ -115,26 +113,8 @@ public class LoadDataService extends IntentService {
             case DISPLAY_TYPE_PROFESSOR:
                 displayCallProfessor(request);
                 break;
-            case PROFESSOR_INFO_TYPE:
-//                professorInfoCall(request);
-                break;
         }
     }
-
-//    private void professorInfoCall(RequestPackage request) {
-//        try {
-//            String response = HttpUtilities.getData(request);
-//            ArrayList<ProfessorInfo> professorInfo = JsonUtilities.getProfessorInfo(response);
-//            Intent intent = new Intent(PROFESSOR_INFO_ACTION);
-//            intent.putExtra(KEY_DATA, professorInfo);
-//            LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
-//            Log.i("Tag", "professorInfoCall: " + response + " and size of array is "
-//                    + professorInfo.size());
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//            Log.i("Tag", "professorInfoCall: it was io" );
-//        }
-//    }
 
     private void displayCallProfessor(RequestPackage request) {
         try {
@@ -149,6 +129,7 @@ public class LoadDataService extends IntentService {
         }
 
     }
+
     private void displayCall(RequestPackage request) {
         try {
             String response = HttpUtilities.getData(request);
@@ -160,23 +141,19 @@ public class LoadDataService extends IntentService {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
     private void notificationCall(RequestPackage request) {
         try {
             String response = HttpUtilities.getData(request);
-            Log.i("Notif", "notificationCall: " + response);
             ArrayList<Notification> notificationList = JsonUtilities.getNotificationList(response);
             Intent intent = new Intent(NOTIFICATION_ACTION);
             intent.putExtra(KEY_DATA, notificationList);
             LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
         } catch (IOException e) {
             e.printStackTrace();
-            Log.i("Tag", "notificationCall: IO");
         } catch (JSONException e) {
             e.printStackTrace();
-            Log.i("Tag", "notificationCall: JSON");
         }
     }
 
@@ -207,7 +184,6 @@ public class LoadDataService extends IntentService {
     private void subjectInnerCall(RequestPackage request) {
         try {
             String response = HttpUtilities.getData(request);
-
             ArrayList<Subject> subjectList = JsonUtilities.getSubjectList(response);
             ArrayList<String> subjectsStrings = new ArrayList<>();
             if (subjectList != null) for (Subject subject : subjectList) {
@@ -228,7 +204,6 @@ public class LoadDataService extends IntentService {
     private void scheduleCall(RequestPackage request) {
         try {
             String response = HttpUtilities.getData(request);
-
             Intent intentSchedule = new Intent(SCHEDULE_ACTION);
             intentSchedule.putExtra(ScheduleActivity.KEY_SCHEDULE, response);
             LocalBroadcastManager.getInstance(this).sendBroadcast(intentSchedule);
@@ -280,7 +255,6 @@ public class LoadDataService extends IntentService {
 
     private void mailCall(RequestPackage requestPackage) {
         try {
-            Log.i("MailCall", "mailCall: request start");
             String response = HttpUtilities.getData(requestPackage);
             ArrayList<Message> mailList = JsonUtilities.getMailList(response);
             Intent intentToMails = new Intent(MAIL_ACTION);
@@ -290,7 +264,6 @@ public class LoadDataService extends IntentService {
 //            intentToDatabase.putExtra(KEY_CONTENT_DATA, mailList);
 //            startService(intentToDatabase);
         } catch (IOException e) {
-            Log.i("MailCall", "mailCall: it was Io");
             e.printStackTrace();
         }
     }

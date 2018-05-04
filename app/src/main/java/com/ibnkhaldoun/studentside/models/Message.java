@@ -1,8 +1,14 @@
+/*------------------------------------------------------------------------------
+ - Copyright (c) 2018. This code was created by Younes Charfaoui in the process of Graduation Project for the year of  2018 , which is about creating a platform  for students and professors to help them in the communication and the get known of the university information and so on.
+ -----------------------------------------------------------------------------*/
+
 package com.ibnkhaldoun.studentside.models;
 
 
 import android.os.Parcel;
 import android.os.Parcelable;
+
+//this class model the message between student and professor.
 
 public class Message implements Parcelable {
     public static final Creator<Message> CREATOR = new Creator<Message>() {
@@ -57,16 +63,8 @@ public class Message implements Parcelable {
         return idStudent;
     }
 
-    public void setIdStudent(long idStudent) {
-        this.idStudent = idStudent;
-    }
-
     public long getIdProfessor() {
         return idProfessor;
-    }
-
-    public void setIdProfessor(long idProfessor) {
-        this.idProfessor = idProfessor;
     }
 
     public boolean isIn() {

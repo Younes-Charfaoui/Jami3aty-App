@@ -1,3 +1,7 @@
+/*------------------------------------------------------------------------------
+ - Copyright (c) 2018. This code was created by Younes Charfaoui in the process of Graduation Project for the year of  2018 , which is about creating a platform  for students and professors to help them in the communication and the get known of the university information and so on.
+ -----------------------------------------------------------------------------*/
+
 package com.ibnkhaldoun.studentside.activities;
 
 import android.content.BroadcastReceiver;
@@ -31,15 +35,22 @@ import java.util.ArrayList;
 
 import static com.ibnkhaldoun.studentside.Utilities.PreferencesManager.STUDENT;
 
+/**
+ * @definition: this activity will show the student the marks they have in the
+ * different subject in the university.
+ */
 public class MarkActivity extends AppCompatActivity {
 
+    //the key for taking the information passed by an intent.
     public static final String KEY_MARKS = "keyMarks";
-    private static final int ID_MARK_LOADER = 1182;
-    public static double AVERAGE;
+
+    //UI elements
     private RecyclerView mRecyclerView;
     private MarksAdapter mAdapter;
     private LinearLayout mEmptyLayout;
     private ProgressBar mLoadingProgressBar;
+
+    //receiver to receive the data from the background service.
     private BroadcastReceiver mMarkReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -61,6 +72,7 @@ public class MarkActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        //initializing the view
         mRecyclerView = findViewById(R.id.marks_recycler_view);
         mLoadingProgressBar = findViewById(R.id.mark_progress_bar);
         mEmptyLayout = findViewById(R.id.mark_empty_view);
@@ -69,14 +81,12 @@ public class MarkActivity extends AppCompatActivity {
 
         if (getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//        getSupportLoaderManager().
-//                initLoader(ID_MARK_LOADER, null, this)
-//                .forceLoad();
 
         mEmptyLayout.setOnClickListener(v ->
                 getNewMarkIfThereIs()
         );
 
+        //registering the receiver.
         LocalBroadcastManager.getInstance(this).registerReceiver(mMarkReceiver, new IntentFilter(LoadDataService.MARK_ACTION));
 
         getNewMarkIfThereIs();
@@ -109,30 +119,8 @@ public class MarkActivity extends AppCompatActivity {
         return true;
     }
 
-//    @Override
-//    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-//        return new CursorLoader(
-//                this, DatabaseContract.MarkEntry.CONTENT_MARK_URI,
-//                new String[]{"*"}, null, null, null
-//        );
-//    }
 
-//    @Override
-//    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-//        mLoadingProgressBar.setVisibility(View.GONE);
-//        if (data.getCount() != 0) {
-//            mAdapter.swapCursor(data);
-//            mRecyclerView.setVisibility(View.VISIBLE);
-//        } else {
-//            mEmptyLayout.setVisibility(View.VISIBLE);
-//        }
-//    }
-
-//    @Override
-//    public void onLoaderReset(Loader<Cursor> loader) {
-//        mAdapter.swapCursor(null);
-//    }
-
+    //method to get the marks from background service.
     private void getNewMarkIfThereIs() {
         if (NetworkUtilities.isConnected(this)) {
             mLoadingProgressBar.setVisibility(View.VISIBLE);
@@ -161,6 +149,7 @@ public class MarkActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        //unregister the receiver to avoid memory leaks.
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mMarkReceiver);
     }
 }

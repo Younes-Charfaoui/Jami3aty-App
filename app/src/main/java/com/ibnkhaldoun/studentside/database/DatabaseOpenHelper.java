@@ -1,3 +1,7 @@
+/*------------------------------------------------------------------------------
+ - Copyright (c) 2018. This code was created by Younes Charfaoui in the process of Graduation Project for the year of  2018 , which is about creating a platform  for students and professors to help them in the communication and the get known of the university information and so on.
+ -----------------------------------------------------------------------------*/
+
 package com.ibnkhaldoun.studentside.database;
 
 
@@ -45,8 +49,6 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
 
     private static final String SQL_QUERY_DROP_NOTE_DISPLAY = BASE_DROP + DatabaseContract.NoteOfDisplaysEntry.TABLE_NAME;
 
-    private static final String SQL_QUERY_CREATE_DISPLAY = "";
-    private static final String SQL_QUERY_DROP_DISPLAY = "";
 
     private static final String SQL_QUERY_CREATE_SUBJECT = BASE_CREATE +
             DatabaseContract.SubjectEntry.TABLE_NAME + " ( " +
@@ -67,8 +69,6 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
     private static final String SQL_QUERY_DROP_SUBJECT = BASE_DROP +
             DatabaseContract.SubjectEntry.TABLE_NAME;
 
-    private static final String SQL_QUERY_CREATE_NOTIFICATION = "";
-    private static final String SQL_QUERY_DROP_NOTIFICATION = "";
 
     private static final String SQL_QUERY_CREATE_SCHEDULE = BASE_CREATE +
             DatabaseContract.ScheduleEntry.TABLE_NAME + " ( " +
@@ -117,8 +117,6 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase database) {
-
-        //database.execSQL(SQL_QUERY_CREATE_DISPLAY);
         database.execSQL(SQL_QUERY_CREATE_NOTE_DISPLAY);
         database.execSQL(SQL_QUERY_CREATE_NOTE);
         database.execSQL(SQL_QUERY_CREATE_SUBJECT);
@@ -130,7 +128,6 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase database, int oldVersion, int newVersion) {
-        //database.execSQL(SQL_QUERY_DROP_DISPLAY);
         database.execSQL(SQL_QUERY_DROP_NOTE_DISPLAY);
         database.execSQL(SQL_QUERY_DROP_NOTE);
         database.execSQL(SQL_QUERY_DROP_SCHEDULE);

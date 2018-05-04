@@ -1,3 +1,7 @@
+/*------------------------------------------------------------------------------
+ - Copyright (c) 2018. This code was created by Younes Charfaoui in the process of Graduation Project for the year of  2018 , which is about creating a platform  for students and professors to help them in the communication and the get known of the university information and so on.
+ -----------------------------------------------------------------------------*/
+
 package com.ibnkhaldoun.studentside.database;
 
 import android.net.Uri;
@@ -6,9 +10,7 @@ import android.provider.BaseColumns;
 
 public class DatabaseContract implements BaseColumns {
 
-    public static final String PATH_DISPLAY = DisplayEntry.TABLE_NAME;
     public static final String PATH_SCHEDULE = ScheduleEntry.TABLE_NAME;
-    public static final String PATH_NOTIFICATION = NotificationEntry.TABLE_NAME;
     static final String AUTHORITY = "com.ibnkhaldoun.studentside";
     static final String PATH_NOTES = NoteEntry.TABLE_NAME;
     static final String PATH_SAVED = SavedEntry.TABLE_NAME;
@@ -91,16 +93,6 @@ public class DatabaseContract implements BaseColumns {
         public static final String COLUMN_DATE = "date";
         public static final String COLUMN_MESSAGE_SUBJECT = "subject";
         static final String TABLE_NAME = "mails";
-    }
-
-    public class DisplayEntry {
-        public static final String TABLE_NAME = "displays";
-        //todo list of the table constant
-    }
-
-    public class NotificationEntry {
-        static final String TABLE_NAME = "notifications";
-        //todo list of the table constant
     }
 
     public static class ScheduleEntry {

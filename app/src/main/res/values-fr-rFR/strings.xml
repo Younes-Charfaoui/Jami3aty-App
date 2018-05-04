@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   ~ Copyright (c) 2018. This code was created by Younes Charfaoui in the process of Graduation Project for the year of  2018 , which is about creating a platform  for students and professors to help them in the communication and the get known of the university information and so on.
-  -->
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 
 <resources>
-    <string name="app_name">jami3aty</string>
+    <string name="app_name">Jami3aty</string>
     <string name="password_string">Mot de passe</string>
     <string name="sign_up">Créer un compte</string>
     <string name="or">OU</string>
@@ -155,4 +155,5 @@
     <string name="fundamental_unity">Fondamental</string>
     <string name="methodological_unity">Methodologique</string>
     <string name="traversal_unity">Traversal</string>
+    <string name="delete_note_asking">Deleting your note</string>
 </resources>

@@ -1,3 +1,7 @@
+/*------------------------------------------------------------------------------
+ - Copyright (c) 2018. This code was created by Younes Charfaoui in the process of Graduation Project for the year of  2018 , which is about creating a platform  for students and professors to help them in the communication and the get known of the university information and so on.
+ -----------------------------------------------------------------------------*/
+
 package com.ibnkhaldoun.studentside.networking.models;
 
 
@@ -31,7 +35,7 @@ public class RequestPackage implements Parcelable {
     //public constant we need in the process of making http calls
     public static final String GET = "GET";
     public static final String POST = "POST";
-    public static final String NONE = "NONE";
+
     private String mEndPoint;
     private String mMethod;
     private Map<String, String> mParams;

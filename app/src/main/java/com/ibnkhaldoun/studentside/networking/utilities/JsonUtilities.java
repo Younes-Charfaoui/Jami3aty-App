@@ -1,6 +1,9 @@
+/*------------------------------------------------------------------------------
+ - Copyright (c) 2018. This code was created by Younes Charfaoui in the process of Graduation Project for the year of  2018 , which is about creating a platform  for students and professors to help them in the communication and the get known of the university information and so on.
+ -----------------------------------------------------------------------------*/
+
 package com.ibnkhaldoun.studentside.networking.utilities;
 
-import android.util.Log;
 import android.util.SparseArray;
 
 import com.ibnkhaldoun.studentside.models.Comment;
@@ -16,10 +19,8 @@ import com.ibnkhaldoun.studentside.models.Schedule;
 import com.ibnkhaldoun.studentside.models.ScheduleItem;
 import com.ibnkhaldoun.studentside.models.Student;
 import com.ibnkhaldoun.studentside.models.Subject;
-import com.ibnkhaldoun.studentside.networking.models.ForgetPasswordResponse;
 import com.ibnkhaldoun.studentside.networking.models.LoginResponse;
 import com.ibnkhaldoun.studentside.networking.models.Response;
-import com.ibnkhaldoun.studentside.networking.models.SignUpResponse;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -99,11 +100,8 @@ import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.KEY_JSON_STA
 
 public class JsonUtilities {
 
-    private static final String TAG = "json";
-
     public static LoginResponse getLoginResponse(String jsonText) {
         try {
-            Log.i(TAG, "getLoginResponse: response " + jsonText);
             JSONObject root = new JSONObject(jsonText);
 
             int status = root.getInt(KEY_JSON_STATUS);
@@ -140,30 +138,26 @@ public class JsonUtilities {
             }
             return response;
         } catch (JSONException e) {
-            Log.i(TAG, "getLoginResponse: JSON Exception");
             e.printStackTrace();
             return new LoginResponse(JSON_EXCEPTION);
         }
-
     }
 
-    public static SignUpResponse getSignUpResponse(String jsonText) {
+    public static Response getSignUpResponse(String jsonText) {
         try {
-
             JSONObject root = new JSONObject(jsonText);
             int status = root.getInt(KEY_JSON_STATUS);
 
-            return new SignUpResponse(status);
+            return new Response(status);
         } catch (JSONException e) {
 
             e.printStackTrace();
-            return new SignUpResponse(JSON_EXCEPTION);
+            return new Response(JSON_EXCEPTION);
         }
     }
 
     public static ArrayList<Subject> getSubjectList(String response) {
         try {
-
             JSONObject root = new JSONObject(response);
             int status = root.getInt(KEY_JSON_STATUS);
             if (status != 200) return null;
@@ -175,22 +169,19 @@ public class JsonUtilities {
         return null;
     }
 
-    public static ForgetPasswordResponse getForgetPasswordResponse(String response) {
-
+    public static Response getForgetPasswordResponse(String response) {
         try {
-            return new ForgetPasswordResponse(Integer.
+            return new Response(Integer.
                     parseInt(new JSONObject(response)
                             .getString(KEY_JSON_STATUS)));
         } catch (JSONException e) {
 
-            return new ForgetPasswordResponse(Response.JSON_EXCEPTION);
+            return new Response(Response.JSON_EXCEPTION);
         }
-
     }
 
     public static ArrayList<MarkItem> getMarkList(String response) {
         ArrayList<MarkItem> marks = new ArrayList<>();
-        Log.i(TAG, "getMarkList: " + response);
         try {
             JSONObject root = new JSONObject(response);
             if (root.getInt(KEY_JSON_STATUS) != 200) throw new JSONException("was not 200");
@@ -231,7 +222,6 @@ public class JsonUtilities {
 
     public static ArrayList<Message> getMailList(String response) {
         ArrayList<Message> messages = new ArrayList<>();
-        Log.i(TAG, "getMailList: " + response);
         try {
             JSONObject root = new JSONObject(response);
             if (root.getInt(KEY_JSON_STATUS) != 200) throw new JSONException("no Success messages");
@@ -251,11 +241,9 @@ public class JsonUtilities {
             }
         } catch (JSONException e) {
             e.printStackTrace();
-            Log.i(TAG, "getMailList: it was Json Excp");
         }
         return messages;
     }
-
 
     private static ArrayList<Subject> getSubjectFromJsonArray(JSONArray array) throws JSONException {
         ArrayList<Subject> subjects = new ArrayList<>();
@@ -287,7 +275,6 @@ public class JsonUtilities {
     }
 
     public static ArrayList<Saved> getSavedList(String response) throws JSONException {
-        Log.i(TAG, "getSavedList: " + response);
         JSONObject root = new JSONObject(response);
         if (root.getInt(KEY_JSON_STATUS) != 200) throw new JSONException("Error in code");
 
@@ -301,7 +288,6 @@ public class JsonUtilities {
             String professor = saved.getString(JSON_POST_PROFESSOR);
             String file = saved.getString(JSON_POST_FILE);
             String subject = saved.getString(JSON_POST_SUBJECT);
-            Log.i(TAG, "getSavedList: " + subject);
             int type = saved.getInt(JSON_POST_TYPE);
             Saved save = new Saved(id, professor, text, date);
             save.setFilePath(file);
@@ -339,9 +325,7 @@ public class JsonUtilities {
         return schedules;
     }
 
-
     public static ArrayList<Comment> getCommentsList(String response) {
-        Log.i(TAG, "getCommentsList: " + response);
         ArrayList<Comment> commentList = new ArrayList<>();
         try {
 
@@ -365,7 +349,6 @@ public class JsonUtilities {
 
     public static ArrayList<Notification> getNotificationList(String response) throws JSONException {
         ArrayList<Notification> notificationList = new ArrayList<>();
-        Log.i(TAG, "getNotificationList: " + response);
         JSONObject root = new JSONObject(response);
         if (root.getInt(KEY_JSON_STATUS) != 200) throw new JSONException("Error code");
         JSONArray data = root.getJSONArray(KEY_JSON_DATA);
@@ -385,7 +368,6 @@ public class JsonUtilities {
     public static ArrayList<Display> getDisplaysList(String response) {
         ArrayList<Display> displays = new ArrayList<>();
         try {
-            Log.i(TAG, "getDisplaysList: " + response);
             JSONObject root = new JSONObject(response);
             if (root.getInt(KEY_JSON_STATUS) != 200) throw new JSONException("Code was not 200");
             JSONArray data = root.getJSONArray(KEY_JSON_DATA);
@@ -410,7 +392,6 @@ public class JsonUtilities {
     public static ArrayList<Display> getDisplaysListProfessor(String response) {
         ArrayList<Display> displays = new ArrayList<>();
         try {
-            Log.i(TAG, "getDisplaysList: " + response);
             JSONObject root = new JSONObject(response);
             if (root.getInt(KEY_JSON_STATUS) != 200) throw new JSONException("Code was not 200");
             JSONArray data = root.getJSONArray(KEY_JSON_DATA);
@@ -431,7 +412,6 @@ public class JsonUtilities {
     }
 
     public static int getStatusCode(String response) throws JSONException {
-        Log.i(TAG, "getStatusCode: " + response);
         JSONObject object = new JSONObject(response);
         return object.getInt(KEY_JSON_STATUS);
     }

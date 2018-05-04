@@ -1,3 +1,7 @@
+/*------------------------------------------------------------------------------
+ - Copyright (c) 2018. This code was created by Younes Charfaoui in the process of Graduation Project for the year of  2018 , which is about creating a platform  for students and professors to help them in the communication and the get known of the university information and so on.
+ -----------------------------------------------------------------------------*/
+
 package com.ibnkhaldoun.studentside.Utilities;
 
 
@@ -9,6 +13,13 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * @definition: this class is responsible for creating and managing the
+ * shared preferences files in the android phone.
+ *
+ * We are storing some basic information of the user like :ID, name and so
+ * on , also is user is login.
+ */
 
 public class PreferencesManager {
 

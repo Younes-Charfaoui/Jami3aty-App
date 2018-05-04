@@ -1,3 +1,7 @@
+/*------------------------------------------------------------------------------
+ - Copyright (c) 2018. This code was created by Younes Charfaoui in the process of Graduation Project for the year of  2018 , which is about creating a platform  for students and professors to help them in the communication and the get known of the university information and so on.
+ -----------------------------------------------------------------------------*/
+
 package com.ibnkhaldoun.studentside.activities;
 
 import android.content.Intent;
@@ -20,9 +24,9 @@ import android.widget.Toast;
 
 import com.ibnkhaldoun.studentside.R;
 import com.ibnkhaldoun.studentside.asyncTask.SignUpAsyncTask;
-import com.ibnkhaldoun.studentside.interfaces.SignUpTaskListener;
+import com.ibnkhaldoun.studentside.interfaces.ResponseTaskListener;
 import com.ibnkhaldoun.studentside.networking.models.RequestPackage;
-import com.ibnkhaldoun.studentside.networking.models.SignUpResponse;
+import com.ibnkhaldoun.studentside.networking.models.Response;
 import com.ibnkhaldoun.studentside.networking.utilities.NetworkUtilities;
 import com.ibnkhaldoun.studentside.providers.EndPointsProvider;
 
@@ -41,17 +45,18 @@ import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.KEY_EMAIL;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.KEY_PASSWORD;
 
 public class SignUpActivity extends AppCompatActivity
-        implements View.OnFocusChangeListener, SignUpTaskListener {
+        implements View.OnFocusChangeListener, ResponseTaskListener {
 
     private EditText mEmailEditText, mPasswordEditText, mCardNumberEditText, mBacAverageEditText;
     private TextInputLayout mEmailWrapper, mCardNumberWrapper, mPasswordWrapper, mBacAverageWrapper;
-    //private Menu mMenu;
+
+
     private ProgressBar mLoadingProgressBar;
     private Button mSignUpButton;
     private TextView mTitleTextView, mSubTitleTextView;
     private LinearLayout mFieldLinearLayout;
 
-    private MenuItem back, help;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -307,7 +312,7 @@ public class SignUpActivity extends AppCompatActivity
     }
 
     @Override
-    public void onSignUpCompletionListener(SignUpResponse response) {
+    public void onTaskCompletionListener(Response response) {
         switch (response.getStatus()) {
             case RESPONSE_SUCCESS:
                 mSubTitleTextView.setText(R.string.account_created_succes_string);

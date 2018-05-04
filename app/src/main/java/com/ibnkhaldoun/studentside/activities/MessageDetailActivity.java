@@ -1,3 +1,7 @@
+/*------------------------------------------------------------------------------
+ - Copyright (c) 2018. This code was created by Younes Charfaoui in the process of Graduation Project for the year of  2018 , which is about creating a platform  for students and professors to help them in the communication and the get known of the university information and so on.
+ -----------------------------------------------------------------------------*/
+
 package com.ibnkhaldoun.studentside.activities;
 
 import android.content.Intent;
@@ -14,9 +18,16 @@ import com.ibnkhaldoun.studentside.Utilities.ActivityUtilities;
 import com.ibnkhaldoun.studentside.Utilities.Utilities;
 import com.ibnkhaldoun.studentside.models.Message;
 
+/**
+ * @definition: this class will have the UI elements to represent
+ * a message in a detailed way.
+ */
 public class MessageDetailActivity extends AppCompatActivity {
 
+    //key to extracts the information from the intent.
     public static final String KEY_MESSAGE = "keyMessage";
+
+    //value to know is the user professor or student.
     public static final int PROFESSOR = 1;
     public static final int STUDENT = 2;
 
@@ -81,6 +92,7 @@ public class MessageDetailActivity extends AppCompatActivity {
 
     }
 
+    //method to launch the reply process
     private void replyMessage(Message message) {
         Intent intent = new Intent(this, NewMessageActivity.class);
         intent.putExtra(NewMessageActivity.MESSAGE, message);

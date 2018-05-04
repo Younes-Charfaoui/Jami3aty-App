@@ -1,3 +1,7 @@
+/*------------------------------------------------------------------------------
+ - Copyright (c) 2018. This code was created by Younes Charfaoui in the process of Graduation Project for the year of  2018 , which is about creating a platform  for students and professors to help them in the communication and the get known of the university information and so on.
+ -----------------------------------------------------------------------------*/
+
 package com.ibnkhaldoun.studentside.database;
 
 import android.content.ContentProvider;
@@ -9,7 +13,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Log;
 
 
 public class DatabaseProvider extends ContentProvider {
@@ -163,11 +166,9 @@ public class DatabaseProvider extends ContentProvider {
 
     private int insertMultipleRows(@NonNull ContentValues[] values,
                                    int insertedRow, SQLiteDatabase database, String table) {
-        Log.i("DbPro", "insertMultipleRows: " + values.length);
         for (ContentValues value :
                 values) {
             long row = database.insert(table, null, value);
-            Log.i("DbPro", "insertMultipleRows: actual row " + row);
             if (row > 0) insertedRow++;
         }
         return insertedRow;
@@ -183,7 +184,6 @@ public class DatabaseProvider extends ContentProvider {
         }
         return null;
     }
-
 
     @Override
     public int delete(@NonNull Uri uri, @Nullable String selection, @Nullable String[] selectionArgs) {
@@ -217,7 +217,6 @@ public class DatabaseProvider extends ContentProvider {
                         String.valueOf(uri.getPathSegments().get(3))};
                 return database.delete(DatabaseContract.ScheduleEntry.TABLE_NAME,
                         selection, selectionArgs);
-
         }
         return 0;
     }
@@ -259,7 +258,6 @@ public class DatabaseProvider extends ContentProvider {
             default:
                 throw new IllegalArgumentException();
         }
-
     }
 
     private int updateElement(@NonNull Uri uri, @Nullable ContentValues values, @Nullable String selection,

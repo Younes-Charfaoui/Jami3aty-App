@@ -1,3 +1,7 @@
+/*------------------------------------------------------------------------------
+ - Copyright (c) 2018. This code was created by Younes Charfaoui in the process of Graduation Project for the year of  2018 , which is about creating a platform  for students and professors to help them in the communication and the get known of the university information and so on.
+ -----------------------------------------------------------------------------*/
+
 package com.ibnkhaldoun.studentside.networking.utilities;
 
 import android.content.Context;
@@ -18,7 +22,7 @@ public final class NetworkUtilities {
         try {
             if (manager != null) {
                 NetworkInfo info = manager.getActiveNetworkInfo();
-                return info != null && info.isConnectedOrConnecting();
+                return info != null && info.isConnected();
             }
             return false;
         } catch (Exception e) {

@@ -1,3 +1,7 @@
+/*------------------------------------------------------------------------------
+ - Copyright (c) 2018. This code was created by Younes Charfaoui in the process of Graduation Project for the year of  2018 , which is about creating a platform  for students and professors to help them in the communication and the get known of the university information and so on.
+ -----------------------------------------------------------------------------*/
+
 package com.ibnkhaldoun.studentside.models;
 
 
@@ -49,76 +53,29 @@ public class Mark implements Parcelable {
         this.subjectId = in.readLong();
     }
 
-    public String getCourseProfessor() {
-        return courseProfessor;
-    }
-
-    public void setCourseProfessor(String courseProfessor) {
-        this.courseProfessor = courseProfessor;
-    }
-
-    public String getTdProfessor() {
-        return tdProfessor;
-    }
-
-    public void setTdProfessor(String tdProfessor) {
-        this.tdProfessor = tdProfessor;
-    }
-
-    public String getTpProfessor() {
-        return tpProfessor;
-    }
-
-    public void setTpProfessor(String tpProfessor) {
-        this.tpProfessor = tpProfessor;
-    }
 
     public String getSubjectName() {
         return subjectName;
-    }
-
-    public void setSubjectName(String subjectName) {
-        this.subjectName = subjectName;
     }
 
     public String getShortSubjectName() {
         return shortSubjectName;
     }
 
-    public void setShortSubjectName(String shortSubjectName) {
-        this.shortSubjectName = shortSubjectName;
-    }
-
     public float getExam() {
         return mExam;
-    }
-
-    public void setExam(float mExam) {
-        this.mExam = mExam;
     }
 
     public float getTD() {
         return mTD;
     }
 
-    public void setTD(float mTD) {
-        this.mTD = mTD;
-    }
-
     public float getTP() {
         return mTP;
     }
 
-    public void setTP(float mTP) {
-        this.mTP = mTP;
-    }
-
     public long getSubjectId() {
         return subjectId;
-    }
-
-    public void setSubjectId(long subjectId) {
-        this.subjectId = subjectId;
     }
 
     @Override

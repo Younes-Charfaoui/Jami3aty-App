@@ -1,3 +1,7 @@
+/*------------------------------------------------------------------------------
+ - Copyright (c) 2018. This code was created by Younes Charfaoui in the process of Graduation Project for the year of  2018 , which is about creating a platform  for students and professors to help them in the communication and the get known of the university information and so on.
+ -----------------------------------------------------------------------------*/
+
 package com.ibnkhaldoun.studentside.activities;
 
 import android.graphics.Color;
@@ -15,9 +19,9 @@ import android.widget.Toast;
 
 import com.ibnkhaldoun.studentside.R;
 import com.ibnkhaldoun.studentside.asyncTask.ForgetPasswordAsyncTask;
-import com.ibnkhaldoun.studentside.interfaces.ForgetPasswordTaskListener;
-import com.ibnkhaldoun.studentside.networking.models.ForgetPasswordResponse;
+import com.ibnkhaldoun.studentside.interfaces.ResponseTaskListener;
 import com.ibnkhaldoun.studentside.networking.models.RequestPackage;
+import com.ibnkhaldoun.studentside.networking.models.Response;
 import com.ibnkhaldoun.studentside.networking.utilities.NetworkUtilities;
 import com.ibnkhaldoun.studentside.providers.EndPointsProvider;
 
@@ -29,8 +33,13 @@ import static com.ibnkhaldoun.studentside.networking.models.Response.RESPONSE_EM
 import static com.ibnkhaldoun.studentside.networking.models.Response.RESPONSE_SUCCESS;
 import static com.ibnkhaldoun.studentside.providers.KeyDataProvider.KEY_EMAIL;
 
-public class ForgetPasswordActivity extends AppCompatActivity implements ForgetPasswordTaskListener {
+/**
+ * @definition: this activity responsible for helping the user to find and reintilaize
+ * it's password when he forget it.
+ */
+public class ForgetPasswordActivity extends AppCompatActivity implements ResponseTaskListener {
 
+    //UI elements.
     private TextView mAccountPleaseTextView;
     private Button mFindAccountButton;
     private EditText mEmailEditText;
@@ -44,8 +53,10 @@ public class ForgetPasswordActivity extends AppCompatActivity implements ForgetP
         setContentView(R.layout.activity_forget_password);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        assert getSupportActionBar() != null;
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if (getSupportActionBar() != null)
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        //initializing the UI elements.
         mFindAccountButton = findViewById(R.id.find_account);
         mAccountPleaseTextView = findViewById(R.id.account_search_textView);
         mEmailEditText = findViewById(R.id.input_email_forget_password);
@@ -54,6 +65,7 @@ public class ForgetPasswordActivity extends AppCompatActivity implements ForgetP
         mProgressBar = findViewById(R.id.forget_password_progress_bar);
 
 
+        //set action when the Button is clicked
         mFindAccountButton.setOnClickListener(v -> {
             if (validate()) {
                 if (NetworkUtilities.isConnected(ForgetPasswordActivity.this)) {
@@ -79,6 +91,11 @@ public class ForgetPasswordActivity extends AppCompatActivity implements ForgetP
         });
     }
 
+    /**
+     * this helper method wil validate the Information.
+     *
+     * @return boolean of the state of the information if they are well formed.
+     */
     private boolean validate() {
 
         boolean validate = true;
@@ -98,8 +115,9 @@ public class ForgetPasswordActivity extends AppCompatActivity implements ForgetP
         return validate;
     }
 
+    //callback triggered when the request is sent to the server and the response come back here.
     @Override
-    public void onForgetPasswordCompletionListener(ForgetPasswordResponse response) {
+    public void onTaskCompletionListener(Response response) {
         switch (response.getStatus()) {
             case RESPONSE_SUCCESS:
                 mProgressBar.setVisibility(GONE);
@@ -138,4 +156,6 @@ public class ForgetPasswordActivity extends AppCompatActivity implements ForgetP
                 break;
         }
     }
+
+
 }

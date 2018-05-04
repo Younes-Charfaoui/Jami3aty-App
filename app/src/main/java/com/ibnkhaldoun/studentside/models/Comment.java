@@ -1,8 +1,17 @@
+/*------------------------------------------------------------------------------
+ - Copyright (c) 2018. This code was created by Younes Charfaoui in the process of Graduation Project for the year of  2018 , which is about creating a platform  for students and professors to help them in the communication and the get known of the university information and so on.
+ -----------------------------------------------------------------------------*/
+
 package com.ibnkhaldoun.studentside.models;
 
 
 import android.os.Parcel;
 import android.os.Parcelable;
+
+/**
+ * @definition this class will model the comment of like called in the application
+ * the note.
+ */
 
 public class Comment implements Parcelable {
     public static final Creator<Comment> CREATOR = new Creator<Comment>() {
@@ -59,25 +68,11 @@ public class Comment implements Parcelable {
         return idComment;
     }
 
-    public void setIdComment(long idComment) {
-        this.idComment = idComment;
-    }
-
-    public long getIdPost() {
-        return idPost;
-    }
-
-    public void setIdPost(long idPost) {
-        this.idPost = idPost;
-    }
 
     public long getIdCommenter() {
         return idCommenter;
     }
 
-    public void setIdCommenter(long idCommenter) {
-        this.idCommenter = idCommenter;
-    }
 
     public String getDate() {
         return date;

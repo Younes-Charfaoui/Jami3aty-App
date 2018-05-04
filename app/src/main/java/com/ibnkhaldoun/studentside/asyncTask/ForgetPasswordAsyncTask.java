@@ -1,9 +1,12 @@
+/*------------------------------------------------------------------------------
+ - Copyright (c) 2018. This code was created by Younes Charfaoui in the process of Graduation Project for the year of  2018 , which is about creating a platform  for students and professors to help them in the communication and the get known of the university information and so on.
+ -----------------------------------------------------------------------------*/
+
 package com.ibnkhaldoun.studentside.asyncTask;
 
 import android.os.AsyncTask;
 
-import com.ibnkhaldoun.studentside.interfaces.ForgetPasswordTaskListener;
-import com.ibnkhaldoun.studentside.networking.models.ForgetPasswordResponse;
+import com.ibnkhaldoun.studentside.interfaces.ResponseTaskListener;
 import com.ibnkhaldoun.studentside.networking.models.RequestPackage;
 import com.ibnkhaldoun.studentside.networking.models.Response;
 import com.ibnkhaldoun.studentside.networking.utilities.HttpUtilities;
@@ -12,21 +15,21 @@ import com.ibnkhaldoun.studentside.networking.utilities.JsonUtilities;
 import java.io.IOException;
 
 
-public class ForgetPasswordAsyncTask extends AsyncTask<RequestPackage, Void, ForgetPasswordResponse> {
+public class ForgetPasswordAsyncTask extends AsyncTask<RequestPackage, Void, Response> {
 
-    private ForgetPasswordTaskListener mTaskListener;
+    private ResponseTaskListener mTaskListener;
 
-    public ForgetPasswordAsyncTask(ForgetPasswordTaskListener listener) {
+    public ForgetPasswordAsyncTask(ResponseTaskListener listener) {
         this.mTaskListener = listener;
     }
 
     @Override
-    protected void onPostExecute(ForgetPasswordResponse forgetResponse) {
-        mTaskListener.onForgetPasswordCompletionListener(forgetResponse);
+    protected void onPostExecute(Response forgetResponse) {
+        mTaskListener.onTaskCompletionListener(forgetResponse);
     }
 
     @Override
-    protected ForgetPasswordResponse doInBackground(RequestPackage... requestPackages) {
+    protected Response doInBackground(RequestPackage... requestPackages) {
         try {
 
             String response = HttpUtilities.getData(requestPackages[0]);
@@ -35,7 +38,7 @@ public class ForgetPasswordAsyncTask extends AsyncTask<RequestPackage, Void, For
         } catch (IOException e) {
 
             e.printStackTrace();
-            return new ForgetPasswordResponse(Response.IO_EXCEPTION);
+            return new Response(Response.IO_EXCEPTION);
         }
 
     }
